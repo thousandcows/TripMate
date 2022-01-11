@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+   <!-- Root Context: defines shared resources visible to all other web components -->
+   
+   <!-- bean 태그로 만들면 자동으로 Singleton 패턴이 적용된다. 단, scope="prototype"을 입력하면 싱글톤이 사라진다. -->
+   <!-- db의 경우 내가 만든것이 아니기 때문에 annotation 방식을 이용해서 인스턴스를 생성할 수 없다. -->
+   <!-- 따라서, 라이브러리 형식으로 가져와서 사용하는 것들은 annotation으로 선언이 불가하기 때문에 xml방식으로 인스턴스를 생성해야한다. -->
+   <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+      <property name="username" value="kh"/>
+      <property name="password" value="kh"/>
+      <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+      <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+      <property name="initialSize" value="30"/>
+   </bean>
+   
+   <!-- jdbctemplate + ctrl space -> 자동완성 -->
+   <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+      <!--  위에 있는 dataSource, ref=reference(참조자료형(주소값), class형 // 외에는 val=value(int, string, char 등등) -->
+      <!-- Dependency Injection의 한 부류 -->
+      <property name="dataSource" ref="dataSource"/>
+   </bean>
+   
+   <!-- mybatis database setting -->
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+      <property name="dataSource" ref="dataSource"/>
+      <!-- mybatis는 xml문서를 참조해서 사용해야하는데 그 위치를 묻는 코드이다.(classpath : src/main/resources) -->
+      <property name="mapperLocations" value="classpath:/mybatis/*-mapper.xml"/>
+   </bean>
+   
+   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+      <!-- 생성자를 통해 넣어준다. -->
+      <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+   </bean>
+   
+</beans>
