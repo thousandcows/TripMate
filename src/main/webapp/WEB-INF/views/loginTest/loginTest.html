@@ -55,7 +55,6 @@
           margin-top: 10px;
           border: none;
           border-radius: 7px;
-          transition: all 0.5s;
         }
 
         .loginBtns button:first-child {
@@ -80,6 +79,14 @@
         /* 회원가입 시작 */
         #signupModalBtn {
           width: 80%;
+          background: linear-gradient(45deg, cornflowerblue, rgb(121, 187, 241));
+          border: none;
+          height: 40px;
+          margin-bottom:15px;
+        }
+
+        #signupModalBtn:hover {
+          opacity: 0.9;
         }
 
         /* 회원가입창 로고부분 */
@@ -100,6 +107,7 @@
         /* 중복확인시 나타나는 글자 */
         .signupInputConfirm {
           font-size: 12px;
+          height:20px;
           color: cornflowerblue;
         }
 
@@ -136,6 +144,10 @@
           color: rgb(63, 63, 63);
         }
 
+        .signupCheckBtn:hover {
+          background-color: rgb(250, 250, 250);
+        }
+
         /* 이름, 비밀번호 */
         .signupLongInput {
           width: 96%;
@@ -144,6 +156,41 @@
           border-radius: 4px;
           padding-left: 6px;
           height: 36px;
+        }
+
+        /* 휴대폰 입력란 */
+        .phoneInput{
+          width:22%;
+          height:36px;
+          padding-left:6px;
+        }
+        .phoneInput:first-child{
+          width:15%;
+        }
+        #phoneCheckBtn{
+          margin-left:24px;
+        }
+        /* 회원가입Go버튼 */
+        .signupGoBtn {
+          width: 96%;
+          height: 40px;
+          border: none;
+          border-radius: 6px;
+          background: linear-gradient(45deg, cornflowerblue, rgb(121, 187, 241));
+          color: white;
+        }
+
+        .signupGoBtn:hover {
+          opacity: 0.9;
+        }
+
+        .signupBack {
+          background-color: #20B2AA;
+          border: none;
+          height: 30px;
+          width: 70px;
+          padding: 0;
+          font-size: 13px;
         }
 
         #kakaoLogin:hover {
@@ -166,8 +213,8 @@
             <div class="modal-body modal-first-body">
               <form action=# method="post" class="loginForm">
                 <div class="loginInputBox">
-                  <input type="text" id="inputID" class="loginInput" placeholder="이메일 주소"><br>
-                  <input type="password" id="inputPW" class="loginInput" placeholder="비밀번호">
+                  <input type="text" id="inputID" class="loginInput" placeholder="이메일 주소" required><br>
+                  <input type="password" id="inputPW" class="loginInput" placeholder="비밀번호" required>
                 </div>
                 <div class="loginBtns">
                   <button>로그인</button>
@@ -192,30 +239,38 @@
             <div class="modal-body modal-signupBody">
               <form action="#" method="post">
                 <div class="signupBoxs">
-                  <input type="text" placeholder="이메일 주소" class="signupEmailInput"><button type="button"
-                    class="signupCheckBtn">중복확인</button>
-                  <div class="emailIdConfirm signupInputConfirm">테스트텍스트</div>
+                  <input type="text" placeholder="이메일 주소" id="signupEmail" class="signupEmailInput" name="email" required><button type="button"
+                    class="signupCheckBtn" id="signupEmailCheckBtn">중복확인</button>
+                  <div class="emailConfirm signupInputConfirm"></div>
                 </div>
                 <div class="signupBoxs">
-                  <input type="text" placeholder="닉네임" class="signupNickNameInput"><button type="button"
+                  <input type="text" placeholder="닉네임" class="signupNickNameInput" name="nick" required><button type="button"
                     class="signupCheckBtn">중복확인</button>
                   <div class="nickNameConfirm signupInputConfirm">테스트텍스트</div>
                 </div>
                 <div class="signupBoxs">
-                  <input type="text" placeholder="이름" class="signupLongInput">
+                  <input type="text" maxlength="3" placeholder="010" class="phoneInput" name="phone1" required> - 
+                  <input type="text" maxlength="4" placeholder="1234" class="phoneInput" name="phone2" required> - 
+                  <input type="text" maxlength="4" placeholder="5678" class="phoneInput" name="phone3" required><button type="button"
+                  class="signupCheckBtn" id="phoneCheckBtn">인증?</button>
+                  <div class="emailIdConfirm signupInputConfirm">테스트텍스트</div>
+                  <input type="text" name="phone">
                 </div>
                 <div class="signupBoxs">
                   <!-- 추후 password로 변경 -->
-                  <input type="text" placeholder="비밀번호" class="signupLongInput">
+                  <input type="text" placeholder="비밀번호" class="signupLongInput" required>
                 </div>
                 <div class="signupBoxs">
-                  <input type="text" placeholder="비밀번호 확인" class="signupLongInput">
+                  <input type="text" placeholder="비밀번호 확인" class="signupLongInput" required>
                 </div>
-                <button>회원가입</button>
+                <div class="signupBoxs">
+                  <button class="signupGoBtn">회원가입</button>
+                </div>
               </form>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">돌아가기</button>
+              <button class="btn btn-primary signupBack" data-bs-target="#exampleModalToggle"
+                data-bs-toggle="modal">돌아가기</button>
             </div>
           </div>
         </div>
@@ -227,6 +282,32 @@
 
 
       <script>
+        document.querySelector("#signupEmailCheckBtn").addEventListener("click", () => {
+          let emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+          let signupEmailValue = document.querySelector("#signupEmail").value
+          if(emailRegex.test(signupEmailValue)){
+            $.ajax({
+              url:"/member/emailCheck",
+              data: signupEmailValue
+            }).done(function(res){
+              if(res == "1"){
+                document.querySelector(".emailConfirm").style.color = "red";
+                document.querySelector(".emailConfirm").innerHTML="사용중인 이메일입니다.";
+              } else {
+                document.querySelector(".emailConfirm").innerHTML="사용 가능한 이메일입니다.";
+              }
+            })
+          } else {
+            document.querySelector(".emailConfirm").style.color = "red";
+            document.querySelector(".emailConfirm").innerHTML="이메일 양식을 확인해주세요.";
+          }
+        })
+
+
+
+
+
+
         document.querySelector("#pwFind").addEventListener("click", () => {
           window.open()
         })

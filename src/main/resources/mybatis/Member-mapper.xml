@@ -5,5 +5,8 @@
   
 <mapper namespace="Member">
 	
+	<select id="emailCheck" resultType="int">
+		select count(*) from member where emailid = #{value}
+	</select>
 
 </mapper>
