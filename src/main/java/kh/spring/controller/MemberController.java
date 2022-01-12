@@ -19,6 +19,8 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="emailCheck", produces="application/text;charset=utf-8")
 	public String emailChek(String email) {
+		System.out.println("넘어온 이메일값 : " + email);
+		System.out.println("보내는 이메일 확인값 : " + memberService.emailCheck(email));
 		return String.valueOf(memberService.emailCheck(email));
 	}
 	
@@ -26,6 +28,8 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="nickNameCheck", produces="application/text;charset=utf-8")
 	public String nickNameCheck(String nickName) {
+		System.out.println("넘어온 닉네임값 : " + nickName);
+		System.out.println("보내는 닉네임 확인값 : " + memberService.nickNameCheck(nickName));
 		return String.valueOf(memberService.nickNameCheck(nickName));
 	}
 	
@@ -33,6 +37,8 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="phoneCheck", produces="application/text;charset=utf-8")
 	public String phoneCheck(String phone) {
+		System.out.println("넘어온 휴대폰값 : " + phone);
+		System.out.println("보내는 휴대폰 확인값 : " + memberService.phoneCheck(phone));
 		return String.valueOf(memberService.phoneCheck(phone));
 	}
 	

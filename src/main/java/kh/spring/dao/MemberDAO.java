@@ -12,7 +12,7 @@ public class MemberDAO {
 	
 	// 이메일 체크
 	public int emailCheck(String email) {
-		return mybatis.selectOne("Member.emailcheck", email);
+		return mybatis.selectOne("Member.emailCheck", email);
 	}
 	
 	// 닉네임 체크

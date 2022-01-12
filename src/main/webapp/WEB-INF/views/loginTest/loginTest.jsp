@@ -301,14 +301,16 @@
           let signupEmailValue = document.querySelector("#signupEmail").value
           if (emailRegex.test(signupEmailValue)) {
             $.ajax({
+              type: "post",
               url: "/member/emailCheck",
-              data: signupEmailValue
+              data: {email: signupEmailValue}
             }).done(function (res) {
               if (res == "1") {
                 document.querySelector(".emailConfirm").style.color = "red";
                 document.querySelector(".emailConfirm").innerHTML = "사용중인 이메일입니다.";
                 emailSubmitCheck = false;
               } else {
+                document.querySelector(".emailConfirm").style.color = "cornflowerblue";
                 document.querySelector(".emailConfirm").innerHTML = "사용 가능한 이메일입니다.";
                 emailSubmitCheck = true;
               }
@@ -318,7 +320,6 @@
             document.querySelector(".emailConfirm").innerHTML = "이메일 양식을 확인해주세요.";
             emailSubmitCheck = false;
           }
-          console.log(emailSubmitCheck);
         });
 
         // 닉네임 중복확인
@@ -328,13 +329,14 @@
           if (nickNameRegex.test(signupNickNameValue)) {
             $.ajax({
               url: "/member/nickNameCheck",
-              data: signupNickNameValue
+              data: {nickName: signupNickNameValue}
             }).done(function (res) {
               if (res == "1") {
                 document.querySelector(".nickNameConfirm").style.color = "red";
                 document.querySelector(".nickNameConfirm").innerHTML = "사용중인 닉네임입니다.";
                 nickNameSubmitCheck = false;
               } else {
+                document.querySelector(".nickNameConfirm").style.color = "cornflowerblue";
                 document.querySelector(".nickNameConfirm").innerHTML = "사용 가능한 닉네임입니다.";
                 nickNameSubmitCheck = true;
               }
@@ -344,7 +346,6 @@
             document.querySelector(".nickNameConfirm").innerHTML = "완성된 한글, 영문, 숫자를 포함한 8글자 이내";
             nickNameSubmitCheck = false;
           }
-          console.log(emailSubmitCheck);
         });
 
         // 휴대폰 중복확인
@@ -353,18 +354,19 @@
           let phone1 = document.querySelector("#signupPhone1").value
           let phone2 = document.querySelector("#signupPhone2").value
           let phone3 = document.querySelector("#signupPhone3").value
-          let phone = phone1 + phone2 + phone3 + "";
-          document.querySelector("#signupPhone").value = phone;
-          if (phoneRegex.test(phone)) {
+          let phone4 = phone1 + phone2 + phone3 + "";
+          document.querySelector("#signupPhone").value = phone4;
+          if (phoneRegex.test(phone4)) {
             $.ajax({
               url: "member/phoneCheck",
-              data: phone
+              data: {phone: phone4}
             }).done(function (res) {
               if (res == "1") {
                 document.querySelector(".phoneConfirm").style.color = "red";
                 document.querySelector(".phoneConfirm").innerHTML = "사용중인 번호입니다.";
                 phoneSubmitCheck = false;
               } else {
+                document.querySelector(".phoneConfirm").style.color = "cornflowerblue";
                 document.querySelector(".phoneConfirm").innerHTML = "사용가능한 번호입니다.";
                 phoneSubmitCheck = true;
               }
