@@ -42,6 +42,12 @@ public class MemberController {
 		return String.valueOf(memberService.phoneCheck(phone));
 	}
 	
+	// 회원가입 구현 예정
+//	@RequestMapping("normalSignup")
+//	public String normalSignup() {
+//		
+//	}
+	
 	
 	
 	
