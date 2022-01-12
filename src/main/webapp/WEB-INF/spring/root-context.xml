@@ -9,10 +9,10 @@
    <!-- db의 경우 내가 만든것이 아니기 때문에 annotation 방식을 이용해서 인스턴스를 생성할 수 없다. -->
    <!-- 따라서, 라이브러리 형식으로 가져와서 사용하는 것들은 annotation으로 선언이 불가하기 때문에 xml방식으로 인스턴스를 생성해야한다. -->
    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-      <property name="username" value="kh"/>
-      <property name="password" value="kh"/>
+      <property name="username" value="kh2"/>
+      <property name="password" value="kh2"/>
       <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-      <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+      <property name="url" value="jdbc:oracle:thin:@3.38.78.110:1521:xe"/>
       <property name="initialSize" value="30"/>
    </bean>
    
