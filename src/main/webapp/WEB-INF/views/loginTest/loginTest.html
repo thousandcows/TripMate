@@ -261,15 +261,17 @@
                     required> -
                   <input type="text" maxlength="4" placeholder="5678" class="phoneInput" name="phone3" id="signupPhone3"
                     required><button type="button" class="signupCheckBtn" id="signupPhoneCheckBtn">인증?</button>
-                  <div class="phoneConfirm signupInputConfirm">테스트텍스트</div>
+                  <div class="phoneConfirm signupInputConfirm"></div>
                   <input type="text" name="phone" id="signupPhone">
                 </div>
                 <div class="signupBoxs">
                   <!-- 추후 password로 변경 -->
-                  <input type="text" placeholder="비밀번호" class="signupLongInput" required>
+                  <input type="text" placeholder="비밀번호" class="signupLongInput" id="signupPw" required>
+                  <div class="pwConfirm signupInputConfirm"></div>
                 </div>
                 <div class="signupBoxs">
-                  <input type="text" placeholder="비밀번호 확인" class="signupLongInput" required>
+                  <input type="text" placeholder="비밀번호 확인" class="signupLongInput" id="signupPwRe" required>
+                  <div class="pwReConfirm signupInputConfirm"></div>
                 </div>
                 <div class="signupBoxs">
                   <button class="signupGoBtn">회원가입</button>
@@ -295,6 +297,7 @@
         let emailSubmitCheck = false;
         let nickNameSubmitCheck = false;
         let phoneSubmitCheck = false;
+        let pwSubmitCheck = false;
         // 이메일 중복확인
         document.querySelector("#signupEmailCheckBtn").addEventListener("click", () => {
           let emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -377,6 +380,13 @@
             phoneSubmitCheck = false;
           }
         });
+
+        // 비밀번호 확인
+        let signupPw = document.querySelector("#signupPw");
+        let signupPwRe = document.querySelector("#signupPwRe");
+        signupPw.addEventListener("input", () => {
+          let pwRegex = /^[A-Za-z0-9\W]{8,16}$/;
+        })
 
 
 
