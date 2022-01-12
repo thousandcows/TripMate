@@ -148,10 +148,9 @@
           background-color: rgb(250, 250, 250);
         }
 
-        /* 이름, 비밀번호 */
+        /* 비밀번호 */
         .signupLongInput {
           width: 96%;
-          margin-bottom: 15px;
           border: 1px solid gray;
           border-radius: 4px;
           padding-left: 6px;
@@ -246,7 +245,7 @@
             <div class="modal-body modal-signupBody">
               <form action="#" method="post" onsubmit="return signupGo()">
                 <div class="signupBoxs">
-                  <input type="text" placeholder="이메일 주소" id="signupEmail" class="signupEmailInput" name="email"
+                  <input type="text" placeholder="이메일 주소" id="signupEmail" class="signupEmailInput" name="emailID"
                     required><button type="button" class="signupCheckBtn" id="signupEmailCheckBtn">중복확인</button>
                   <div class="emailConfirm signupInputConfirm"></div>
                 </div>
@@ -266,11 +265,11 @@
                 </div>
                 <div class="signupBoxs">
                   <!-- 추후 password로 변경 -->
-                  <input type="text" placeholder="비밀번호" class="signupLongInput" id="signupPw" required>
+                  <input type="text" placeholder="비밀번호 (8자 ~ 16자)" class="signupLongInput" id="signupPw" required>
                   <div class="pwConfirm signupInputConfirm"></div>
                 </div>
                 <div class="signupBoxs">
-                  <input type="text" placeholder="비밀번호 확인" class="signupLongInput" id="signupPwRe" required>
+                  <input type="text" placeholder="비밀번호 확인" class="signupLongInput" id="signupPwRe" name="pw" required>
                   <div class="pwReConfirm signupInputConfirm"></div>
                 </div>
                 <div class="signupBoxs">
@@ -298,6 +297,7 @@
         let nickNameSubmitCheck = false;
         let phoneSubmitCheck = false;
         let pwSubmitCheck = false;
+        let pwReSubmitCheck = false;
         // 이메일 중복확인
         document.querySelector("#signupEmailCheckBtn").addEventListener("click", () => {
           let emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -385,7 +385,36 @@
         let signupPw = document.querySelector("#signupPw");
         let signupPwRe = document.querySelector("#signupPwRe");
         signupPw.addEventListener("input", () => {
-          let pwRegex = /^[A-Za-z0-9\W]{8,16}$/;
+          let pwRegex = /^[A-Za-z0-9\S]{8,16}$/;
+          if(pwRegex.test(signupPw.value)){
+            document.querySelector(".pwConfirm").style.color = "cornflowerblue";
+            document.querySelector(".pwConfirm").innerHTML = "사용 가능한 PW입니다.";
+            pwSubmitCheck = true;
+          } else {
+            document.querySelector(".pwConfirm").style.color = "red";
+            document.querySelector(".pwConfirm").innerHTML = "공백 없는 8~16자로 입력해주세요.";
+            pwSubmitCheck = false;
+          }
+          if (signupPw.value == signupPwRe.value) {
+            document.querySelector(".pwReConfirm").style.color = "cornflowerblue";
+            document.querySelector(".pwReConfirm").innerHTML = "PW가 일치합니다.";
+            pwReSubmitCheck = true;
+          } else {
+            document.querySelector(".pwReConfirm").style.color = "red";
+            document.querySelector(".pwReConfirm").innerHTML = "PW가 일치하지 않습니다.";
+            pwReSubmitCheck = false;
+          }
+        });
+        signupPwRe.addEventListener("input", () => {
+          if (signupPw.value == signupPwRe.value) {
+            document.querySelector(".pwReConfirm").style.color = "cornflowerblue";
+            document.querySelector(".pwReConfirm").innerHTML = "PW가 일치합니다.";
+            pwReSubmitCheck = true;
+          } else {
+            document.querySelector(".pwReConfirm").style.color = "red";
+            document.querySelector(".pwReConfirm").innerHTML = "PW가 일치하지 않습니다.";
+            pwReSubmitCheck = false;
+          }
         })
 
 
@@ -406,6 +435,16 @@
 
           if (!phoneSubmitCheck) {
             alert("휴대폰번호를 확인해주세요.");
+            return false;
+          }
+
+          if (!pwSubmitCheck) {
+            alert("비밀번호를 확인해주세요.");
+            return false;
+          }
+
+          if (!pwReSubmitCheck) {
+            alert("입력된 비밀번호가 다릅니다.");
             return false;
           }
         }
