@@ -22,6 +22,24 @@ public class MemberController {
 		return String.valueOf(memberService.emailCheck(email));
 	}
 	
+	// 닉네임 체크
+	@ResponseBody
+	@RequestMapping(value="nickNameCheck", produces="application/text;charset=utf-8")
+	public String nickNameCheck(String nickName) {
+		return String.valueOf(memberService.nickNameCheck(nickName));
+	}
+	
+	// 휴대폰 체크
+	@ResponseBody
+	@RequestMapping(value="phoneCheck", produces="application/text;charset=utf-8")
+	public String phoneCheck(String phone) {
+		return String.valueOf(memberService.phoneCheck(phone));
+	}
+	
+	
+	
+	
+	
 	// 일반 회원가입
 	@RequestMapping("nomalSignup")
 	public String signup() {

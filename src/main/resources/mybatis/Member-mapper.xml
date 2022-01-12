@@ -8,5 +8,13 @@
 	<select id="emailCheck" resultType="int">
 		select count(*) from member where emailid = #{value}
 	</select>
+	
+	<select id="nickNameCheck" resultType="int">
+		select count(*) from member where nick = #{value}
+	</select>
+	
+	<select id="phoneCheck" resultType="int">
+		select count(*) from member where phone = #{value}
+	</select>
 
 </mapper>

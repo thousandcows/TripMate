@@ -10,7 +10,18 @@ public class MemberDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
+	// 이메일 체크
 	public int emailCheck(String email) {
 		return mybatis.selectOne("Member.emailcheck", email);
+	}
+	
+	// 닉네임 체크
+	public int nickNameCheck(String nickName) {
+		return mybatis.selectOne("Member.nickNameCheck", nickName);
+	}
+	
+	// 휴대폰 체크
+	public int phoneCheck(String phone) {
+		return mybatis.selectOne("Member.phoneCheck", phone);
 	}
 }

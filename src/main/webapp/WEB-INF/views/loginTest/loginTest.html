@@ -82,7 +82,7 @@
           background: linear-gradient(45deg, cornflowerblue, rgb(121, 187, 241));
           border: none;
           height: 40px;
-          margin-bottom:15px;
+          margin-bottom: 15px;
         }
 
         #signupModalBtn:hover {
@@ -107,7 +107,7 @@
         /* 중복확인시 나타나는 글자 */
         .signupInputConfirm {
           font-size: 12px;
-          height:20px;
+          height: 20px;
           color: cornflowerblue;
         }
 
@@ -159,17 +159,24 @@
         }
 
         /* 휴대폰 입력란 */
-        .phoneInput{
-          width:22%;
-          height:36px;
-          padding-left:6px;
+        .phoneInput {
+          width: 22%;
+          height: 36px;
+          padding-left: 6px;
         }
-        .phoneInput:first-child{
-          width:15%;
+
+        .phoneInput:first-child {
+          width: 15%;
         }
-        #phoneCheckBtn{
-          margin-left:24px;
+
+        #signupPhoneCheckBtn {
+          margin-left: 24px;
         }
+
+        #signupPhone {
+          display: none;
+        }
+
         /* 회원가입Go버튼 */
         .signupGoBtn {
           width: 96%;
@@ -237,24 +244,25 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body modal-signupBody">
-              <form action="#" method="post">
+              <form action="#" method="post" onsubmit="return signupGo()">
                 <div class="signupBoxs">
-                  <input type="text" placeholder="이메일 주소" id="signupEmail" class="signupEmailInput" name="email" required><button type="button"
-                    class="signupCheckBtn" id="signupEmailCheckBtn">중복확인</button>
+                  <input type="text" placeholder="이메일 주소" id="signupEmail" class="signupEmailInput" name="email"
+                    required><button type="button" class="signupCheckBtn" id="signupEmailCheckBtn">중복확인</button>
                   <div class="emailConfirm signupInputConfirm"></div>
                 </div>
                 <div class="signupBoxs">
-                  <input type="text" placeholder="닉네임" class="signupNickNameInput" name="nick" required><button type="button"
-                    class="signupCheckBtn">중복확인</button>
-                  <div class="nickNameConfirm signupInputConfirm">테스트텍스트</div>
+                  <input type="text" placeholder="닉네임" class="signupNickNameInput" id="signupNickName" name="nick"
+                    required><button type="button" class="signupCheckBtn" id="signupNickNameCheckBtn">중복확인</button>
+                  <div class="nickNameConfirm signupInputConfirm"></div>
                 </div>
                 <div class="signupBoxs">
-                  <input type="text" maxlength="3" placeholder="010" class="phoneInput" name="phone1" required> - 
-                  <input type="text" maxlength="4" placeholder="1234" class="phoneInput" name="phone2" required> - 
-                  <input type="text" maxlength="4" placeholder="5678" class="phoneInput" name="phone3" required><button type="button"
-                  class="signupCheckBtn" id="phoneCheckBtn">인증?</button>
-                  <div class="emailIdConfirm signupInputConfirm">테스트텍스트</div>
-                  <input type="text" name="phone">
+                  <input type="text" value="010" class="phoneInput" name="phone1" id="signupPhone1" readonly> -
+                  <input type="text" maxlength="4" placeholder="1234" class="phoneInput" name="phone2" id="signupPhone2"
+                    required> -
+                  <input type="text" maxlength="4" placeholder="5678" class="phoneInput" name="phone3" id="signupPhone3"
+                    required><button type="button" class="signupCheckBtn" id="signupPhoneCheckBtn">인증?</button>
+                  <div class="phoneConfirm signupInputConfirm">테스트텍스트</div>
+                  <input type="text" name="phone" id="signupPhone">
                 </div>
                 <div class="signupBoxs">
                   <!-- 추후 password로 변경 -->
@@ -282,32 +290,115 @@
 
 
       <script>
+        "use strict";
+        // 회원가입 중복확인용 변수들
+        let emailSubmitCheck = false;
+        let nickNameSubmitCheck = false;
+        let phoneSubmitCheck = false;
+        // 이메일 중복확인
         document.querySelector("#signupEmailCheckBtn").addEventListener("click", () => {
           let emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
           let signupEmailValue = document.querySelector("#signupEmail").value
-          if(emailRegex.test(signupEmailValue)){
+          if (emailRegex.test(signupEmailValue)) {
             $.ajax({
-              url:"/member/emailCheck",
+              url: "/member/emailCheck",
               data: signupEmailValue
-            }).done(function(res){
-              if(res == "1"){
+            }).done(function (res) {
+              if (res == "1") {
                 document.querySelector(".emailConfirm").style.color = "red";
-                document.querySelector(".emailConfirm").innerHTML="사용중인 이메일입니다.";
+                document.querySelector(".emailConfirm").innerHTML = "사용중인 이메일입니다.";
+                emailSubmitCheck = false;
               } else {
-                document.querySelector(".emailConfirm").innerHTML="사용 가능한 이메일입니다.";
+                document.querySelector(".emailConfirm").innerHTML = "사용 가능한 이메일입니다.";
+                emailSubmitCheck = true;
               }
             })
           } else {
             document.querySelector(".emailConfirm").style.color = "red";
-            document.querySelector(".emailConfirm").innerHTML="이메일 양식을 확인해주세요.";
+            document.querySelector(".emailConfirm").innerHTML = "이메일 양식을 확인해주세요.";
+            emailSubmitCheck = false;
           }
-        })
+          console.log(emailSubmitCheck);
+        });
+
+        // 닉네임 중복확인
+        document.querySelector("#signupNickNameCheckBtn").addEventListener("click", () => {
+          let nickNameRegex = /^([a-zA-Z0-9가-힣]){1,8}$/;
+          let signupNickNameValue = document.querySelector("#signupNickName").value
+          if (nickNameRegex.test(signupNickNameValue)) {
+            $.ajax({
+              url: "/member/nickNameCheck",
+              data: signupNickNameValue
+            }).done(function (res) {
+              if (res == "1") {
+                document.querySelector(".nickNameConfirm").style.color = "red";
+                document.querySelector(".nickNameConfirm").innerHTML = "사용중인 닉네임입니다.";
+                nickNameSubmitCheck = false;
+              } else {
+                document.querySelector(".nickNameConfirm").innerHTML = "사용 가능한 닉네임입니다.";
+                nickNameSubmitCheck = true;
+              }
+            })
+          } else {
+            document.querySelector(".nickNameConfirm").style.color = "red";
+            document.querySelector(".nickNameConfirm").innerHTML = "완성된 한글, 영문, 숫자를 포함한 8글자 이내";
+            nickNameSubmitCheck = false;
+          }
+          console.log(emailSubmitCheck);
+        });
+
+        // 휴대폰 중복확인
+        document.querySelector("#signupPhoneCheckBtn").addEventListener("click", () => {
+          let phoneRegex = /^[0-9]{11}$/;
+          let phone1 = document.querySelector("#signupPhone1").value
+          let phone2 = document.querySelector("#signupPhone2").value
+          let phone3 = document.querySelector("#signupPhone3").value
+          let phone = phone1 + phone2 + phone3 + "";
+          document.querySelector("#signupPhone").value = phone;
+          if (phoneRegex.test(phone)) {
+            $.ajax({
+              url: "member/phoneCheck",
+              data: phone
+            }).done(function (res) {
+              if (res == "1") {
+                document.querySelector(".phoneConfirm").style.color = "red";
+                document.querySelector(".phoneConfirm").innerHTML = "사용중인 번호입니다.";
+                phoneSubmitCheck = false;
+              } else {
+                document.querySelector(".phoneConfirm").innerHTML = "사용가능한 번호입니다.";
+                phoneSubmitCheck = true;
+              }
+            })
+          } else {
+            document.querySelector(".phoneConfirm").style.color = "red";
+            document.querySelector(".phoneConfirm").innerHTML = "유효한 번호를 입력해주세요.";
+            phoneSubmitCheck = false;
+          }
+        });
 
 
 
 
 
+        // 회원가입Go버튼
+        function signupGo() {
+          if (!emailSubmitCheck) {
+            alert("이메일을 확인해주세요.");
+            return false;
+          }
 
+          if (!nickNameSubmitCheck) {
+            alert("닉네임을 확인해주세요.");
+            return false;
+          }
+
+          if (!phoneSubmitCheck) {
+            alert("휴대폰번호를 확인해주세요.");
+            return false;
+          }
+        }
+
+        // PW찾기 팝업
         document.querySelector("#pwFind").addEventListener("click", () => {
           window.open()
         })
