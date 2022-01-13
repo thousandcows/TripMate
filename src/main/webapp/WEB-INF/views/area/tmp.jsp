@@ -11,7 +11,30 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 <body>
-	${totalCount }
+	<button id=btn>hi</button>
+	<script>
+		$("#btn").on("click",function(){
+			location.href="/area/main?page=2";
+		})
+	</script>
+	
+	
+	<c:forEach var="i" items="${pageView }">
+		<c:choose>
+		<c:when test="${i eq -1 }">
+			<
+		</c:when>
+		<c:when test="${i eq -2 }">
+			>
+		</c:when>
+		<c:otherwise>
+			${i }
+		</c:otherwise>
+		</c:choose>
+		
+	</c:forEach>
+	<br>
+	${pageNo }현재페이지<br>
 
 	<c:forEach var="item" items="${list }">
 		${item.title }<br>
@@ -22,8 +45,10 @@
 		${item.cat3}<br>
 		${item.cat1 }<br>
 		${item.readcount }<br>
+		<c:if test="${item.firstimage ne null }">
 		<img src="${item.firstimage}"><br>
-		<p>
+		</c:if>
+		<p> 
 	</c:forEach>
 </body>
 </html>
