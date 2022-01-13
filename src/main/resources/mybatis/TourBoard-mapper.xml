@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TourBoard">
+
+	<select id="selectAll" resultType="kh.spring.dto.TourBoardDTO">
+		select * from tour_board order by seq
+	</select>
+	
+	<insert id="insert">
+		insert into tour_board values(tourb_seq.nextval, 1,
+		#{title}, #{contents}, 'trip', default, default, default, default)
+	</insert>
+	
+	<select id="selectBySeq" resultType="kh.spring.dto.TourBoardDTO">
+		select * from tour_board where seq = #{value}
+	</select>
+	
+	<update id="modify">
+		update tour_board set title=#{title}, contents=#{contents} where seq = #{seq}
+	</update>
+</mapper>
