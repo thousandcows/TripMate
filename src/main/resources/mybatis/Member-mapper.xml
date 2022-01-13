@@ -16,5 +16,17 @@
 	<select id="phoneCheck" resultType="int">
 		select count(*) from member where phone = #{value}
 	</select>
+	
+	<insert id="normalSignup">
+		insert into member (seq, emailid, pw, nick, phone, violation) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, 0)
+	</insert>
+	
+	<select id="normalLoginCheck" resultType="int">
+		select count(*) from member where emailid = #{emailID} and pw = #{encryptPw}
+	</select>
+	
+	<select id="normalLoginSelectAll" resultType="kh.spring.dto.NormalMemberDTO">
+		select * from member where emailid = #{emailID} and pw = #{encryptPw}
+	</select>
 
 </mapper>
