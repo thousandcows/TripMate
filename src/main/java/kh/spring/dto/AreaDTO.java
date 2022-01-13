@@ -3,12 +3,12 @@ package kh.spring.dto;
 public class AreaDTO {
 	private String name;
 	private String category;
-	private String hours;
 	private String location;
 	private String lo_detail;
 	private String phone;
 	private String detail;
 	private String homepage;
+	private String photo;
 	public String getName() {
 		return name;
 	}
@@ -20,12 +20,6 @@ public class AreaDTO {
 	}
 	public void setCategory(String category) {
 		this.category = category;
-	}
-	public String getHours() {
-		return hours;
-	}
-	public void setHours(String hours) {
-		this.hours = hours;
 	}
 	public String getLocation() {
 		return location;
@@ -66,12 +60,11 @@ public class AreaDTO {
 	public AreaDTO() {
 		super();
 	}
-	public AreaDTO(String name, String category, String hours, String location, String lo_detail, String phone,
+	public AreaDTO(String name, String category, String location, String lo_detail, String phone,
 			String detail, String homepage, String photo) {
 		super();
 		this.name = name;
 		this.category = category;
-		this.hours = hours;
 		this.location = location;
 		this.lo_detail = lo_detail;
 		this.phone = phone;
@@ -79,6 +72,5 @@ public class AreaDTO {
 		this.homepage = homepage;
 		this.photo = photo;
 	}
-	private String photo;
 	
 }
