@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kh.spring.dto.NormalMemberDTO;
+import kh.spring.dto.MemberDTO;
 
 @Repository
 public class MemberDAO {
@@ -49,18 +49,30 @@ public class MemberDAO {
 	}
 	
 	// 일반 로그인 사용자 정보 빼오기
-	public NormalMemberDTO normalLoginSelectAll(String emailID, String encryptPw) {
+	public MemberDTO normalLoginSelectAll(String emailID, String encryptPw) {
 		Map<String, String> map = new HashMap<>();
 		map.put("emailID", emailID);
 		map.put("encryptPw", encryptPw);
 		return mybatis.selectOne("Member.normalLoginSelectAll", map);
 	}
 	
+	// 카카오 회원가입여부 확인
+	public int kakaoLoginLookup(String kakaoLoginEmail) {
+		return mybatis.selectOne("Member.kakaoLoginLookup", kakaoLoginEmail);
+	}
 	
+	// 카카오 로그인 정보 빼오기
+	public MemberDTO kakaoLoginSelectAll(String kakaoLoginEmail) {
+		return mybatis.selectOne("Member.kakaoLoginSelectAll", kakaoLoginEmail);
+	}
 	
-	
-	
-	
+	// 카카오 사용자 회원가입 시키기
+	public int kakaoSignup(String kakaoLoginEmail, String kakaoLoginNick) {
+		Map<String, String> map = new HashMap<>();
+		map.put("kakaoEmail", kakaoLoginEmail);
+		map.put("kakaoNick", kakaoLoginNick);
+		return mybatis.insert("Member.kakaoSignup", map);
+	}
 	
 	
 	

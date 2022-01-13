@@ -86,7 +86,7 @@
           background: linear-gradient(45deg, cornflowerblue, rgb(121, 187, 241));
           border: none;
           height: 40px;
-          margin-bottom: 15px;
+          margin-bottom: 8px;
           margin-top: 7px;
         }
 
@@ -204,6 +204,10 @@
           font-size: 13px;
         }
 
+        #kakaoLogin {
+          margin-bottom: 20px;
+        }
+
         #kakaoLogin:hover {
           opacity: 0.85;
           cursor: pointer;
@@ -217,7 +221,8 @@
         <c:when test="${loginEmailID != null}">
           ${loginEmailID} 님 환영 ㅎㅎ<br>
           ${loginSeq}<br>
-          ${loginNick}
+          ${loginNick}<br>
+          <a href="/member/normalLogout">로그아웃</a>
         </c:when>
         <c:otherwise>
           <!-- 로그인&회원가입모달창 -->
@@ -492,6 +497,17 @@
         document.querySelector("#pwFind").addEventListener("click", () => {
           window.open()
         })
+
+        //////// 카카오 로그인 시작 ///////
+        document.querySelector("#kakaoLogin").addEventListener("click", () => {
+          $.ajax({
+            url: '/member/getKakaoAuthUrl',
+            type: 'get'
+          }).done(function (res) {
+            location.href = res;
+          })
+        })
+
       </script>
 
     </body>
