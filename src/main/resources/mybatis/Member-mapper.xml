@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Member">
+	
+	<select id="emailCheck" resultType="int">
+		select count(*) from member where emailid = #{value}
+	</select>
+	
+	<select id="nickNameCheck" resultType="int">
+		select count(*) from member where nick = #{value}
+	</select>
+	
+	<select id="phoneCheck" resultType="int">
+		select count(*) from member where phone = #{value}
+	</select>
+	
+	<insert id="normalSignup">
+		insert into member (seq, emailid, pw, nick, phone, violation) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, 0)
+	</insert>
+	
+	<select id="normalLoginCheck" resultType="int">
+		select count(*) from member where emailid = #{emailID} and pw = #{encryptPw}
+	</select>
+	
+	<select id="normalLoginSelectAll" resultType="kh.spring.dto.MemberDTO">
+		select * from member where emailid = #{emailID} and pw = #{encryptPw}
+	</select>
+
+	<!-- 카카오 로그인시작 -->
+	<select id="kakaoLoginLookup" resultType="int">
+		select count(*) from member where emailid = #{value}
+	</select>
+	
+	<select id="kakaoLoginSelectAll" resultType="kh.spring.dto.MemberDTO">
+		select * from member where emailid = #{value}
+	</select>
+	
+	<insert id="kakaoSignup">
+		insert into member (seq, emailid, nick, violation) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0)
+	</insert>
+	
+	
+</mapper>
