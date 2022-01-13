@@ -22,7 +22,8 @@ public class TourBoardService {
 	}
 	
 	public int writeProc(String title, String contents) {
-		System.out.println("서비스에서의 값 : " + title + " " + contents);
+		System.out.println("서비스에서의 title : " + title);
+		System.out.println("서비스에서의 contents : " + contents);
 		return dao.insert(title, contents);
 	}
 	
@@ -34,7 +35,9 @@ public class TourBoardService {
 		return dao.modify(seq, title, contents);
 	}
 	
-	
+	public int delete(int seq) {
+		return dao.delete(seq);
+	}
 	
 	
 	

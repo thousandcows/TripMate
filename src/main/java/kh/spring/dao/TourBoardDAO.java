@@ -23,7 +23,8 @@ public class TourBoardDAO {
 
 	public int insert(String title, String contents) {
 
-		System.out.println("DAO에서의 값 : " + title + " " + contents);
+		System.out.println("DAO에서의 title : " + title);
+		System.out.println("DAO에서의 contents : " + contents);
 		Map<String, String> map = new HashMap<>();
 		map.put("title", title);
 		map.put("contents", contents);
@@ -45,7 +46,10 @@ public class TourBoardDAO {
 		return mybatis.update("TourBoard.modify", map);
 	}
 	
-	
+	public int delete(int seq) {
+		
+		return mybatis.delete("TourBoard.delete", seq);
+	}
 	
 	
 	
