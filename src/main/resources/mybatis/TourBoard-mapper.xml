@@ -21,4 +21,8 @@
 	<update id="modify">
 		update tour_board set title=#{title}, contents=#{contents} where seq = #{seq}
 	</update>
+	
+	<delete id="delete">
+		delete from tour_board where seq=#{value}
+	</delete>
 </mapper>
