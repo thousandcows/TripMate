@@ -39,7 +39,7 @@ public class AreaService {
 	public String contentID(int contenttypeID) {
 		String result = "";
 		switch(contenttypeID) {
-		case 12: result = "관광지"; break;
+		case 12 : result = "관광지"; break;
 		case 14 : result = "문화시설"; break;
 		case 15 : result = "행사/공연/축제"; break;
 		case 25 : result = "여행코스"; break;
@@ -50,15 +50,38 @@ public class AreaService {
 		}
 		return result;
 	}
+	
+	public int areaCode(String area) {
+		int result = 0;
+		switch(area) {
+		case "서울": result = 1; break;
+		case "인천": result = 2; break;
+		case "대전": result = 3; break;
+		case "대구": result = 4; break;
+		case "광주": result = 5; break;
+		case "부산": result = 6; break;
+		case "울산": result = 7; break;
+		case "세종": result = 8; break;
+		case "경기": result = 31; break;
+		case "강원": result = 32; break;
+		case "충북": result = 33; break;
+		case "충남": result = 34; break;
+		case "경북": result = 35; break;
+		case "경남": result = 36; break;
+		case "전북": result = 37; break;
+		case "전남": result = 38; break;
+		case "제주": result = 39; break;
+		}
+		return result;
+
+	}
 
 	public AreaDTO detail(int target) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
-		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode(Integer.toString(Statics.areaViewNo), "UTF-8")); /*한 페이지 결과 수*/
 		urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰),AND(안드로이드),WIN(원도우폰),ETC*/
 		urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
-		urlBuilder.append("&" + URLEncoder.encode("contentId","UTF-8") + "=" + URLEncoder.encode(Integer.toString(target), "UTF-8")); /*콘텐츠ID*/
-		urlBuilder.append("&" + URLEncoder.encode("contentTypeId","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*관광타입(관광지, 숙박 등) ID*/
+		urlBuilder.append("&" + URLEncoder.encode("contentId","UTF-8") + "=" + target); /*콘텐츠ID*/
 		urlBuilder.append("&" + URLEncoder.encode("defaultYN","UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); /*기본정보 조회여부*/
 		urlBuilder.append("&" + URLEncoder.encode("firstImageYN","UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); /*원본, 썸네일 대표이미지 조회여부*/
 		urlBuilder.append("&" + URLEncoder.encode("areacodeYN","UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); /*지역코드, 시군구코드 조회여부*/
@@ -91,32 +114,54 @@ public class AreaService {
 		JsonObject response = (JsonObject) JsonParser.parseString(j.get("response").toString());
 		JsonObject body = (JsonObject) JsonParser.parseString(response.get("body").toString());
 		JsonObject items = (JsonObject) JsonParser.parseString(body.get("items").toString());
-		JsonObject item = (JsonObject) JsonParser.parseString(body.get("item").toString());
-
+		JsonObject item = (JsonObject) JsonParser.parseString(items.get("item").toString());
+		System.out.println(item.toString());
 		String name = item.get("title").toString(); //타이틀
+		name = name.substring(1,name.length()-1);
 		String category = item.get("cat1").toString(); //카테고리
-		String hours = item.get("usetime").toString();
+		category = category.substring(1,category.length()-1);
 		String location = item.get("areacode").toString(); //지역코드		
 		String lo_detail = item.get("addr1").toString(); //주소
-		String tel = item.get("tel").toString();
-		String detail = item.get("overview").toString(); //상세설명
-		String homepage = item.get("homepage").toString(); //홈페이지
-		String photo = item.get("firstimage").toString(); //이미지
-
-		AreaDTO dto = new AreaDTO(name, category, hours, location,lo_detail,tel,detail,homepage,photo);
+		lo_detail = lo_detail.substring(1,lo_detail.length()-1);
+		String tel = "null";
+		if(item.has("tel")) {
+			tel = item.get("tel").toString().replace("\"", "");		
+		}
+		String detail = item.get("overview").toString().replace("\"", ""); //상세설명
+		detail = detail.replace("\\", "<br>");
+		String homepage = "null";
+		if(item.has("homepage")) {
+			homepage = item.get("homepage").toString(); //홈페이지	
+			homepage = homepage.replace("\"", "");
+			homepage = homepage.replace("\\", "");
+		}
+		String photo = "null"; //이미지
+		if(item.has("firstimage")) {
+			photo = item.get("firstimage").toString().replace("\"", "");
+		}
+		
+		
+		
+		
+		
+		AreaDTO dto = new AreaDTO(name, category, location,lo_detail,tel,detail,homepage,photo);
 		return dto;
 	}
 
 	public List<AreaListDTO> list(int pageNum, int conID, int areaCode) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
-		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode(Integer.toString(Statics.areaViewNo), "UTF-8")); /*한 페이지 결과 수*/
-		urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(Integer.toString(pageNum), "UTF-8")); /*현재페이지 번호*/
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + Statics.areaViewNo); /*한 페이지 결과 수*/
+		urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + pageNum); /*현재페이지 번호*/
 		urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰),AND(안드로이드),WIN(원도우폰),ETC*/
 		urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
 		urlBuilder.append("&" + URLEncoder.encode("arrange","UTF-8") + "=" + URLEncoder.encode("P", "UTF-8")); /*조회순 정렬*/
-		urlBuilder.append("&" + URLEncoder.encode("contentTypeId","UTF-8") + "=" + URLEncoder.encode(Integer.toString(conID), "UTF-8")); /*관광타입(관광지, 숙박 등) ID*/
-		urlBuilder.append("&" + URLEncoder.encode("areaCode","UTF-8") + "=" + URLEncoder.encode(Integer.toString(areaCode), "UTF-8")); /*지역코드*/
+		if(conID!=0) {
+			urlBuilder.append("&" + URLEncoder.encode("contentTypeId","UTF-8") + "=" + conID); /*관광타입(관광지, 숙박 등) ID*/			
+		}
+		if(areaCode!=0) {
+			urlBuilder.append("&" + URLEncoder.encode("areaCode","UTF-8") + "=" + areaCode); /*지역코드*/			
+		}
 		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
 
 
@@ -154,7 +199,11 @@ public class AreaService {
 			title = title.substring(1,title.length()-1);
 			int contenttype = tmp.get("contenttypeid").getAsInt();
 			String contenttypeid = contentID(contenttype);
-			String addr1 = tmp.get("addr1").toString();
+			String addr1 = "null";
+			if(tmp.has("addr1")) {
+				addr1=	tmp.get("addr1").toString();
+
+			}
 			addr1 = addr1.substring(1,addr1.length()-1);
 			String cat1 = tmp.get("cat1").toString();
 			cat1 = categorySort(cat1.substring(1,cat1.length()-1));
@@ -178,14 +227,17 @@ public class AreaService {
 	public int[] pageCount(int pageNum, int conID, int areaCode) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
-		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode(Integer.toString(Statics.areaViewNo), "UTF-8")); /*한 페이지 결과 수*/
-		urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(Integer.toString(pageNum), "UTF-8")); /*현재페이지 번호*/
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + Statics.areaViewNo); /*한 페이지 결과 수*/
+		urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + pageNum); /*현재페이지 번호*/
 		urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰),AND(안드로이드),WIN(원도우폰),ETC*/
 		urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
 		urlBuilder.append("&" + URLEncoder.encode("arrange","UTF-8") + "=" + URLEncoder.encode("P", "UTF-8")); /*조회순 정렬*/
-		urlBuilder.append("&" + URLEncoder.encode("contentTypeId","UTF-8") + "=" + URLEncoder.encode(Integer.toString(conID), "UTF-8")); /*관광타입(관광지, 숙박 등) ID*/
-		urlBuilder.append("&" + URLEncoder.encode("areaCode","UTF-8") + "=" + URLEncoder.encode(Integer.toString(areaCode), "UTF-8")); /*지역코드*/
-		//		urlBuilder.append("&" + URLEncoder.encode("listYN","UTF-8") + "=" + URLEncoder.encode("N", "UTF-8")); /*리스트갯수*/
+		if(conID!=0) {
+			urlBuilder.append("&" + URLEncoder.encode("contentTypeId","UTF-8") + "=" + conID); /*관광타입(관광지, 숙박 등) ID*/			
+		}
+		if(areaCode!=0) {
+			urlBuilder.append("&" + URLEncoder.encode("areaCode","UTF-8") + "=" + areaCode); /*지역코드*/			
+		}
 		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
 
 
@@ -213,7 +265,6 @@ public class AreaService {
 		JsonObject response = (JsonObject) JsonParser.parseString(j.get("response").toString());
 		JsonObject body = (JsonObject) JsonParser.parseString(response.get("body").toString());
 		int result[] = new int[2]; 
-		System.out.println(body.get("totalCount"));
 		result[0] = body.get("totalCount").getAsInt()/Statics.areaViewNo;
 		if(body.get("totalCount").getAsInt()%Statics.areaViewNo!= 0 ) {result[0]++;}
 		result[1] = body.get("pageNo").getAsInt();
@@ -221,8 +272,13 @@ public class AreaService {
 	}
 
 	public List<Integer> paging(int total, int page) {
+		if(page%10==0) {
+			page--;
+		}
 		int target = page/10*10+1;
+		
 		List<Integer> result = new ArrayList<>();
+		System.out.println(target);
 		if(target != 1) {
 			result.add(-1);
 		}
@@ -238,6 +294,10 @@ public class AreaService {
 			for(;target<total;target++) {
 				result.add(target);
 			}
+		}
+		
+		if(result.size()==0) {
+			result.add(1);
 		}
 
 		return result;

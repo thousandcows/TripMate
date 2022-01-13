@@ -23,13 +23,16 @@ public class AreaController {
 	
 	
 	@RequestMapping(value="main", method=RequestMethod.GET)
-	public String main(int page,Model model) throws Exception{
-		List<AreaListDTO> list = aService.list(page,12,1);
-		model.addAttribute("list",list);
-		int[] count = aService.pageCount(page,12,1);
+	public String main(int page,int area,int contentType, Model model) throws Exception{
+		List<AreaListDTO> list = aService.list(page,contentType,area);
+		int[] count = aService.pageCount(page,contentType,area);
 		List<Integer> pageView = aService.paging(count[0],count[1]);
+
+		model.addAttribute("list",list);
 		model.addAttribute("pageNo",count[1]);
 		model.addAttribute("pageView",pageView);
+		model.addAttribute("areaCode",area);
+		model.addAttribute("contentType",contentType);
 		return "/area/tmp";
 	}
 	
