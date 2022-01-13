@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Member">
+	
+	<select id="emailCheck" resultType="int">
+		select count(*) from member where emailid = #{value}
+	</select>
+	
+	<select id="nickNameCheck" resultType="int">
+		select count(*) from member where nick = #{value}
+	</select>
+	
+	<select id="phoneCheck" resultType="int">
+		select count(*) from member where phone = #{value}
+	</select>
+
+</mapper>
