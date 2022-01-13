@@ -50,7 +50,7 @@ public class AreaService {
 		}
 		return result;
 	}
-	
+
 	public int areaCode(String area) {
 		int result = 0;
 		switch(area) {
@@ -139,15 +139,16 @@ public class AreaService {
 		if(item.has("firstimage")) {
 			photo = item.get("firstimage").toString().replace("\"", "");
 		}
-		
-		
-		
-		
-		
+
+
+
+
+
 		AreaDTO dto = new AreaDTO(name, category, location,lo_detail,tel,detail,homepage,photo);
 		return dto;
 	}
 
+	//일반
 	public List<AreaListDTO> list(int pageNum, int conID, int areaCode) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
@@ -202,7 +203,6 @@ public class AreaService {
 			String addr1 = "null";
 			if(tmp.has("addr1")) {
 				addr1=	tmp.get("addr1").toString();
-
 			}
 			addr1 = addr1.substring(1,addr1.length()-1);
 			String cat1 = tmp.get("cat1").toString();
@@ -223,6 +223,117 @@ public class AreaService {
 		}
 		return list;
 	}
+
+	//검색
+	public List<AreaListDTO> search(int pageNum, int conID, int areaCode,String target) throws Exception{
+		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword"); /*URL*/
+		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + Statics.areaViewNo); /*한 페이지 결과 수*/
+		urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + pageNum); /*현재페이지 번호*/
+		urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰),AND(안드로이드),WIN(원도우폰),ETC*/
+		urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
+		urlBuilder.append("&" + URLEncoder.encode("arrange","UTF-8") + "=" + URLEncoder.encode("P", "UTF-8")); /*조회순 정렬*/
+		if(conID!=0) {
+			urlBuilder.append("&" + URLEncoder.encode("contentTypeId","UTF-8") + "=" + conID); /*관광타입(관광지, 숙박 등) ID*/			
+		}
+		if(areaCode!=0) {
+			urlBuilder.append("&" + URLEncoder.encode("areaCode","UTF-8") + "=" + areaCode); /*지역코드*/			
+		}
+		urlBuilder.append("&" + URLEncoder.encode("keyword","UTF-8") + "=" + URLEncoder.encode(target, "UTF-8")); /*검색어*/
+		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
+
+
+		URL url = new URL(urlBuilder.toString());
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		BufferedReader rd;
+		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+
+
+		List<AreaListDTO> list = new ArrayList<>();
+		JsonObject j = (JsonObject) JsonParser.parseString(sb.toString());
+		JsonObject response = (JsonObject) JsonParser.parseString(j.get("response").toString());
+		JsonObject body = (JsonObject) JsonParser.parseString(response.get("body").toString());
+		if(body.get("items").isJsonObject()) {
+			JsonObject items = (JsonObject) JsonParser.parseString(body.get("items").toString());
+			System.out.println(items.toString());
+			if(JsonParser.parseString(items.get("item").toString()).isJsonArray()){
+				JsonArray item = (JsonArray)JsonParser.parseString(items.get("item").toString());
+
+				for(int i = 0; i< item.size();i++) {
+					JsonObject tmp = (JsonObject) item.get(i);
+					String contentid = tmp.get("contentid").toString();
+					String title = tmp.get("title").toString();
+					title = title.substring(1,title.length()-1);
+					int contenttype = tmp.get("contenttypeid").getAsInt();
+					String contenttypeid = contentID(contenttype);
+					String addr1 = "null";
+					if(tmp.has("addr1")) {
+						addr1=	tmp.get("addr1").toString();
+					}
+					addr1 = addr1.substring(1,addr1.length()-1);
+					String cat1 = tmp.get("cat1").toString();
+					cat1 = categorySort(cat1.substring(1,cat1.length()-1));
+					int areacode = tmp.get("areacode").getAsInt();
+					String cat3 = tmp.get("cat3").toString();
+					cat3 = cat3.substring(1,cat3.length()-1);
+					String firstimage = "";
+					if(tmp.has("firstimage")){
+						firstimage = tmp.get("firstimage").toString();
+						firstimage = firstimage.substring(1,firstimage.length()-1);
+					}else{
+						firstimage ="null";
+					}
+					int readcount = tmp.get("readcount").getAsInt();
+					AreaListDTO dto = new AreaListDTO(title,contentid,contenttypeid,addr1,areacode,cat1,cat3,firstimage,readcount);
+					list.add(dto);
+				}
+			}else {
+				JsonObject item = (JsonObject)JsonParser.parseString(items.get("item").toString());
+				String contentid = item.get("contentid").toString();
+				String title = item.get("title").toString();
+				title = title.substring(1,title.length()-1);
+				int contenttype = item.get("contenttypeid").getAsInt();
+				String contenttypeid = contentID(contenttype);
+				String addr1 = "null";
+				if(item.has("addr1")) {
+					addr1=	item.get("addr1").toString();
+				}
+				addr1 = addr1.substring(1,addr1.length()-1);
+				String cat1 = item.get("cat1").toString();
+				cat1 = categorySort(cat1.substring(1,cat1.length()-1));
+				int areacode = item.get("areacode").getAsInt();
+				String cat3 = item.get("cat3").toString();
+				cat3 = cat3.substring(1,cat3.length()-1);
+				String firstimage = "";
+				if(item.has("firstimage")){
+					firstimage = item.get("firstimage").toString();
+					firstimage = firstimage.substring(1,firstimage.length()-1);
+				}else{
+					firstimage ="null";
+				}
+				int readcount = item.get("readcount").getAsInt();
+				AreaListDTO dto = new AreaListDTO(title,contentid,contenttypeid,addr1,areacode,cat1,cat3,firstimage,readcount);
+				list.add(dto);
+			}
+		}
+
+		return list;
+	}
+
 
 	public int[] pageCount(int pageNum, int conID, int areaCode) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList"); /*URL*/
@@ -271,12 +382,60 @@ public class AreaService {
 		return result;
 	}
 
+	public int[] searchCount(int pageNum, int conID, int areaCode,String target) throws Exception{
+		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword"); /*URL*/
+		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + Statics.areaViewNo); /*한 페이지 결과 수*/
+		urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + pageNum); /*현재페이지 번호*/
+		urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰),AND(안드로이드),WIN(원도우폰),ETC*/
+		urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
+		urlBuilder.append("&" + URLEncoder.encode("arrange","UTF-8") + "=" + URLEncoder.encode("P", "UTF-8")); /*조회순 정렬*/
+		if(conID!=0) {
+			urlBuilder.append("&" + URLEncoder.encode("contentTypeId","UTF-8") + "=" + conID); /*관광타입(관광지, 숙박 등) ID*/			
+		}
+		if(areaCode!=0) {
+			urlBuilder.append("&" + URLEncoder.encode("areaCode","UTF-8") + "=" + areaCode); /*지역코드*/			
+		}
+		urlBuilder.append("&" + URLEncoder.encode("keyword","UTF-8") + "=" + URLEncoder.encode(target, "UTF-8")); /*검색어*/
+		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
+
+
+		URL url = new URL(urlBuilder.toString());
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		BufferedReader rd;
+		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+
+
+		JsonObject j = (JsonObject) JsonParser.parseString(sb.toString());
+		JsonObject response = (JsonObject) JsonParser.parseString(j.get("response").toString());
+		JsonObject body = (JsonObject) JsonParser.parseString(response.get("body").toString());
+		int result[] = new int[2]; 
+		result[0] = body.get("totalCount").getAsInt()/Statics.areaViewNo;
+		if(body.get("totalCount").getAsInt()%Statics.areaViewNo!= 0 ) {result[0]++;}
+		result[1] = body.get("pageNo").getAsInt();
+		return result;
+	}
+
 	public List<Integer> paging(int total, int page) {
 		if(page%10==0) {
 			page--;
 		}
 		int target = page/10*10+1;
-		
+
 		List<Integer> result = new ArrayList<>();
 		System.out.println(target);
 		if(target != 1) {
@@ -295,7 +454,7 @@ public class AreaService {
 				result.add(target);
 			}
 		}
-		
+
 		if(result.size()==0) {
 			result.add(1);
 		}
