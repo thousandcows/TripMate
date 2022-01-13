@@ -14,6 +14,9 @@
 </body>
 	<button id="click">click!</button>
 	<button id="toParyBoard">To Party Board</button>
+	<button id="loginProc">LoginTestGo</button>
+	
+	
 	
 	<script>
 	$("#click").on("click", function(){
@@ -24,6 +27,12 @@
 	<script>
 		$("#toParyBoard").on("click", function() {
 			location.href = "/companyboard/list";
+		})
+	</script>
+	
+	<script>
+		document.querySelector("#loginProc").addEventListener("click", () => {
+			location.href = "/member/Proc";
 		})
 	</script>
 </html>

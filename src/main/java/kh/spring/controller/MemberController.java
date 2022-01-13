@@ -31,6 +31,14 @@ public class MemberController {
 
 	@Autowired
 	private HttpSession session;
+	
+	// 임시로 만든 버튼이동용 메서드
+	@RequestMapping("Proc")
+	public String Proc() {
+		return "/loginTest/loginTest";
+	}
+	
+	
 
 	// 이메일 체크
 	@ResponseBody
