@@ -1,6 +1,6 @@
 package kh.spring.dto;
 
-public class NormalMemberDTO {
+public class MemberDTO {
 	private int seq;
 	private String emailID;
 	private String pw;
@@ -13,11 +13,11 @@ public class NormalMemberDTO {
 	private String text;
 	private String photo;
 	private int violation;
-	public NormalMemberDTO() {
+	public MemberDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public NormalMemberDTO(int seq, String emailID, String pw, String nick, String gender, int age, String phone,
+	public MemberDTO(int seq, String emailID, String pw, String nick, String gender, int age, String phone,
 			String ph_Open, String preference, String text, String photo, int violation) {
 		super();
 		this.seq = seq;
