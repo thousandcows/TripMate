@@ -25,8 +25,22 @@
 		select count(*) from member where emailid = #{emailID} and pw = #{encryptPw}
 	</select>
 	
-	<select id="normalLoginSelectAll" resultType="kh.spring.dto.NormalMemberDTO">
+	<select id="normalLoginSelectAll" resultType="kh.spring.dto.MemberDTO">
 		select * from member where emailid = #{emailID} and pw = #{encryptPw}
 	</select>
 
+	<!-- 카카오 로그인시작 -->
+	<select id="kakaoLoginLookup" resultType="int">
+		select count(*) from member where emailid = #{value}
+	</select>
+	
+	<select id="kakaoLoginSelectAll" resultType="kh.spring.dto.MemberDTO">
+		select * from member where emailid = #{value}
+	</select>
+	
+	<insert id="kakaoSignup">
+		insert into member (seq, emailid, nick, violation) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0)
+	</insert>
+	
+	
 </mapper>

@@ -38,15 +38,16 @@ public class TourBoardController {
 	}
 	
 	@RequestMapping("writeProc")
-	public String writeProc(String title, String contents, MultipartFile[] file) {
+	public String writeProc(String title, String explanation, MultipartFile[] file) {
 		
-		
+		System.out.println("explanation : " + explanation);
 //		String writer = (String) session.getAttribute("loginID");
 //		dto.setWriter(writer);	
 
 //		String realPath = session.getServletContext().getRealPath("upload");	
-		
-		System.out.println("컨트롤러에서의 값 : " + title + " " + contents);
+		String contents = explanation;
+		System.out.println("컨트롤러에서의 title : " + title);
+		System.out.println("컨트롤러에서의 contents : " + contents);
 		tservice.writeProc(title, contents);
 		
 		return "redirect:/tourboard/list";
@@ -65,17 +66,17 @@ public class TourBoardController {
     }
 	
 	@RequestMapping("modify")
-	public String modify(int seq, String title, String contents) throws Exception{
+	public String modify(int seq, String title, String explanation) throws Exception{
 
+		String contents = explanation;
 		int result = tservice.modify(seq, title, contents);
 		return "redirect:/tourboard/detail?seq="+seq;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+	@RequestMapping("delete")
+	public String delete(int seq) throws Exception{
+
+		int result = tservice.delete(seq);
+		return "redirect:/tourboard/list";
+	}
 }
