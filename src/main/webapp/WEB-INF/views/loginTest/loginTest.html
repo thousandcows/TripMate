@@ -35,7 +35,6 @@
         .loginInput {
           width: 80%;
           height: 40px;
-          margin-top: 10px;
           border: 1px solid rgb(185, 185, 185);
           padding-left: 15px;
           border-radius: 5px;
@@ -75,6 +74,11 @@
           margin-bottom: 5px;
         }
 
+        .normalLoginConfirm {
+          text-align: left;
+          padding-left: 50px;
+        }
+
         /* 로그인 인풋 끝 */
         /* 회원가입 시작 */
         #signupModalBtn {
@@ -82,7 +86,8 @@
           background: linear-gradient(45deg, cornflowerblue, rgb(121, 187, 241));
           border: none;
           height: 40px;
-          margin-bottom: 15px;
+          margin-bottom: 8px;
+          margin-top: 7px;
         }
 
         #signupModalBtn:hover {
@@ -199,6 +204,10 @@
           font-size: 13px;
         }
 
+        #kakaoLogin {
+          margin-bottom: 20px;
+        }
+
         #kakaoLogin:hover {
           opacity: 0.85;
           cursor: pointer;
@@ -207,91 +216,107 @@
     </head>
 
     <body>
-      <!-- 로그인&회원가입모달창 -->
-      <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-        tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalToggleLabel">TripMate(로고가 올듯)</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body modal-first-body">
-              <form action=# method="post" class="loginForm">
-                <div class="loginInputBox">
-                  <input type="text" id="inputID" class="loginInput" placeholder="이메일 주소" required><br>
-                  <input type="password" id="inputPW" class="loginInput" placeholder="비밀번호" required>
+
+      <c:choose>
+        <c:when test="${loginEmailID != null}">
+          ${loginEmailID} 님 환영 ㅎㅎ<br>
+          ${loginSeq}<br>
+          ${loginNick}<br>
+          <a href="/member/normalLogout">로그아웃</a>
+        </c:when>
+        <c:otherwise>
+          <!-- 로그인&회원가입모달창 -->
+          <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+            tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalToggleLabel">TripMate(로고가 올듯)</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="loginBtns">
-                  <button>로그인</button>
-                  <button type="button" id="pwFind">PW찾기</button>
+                <div class="modal-body modal-first-body">
+                  <div class="loginInputBox">
+                    <input type="text" id="normalLoginID" class="loginInput" placeholder="이메일 주소" required>
+                    <div class="signupInputConfirm normalLoginConfirm">테스트텍스트</div>
+                    <input type="password" id="normalLoginPW" class="loginInput" placeholder="비밀번호" required>
+                  </div>
+                  <div class="loginBtns">
+                    <button id="normalLoginBtn">로그인</button>
+                    <button type="button" id="pwFind">PW찾기</button>
+                  </div>
+                  <button type="button" id="signupModalBtn" class="btn btn-primary"
+                    data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">회원가입</button><br>
+                  <img src="/images/kakao_login.png" id="kakaoLogin">
                 </div>
-              </form>
-              <button type="button" id="signupModalBtn" class="btn btn-primary" data-bs-target="#exampleModalToggle2"
-                data-bs-toggle="modal">회원가입</button><br>
-              <img src="/images/kakao_login.png" id="kakaoLogin">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-        tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content modal-signup-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalToggleLabel2">회원가입</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body modal-signupBody">
-              <form action="#" method="post" onsubmit="return signupGo()">
-                <div class="signupBoxs">
-                  <input type="text" placeholder="이메일 주소" id="signupEmail" class="signupEmailInput" name="emailID"
-                    required><button type="button" class="signupCheckBtn" id="signupEmailCheckBtn">중복확인</button>
-                  <div class="emailConfirm signupInputConfirm"></div>
-                </div>
-                <div class="signupBoxs">
-                  <input type="text" placeholder="닉네임" class="signupNickNameInput" id="signupNickName" name="nick"
-                    required><button type="button" class="signupCheckBtn" id="signupNickNameCheckBtn">중복확인</button>
-                  <div class="nickNameConfirm signupInputConfirm"></div>
-                </div>
-                <div class="signupBoxs">
-                  <input type="text" value="010" class="phoneInput" name="phone1" id="signupPhone1" readonly> -
-                  <input type="text" maxlength="4" placeholder="1234" class="phoneInput" name="phone2" id="signupPhone2"
-                    required> -
-                  <input type="text" maxlength="4" placeholder="5678" class="phoneInput" name="phone3" id="signupPhone3"
-                    required><button type="button" class="signupCheckBtn" id="signupPhoneCheckBtn">인증?</button>
-                  <div class="phoneConfirm signupInputConfirm"></div>
-                  <input type="text" name="phone" id="signupPhone">
-                </div>
-                <div class="signupBoxs">
-                  <!-- 추후 password로 변경 -->
-                  <input type="text" placeholder="비밀번호 (8자 ~ 16자)" class="signupLongInput" id="signupPw" required>
-                  <div class="pwConfirm signupInputConfirm"></div>
-                </div>
-                <div class="signupBoxs">
-                  <input type="text" placeholder="비밀번호 확인" class="signupLongInput" id="signupPwRe" name="pw" required>
-                  <div class="pwReConfirm signupInputConfirm"></div>
-                </div>
-                <div class="signupBoxs">
-                  <button class="signupGoBtn">회원가입</button>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-primary signupBack" data-bs-target="#exampleModalToggle"
-                data-bs-toggle="modal">돌아가기</button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <!-- 로그인&회원가입 모달창 끝 -->
-      <!-- 로그인&회원가입버튼 -->
-      <a class="btn btn-primary" id="loginBtn" data-bs-toggle="modal" href="#exampleModalToggle"
-        role="button">로그인버튼입니다.</a>
+          <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+            tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content modal-signup-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalToggleLabel2">회원가입</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body modal-signupBody">
+                  <form action="/member/normalSignup" method="post" onsubmit="return signupGo()">
+                    <div class="signupBoxs">
+                      <input type="text" placeholder="이메일 주소" id="signupEmail" class="signupEmailInput" name="emailID"
+                        required><button type="button" class="signupCheckBtn" id="signupEmailCheckBtn">중복확인</button>
+                      <div class="emailConfirm signupInputConfirm"></div>
+                    </div>
+                    <div class="signupBoxs">
+                      <input type="text" placeholder="닉네임" class="signupNickNameInput" id="signupNickName" name="nick"
+                        required><button type="button" class="signupCheckBtn" id="signupNickNameCheckBtn">중복확인</button>
+                      <div class="nickNameConfirm signupInputConfirm"></div>
+                    </div>
+                    <div class="signupBoxs">
+                      <input type="text" value="010" class="phoneInput" id="signupPhone1" readonly> -
+                      <input type="text" maxlength="4" placeholder="1234" class="phoneInput" id="signupPhone2" required>
+                      -
+                      <input type="text" maxlength="4" placeholder="5678" class="phoneInput" id="signupPhone3"
+                        required><button type="button" class="signupCheckBtn" id="signupPhoneCheckBtn">인증?</button>
+                      <div class="phoneConfirm signupInputConfirm"></div>
+                      <input type="text" name="phone" id="signupPhone">
+                    </div>
+                    <div class="signupBoxs">
+                      <!-- 추후 password로 변경 -->
+                      <input type="password" placeholder="비밀번호 (8자 ~ 16자)" class="signupLongInput" id="signupPw"
+                        required>
+                      <div class="pwConfirm signupInputConfirm"></div>
+                    </div>
+                    <div class="signupBoxs">
+                      <input type="password" placeholder="비밀번호 확인" class="signupLongInput" id="signupPwRe" name="pw"
+                        required>
+                      <div class="pwReConfirm signupInputConfirm"></div>
+                    </div>
+                    <div class="signupBoxs">
+                      <button class="signupGoBtn">회원가입</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary signupBack" data-bs-target="#exampleModalToggle"
+                    data-bs-toggle="modal">돌아가기</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 로그인&회원가입 모달창 끝 -->
+          <!-- 로그인&회원가입버튼 -->
+          <a class="btn btn-primary" id="loginBtn" data-bs-toggle="modal" href="#exampleModalToggle"
+            role="button">로그인버튼입니다.</a>
+
+
+        </c:otherwise>
+      </c:choose>
+
 
 
       <script>
         "use strict";
+        // 일반 회원가입 시작
         // 회원가입 중복확인용 변수들
         let emailSubmitCheck = false;
         let nickNameSubmitCheck = false;
@@ -306,7 +331,7 @@
             $.ajax({
               type: "post",
               url: "/member/emailCheck",
-              data: {email: signupEmailValue}
+              data: { email: signupEmailValue }
             }).done(function (res) {
               if (res == "1") {
                 document.querySelector(".emailConfirm").style.color = "red";
@@ -332,7 +357,7 @@
           if (nickNameRegex.test(signupNickNameValue)) {
             $.ajax({
               url: "/member/nickNameCheck",
-              data: {nickName: signupNickNameValue}
+              data: { nickName: signupNickNameValue }
             }).done(function (res) {
               if (res == "1") {
                 document.querySelector(".nickNameConfirm").style.color = "red";
@@ -362,7 +387,7 @@
           if (phoneRegex.test(phone4)) {
             $.ajax({
               url: "member/phoneCheck",
-              data: {phone: phone4}
+              data: { phone: phone4 }
             }).done(function (res) {
               if (res == "1") {
                 document.querySelector(".phoneConfirm").style.color = "red";
@@ -386,7 +411,7 @@
         let signupPwRe = document.querySelector("#signupPwRe");
         signupPw.addEventListener("input", () => {
           let pwRegex = /^[A-Za-z0-9\S]{8,16}$/;
-          if(pwRegex.test(signupPw.value)){
+          if (pwRegex.test(signupPw.value)) {
             document.querySelector(".pwConfirm").style.color = "cornflowerblue";
             document.querySelector(".pwConfirm").innerHTML = "사용 가능한 PW입니다.";
             pwSubmitCheck = true;
@@ -416,12 +441,7 @@
             pwReSubmitCheck = false;
           }
         })
-
-
-
-
-
-        // 회원가입Go버튼
+        // 회원가입 완료 버튼
         function signupGo() {
           if (!emailSubmitCheck) {
             alert("이메일을 확인해주세요.");
@@ -448,11 +468,46 @@
             return false;
           }
         }
+        // 일반 회원가입 끝
+
+        // 일반 로그인 시작
+        document.querySelector("#normalLoginBtn").addEventListener("click", () => {
+          let emailID = document.querySelector("#normalLoginID").value
+          let pw = document.querySelector("#normalLoginPW").value
+          console.log("아이디 : " + emailID);
+          console.log("비번 : " + pw);
+          $.ajax({
+            type: "post",
+            url: "member/normalLogin",
+            data: {
+              "emailID": emailID,
+              "pw": pw
+            }
+          }).done(function (res) {
+            if (res == 0) {
+              document.querySelector(".normalLoginConfirm").style.color = "red";
+              document.querySelector(".normalLoginConfirm").innerHTML = "계정과 패스워드를 확인해주세요.";
+            } else {
+              location.reload();
+            }
+          })
+        })
 
         // PW찾기 팝업
         document.querySelector("#pwFind").addEventListener("click", () => {
           window.open()
         })
+
+        //////// 카카오 로그인 시작 ///////
+        document.querySelector("#kakaoLogin").addEventListener("click", () => {
+          $.ajax({
+            url: '/member/getKakaoAuthUrl',
+            type: 'get'
+          }).done(function (res) {
+            location.href = res;
+          })
+        })
+
       </script>
 
     </body>
