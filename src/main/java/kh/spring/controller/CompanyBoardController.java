@@ -37,6 +37,27 @@ public class CompanyBoardController {
 		return "redirect:/companyboard/list"; 
 	}
 	
+	// 글 제목 클릭시 상세페이지 이동 메소드
+	@RequestMapping("detail")
+	public String detail(int seq, Model model) {
+		CompanyBoardDTO dto = cbs.selectBySeq(seq);
+		
+		model.addAttribute("dto",dto);
+		return "companyboard/detail";
+	}
 	
+	//수정완료 버튼 클릭 시 db 수정 
+	@RequestMapping("modify")
+	public String modify(CompanyBoardDTO dto) {
+		int result = cbs.modify(dto);
+		return "redirect:/companyboard/detail?seq="+dto.getSeq();
+	}
+	
+	//삭제 버튼 클릭 시 db에서 삭제
+	@RequestMapping("deleteProc")
+	public String deleteProc(int seq) throws Exception{
+		int result = cbs.delete(seq);
+		return "redirect:/companyboard/list";
+	}	
 	
 }

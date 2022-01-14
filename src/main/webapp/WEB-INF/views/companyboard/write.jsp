@@ -117,6 +117,12 @@
             padding: 10px;
             border: 1px solid red;
         }
+        
+        .select_date {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid red;
+        }
 
         .select_gender {
             width: 100%;
@@ -208,10 +214,10 @@
                     </select>
                 </div>
 
-                <div class="select_gender">
+                <div class="select_date">
                     [ 여행 기간 ]<br>
-					<input type="text" id="startDate" name="start_date"/> - 
-                    <input type="text" id="endDate" name="end_date"/>
+					<input type="text" id="startDate" name="start_date" autocomplete='off'/> - 
+                    <input type="text" id="endDate" name="end_date" autocomplete='off'/>
                     
                 </div>
 
