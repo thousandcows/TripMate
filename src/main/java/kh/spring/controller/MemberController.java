@@ -102,6 +102,7 @@ public class MemberController {
 		}
 	}
 	
+	String findPwTargetEmail = "";
 	// PW 찾기
 	@ResponseBody
 	@RequestMapping(value = "findPw", produces = "application/text;charset=utf-8")
@@ -112,7 +113,7 @@ public class MemberController {
 			return "0";
 		}
 		// 이메일 발송 시작
-		String findPwTargetEmail = emailID; // 받는사람의 이메일
+		findPwTargetEmail = emailID; // 받는사람의 이메일
 		
 		// 보내는 개발자?의 메일계정
 		String user = "sfchampion724@naver.com";
@@ -133,7 +134,7 @@ public class MemberController {
 			}
 		});
 		
-		// Message 클래스로 수싱자랑 내용 제목의 메세지 전달
+		// Message 클래스로 수신자랑 내용 제목의 메세지 전달
 		MimeMessage message = new MimeMessage(mailSession);
 		message.setFrom(new InternetAddress(user));
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(findPwTargetEmail));
@@ -142,6 +143,14 @@ public class MemberController {
 		message.setText("TripMate PW찾기 인증번호는 : " + verificationCode + " 입니다.");
 		Transport.send(message);
 		return String.valueOf(verificationCode);
+	}
+	
+	// PW찾기 후 비밀번호 변경
+	@RequestMapping("findPwChange")
+	public String findPwChange(String pw) {
+		System.out.println("변경할 대상 이메일 : " + findPwTargetEmail);
+		memberService.findPwChange(findPwTargetEmail, pw);
+		return "redirect:/";
 	}
 	
 	
@@ -171,8 +180,7 @@ public class MemberController {
 
 		Gson gson = new Gson();
 		// POST방식으로 key=value 데이터를 요청(카카오쪽으로)
-		RestTemplate rt = new RestTemplate(); // 스프링3부터 되는애라고 함
-		// WebClient 얘로 바꿔야됨
+		RestTemplate rt = new RestTemplate(); // 곧 지원중지될 API라 WebClient이걸 공부해야될듯
 		
 		// HttpHeader 오브젝트 생성
 		HttpHeaders headers = new HttpHeaders();

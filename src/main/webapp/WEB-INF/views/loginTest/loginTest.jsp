@@ -378,8 +378,8 @@
                     <div class="verificationCodeConfirm signupInputConfirm"></div>
                   </div>
                   <div class="verificationOk">
-                    <form action="/member/changePw" method="post" id="changePwForm">
-                      <input type="text" class="changePwInput" id="changePwInput" placeholder="변경할 비밀번호를 입력해주세요."><button type="button"
+                    <form action="/member/findPwChange" method="post" id="changePwForm">
+                      <input type="text" class="changePwInput" id="changePwInput" name="pw" placeholder="변경할 비밀번호를 입력해주세요."><button type="button"
                         class="changePwBtn" id="changePwBtn">변경</button>
                         <div class="changePwConfirm signupInputConfirm"></div>
                     </form>
@@ -638,6 +638,7 @@
             }
             // 컨펌창 하나 띄워서 확인
             if(confirm("변경하시겠습니까?")){
+              alert("변경되었습니다.");
               document.querySelector("#changePwForm").submit();
             } else {
               return false;
