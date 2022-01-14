@@ -10,13 +10,16 @@
 	</select>
 	
 	<insert id="insert">
-		insert into tour_board values(tourb_seq.nextval, 1,
-		#{title}, #{contents}, 'trip', default, default, default, default)
+		insert into tour_board values(tourb_seq.nextval, 1,	#{title}, #{contents}, #{category}, sysdate, default, default, default)
 	</insert>
 	
 	<select id="selectBySeq" resultType="kh.spring.dto.TourBoardDTO">
 		select * from tour_board where seq = #{value}
 	</select>
+	
+	<update id="addViewCount">
+		update tour_board set view_count = view_count + 1 where seq = #{seq}
+	</update>
 	
 	<update id="modify">
 		update tour_board set title=#{title}, contents=#{contents} where seq = #{seq}

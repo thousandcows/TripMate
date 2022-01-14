@@ -21,14 +21,17 @@ public class TourBoardService {
 		return dao.selectAll();
 	}
 	
-	public int writeProc(String title, String contents) {
-		System.out.println("서비스에서의 title : " + title);
-		System.out.println("서비스에서의 contents : " + contents);
-		return dao.insert(title, contents);
+	public int writeProc(TourBoardDTO dto) {
+		
+		return dao.insert(dto);
 	}
 	
 	public TourBoardDTO selectBySeq(int seq) {
 		return dao.selectBySeq(seq);
+	}
+	
+	public int addViewCount(int seq) {
+		return dao.addViewCount(seq);
 	}
 	
 	public int modify(int seq, String title, String contents) {
