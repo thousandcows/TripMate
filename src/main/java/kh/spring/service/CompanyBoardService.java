@@ -21,4 +21,16 @@ public class CompanyBoardService {
 	public List<CompanyBoardDTO> selectAll(){
 		return cdao.selectAll();
 	}
+	
+	public CompanyBoardDTO selectBySeq(int seq) {
+		return cdao.selectBySeq(seq);
+	}
+	
+	public int delete(int seq) {
+		return cdao.delete(seq);
+	}
+	
+	public int modify(CompanyBoardDTO dto) {
+		return cdao.modify(dto);
+	}
 }
