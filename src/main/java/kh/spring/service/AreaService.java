@@ -115,11 +115,11 @@ public class AreaService {
 		JsonObject body = (JsonObject) JsonParser.parseString(response.get("body").toString());
 		JsonObject items = (JsonObject) JsonParser.parseString(body.get("items").toString());
 		JsonObject item = (JsonObject) JsonParser.parseString(items.get("item").toString());
-		System.out.println(item.toString());
 		String name = item.get("title").toString(); //타이틀
 		name = name.substring(1,name.length()-1);
 		String category = item.get("cat1").toString(); //카테고리
 		category = category.substring(1,category.length()-1);
+		category = categorySort(category);
 		String location = item.get("areacode").toString(); //지역코드		
 		String lo_detail = item.get("addr1").toString(); //주소
 		lo_detail = lo_detail.substring(1,lo_detail.length()-1);
@@ -129,6 +129,9 @@ public class AreaService {
 		}
 		String detail = item.get("overview").toString().replace("\"", ""); //상세설명
 		detail = detail.replace("\\", "<br>");
+		detail = detail.replace("n", "");
+		detail = detail.replace("\"", "");
+		
 		String homepage = "null";
 		if(item.has("homepage")) {
 			homepage = item.get("homepage").toString(); //홈페이지	
@@ -437,7 +440,6 @@ public class AreaService {
 		int target = page/10*10+1;
 
 		List<Integer> result = new ArrayList<>();
-		System.out.println(target);
 		if(target != 1) {
 			result.add(-1);
 		}
