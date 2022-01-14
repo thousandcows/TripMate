@@ -21,19 +21,20 @@ public class TourBoardDAO {
 		return mybatis.selectList("TourBoard.selectAll");
 	}
 
-	public int insert(String title, String contents) {
+	public int insert(TourBoardDTO dto) {
 
-		System.out.println("DAO에서의 title : " + title);
-		System.out.println("DAO에서의 contents : " + contents);
-		Map<String, String> map = new HashMap<>();
-		map.put("title", title);
-		map.put("contents", contents);
-		return mybatis.insert("TourBoard.insert", map);
+		System.out.println(dto.getCategory() + " : " + dto.getTitle() + " : " + dto.getContents());
+		return mybatis.insert("TourBoard.insert", dto);
 	}
 
 	public TourBoardDTO selectBySeq(int seq) {
 
 		return mybatis.selectOne("TourBoard.selectBySeq", seq);
+	}
+	
+	public int addViewCount(int seq) {
+
+		return mybatis.update("TourBoard.addViewCount", seq);
 	}
 	
 	public int modify(int seq, String title, String contents) {
