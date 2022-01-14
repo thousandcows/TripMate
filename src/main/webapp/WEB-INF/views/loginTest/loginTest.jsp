@@ -212,6 +212,29 @@
           opacity: 0.85;
           cursor: pointer;
         }
+
+        /* 비밀번호 모달창 시작 */
+        .findPwInput {
+          width: 64%;
+          height: 40px;
+          border: 1px solid gray;
+          padding-left: 10px;
+          border-radius: 5px;
+        }
+
+        .findPwBtn {
+          border: none;
+          height: 38px;
+          width: 60px;
+          background-color: #20B2AA;
+          border-radius: 5px;
+          color: white;
+          font-size: 16px;
+        }
+
+        .findPwBtn:hover {
+          opacity: 0.9;
+        }
       </style>
     </head>
 
@@ -225,7 +248,7 @@
           <a href="/member/normalLogout">로그아웃</a>
         </c:when>
         <c:otherwise>
-          <!-- 로그인&회원가입모달창 -->
+          <!-- 로그인 모달창 -->
           <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
             tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
@@ -242,7 +265,7 @@
                   </div>
                   <div class="loginBtns">
                     <button id="normalLoginBtn">로그인</button>
-                    <button type="button" id="pwFind">PW찾기</button>
+                    <button type="button" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">PW찾기</button>
                   </div>
                   <button type="button" id="signupModalBtn" class="btn btn-primary"
                     data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">회원가입</button><br>
@@ -251,6 +274,7 @@
               </div>
             </div>
           </div>
+          <!-- 회원가입 모달창 -->
           <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
             tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
@@ -303,6 +327,31 @@
               </div>
             </div>
           </div>
+          <!-- PW찾기 모달창 -->
+          <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+            tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalToggleLabel">PW찾기</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body modal-first-body">
+                  <div class="loginInputBox">
+                    <input type="text" class="findPwInput" id="findPwInput" placeholder="찾으실 Email을 입력해주세요." required>
+                    <button type="button" class="findPwBtn" id="findPwBtn">발송</button>
+                    <div class="signupInputConfirm normalLoginConfirm">테스트텍스트</div>
+                    <input type="text" class="findPwInput" placeholder="인증번호 입력">
+                    <button type="button" class="findPwBtn">인증</button>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary signupBack" data-bs-target="#exampleModalToggle"
+                      data-bs-toggle="modal">돌아가기</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- 로그인&회원가입 모달창 끝 -->
           <!-- 로그인&회원가입버튼 -->
           <a class="btn btn-primary" id="loginBtn" data-bs-toggle="modal" href="#exampleModalToggle"
@@ -311,8 +360,6 @@
 
         </c:otherwise>
       </c:choose>
-
-
 
       <script>
         "use strict";
@@ -491,12 +538,6 @@
                 location.reload();
               }
             })
-          })
-
-          // PW찾기 팝업
-          document.querySelector("#pwFind").addEventListener("click", () => {
-            // window.open('/member/pwFindPopup', 'pop01', 'width=500,height=500');
-            alert("확인");
           })
 
           // 카카오 로그인
