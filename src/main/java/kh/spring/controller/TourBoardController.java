@@ -38,17 +38,18 @@ public class TourBoardController {
 	}
 	
 	@RequestMapping("writeProc")
-	public String writeProc(String title, String explanation, MultipartFile[] file) {
+	public String writeProc(TourBoardDTO dto, MultipartFile[] file) {
 		
-		System.out.println("explanation : " + explanation);
 //		String writer = (String) session.getAttribute("loginID");
 //		dto.setWriter(writer);	
 
 //		String realPath = session.getServletContext().getRealPath("upload");	
-		String contents = explanation;
-		System.out.println("컨트롤러에서의 title : " + title);
-		System.out.println("컨트롤러에서의 contents : " + contents);
-		tservice.writeProc(title, contents);
+
+//		tourb_seq.nextval, 1,	#{title}, #{contents}, 'trip', default, default, default, default
+//		System.out.println("explanation : " + explanation);
+//		String contents = explanation;
+		
+		tservice.writeProc(dto);
 		
 		return "redirect:/tourboard/list";
 	}
@@ -56,7 +57,7 @@ public class TourBoardController {
 	@RequestMapping("detail")
 	public String detail(int seq, Model model) {
         TourBoardDTO dto = tservice.selectBySeq(seq);
-
+        int result = tservice.addViewCount(seq);
 //        int parentSeq = bdto.getSeq();        
 //        List<FilesDTO> files = fservice.selectByParentSeq(parentSeq);        
 

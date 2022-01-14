@@ -149,7 +149,7 @@
             <c:forEach var="i" items="${list }">
     	  		<div class="board_enroll">
        		        <div class="seq" style="width: 10%;">${i.seq }</div>
-       		        <div class="category" style="width: 10%;">${i.category }</div>
+       		        <div class="category" style="width: 10%;">[${i.category }]</div>
        		        <div class="title" style="width: 30%;"><a href="/tourboard/detail?seq=${i.seq}">${i.title }</a></div>
        		        <div class="mem_seq" style="width: 10%;">${i.mem_seq }</div>
        		        <div class="writen_time" style="width: 20%;">${i.writen_time }</div>
