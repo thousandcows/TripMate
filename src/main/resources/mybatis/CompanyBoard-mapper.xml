@@ -12,5 +12,19 @@
  		<select id="selectAll" resultType="kh.spring.dto.CompanyBoardDTO">
  			select * from company_board order by seq
  		</select>
-  
+ 		
+ 		<select id="selectBySeq" resultType="kh.spring.dto.CompanyBoardDTO">
+ 			select * from company_board where seq = #{value}
+ 		</select>
+    	
+    	
+    	<delete id="delete">
+    		delete from company_board where seq=#{value}
+    	</delete>
+    	
+    	<update id="modify">
+    		update company_board set title=#{title}, contents=#{contents}, recruit=#{recruit}, tour=#{tour}, gender=#{gender}, start_date=#{start_date}, end_date=#{end_date} where seq = #{seq}
+    	</update> 
+    	
+    	
   </mapper>
