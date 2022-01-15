@@ -75,12 +75,15 @@ public class MemberController {
 		return String.valueOf(memberService.phoneCheck(phone));
 	}
 
-	// 일반 회원가입
+	// 일반 회원가입&즉시 로그인
 	@RequestMapping("normalSignup")
 	public String normalSignup(String emailID, String nick, String phone, String pw) {
 		memberService.normalSignup(emailID, nick, phone, pw);
+		MemberDTO dto = memberService.normalLoginSelectAll(emailID, pw);
+		session.setAttribute("loginSeq", dto.getSeq());
+		session.setAttribute("loginEmailID", dto.getEmailID());
+		session.setAttribute("loginNick", dto.getNick());
 		return "redirect:/";
-		// 바로 로그인되게 해버릴까 고민중
 	}
 
 	// 일반 로그인
@@ -138,7 +141,7 @@ public class MemberController {
 		MimeMessage message = new MimeMessage(mailSession);
 		message.setFrom(new InternetAddress(user));
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(findPwTargetEmail));
-		message.setSubject("TripMate PW인증번호 입니다.");
+		message.setSubject("TripMate PW찾기 인증번호입니다.");
 		int verificationCode = (int) (Math.random() * (9999 - 1000)) + 1000;
 		message.setText("TripMate PW찾기 인증번호는 : " + verificationCode + " 입니다.");
 		Transport.send(message);

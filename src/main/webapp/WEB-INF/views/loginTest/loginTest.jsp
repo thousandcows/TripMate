@@ -332,7 +332,7 @@
                       <input type="text" maxlength="4" placeholder="1234" class="phoneInput" id="signupPhone2" required>
                       -
                       <input type="text" maxlength="4" placeholder="5678" class="phoneInput" id="signupPhone3"
-                        required><button type="button" class="signupCheckBtn" id="signupPhoneCheckBtn">인증?</button>
+                        required><button type="button" class="signupCheckBtn" id="signupPhoneCheckBtn">체크</button>
                       <div class="phoneConfirm signupInputConfirm"></div>
                       <input type="text" name="phone" id="signupPhone">
                     </div>
@@ -508,17 +508,18 @@
               pwSubmitCheck = false;
             }
             if (signupPw.value == signupPwRe.value) {
-              document.querySelector(".pwReConfirm").style.color = "cornflowerblue";
-              document.querySelector(".pwReConfirm").innerHTML = "PW가 일치합니다.";
+              document.querySelector(".pwReConfirm").innerHTML = "";
               pwReSubmitCheck = true;
             } else {
-              document.querySelector(".pwReConfirm").style.color = "red";
-              document.querySelector(".pwReConfirm").innerHTML = "PW가 일치하지 않습니다.";
+              document.querySelector(".pwReConfirm").innerHTML = "";
               pwReSubmitCheck = false;
             }
           });
           signupPwRe.addEventListener("input", () => {
-            if (signupPw.value == signupPwRe.value) {
+            if(signupPwRe.value == ""){
+              document.querySelector(".pwReConfirm").innerHTML = "";
+              pwReSubmitCheck = false;
+            } else if (signupPw.value == signupPwRe.value && signupPwRe.value != "") {
               document.querySelector(".pwReConfirm").style.color = "cornflowerblue";
               document.querySelector(".pwReConfirm").innerHTML = "PW가 일치합니다.";
               pwReSubmitCheck = true;
@@ -554,7 +555,10 @@
               alert("입력된 비밀번호가 다릅니다.");
               return false;
             }
-            document.querySelector("#signupForm").submit();
+            if(confirm("해당 정보로 가입하시겠습니까?")){
+              document.querySelector("#signupForm").submit();
+            }
+            return false;
           });
 
           // 일반 회원가입 끝
