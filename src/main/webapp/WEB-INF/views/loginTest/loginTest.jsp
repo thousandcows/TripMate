@@ -5,7 +5,7 @@
 
     <head>
       <meta charset="UTF-8">
-      <title>title here</title>
+      <title>Trip Mate</title>
       <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -205,8 +205,11 @@
               <li class="nav-item">
                 <c:choose>
                   <c:when test="${loginEmailID != null}">
-                    ${loginEmailID} 님
-                    <a href="/member/normalLogout">로그아웃</a>
+                    <div id="loginAfterBox">
+                      ${loginNick} 님
+                      <a href="/member/normalLogout">로그아웃</a>
+                      <a hred="/member/mypageGo">마이페이지</a>
+                    </div>
                   </c:when>
                   <c:otherwise>
                     <a class="btn btn-primary" id="loginBtn" data-bs-toggle="modal" href="#exampleModalToggle"
@@ -237,9 +240,4 @@
         })
       </script>
     </body>
-
-
-
-
-
     </html>
