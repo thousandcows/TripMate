@@ -232,19 +232,23 @@ public class MemberController {
 		// 회원가입처리시켜버리면되겠다.
 		String kakaoLoginEmail = kProfile.kakao_account.email + "/kakao";
 		String kakaoLoginNick = kProfile.properties.nickname;
-
-		int kakaoResult = memberService.kakaoLoginLookup(kakaoLoginEmail);
+		// 이메일 동의 거부했을 경우 id로 구분해야한다
+		int kakaoLoginId = kProfile.id;
+		
+		int kakaoResult = memberService.kakaoLoginLookup(kakaoLoginId);
 		if (kakaoResult == 1) { // 가입내역이 있다면 정보를 빼서 세션에 담고
-			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginEmail);
+			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginId);
 			session.setAttribute("loginSeq", kakaoDto.getSeq());
 			session.setAttribute("loginEmailID", kakaoDto.getEmailID());
 			session.setAttribute("loginNick", kakaoDto.getNick());
+			session.setAttribute("loginKakaoID", kakaoDto.getSns_division());
 		} else { // 가입내역이 없다면 회원가입을 시키고 이메일이랑 닉네임만 세션에 바로 담아버리면 될듯했는데 seq때문에 또 빼와야하네
-			memberService.kakaoSignup(kakaoLoginEmail, kakaoLoginNick);
-			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginEmail);
+			memberService.kakaoSignup(kakaoLoginEmail, kakaoLoginNick, kakaoLoginId);
+			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginId);
 			session.setAttribute("loginSeq", kakaoDto.getSeq());
 			session.setAttribute("loginEmailID", kakaoDto.getEmailID());
 			session.setAttribute("loginNick", kakaoDto.getNick());
+			session.setAttribute("loginKakaoID", kakaoDto.getSns_division());
 		}
 
 		System.out.println("로그인한 카카오 이메일 : " + kProfile.kakao_account.email);

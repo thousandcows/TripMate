@@ -65,20 +65,21 @@ public class MemberDAO {
 	}
 	
 	// 카카오 회원가입여부 확인
-	public int kakaoLoginLookup(String kakaoLoginEmail) {
-		return mybatis.selectOne("Member.kakaoLoginLookup", kakaoLoginEmail);
+	public int kakaoLoginLookup(int kakaoLoginId) {
+		return mybatis.selectOne("Member.kakaoLoginLookup", kakaoLoginId);
 	}
 	
 	// 카카오 로그인 정보 빼오기
-	public MemberDTO kakaoLoginSelectAll(String kakaoLoginEmail) {
-		return mybatis.selectOne("Member.kakaoLoginSelectAll", kakaoLoginEmail);
+	public MemberDTO kakaoLoginSelectAll(int kakaoLoginId) {
+		return mybatis.selectOne("Member.kakaoLoginSelectAll", kakaoLoginId);
 	}
 	
 	// 카카오 사용자 회원가입 시키기
-	public int kakaoSignup(String kakaoLoginEmail, String kakaoLoginNick) {
+	public int kakaoSignup(String kakaoLoginEmail, String kakaoLoginNick, int kakaoLoginId) {
 		Map<String, String> map = new HashMap<>();
 		map.put("kakaoEmail", kakaoLoginEmail);
 		map.put("kakaoNick", kakaoLoginNick);
+		map.put("kakaoId", String.valueOf(kakaoLoginId));
 		return mybatis.insert("Member.kakaoSignup", map);
 	}
 	
