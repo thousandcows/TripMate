@@ -206,7 +206,7 @@
                 <c:choose>
                   <c:when test="${loginEmailID != null}">
                     <div id="loginAfterBox">
-                      ${loginEmailID} 님
+                      ${loginNick} 님
                       <a href="/member/normalLogout">로그아웃</a>
                       <a hred="/member/mypageGo">마이페이지</a>
                     </div>
