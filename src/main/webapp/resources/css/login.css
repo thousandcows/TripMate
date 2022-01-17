@@ -1,12 +1,15 @@
 @charset "utf-8";
 
   /* 로그인&회원가입 시작*/
-  /* 로그인버튼 임시 위치지정 */
-  #loginBtn {
-    margin-top: 200px;
-    margin-left: 200px;
+  #loginBtn{
+    background-color:aliceblue;
+    color:black;
+    border:none;
+    box-shadow: 1px 1px 2px 1px rgb(230, 230, 230);
   }
-
+  #loginBtn:hover{
+    opacity: 0.9;
+  }
   .modal-first-body {
     text-align: center;
   }

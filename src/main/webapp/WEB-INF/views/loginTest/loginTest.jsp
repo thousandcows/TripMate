@@ -83,7 +83,6 @@
                       <input type="text" name="phone" id="signupPhone">
                     </div>
                     <div class="signupBoxs">
-                      <!-- 추후 password로 변경 -->
                       <input type="password" placeholder="비밀번호 (8자 ~ 16자)" class="signupLongInput" id="signupPw"
                         required>
                       <div class="pwConfirm signupInputConfirm"></div>
