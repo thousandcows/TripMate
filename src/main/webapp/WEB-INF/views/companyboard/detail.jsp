@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
     integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
+
+<!-- datepicker -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
     <style>
         * {
             box-sizing: border-box;
@@ -113,6 +119,12 @@
             padding: 10px;
             border: 1px solid red;
         }
+        
+        .select_date {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid red;
+        }
 
         .select_gender {
             width: 100%;
@@ -168,24 +180,56 @@
             <div class="partyboard"><a href="">동행게시판</a></div>
         </div>
     
-        <form action="" method="post">
+        <form action="/companyboard/modify" method="post" id="frmDetail">
             <div class="board">
+            	<input type=hidden value="${dto.seq}" name=seq> <!-- 글 번호에 맞춰 불러오기 위한 꼼수 -->
                 <div class="select_tour">여행지 :
-                    <input type=text id=tour name=tour readonly value="${dto.tour }">
+                    <input type=text id=tourInput readonly value="${dto.tour }">
+               		<select id="tourSelect" name="tour" style="display:none">
+                        <option value="seoul">서울</option>
+                        <option value="incheon">인천</option>
+                        <option value="gyeonggi">경기</option>
+                        <option value="gangwon">강원</option>
+                        <option value="daejeon">대전</option>
+                        <option value="chungnam">충남</option>
+                        <option value="chungbuk">충북</option>
+                        <option value="sejong">세종</option>
+                        <option value="gyeongbuk">경북</option>
+                        <option value="gyeongnam">경남</option>
+                        <option value="busan">부산</option>
+                        <option value="daegu">대구</option>
+                        <option value="ulsan">울산</option>
+                        <option value="jeolbuk">전북</option>
+                        <option value="jeolnam">전남</option>
+                        <option value="gwangju">광주</option>
+                        <option value="jeju">제주</option>
+                    </select>              
                 </div>
     
                 <div class="select_recruit">모집 인원 :
-                    <input type=text id=recruit name=recruit readonly value="${dto.recruit }">
+                    <input type=text id=recruitInput readonly value="${dto.recruit }">
+                	<select id="recruitSelect" name="recruit" style="display:none">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
                 </div>
     
-                <div class="select_gender">
+                <div class="select_date">
                     [ 여행 기간 ]<br>
-                    <input type="text" id="startDate" readonly value="${dto.start_date }" /> -
-                    <input type="text" id="endDate" readonly value="${dto.end_date }" />
+                    <input type="text" id="startDateBefore" readonly value="${dto.start_date }" autocomplete='off'/> <span id="datetxt1">-</span>
+                    <input type="text" id="endDateBefore" readonly value="${dto.end_date }" autocomplete='off'/>
+                    <input type="text" id="startDateAfter" name="start_date" readonly value="${dto.start_date }" style="display: none;" autocomplete='off'/> <span style="display:none" id="datetxt2">-</span>
+                    <input type="text" id="endDateAfter" name="end_date" readonly value="${dto.end_date }" style="display: none;" autocomplete='off'/>
                 </div>
     
                 <div class="select_gender">성별 :
-                    <input type=text id=gender name=tour readonly value="${dto.gender }">
+                    <input type=text id=genderInput readonly value="${dto.gender }">
+                	<input type="radio" id="manRadio" name="gender" value="man" style="display:none"><p style="display:none" id="mantxt">남자</p>
+                    <input type="radio" id="womanRadio" name="gender" value="woman" style="display:none"><p style="display:none" id="womantxt">여자</p>
                 </div>
     
                 <div class="title">
@@ -199,8 +243,8 @@
     
                 <div class="button">
                     <button type=button id=back>목록으로</button>
-                    <button type=button id=mod>수정하기</button>
-                    <button type=button id=del>삭제하기</button>
+                    <button type=button id=modify>수정하기</button>
+                    <button type=button id=delete>삭제하기</button>
                     <button type=button id=modOk style="display: none;">수정완료</button>
                     <button type=button id=modCancel style="display: none;">취소</button>
                 </div>
@@ -215,6 +259,102 @@
 		})
 	</script>
 	
+	<!-- 삭제하기 -->
+	<script>
+		$("#del").on("click", function(){
+			if(confirm("정말 삭제하시겠습니까?")){
+				location.href="/board/deleteProc?seq=${dto.seq}"; 
+			}
+		})
+	</script>
 	
+	<!-- 수정하기, 버튼 클릭시 -->
+	<script>
+		let backupTour="";
+		let backupRecruit="";
+		let backupStartDate="";
+		let backupEndDate="";
+		let backupGender="";
+		let backupTitle = "";
+		let backupContents = "";
+		
+		$("#modify").on("click", function(){
+			
+			// 기존 데이터 담기
+			backupTour = $("tourInput").val();
+			backupRecruit = $("recruitInput").val();
+			backupStartDate = $("#startDateBefore").val();
+			backupEndDate = $("#endDateBefore").val();
+			backupGender = $("#genderInput").val();
+			backupTitle = $("#title").val();
+			backupContents = $("#contents").val();		
+
+			// 폼 형태 바꾸기 및 읽기 전용 해제
+			$("#tourInput").css("display", "none");
+			$("#recruitInput").css("display", "none");
+			$("#startDateBefore").css("display", "none");
+			$("#datetxt1").css("display", "none");
+			$("#endDateBefore").css("display", "none");
+			$("#genderInput").css("display", "none");
+			
+			$("#tourSelect").css("display", "inline");
+			$("#recruitSelect").css("display", "inline");
+			$("#startDateAfter").css("display", "inline");
+			$("#datetxt2").css("display", "inline");
+			$("#endDateAfter").css("display", "inline");
+			$("#manRadio").css("display", "inline");
+			$("#womanRadio").css("display", "inline");
+			$("#mantxt").css("display", "inline");
+			$("#womantxt").css("display", "inline");
+			$("#title").removeAttr("readonly");
+			$("#contents").removeAttr("readonly");
+	
+			//버튼 형태 바꾸기
+			$("#modify").css("display", "none");
+			$("#delete").css("display", "none");
+			$("#modOk").css("display", "inline");
+			$("#modCancel").css("display", "inline");	
+		})
+		
+		$("#modOk").on("click",function(){
+			if(confirm("이대로 수정하시겠습니까?")){
+				$("#frmDetail").submit(); // 수정완료시 submit
+			}
+		})
+		
+		
+		$("#modCancel").on("click", function(){
+			if(confirm("정말 취소하시겠습니까?")){
+				location.reload();
+			}
+	
+		})
+	</script>
+	
+	<!-- datepicker  -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#startDateAfter").datepicker({
+                dateFormat: "yy-mm-dd", // 날짜의 형식
+                minDate: 0,
+                nextText: ">",
+                prevText: "<",
+                onSelect: function (date) {
+                    var endDate = $('#endDateAfter');
+                    var startDate = $(this).datepicker('getDate');
+                    var minDate = $(this).datepicker('getDate');
+                    endDate.datepicker('setDate', minDate);
+                    startDate.setDate(startDate.getDate() + 30);
+                    endDate.datepicker('option', 'maxDate', startDate);
+                    endDate.datepicker('option', 'minDate', minDate);
+                }
+            });
+            $('#endDateAfter').datepicker({
+                dateFormat: "yy-mm-dd", // 날짜의 형식
+                nextText: ">",
+                prevText: "<"
+            });
+        });
+	</script>
 </body>
 </html>

@@ -28,6 +28,10 @@
 	<select id="normalLoginSelectAll" resultType="kh.spring.dto.MemberDTO">
 		select * from member where emailid = #{emailID} and pw = #{encryptPw}
 	</select>
+	
+	<update id="findPwChange">
+		update member set pw = #{encryptPw} where emailid = #{findPwTargetEmail}
+	</update>
 
 	<!-- 카카오 로그인시작 -->
 	<select id="kakaoLoginLookup" resultType="int">
