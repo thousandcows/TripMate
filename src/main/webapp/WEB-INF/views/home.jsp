@@ -16,6 +16,7 @@
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Poor+Story&display=swap"
         rel="stylesheet">
       <link rel="stylesheet" href="/css/login.css" type="text/css">
+      <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
       <script defer src="/js/login.js"></script>
     </head>
     <style>
@@ -208,7 +209,7 @@
                     <div id="loginAfterBox">
                       ${loginNick} 님
                       <a href="/member/normalLogout">로그아웃</a>
-                      <a hred="/member/mypageGo">마이페이지</a>
+                      <a href="/member/mypageGo">마이페이지</a>
                     </div>
                   </c:when>
                   <c:otherwise>
@@ -229,7 +230,7 @@
       </script>
 
       <script>
-        $("#toParyBoard").on("click", function () {
+        $("#companyboard").on("click", function () {
           location.href = "/companyboard/list";
         })
       </script>

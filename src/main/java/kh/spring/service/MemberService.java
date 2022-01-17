@@ -54,20 +54,25 @@ public class MemberService {
 	
 	///// 카카오 로그인 /////
 	// 카카오 사용자 가입여부 확인
-	public int kakaoLoginLookup(String kakaoLoginEmail) {
-		return memberDao.kakaoLoginLookup(kakaoLoginEmail);
+	public int kakaoLoginLookup(int kakaoLoginId) {
+		return memberDao.kakaoLoginLookup(kakaoLoginId);
 	}
 	
 	// 카카오 사용자 정보 빼오기
-	public MemberDTO kakaoLoginSelectAll(String kakaoLoginEmail) { // 오버로딩해도 될거같은데 헷갈릴듯
-		return memberDao.kakaoLoginSelectAll(kakaoLoginEmail);
+	public MemberDTO kakaoLoginSelectAll(int kakaoLoginId) { // 오버로딩해도 될거같은데 헷갈릴듯
+		return memberDao.kakaoLoginSelectAll(kakaoLoginId);
 	}
 	
 	// 카카오 로그인사용자 회원가입 시키기
-	public int kakaoSignup(String kakaoLoginEmail, String kakaoLoginNick) {
-		return memberDao.kakaoSignup(kakaoLoginEmail, kakaoLoginNick);
+	public int kakaoSignup(String kakaoLoginEmail, String kakaoLoginNick, int kakaoLoginId) {
+		return memberDao.kakaoSignup(kakaoLoginEmail, kakaoLoginNick, kakaoLoginId);
 	}
+	///// 카카오 로그인 끝 /////
 	
+	// 마이페이지 정보 빼오기
+	public MemberDTO myInfoSelectAll(int loginSeq) {
+		return memberDao.myInfoSelectAll(loginSeq);
+	}
 	
 	
 	
