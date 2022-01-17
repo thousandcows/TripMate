@@ -120,7 +120,7 @@ public class MemberController {
 		
 		// 보내는 개발자?의 메일계정
 		String user = "sfchampion724@naver.com";
-		String password = "wkdfmshd9922";
+		String password = "xptmxmdlqslek";
 		
 		// SMTP 서버 정보 설정
 		Properties props = new Properties();
