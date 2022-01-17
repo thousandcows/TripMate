@@ -97,7 +97,7 @@
       </header>
 
       <script>
-        $("#click").on("click", function () {
+        $("#tourboard").on("click", function () {
           location.href = "/tourboard/list";
         })
       </script>

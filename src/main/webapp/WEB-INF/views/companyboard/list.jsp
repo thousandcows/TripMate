@@ -168,7 +168,7 @@
             	<c:forEach var="l" items="${list }">
             		<div class="seq" style="width: 5%;">${l.seq }</div>
                 	<div class="tour" style="width: 7%;">${l.tour }</div>
-                	<div class="title" style="width: 44%;"><a href="/companyboard/detail?seq=z${l.seq}">${l.title }</a></div>
+                	<div class="title" style="width: 44%;"><a href="/companyboard/detail?seq=${l.seq}">${l.title }</a></div>
                 	<div class="recruit" style="width: 9%;">${l.recruit }</div>
                 	<div class="mem_seq" style="width: 10%;">${l.mem_seq}</div>
                 	<div class="writen_date" style="width: 10%;">${l.writen_date }</div>

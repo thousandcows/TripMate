@@ -135,12 +135,12 @@
         <div class="writeForm">
         	<div class="catetitle">
                 <div class="category">
-                    <select>
+                    <select name="category">
                         <option value="">말머리</option>
-                        <option value="">명소</option>
-                        <option value="">문화</option>
-                        <option value="">생태</option>
-                        <option value="">체험</option>
+                        <option value="명소">명소</option>
+                        <option value="문화">문화</option>
+                        <option value="생태">생태</option>
+                        <option value="체험">체험</option>
                     </select>
                 </div>
                 <div class="title">
@@ -148,7 +148,7 @@
                 </div>
             </div><br>
         	<div class="contents" style="margin-left:80px;">
- 				<textarea id="summernote" rows="5" name="explanation" style="width:100%; height:250px;"></textarea>
+ 				<textarea id="summernote" rows="5" name="contents" style="width:100%; height:250px;"></textarea>
  				<input type=hidden>
  			</div>
 <!--        <input type=text placeholder="내용을 입력하세요" name="contents"> -->
