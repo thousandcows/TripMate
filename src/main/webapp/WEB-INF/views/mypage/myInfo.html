@@ -14,7 +14,7 @@
         crossorigin="anonymous"></script>
       <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
       <style>
-        /* 간단세팅 */
+        /* 간단세팅 나중에 css파일 따로 뺄거*/
         * {
           box-sizing: border-box;
           padding: 0;
@@ -86,25 +86,59 @@
         .sideBarMenuBox li:first-child a {
           background-color: rgb(255, 228, 193);
         }
+
         /* 사이드바 끝 */
 
         /* 정보수정 시작 */
-        .contentsBox{
-          display:flex;
+        .contentsBox {
+          display: flex;
           flex-direction: column;
         }
-        .contentsTop{
-          width:1000px;
+
+        .contentsTop {
+          width: 1000px;
           background-color: bisque;
-          height:200px;
+          height: 200px;
           line-height: 200px;
           text-align: center;
           font-size: 26px;
         }
-        .contentsMiddle{
-          width:100%;
-          height:100%;
-          background-color:rgb(153, 204, 245);
+
+        .contentsMiddle {
+          width: 100%;
+          height: 100%;
+          background-color: rgb(153, 204, 245);
+        }
+
+        .contentsMiddleIn {
+          width: 800px;
+          margin: auto;
+          height: 100%;
+          background-color: cornsilk;
+        }
+
+        .contentsMiddleIn ul:first-child {
+          width: 300px;
+          margin: 0;
+          padding: 0;
+          float: left;
+        }
+
+        .contentsMiddleIn ul:first-child li {
+          margin-top: 50px;
+          margin-left: 100px;
+          text-align: left;
+        }
+
+        .contentsMiddleIn ul:last-child {
+          margin: 0;
+          padding: 0;
+          width: 500px;
+          float: left;
+        }
+
+        .contentsMiddleIn ul:last-child li {
+          margin-top: 50px;
         }
 
 
@@ -136,7 +170,28 @@
             개인 정보 수정
           </div>
           <div class="contentsMiddle">
-            여기가 중간
+            <div class="contentsMiddleIn">
+              <ul>
+                <li>Email-ID</li>
+                <li>닉네임</li>
+                <li>나이</li>
+                <li>성별</li>
+                <li>연락처</li>
+                <li>여행 선호방식</li>
+                <li>자기소개</li>
+                <li>신고 횟수</li>
+              </ul>
+              <ul>
+                <li>하이</li>
+                <li>하이</li>
+                <li>하이</li>
+                <li>하이</li>
+                <li>하이</li>
+                <li>하이</li>
+                <li>하이</li>
+                <li>하이</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
