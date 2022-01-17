@@ -16,9 +16,12 @@ public class TourBoardDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
-	public List<TourBoardDTO> selectAll() {
+	public List<TourBoardDTO> selectAll(int start, int end) {
 
-		return mybatis.selectList("TourBoard.selectAll");
+		Map<String, String> map = new HashMap<>();
+		map.put("start", String.valueOf(start));
+		map.put("end", String.valueOf(end));
+		return mybatis.selectList("TourBoard.selectAll", map);
 	}
 
 	public int insert(TourBoardDTO dto) {
@@ -37,11 +40,12 @@ public class TourBoardDAO {
 		return mybatis.update("TourBoard.addViewCount", seq);
 	}
 	
-	public int modify(int seq, String title, String contents) {
+	public int modify(int seq, String title, String contents, String category) {
 		
 		Map<String, String> map = new HashMap<>();
 		map.put("title", title);
 		map.put("contents", contents);
+		map.put("category",  category);
 		map.put("seq", String.valueOf(seq));
 
 		return mybatis.update("TourBoard.modify", map);
@@ -52,7 +56,10 @@ public class TourBoardDAO {
 		return mybatis.delete("TourBoard.delete", seq);
 	}
 	
-	
+	public int getRecordCount() throws Exception{
+		
+		return mybatis.selectOne("TourBoard.recordCount");
+	}
 	
 	
 	
