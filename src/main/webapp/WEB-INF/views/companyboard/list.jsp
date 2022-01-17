@@ -125,6 +125,10 @@
         }
 
     </style>
+    
+    <style type="text/css">
+			li {list-style: none; float: left; padding: 6px;}
+	</style>
 
 </head>
 <body>
@@ -183,10 +187,10 @@
         </div>
 
         <div class="page">
-            <div class="paging">
-                <div>1 2 3 4 5 6 7 8 9 10</div>
+			<div class="paging">
+                ${navi  }
             </div>
-        </div>
+		</div>
     </div>
     
     <script>

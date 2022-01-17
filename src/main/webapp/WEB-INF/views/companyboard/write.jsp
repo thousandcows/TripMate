@@ -17,6 +17,16 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 
+   
+<!-- include libraries(jQuery, bootstrap)  -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- include summernote css/js  -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	
     
 <style>
         * {
@@ -183,28 +193,30 @@
             <div class="board">
                 <div class="select_tour">여행지 :
                     <select name="tour">
-                        <option value="seoul">서울</option>
-                        <option value="incheon">인천</option>
-                        <option value="gyeonggi">경기</option>
-                        <option value="gangwon">강원</option>
-                        <option value="daejeon">대전</option>
-                        <option value="chungnam">충남</option>
-                        <option value="chungbuk">충북</option>
-                        <option value="sejong">세종</option>
-                        <option value="gyeongbuk">경북</option>
-                        <option value="gyeongnam">경남</option>
-                        <option value="busan">부산</option>
-                        <option value="daegu">대구</option>
-                        <option value="ulsan">울산</option>
-                        <option value="jeolbuk">전북</option>
-                        <option value="jeolnam">전남</option>
-                        <option value="gwangju">광주</option>
-                        <option value="jeju">제주</option>
+                    	<option value="" selected disabeled hidden>여행지</option>
+                        <option value="서울">서울</option>
+                        <option value="인천">인천</option>
+                        <option value="경기">경기</option>
+                        <option value="강원">강원</option>
+                        <option value="대전">대전</option>
+                        <option value="충남">충남</option>
+                        <option value="충북">충북</option>
+                        <option value="세종">세종</option>
+                        <option value="경북">경북</option>
+                        <option value="경남">경남</option>
+                        <option value="부산">부산</option>
+                        <option value="대구">대구</option>
+                        <option value="울산">울산</option>
+                        <option value="전북">전북</option>
+                        <option value="전남">전남</option>
+                        <option value="광주">광주</option>
+                        <option value="제주">제주</option>
                     </select>
                 </div>
 
                 <div class="select_recruit">모집 인원 :
                     <select name="recruit">
+                    	<option value="" selected disabeled hidden>인원</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -216,14 +228,14 @@
 
                 <div class="select_date">
                     [ 여행 기간 ]<br>
-					<input type="text" id="startDate" name="start_date" autocomplete='off'/> - 
-                    <input type="text" id="endDate" name="end_date" autocomplete='off'/>
+					<input type="text" id="startDate" name="start_date" autocomplete='off' style="width:100px; text-align:center;"/> ~ 
+                    <input type="text" id="endDate" name="end_date" autocomplete='off' style="width:100px; text-align:center;"/>
                     
                 </div>
 
                 <div class="select_gender">성별 :
-                    <input type="radio" name="gender" value="man" >남자
-                    <input type="radio" name="gender" value="woman">여자
+                    <input type="radio" name="gender" value="남자" >남자
+                    <input type="radio" name="gender" value="여자">여자
                 </div>
 
                 <div class="title">
@@ -231,7 +243,7 @@
                 </div>
 
                 <div class="write_con">
-                    <textarea placeholder="내용을 입력해 주세요" name=contents></textarea>
+                    <textarea id="summernote" placeholder="내용을 입력해 주세요" name=contents></textarea>
                 </div>
 
                 <div class="button">
@@ -243,36 +255,64 @@
     </div>
 
 <!-- 목록으로  -->
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
-		$("#back").on("click", () => {
+		var $j360 = jQuery.noConflict();
+	
+		$j360("#back").on("click", () => {
 			location.href="/companyboard/list";
 		})
 	</script>
 	
+<!-- 썸머노트  -->
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --> <!--Summernote용 쿼리 충돌 방지-->
+	<script>
+		/* var $j351 = jQuery.noConflict(); */
+		
+		$(document).ready(function() {
+    		//여기 아래 부분
+    		$('#summernote').summernote({
+               	height: 300,				 // 에디터 높이
+    		  	minHeight: 300,             // 최소 높이
+    		  	maxHeight: null,             // 최대 높이
+    		  	focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+    		  	lang: "ko-KR",					// 한글 설정
+    		  	placeholder: '최대 2048자까지 쓸 수 있습니다' 	//placeholder 설정
+    		});
+    	});
+    </script>    
+	
 <!-- datepicker  -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> <!--DatePicker용 쿼리 충돌 방지-->
+	<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#startDate").datepicker({
+    	var $j112 = jQuery.noConflict();
+    	/* var $j1124 = jQuery.noConflict();  */
+    	
+    	$j112(document).ready(function () {
+    		$j112("#startDate").datepicker({
                 dateFormat: "yy-mm-dd", // 날짜의 형식
                 minDate: 0,
                 nextText: ">",
                 prevText: "<",
                 onSelect: function (date) {
-                    var endDate = $('#endDate');
-                    var startDate = $(this).datepicker('getDate');
-                    var minDate = $(this).datepicker('getDate');
+                    var endDate = $j112('#endDate');
+                    var startDate = $j112(this).datepicker('getDate');
+                    var minDate = $j112(this).datepicker('getDate');
                     endDate.datepicker('setDate', minDate);
-                    startDate.setDate(startDate.getDate() + 30);
+                    startDate.setDate(startDate.getDate() + 10000);
                     endDate.datepicker('option', 'maxDate', startDate);
                     endDate.datepicker('option', 'minDate', minDate);
+                    $j112("#endDate").val("");
                 }
             });
-            $('#endDate').datepicker({
+    		$j112('#endDate').datepicker({
                 dateFormat: "yy-mm-dd", // 날짜의 형식
                 nextText: ">",
                 prevText: "<"
             });
         });
 	</script>
+	
 </body>
 </html>

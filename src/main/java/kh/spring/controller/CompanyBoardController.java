@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kh.spring.dto.CompanyBoardDTO;
 import kh.spring.service.CompanyBoardService;
+import kh.spring.statics.Statics;
 
 @Controller
 @RequestMapping("/companyboard/")
@@ -19,8 +20,10 @@ public class CompanyBoardController {
 	
 	@RequestMapping("list")
 	public String list(Model model) {
+		
 		List<CompanyBoardDTO> list = cbs.selectAll();
 		model.addAttribute("list",list);
+		
 		return "companyboard/list";
 	}
 	
@@ -41,6 +44,7 @@ public class CompanyBoardController {
 	@RequestMapping("detail")
 	public String detail(int seq, Model model) {
 		CompanyBoardDTO dto = cbs.selectBySeq(seq);
+		int result = cbs.addViewCount(seq);
 		
 		model.addAttribute("dto",dto);
 		return "companyboard/detail";
@@ -59,5 +63,5 @@ public class CompanyBoardController {
 		int result = cbs.delete(seq);
 		return "redirect:/companyboard/list";
 	}	
-	
+
 }
