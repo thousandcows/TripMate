@@ -8,6 +8,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -15,12 +16,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import kh.spring.dao.AreaDAO;
 import kh.spring.dto.AreaDTO;
 import kh.spring.dto.AreaListDTO;
+import kh.spring.dto.AreaReplyDTO;
+import kh.spring.dto.SavedDTO;
 import kh.spring.statics.Statics;
 
 @Service
 public class AreaService {
+	
+	@Autowired
+	public AreaDAO dao;
 
 	public String categorySort(String cat) {
 		String result = "";
@@ -142,11 +149,6 @@ public class AreaService {
 		if(item.has("firstimage")) {
 			photo = item.get("firstimage").toString().replace("\"", "");
 		}
-
-
-
-
-
 		AreaDTO dto = new AreaDTO(name, category, location,lo_detail,tel,detail,homepage,photo);
 		return dto;
 	}
@@ -463,4 +465,61 @@ public class AreaService {
 
 		return result;
 	}
+	
+	
+	
+	/*찜관련 부분*/
+	//찜확인
+	public int saveCheck(SavedDTO dto) {
+		return dao.saveCheck(dto);
+	}
+	
+	//찜 저장
+	public int saveInsert(SavedDTO dto) {
+		return dao.saveInsert(dto);
+	}
+	
+	//찜 취소
+	public int saveDelete(SavedDTO dto) {
+		return dao.saveDelete(dto);
+	}
+	
+	//평점출력
+	public double countRate(int area_seq) {
+		return Math.round(dao.countRate(area_seq)*100)/100.0;
+	}
+	
+	
+	/*댓글 관련 부분*/
+	//댓글 입력
+	public void replyInsert(AreaReplyDTO dto) {
+		dao.replyInsert(dto);
+	}
+	
+	//댓글 카운트
+	public int replyCount(int area_seq) {
+		return dao.replyCount(area_seq);
+	}
+	
+	//댓글 출력
+	public List<AreaReplyDTO> replyPrint(int start, int end, int area_seq){
+		return dao.replyPrint(start, end, area_seq);
+	}
+	
+	//댓글 Json화
+	public String replyToJson(List<AreaReplyDTO> list) {
+		Gson gson = new Gson();
+		return gson.toJson(list);
+	}
+	
+	//댓글 삭제
+	public void replyDelete(int seq) {
+		dao.replyDelete(seq);
+	}
+	
+	//댓글 수정
+	public void replyUpdate(AreaReplyDTO dto) {
+		dao.replyUpdate(dto);
+	}
+	
 }
