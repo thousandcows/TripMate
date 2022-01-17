@@ -127,10 +127,13 @@
 			</div>
 		</div>
 		
-		<div class="row">
-			<div class="col">
-				추천여행지 들어갈 부분 X4. 사진+ 타이틀
+		<div class="row border">
+			<c:forEach var="i" items="${rcmd }">
+			<div class="col-3 rcmd" id="${i.seq }">
+				${i.title }
+				<img src="${i.photo }">
 			</div>
+			</c:forEach>
 		</div>
 
 		<form action="/area/replySubmit" method="post" enctype="multipart/form-data">
@@ -244,6 +247,11 @@
 
 
 	<script>
+	$(".rcmd").on("click",function(){
+		location.href="/area/detail?num="+this.id;
+	})
+	
+	
 	let loginSeq = 0;
 	<c:if test="${!empty loginSeq}">
 		loginSeq = ${loginSeq};

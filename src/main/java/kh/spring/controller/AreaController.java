@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dto.AreaDTO;
 import kh.spring.dto.AreaListDTO;
+import kh.spring.dto.AreaRcmdDTO;
 import kh.spring.dto.AreaReplyDTO;
 import kh.spring.dto.SavedDTO;
 import kh.spring.service.AreaService;
@@ -83,8 +84,13 @@ public class AreaController {
 			double rate = aService.countRate(num);
 			model.addAttribute("rate",rate);			
 		}
+		
+		List<AreaRcmdDTO> rcmd = aService.rcmd(dto.getCategory(),dto.getCat2(),dto.getCat3());
+		System.out.println(rcmd.get(0).getTitle());
+		dto.setCategory(aService.categorySort(dto.getCategory()));
 		model.addAttribute("rcmdCheck",rcmdCheck);
 		model.addAttribute("dto",dto);
+		model.addAttribute("rcmd",rcmd);
 		model.addAttribute("reply",reply);
 		model.addAttribute("printNum",printNum);
 		model.addAttribute("replyCount",replyCount);

@@ -19,6 +19,7 @@ import com.google.gson.JsonParser;
 import kh.spring.dao.AreaDAO;
 import kh.spring.dto.AreaDTO;
 import kh.spring.dto.AreaListDTO;
+import kh.spring.dto.AreaRcmdDTO;
 import kh.spring.dto.AreaReplyDTO;
 import kh.spring.dto.SavedDTO;
 import kh.spring.statics.Statics;
@@ -126,7 +127,10 @@ public class AreaService {
 		name = name.substring(1,name.length()-1);
 		String category = item.get("cat1").toString(); //카테고리
 		category = category.substring(1,category.length()-1);
-		category = categorySort(category);
+		String cat3 = item.get("cat3").toString();
+		cat3 = cat3.substring(1,cat3.length()-1);
+		String cat2 = item.get("cat2").toString();
+		cat2 = cat2.substring(1,cat2.length()-1);
 		String location = item.get("areacode").toString(); //지역코드		
 		String lo_detail = item.get("addr1").toString(); //주소
 		lo_detail = lo_detail.substring(1,lo_detail.length()-1);
@@ -149,10 +153,90 @@ public class AreaService {
 		if(item.has("firstimage")) {
 			photo = item.get("firstimage").toString().replace("\"", "");
 		}
-		AreaDTO dto = new AreaDTO(name, category, location,lo_detail,tel,detail,homepage,photo);
+		AreaDTO dto = new AreaDTO(name, category,cat2,cat3, location,lo_detail,tel,detail,homepage,photo);
 		return dto;
 	}
 
+	public List<AreaRcmdDTO> rcmd(String cat1,String cat2, String cat3) throws Exception{
+		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList"); /*URL*/
+		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + Statics.areaRecommandNo); /*한 페이지 결과 수*/
+		urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰),AND(안드로이드),WIN(원도우폰),ETC*/
+		urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
+		urlBuilder.append("&" + URLEncoder.encode("arrange","UTF-8") + "=" + URLEncoder.encode("P", "UTF-8")); /*조회순 정렬*/
+		urlBuilder.append("&" + URLEncoder.encode("cat1","UTF-8") + "=" + URLEncoder.encode(cat1, "UTF-8")); /*조회순 정렬*/
+		urlBuilder.append("&" + URLEncoder.encode("cat2","UTF-8") + "=" + URLEncoder.encode(cat2, "UTF-8")); /*조회순 정렬*/
+		urlBuilder.append("&" + URLEncoder.encode("cat3","UTF-8") + "=" + URLEncoder.encode(cat3, "UTF-8")); /*조회순 정렬*/		
+		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
+
+
+		URL url = new URL(urlBuilder.toString());
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		BufferedReader rd;
+		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+
+
+		List<AreaRcmdDTO> list = new ArrayList<>();
+		JsonObject j = (JsonObject) JsonParser.parseString(sb.toString());
+		JsonObject response = (JsonObject) JsonParser.parseString(j.get("response").toString());
+		JsonObject body = (JsonObject) JsonParser.parseString(response.get("body").toString());
+				System.out.println(body.toString());;
+		if(body.get("items").isJsonObject()) {
+			JsonObject items = (JsonObject) JsonParser.parseString(body.get("items").toString());
+			System.out.println(items.toString());
+			if(JsonParser.parseString(items.get("item").toString()).isJsonArray()){
+				JsonArray item = (JsonArray)JsonParser.parseString(items.get("item").toString());
+
+				for(int i = 0; i< item.size();i++) {
+					JsonObject tmp = (JsonObject) item.get(i);
+					String contentid = tmp.get("contentid").toString();
+					String title = tmp.get("title").toString();
+					title = title.substring(1,title.length()-1);
+					
+					String firstimage = "";
+					if(tmp.has("firstimage")){
+						firstimage = tmp.get("firstimage2").toString();
+						firstimage = firstimage.substring(1,firstimage.length()-1);
+					}else{
+						firstimage ="null";
+					}
+					AreaRcmdDTO dto = new AreaRcmdDTO(title,firstimage,contentid);
+					list.add(dto);
+				}
+			}else {
+				JsonObject item = (JsonObject)JsonParser.parseString(items.get("item").toString());
+				String contentid = item.get("contentid").toString();
+				String title = item.get("title").toString();
+				title = title.substring(1,title.length()-1);
+				String firstimage = "";
+				if(item.has("firstimage")){
+					firstimage = item.get("firstimage2").toString();
+					firstimage = firstimage.substring(1,firstimage.length()-1);
+				}else{
+					firstimage ="null";
+				}
+				AreaRcmdDTO dto = new AreaRcmdDTO(title,firstimage,contentid);
+				list.add(dto);
+			}
+		}
+
+		return list;
+	}
+	
 	//일반
 	public List<AreaListDTO> list(int pageNum, int conID, int areaCode) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList"); /*URL*/
