@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>${dto.name }</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -47,6 +47,12 @@
   font-feature-settings: 'liga';
 }
 </style>
+<script>
+	$(document).ready(function(){
+		$(".updateSubmit").hide();
+		$(".cancel").hide();
+	})
+</script>
 </head>
 <body>
 	<div class="container">
@@ -130,8 +136,13 @@
 		<div class="row border">
 			<c:forEach var="i" items="${rcmd }">
 			<div class="col-3 rcmd" id="${i.seq }">
+				<div>
+				<img src="${i.photo }" style="width:100px;height:100px;">
+				</div>
+				<div>
 				${i.title }
-				<img src="${i.photo }">
+				</div>
+				
 			</div>
 			</c:forEach>
 		</div>
@@ -187,12 +198,22 @@
 		
 		<c:forEach var="i" items="${reply }" >
 		<div class="row border">
+			<form action="/area/replyUpdate" method="post" enctype="multipart/form-data">
+			<input type="hidden" name=seq value=${i.seq }>
+			<input type="hidden" name=area_seq value=${i.area_seq }>
 			<div class="col-3">
+				<label class="w-100 h-100">
+				<div id="ph">
 				<c:if test="${i.photo ne null }">
-				<img src="/resource/${i.photo }" class="w-100 h-100">
+					<img src="/resources/${i.photo }" class="w-100 h-100">
 				</c:if>
 				<c:if test="${i.photo eq null }">
+				
 				</c:if>
+				<input accept="image/*" id="img${i.seq }" type="file" class="opacity-0" class="replyimg" name="picture" style="display:none;" disabled/>
+				
+				</div>
+				</label>
 			</div>
 			<div class="col-9">
 				<div class="row">
@@ -205,7 +226,8 @@
 				</div>
 				<div class="row">
 					<div class="col">
-						${i.text }
+						<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 100px;resize:none;" readonly id="replyTxt${i.seq }">${i.text }</textarea>
+						<input type="hidden" value="${i.text }" id="replyHidden${i.seq }">
 					</div>
 				</div>
 				<c:if test="${i.mem_seq eq loginSeq}">
@@ -213,11 +235,14 @@
 					<div class="col-8"></div>
 				
 					<div class="col-2 text-end">
-						<button type="button" class="btn btn-success update">수정</button>						
+						<button type="button" class="btn btn-success update" id="${i.seq }">수정</button>
+						<button type="submit" class="btn btn-success updateSubmit" id="replySubmit${i.seq }">등록</button>						
 					</div>
+				</form>
 					<div class="col-2 text-end">
 						<form action="replyDelete">
-						<button type="submit" class="btn btn-success delete">삭제</button>
+						<button type="submit" class="btn btn-success delete" id="replyDel${i.seq }">삭제</button>
+						<button type="button" class="btn btn-success cancel" id="replyCancel${i.seq }">취소</button>
 						<input type="hidden" name="area_seq" value=${area_seq } >
 						<input type="hidden" name="seq" value=${i.seq }>
 						</form>
@@ -247,19 +272,39 @@
 
 
 	<script>
-	$(".rcmd").on("click",function(){
-		location.href="/area/detail?num="+this.id;
-	})
-	
-	
 	let loginSeq = 0;
 	<c:if test="${!empty loginSeq}">
 		loginSeq = ${loginSeq};
 	</c:if>
+	
+	$(".rcmd").on("click",function(){
+		location.href="/area/detail?num="+this.id;
+	})
+	
 	//댓글 수정
-		$(".update").on("click",function(){
-			
-		})
+	$(".update").on("click",function(){
+		let seq = "#replyTxt"+this.id;
+		$(seq).removeAttr("readonly");
+		$(this).hide();
+		
+		$("#replyDel"+this.id).hide();
+		$("#replySubmit"+this.id).show();
+		$("#replyCancel"+this.id).show();
+		$("#img"+this.id).prop("disabled",false);
+	})
+	
+	$(".cancel").on("click",function(){
+		$(this).hide();
+		let id = this.id.substr(11);
+		let seq = "#replyTxt"+id;
+		$(seq).attr("readonly","readonly");
+		$(seq).val($("#replyHidden"+id).val());
+		$("#replyDel"+id).show();
+		$("#"+id).show();
+		$("#replySubmit"+id).hide();
+		$("#img"+id).prop("disabled",true);
+
+	})
 	
 	//댓글 삭제
 		$(".delete").on("click",function(){

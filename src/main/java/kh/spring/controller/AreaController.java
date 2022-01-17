@@ -1,9 +1,11 @@
 package kh.spring.controller;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,12 +37,47 @@ public class AreaController {
 	@Autowired
 	private HttpSession session;
 	
-	@RequestMapping(value="main", method=RequestMethod.GET, params= {"page","area","contentType"})
+	@RequestMapping(value="main", method=RequestMethod.GET, params= {"page","area","contentType"}) //기본 출력
 	public String main(int page,int area,int contentType, Model model) throws Exception{
-		List<AreaListDTO> list = aService.list(page,contentType,area);
-		int[] count = aService.pageCount(page,contentType,area);
-		List<Integer> pageView = aService.paging(count[0],count[1]);
+		URL url = aService.listBuild(page,contentType,area); //DTO 리스트
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		BufferedReader rd;
+		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
 
+		List<AreaListDTO> list = aService.list(sb.toString());
+
+		url = aService.pageCountBuild(page, contentType, area);
+		conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		sb = new StringBuilder();
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+		int[] count = aService.pageCount(sb.toString()); //전체페이지, 현재페이지
+		List<Integer> pageView = aService.paging(count[0],count[1]); //페이지 숫자 출력
 		model.addAttribute("list",list);
 		model.addAttribute("pageNo",count[1]);
 		model.addAttribute("pageView",pageView);
@@ -49,11 +86,49 @@ public class AreaController {
 		return "/area/tmp";
 	}
 	
-	@RequestMapping(value="main", params= {"page","area","contentType","target"})
+	@RequestMapping(value="main", params= {"page","area","contentType","target"}) //검색 출력
 	public String main(int page, int area,int contentType, String target, Model model) throws Exception{
-		List<AreaListDTO> list = aService.search(page,contentType,area,target);
-		int[] count = aService.searchCount(page,contentType,area,target);
-		List<Integer> pageView = aService.paging(count[0],count[1]);
+		URL url = aService.searchBuild(page, contentType, area, target);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		BufferedReader rd;
+		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+		
+		List<AreaListDTO> list = aService.search(sb.toString()); //검색결과 리스트
+		url = aService.searchBuild(page, contentType, area, target);
+
+		conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		sb = new StringBuilder();
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+
+
+		int[] count = aService.searchCount(sb.toString()); //전체페이지,현재페이지
+		List<Integer> pageView = aService.paging(count[0],count[1]); //페이지 숫자 출력
 		model.addAttribute("list",list);
 		model.addAttribute("pageNo",count[1]);
 		model.addAttribute("pageView",pageView);
@@ -63,31 +138,65 @@ public class AreaController {
 		return "/area/tmp";		
 	}
 	
-	@RequestMapping("detail")
+	@RequestMapping("detail") //상세페이지
 	public String detail(int num,Model model) throws Exception{
-		AreaDTO dto = aService.detail(num);
+		URL url = aService.detailBuild(num); //조건 설정
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		BufferedReader rd;
+		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+		
+		AreaDTO dto = aService.detail(sb.toString()); //데이터 출력
+
 		int loginSeq = 0;
-		if(session.getAttribute("loginSeq") != null) {
+		if(session.getAttribute("loginSeq") != null) { //로그인 여부 확인, seq 주입
 			loginSeq = (int)session.getAttribute("loginSeq");			
 		}
-		int rcmdCheck = aService.saveCheck(new SavedDTO(0,loginSeq,num));
-		int replyCount = aService.replyCount(num);
-		int areaReviewNo = Statics.areaReviewNo;
+		int rcmdCheck = aService.saveCheck(new SavedDTO(0,loginSeq,num)); //찜 여부 확인
+		int replyCount = aService.replyCount(num); //댓글수 계산
 		int printNum = 1;
-		if(areaReviewNo<replyCount) {
-			printNum = areaReviewNo;
-		}else {
-			printNum = replyCount;
-		}
-		List<AreaReplyDTO> reply = aService.replyPrint(1, printNum, num);
-		if(replyCount>0) {
+		if(Statics.areaReviewNo<replyCount) {printNum = Statics.areaReviewNo;}
+		else { printNum = replyCount;}
+		List<AreaReplyDTO> reply = aService.replyPrint(1, printNum, num); //댓글 출력
+
+		if(replyCount>0) {//댓글 1개이상 존재시, 평점 출력
 			double rate = aService.countRate(num);
 			model.addAttribute("rate",rate);			
 		}
 		
-		List<AreaRcmdDTO> rcmd = aService.rcmd(dto.getCategory(),dto.getCat2(),dto.getCat3());
-		System.out.println(rcmd.get(0).getTitle());
-		dto.setCategory(aService.categorySort(dto.getCategory()));
+		url = aService.rcmdBuild(dto.getCategory(),dto.getCat2(),dto.getCat3());
+		conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		sb = new StringBuilder();
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+		
+		
+		List<AreaRcmdDTO> rcmd = aService.rcmd(sb.toString()); //추천 여행지 리스트
+		dto.setCategory(aService.categorySort(dto.getCategory())); //카테고리 한글변경
 		model.addAttribute("rcmdCheck",rcmdCheck);
 		model.addAttribute("dto",dto);
 		model.addAttribute("rcmd",rcmd);
@@ -95,63 +204,59 @@ public class AreaController {
 		model.addAttribute("printNum",printNum);
 		model.addAttribute("replyCount",replyCount);
 		model.addAttribute("area_seq",num);
-		model.addAttribute("staticNo",areaReviewNo);
+		model.addAttribute("staticNo",Statics.areaReviewNo);
 		return "/area/detail";
 	}
 	
 	@ResponseBody
-	@RequestMapping("moreReply")
+	@RequestMapping("moreReply")  //댓글 Ajax로 추가출력
 	public String moreReply(int printNum,int area_seq,int replyCount,Model model) {
 		List<AreaReplyDTO> reply = new ArrayList<>();
-		if(printNum+Statics.areaReviewNo<replyCount) {
+		if(printNum+Statics.areaReviewNo<replyCount) { //남은 댓글수에 따라 출력.
 			reply = aService.replyPrint(printNum+1, printNum+Statics.areaReviewNo, area_seq);
 		}else {
 			reply = aService.replyPrint(printNum+1, replyCount, area_seq);
 		}
-		String result = aService.replyToJson(reply);		
+		String result = aService.replyToJson(reply); //Json String처리
 		return result;
 	}
 	
 	@ResponseBody
-	@RequestMapping("save")
+	@RequestMapping("save")//찜 ajax로 확인
 	public String save(int area_seq, Model model) throws Exception{
 		int loginSeq = Integer.parseInt(session.getAttribute("loginSeq").toString());
-		SavedDTO dto = new SavedDTO(0,loginSeq,area_seq);
-		int saveCheck = aService.saveCheck(dto);
-		System.out.println(saveCheck);
+		SavedDTO dto = new SavedDTO(0,loginSeq,area_seq); //DTO 생성
+		int saveCheck = aService.saveCheck(dto); //기존 찜 여부 확인
 		String result = "";
 		if(saveCheck==0) {
-			aService.saveInsert(dto);
+			aService.saveInsert(dto); //찜 생성
 			result = "saved";
 		}else if(saveCheck==1) {
-			aService.saveDelete(dto);
+			aService.saveDelete(dto); //찜 삭제
 			result = "removed";
 		}
-		
 		return result;
 	}
 	
-	@RequestMapping("replySubmit")
+	@RequestMapping("replySubmit") //댓글 작성
 	public String replySubmit(AreaReplyDTO dto, MultipartFile picture) throws Exception {
-		String photo = "";
-		if(!picture.isEmpty()) {
-			String realPath = session.getServletContext().getRealPath("upload");
-			File realPathFile = new File(realPath);
-			if(!realPathFile.exists()) {realPathFile.mkdir();}
-			
-			String oriName= picture.getOriginalFilename(); //사용자가 업로드한 파일의 원본 이름
-			String sysName = UUID.randomUUID()+"_"+oriName; //서버쪽에 저장할파일 이름
-			//서버에 업로드 되어 메모리에 적재된 파일의 내용을 어디에 저장할 지 결정하는 부분
-			picture.transferTo(new File(realPath+"/"+sysName));	
-			photo = sysName;
-		}
-		
+		String photo = aService.uploadPhoto(picture,session);
 		int loginSeq = (int)(session.getAttribute("loginSeq"));
 		String mem_nick = session.getAttribute("loginNick").toString();
 		dto.setMem_nick(mem_nick);
 		dto.setMem_seq(loginSeq);
 		dto.setPhoto(photo);
 		aService.replyInsert(dto);
+		return "redirect:/area/detail?num="+dto.getArea_seq();
+	}
+	
+	@RequestMapping("replyUpdate")
+	public String replyUpdate(AreaReplyDTO dto, MultipartFile picture) throws Exception{
+		String photo = aService.updatePhoto(picture, session, dto.getSeq());
+		String mem_nick = session.getAttribute("loginNick").toString();
+		dto.setMem_nick(mem_nick);
+		dto.setPhoto(photo);
+		aService.replyUpdate(dto);
 		return "redirect:/area/detail?num="+dto.getArea_seq();
 	}
 	
