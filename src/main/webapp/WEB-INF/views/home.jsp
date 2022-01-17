@@ -16,6 +16,7 @@
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Poor+Story&display=swap"
         rel="stylesheet">
       <link rel="stylesheet" href="/css/login.css" type="text/css">
+      <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
       <script defer src="/js/login.js"></script>
     </head>
     <style>
