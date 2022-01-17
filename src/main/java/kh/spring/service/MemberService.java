@@ -67,7 +67,12 @@ public class MemberService {
 	public int kakaoSignup(String kakaoLoginEmail, String kakaoLoginNick, int kakaoLoginId) {
 		return memberDao.kakaoSignup(kakaoLoginEmail, kakaoLoginNick, kakaoLoginId);
 	}
+	///// 카카오 로그인 끝 /////
 	
+	// 마이페이지 정보 빼오기
+	public MemberDTO myInfoSelectAll(int loginSeq) {
+		return memberDao.myInfoSelectAll(loginSeq);
+	}
 	
 	
 	

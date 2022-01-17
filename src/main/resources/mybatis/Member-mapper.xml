@@ -46,5 +46,10 @@
 		insert into member (seq, emailid, nick, violation, sns_division) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0, #{kakaoId})
 	</insert>
 	
+	<!-- 마이페이지 -->
+	<select id="myInfoSelectAll" resultType="kh.spring.dto.MemberDTO">
+		select * from member where seq = #{value}
+	</select>
+	
 	
 </mapper>

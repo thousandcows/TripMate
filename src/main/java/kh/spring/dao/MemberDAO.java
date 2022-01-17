@@ -83,6 +83,11 @@ public class MemberDAO {
 		return mybatis.insert("Member.kakaoSignup", map);
 	}
 	
+	// 마이페이지 정보빼오기
+	public MemberDTO myInfoSelectAll(int loginSeq) {
+		return mybatis.selectOne("Member.myInfoSelectAll", loginSeq);
+	}
+	
 	
 	
 }

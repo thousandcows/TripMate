@@ -18,6 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -266,6 +267,15 @@ public class MemberController {
 		session.invalidate(); // 이게 맞을듯
 		return "redirect:/";
 		// 나중에 현재페이지 로그인&로그아웃으로 변경할것
+	}
+	
+	// 마이페이지 이동시 정보 빼오기
+	@RequestMapping("mypageGo")
+	public String mypageGo(Model model) {
+		int loginSeq = (int) session.getAttribute("loginSeq");
+		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
+		model.addAttribute("loginInfo", dto);
+		return "mypage/myInfo";
 	}
 
 	@ExceptionHandler
