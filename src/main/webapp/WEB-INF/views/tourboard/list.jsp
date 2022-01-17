@@ -122,11 +122,11 @@
     </div>
     <div class="container">
         <div class="root">
-            <div class="home"><i class="fas fa-home" href=""></i></div>
+            <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
             <div class="community" href="">커뮤니티</div>
             <div> > </div>
-            <div class="tourboard" href="">여행지 게시판</div>
+            <div class="tourboard"><a href="/tourboard/list?cpage=1">여행지 게시판</a></div>
         </div>
         <div class="searchbar">
             <select>
@@ -163,7 +163,7 @@
         </div>
         <div class="page">
             <div class="paging">
-                <div>1 2 3 4 5 6 7 8 9 10</div>
+                <div>${navi  }</div>
             </div>
         </div>       
     </div>

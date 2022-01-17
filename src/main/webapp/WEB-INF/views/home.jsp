@@ -198,7 +198,7 @@
               <li class="nav-item active"><a class="nav-link" id="triplist">여행지</a></li>
               <li class="nav-item"><a class="nav-link" href="">여행일정</a></li>
               <li class="nav-item active"><a class="nav-link" id="tourboard">여행게시판</a></li>
-              <li class="nav-item"><a class="nav-link" id="companyboard">동행게시판</a></li>
+              <li class="nav-item"><a class="nav-link" id="companyboard" href="/companyboard/list">동행게시판</a></li>
               <li class="searchbar"> <i class="fas fa-search"></i><input class="form-control rounded-start" type="text"
                   placeholder="Search for products" size="20">
               </li>
@@ -224,7 +224,7 @@
 
       <script>
         $("#tourboard").on("click", function () {
-          location.href = "/tourboard/list";
+          location.href = "/tourboard/list?cpage=1";
         })
       </script>
 

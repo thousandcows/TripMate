@@ -6,7 +6,7 @@
 <mapper namespace="TourBoard">
 
 	<select id="selectAll" resultType="kh.spring.dto.TourBoardDTO">
-		select * from tour_board order by seq
+		select * from (select tour_board.*, row_number() over(order by seq desc) rn from tour_board) where rn between #{start} and #{end}
 	</select>
 	
 	<insert id="insert">
@@ -22,10 +22,16 @@
 	</update>
 	
 	<update id="modify">
-		update tour_board set title=#{title}, contents=#{contents} where seq = #{seq}
+		update tour_board set title=#{title}, contents=#{contents}, category=#{category} where seq = #{seq}
 	</update>
 	
 	<delete id="delete">
 		delete from tour_board where seq=#{value}
 	</delete>
+	
+	<select id="recordCount" resultType="int">
+     	select count(*) from tour_board
+     </select>
+   
+     
 </mapper>

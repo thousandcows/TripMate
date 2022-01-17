@@ -1,6 +1,7 @@
 package kh.spring.dto;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class CompanyBoardDTO {
 
@@ -161,6 +162,32 @@ public class CompanyBoardDTO {
 
 	public void setRep_count(int rep_count) {
 		this.rep_count = rep_count;
+	}
+	
+	// 시간을 꾸며주는 메소드
+	public String getFormedDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+		return sdf.format(this.writen_date.getTime());
+	}
+
+	public String getDetailDate() {
+		long current_time = System.currentTimeMillis(); // 현재의 Timestamp
+		long write_time = this.writen_date.getTime(); // 글이 작성된 시점의 Timestamp
+			
+		long time_gap = current_time - write_time;
+			
+		if(time_gap < 60000) {
+			return "1분 이내";
+		}else if(time_gap < 300000) {
+			return "5분 이내";
+		}else if(time_gap < 3600000) {
+			return "1시간 이내";
+		}else if(time_gap < 86400000) {
+			return "오늘";
+		}else {
+			return getFormedDate();
+		}
+			
 	}
 	
 	

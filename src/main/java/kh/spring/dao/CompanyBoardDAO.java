@@ -31,6 +31,17 @@ public class CompanyBoardDAO {
 	}
 	
 	public int modify(CompanyBoardDTO dto) {
-		return mybatis.update("CompanyBoard.modify",dto);
+		return mybatis.update("CompanyBoard.modify", dto);
 	}
+	
+	public int addViewCount(int seq) {
+		return mybatis.update("CompanyBoard.addViewCount", seq);
+	}
+	
+	public int getRecordCount() throws Exception{
+		return mybatis.selectOne("CompanyBoard.getRecordCount");
+	}
+
+	
+	
 }

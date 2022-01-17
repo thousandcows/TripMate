@@ -65,7 +65,7 @@
         }
 
        .writeForm{
-            border: 1px solid red;
+            border:1px solid red;
         }
         
         .catetitle{
@@ -79,7 +79,7 @@
         }
         
         .title{
-        	border: 1px solid red;
+        	border:1px solid red;
         	width:90%;
         	float:left;
         }
@@ -89,7 +89,7 @@
         }        
         
          .writeForm>div{ 
-             border: 1px solid red; 
+             border:1px solid red; 
          }
          
          .contents{
@@ -97,10 +97,87 @@
         }
         
         .ft_btn{
-            border: 1px solid red;
+            border:1px solid red;
             width: 100%;
             text-align: right;
+            padding: 0px 80px 0px 80px;  
         }
+
+        .icons{
+            border:1px solid red;
+            padding: 0px 80px 0px 80px;  
+            overflow: auto;
+        }
+
+        .icons>div{
+            float: left;
+            border:1px solid red;
+            padding-right: 20px;
+        }
+
+        .reply{
+            border:1px solid red;
+            padding: 0px 80px 0px 80px;  
+        }
+
+        .reply>div{
+            border:1px solid red;            
+        }
+
+        .reply_list{
+            border:1px solid red;
+            padding: 0px 80px 0px 80px;  
+        }
+        .reply_title{
+            border:1px solid red;
+            overflow: auto;
+        }
+
+        .reply_title>div{
+            float: left;
+            border:1px solid red;
+        }
+
+        .reply_title>.rp_id{
+            border:1px solid red;
+            width: 90%; 
+            padding-left: 10px;
+        }
+
+        .reply_title>.rp_time{
+           width: 10%; 
+           text-align: center;
+        }
+
+        .reply_contents{
+            overflow: auto;
+            border:1px solid red;
+            width: 100%;
+        }
+
+        .reply_contents>div{
+            float:left;
+            border:1px solid red;
+        }
+
+        .reply_contents>.rp_content{
+            border:1px solid red;
+            width: 90%;
+        }
+
+        .rp_content>input{
+            width: 100%;
+        }
+
+        .rp_btns{
+            overflow: auto;
+            width:10%;
+            text-align: center;
+        }
+
+        .rp_btns>div{
+            float: right;
+        }        
         
         /* 링크 속성 지우기 */
         a { text-decoration:none  } 
@@ -112,13 +189,21 @@
         .fa-home{
             color: rgb(56, 181, 174);
         }
+
+        .fa-thumbs-up, .fa-comment-dots{
+            color: rgb(151, 151, 151);
+        }
+        
+        .icon_recommand :hover{
+            cursor:pointer;
+        }
         
         
 	</style>
 </head>
    
 <body>
-	<form action="/tourboard/modify" method="post" id="frmDetail" enctype="multipart/form-data">
+	
     <!-- .banner에 이미지 추가해야한다.-->
     <div class="banner">
         <div class="banner_title" href="">여행지 게시판</div>
@@ -126,22 +211,23 @@
     </div>
     <div class="container">
         <div class="root">
-            <div class="home"><i class="fas fa-home" href=""></i></div>
+            <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
             <div class="community" href="">커뮤니티</div>
             <div> > </div>
-            <div class="tourboard" href="">여행지 게시판</div>
+            <div class="tourboard"><a href="/tourboard/list?cpage=1">여행지 게시판</a></div>
         </div>
+        <form action="/tourboard/modify" method="post" id="frmDetail" enctype="multipart/form-data">
         <div class="writeForm">
         	<div class="catetitle">        		
                 <div class="category" >
                 	<input type=text value="[${dto.category }]" id="discategory" style="border:0px; text-align:center; width:100%;" readonly>
-                    <select style="display:none"; id="modcategory">
+                    <select style="display:none"; id="modcategory" name="category">
                         <option value="">말머리</option>
-                        <option value="">명소</option>
-                        <option value="">문화</option>
-                        <option value="">생태</option>
-                        <option value="">체험</option>
+                        <option value="명소">명소</option>
+                        <option value="문화">문화</option>
+                        <option value="생태">생태</option>
+                        <option value="체험">체험</option>
                     </select>
                 </div>
                 <div class="title">
@@ -150,20 +236,63 @@
                 </div>
             </div><br>
             <div class="contents" style="margin-left:80px; readonly">
- 				<textarea id="summernote" rows="5" name="explanation" style="width:100%; height:250px;" style="display:none; height:300px;">${dto.contents }</textarea>
+ 				<textarea id="summernote" rows="5" name="explanation">${dto.contents }</textarea>
  			</div>
         </div>
         <div class="ft_btn">
-        	<a href="/tourboard/list"><button type=button>목록으로</button></a>
-<%--         	<c:if test="${dto.writer == loginID}"> --%>
+        	<a href="/tourboard/list?cpage=1"><button type=button>목록으로</button></a>
 			<button type=button id=mod>수정하기</button>
 			<button type=button id=del>삭제하기</button>
 			<button type=button id=modOk style="display: none;">수정완료</button>
 			<button type=button id=modCancel style="display: none;">취소</button>
-<%-- 			</c:if> --%>
+        </div>
+        </form>
+        <br>
+        <div class="icons">
+            <div class="icon_recommand"><i class="fas fa-thumbs-up fa-lg"> 3</i></div>
+            <div class="icon_reply"><i class="far fa-comment-dots fa-lg"> 3</i></div>
+        </div>
+        <br>
+        <form action="/tourreply/reply" method="post" id="frmReply" enctype="multipart/form-data">
+      	  <div class="reply">
+ 	         <input type=hidden value="${dto.seq}" name=rseq>
+   	         <div class="rp_input"><input type=text placeholder="댓글을 입력하세요" style="width:100%; height: 30px;" name="reply"></div>
+   	         <div class="rp_write" style="text-align: right;"><button type=submit id="write_btn">작성하기</button></div>
+ 	      </div>
+        </form>
+        <div class="reply_list">
+            <hr>
+            <c:forEach var="i" items="${list }">
+            <div class="reply_title">
+                <div class="rp_id">${i.mem_seq }</div>
+                <div class="rp_time">${i.writen_time }</div>
+            </div>
+            <br>
+            <div class="reply_contents " style="text-align: right;">
+                <div class="rp_content"><input type=text value="${i.contents }"></div>
+                <div class="rp_btns">
+                    <div class="rp_delete"><button type=button id="rp_del_btn" style="color: red;"><b>X</b></button></div>
+                    <div class="rp_modify"><button type=button id="rp_mod_btn"><i class="fas fa-tools"></i></button></div>                    
+                </div>                
+            </div>
+            </c:forEach>
         </div>
     </div>    
-    </form>
+    
+    <script>
+    $("#write_btn").on("click", function() {
+			if (confirm("이대로 작성하시겠습니까?")) {
+				$("#frmReply").submit();
+			}
+		});
+    </script>
+
+	<script>
+	$(".icon_recommand").on("click", function(){
+		location.href = "/tourboard/like";
+	})
+	</script>
+	
     <script>
     $("#del").on("click", function() {
 		if (confirm("정말 삭제하시겠습니까?")) {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TourReply">
+	<insert id="insert">
+		insert into tour_reply values(tourr_seq.nextval, #{rseq}, 1, #{reply}, default)
+	</insert>
+	
+	<select id="selectAll" resultType="kh.spring.dto.TourReplyDTO">
+		select r.par_seq, r.mem_seq, r.contents, r.writen_time from tour_reply r join tour_board b on(r.par_seq=b.seq) order by r.writen_time desc
+	</select>
+
+</mapper>
