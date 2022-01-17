@@ -98,7 +98,7 @@
 
       <script>
         $("#tourboard").on("click", function () {
-          location.href = "/tourboard/list";
+          location.href = "/tourboard/list?cpage=1";
         })
       </script>
 

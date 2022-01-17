@@ -126,16 +126,16 @@
     </div>
     <div class="container">
         <div class="root">
-            <div class="home"><i class="fas fa-home" href=""></i></div>
+            <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
             <div class="community" href="">커뮤니티</div>
             <div> > </div>
-            <div class="tourboard" href="">여행지 게시판</div>
+            <div class="tourboard"><a href="tourboard/list">여행지 게시판</a></div>
         </div>
         <div class="writeForm">
         	<div class="catetitle">
                 <div class="category">
-                    <select name="category">
+                    <select name="category" id="category">
                         <option value="">말머리</option>
                         <option value="명소">명소</option>
                         <option value="문화">문화</option>
@@ -144,7 +144,7 @@
                     </select>
                 </div>
                 <div class="title">
-                    <input type=text placeholder="제목을 입력하세요" name="title">
+                    <input type=text placeholder="제목을 입력하세요" name="title" id="title">
                 </div>
             </div><br>
         	<div class="contents" style="margin-left:80px;">
@@ -179,5 +179,31 @@
     	});
     });
     </script>    
+    
+    <script>
+    $("#write_btn").on("click", function() {
+    	if($("#category").val()==""){
+    		
+    		alert("말머리를 선택해주세요");
+    		return false;
+    	}
+    	
+    	if($("#title").val()==""){
+    		
+    		alert("제목을 입력해주세요");
+    		return false;
+    	}
+    	
+    	if($("#summernote").val()==""){
+    		
+    		alert("내용을 입력해주세요");
+    		return false;
+    	}   	
+
+		if (confirm("이대로 작성하시겠습니까?")) {
+				$("#frmDetail").submit();
+			}
+		});   
+    </script>
 </body>
 </html>
