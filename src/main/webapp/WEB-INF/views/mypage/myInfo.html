@@ -48,6 +48,7 @@
           margin-left: 25px;
           margin-top: 50px;
           background-color: hotpink;
+          position:relative;
         }
 
         .sideMyNick {
@@ -106,43 +107,80 @@
 
         .contentsMiddle {
           width: 100%;
-          height: 100%;
           background-color: rgb(153, 204, 245);
           padding-top: 30px;
         }
 
         .contentsMiddleIn {
           width: 800px;
+          height:650px;
           margin: auto;
-          height: 100%;
           background-color: cornsilk;
         }
 
-        .contentsMiddleIn ul:first-child {
+        .leftInfo {
           width: 300px;
+          height:100%;
           margin: 0;
           padding: 0;
           float: left;
         }
 
-        .contentsMiddleIn ul:first-child li {
-          height:80px;
-          margin-left: 100px;
+        .leftInfo li {
+          height: 70px;
+          margin-left: 120px;
           text-align: left;
         }
 
-        .contentsMiddleIn ul:last-child {
+        .rightInfo {
           margin: 0;
           padding: 0;
           width: 500px;
           float: left;
+          height:100%;
         }
 
-        .contentsMiddleIn ul:last-child li {
-          height:80px;
+        .rightInfo li {
+          height: 70px;
+        }
+        /* input들 */
+        .emailInput,
+        .nickInput,
+        .phoneInput {
+          width: 280px;
+          height: 40px;
+          padding-left: 10px;
+          border-radius: 5px;
+          border: 1px solid rgb(190, 190, 190);
         }
 
+        .ageInput {
+          height: 40px;
+          width: 50px;
+          padding-left: 7px;
+        }
 
+        .preferenceInput {
+          width: 340px;
+          height: 40px;
+        }
+        .infoChangeBtn{
+          width:100px;
+          height:40px;
+        }
+        /* 사진 수정 */
+        .portraitInput{
+          width:150px;
+          height:150px;
+          background-color: aliceblue;
+          position:absolute;
+          opacity: 0;
+        }
+        .portraitPhoto{
+          width:150px;
+          height:150px;
+          position:absolute;
+        }
         /* 정보수정 끝 */
         footer {
           width: 100%;
@@ -156,7 +194,8 @@
       <div class="myPageContainer">
         <div class="sideBar">
           <div class="sideMyPortrait">
-            초상화
+            <img src="/webapp/resources/images/default_profile.png" class="portraitPhoto" id="portraitPhoto">
+            <input type="file" class="portraitInput" id="portraitInput">
           </div>
           <div class="sideMyNick">OO회원님 안녕하세요.</div>
           <ul class="sideBarMenuBox">
@@ -172,35 +211,50 @@
           </div>
           <div class="contentsMiddle">
             <div class="contentsMiddleIn">
-              <ul>
-                <li>Email-ID</li>
-                <li>닉네임</li>
-                <li>나이</li>
-                <li>성별</li>
-                <li>연락처</li>
-                <li>여행 선호방식</li>
-                <li>신고 횟수</li>
-                <li>자기소개</li>
-              </ul>
-              <ul>
-                <li><input type="text" value="Test1234@naver.com" disabled></li>
-                <li><input type="text" value="닉네임"></li>
-                <li><input type="number" min="14" max="100"></li>
-                <li><input type="radio" name="gender" value="male"> 남성 &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female"> 여성</li>
-                <li><input type="text" value="걍 합쳐버릴까.."></li>
-                <li>
-                  <select>
-                    <option value="">선택하세요</option>
-                    <option value="1">여행선호1</option>
-                    <option value="2">여행선호3</option>
-                    <option value="3">여행선호3</option>
-                    <option value="4">여행선호4</option>
-                    <option value="5">여행선호5</option>
-                  </select>
-                </li>
-                <li>0</li>
-                <li><textarea cols="50" rows="5" maxlength="120" style="resize: none;" placeholder="자기소개를 입력해주세요."></textarea></li>
-              </ul>
+              <form action="#" method="post" class="infoForm">
+                <ul class="leftInfo">
+                  <li><div class="sideMyPortrait">
+                    <img src="/webapp/resources/images/default_profile.png" class="portraitPhoto" id="portraitPhoto">
+                    <input type="file" class="portraitInput" id="portraitInput">
+                  </div></li>
+                  <li>&nbsp;</li>
+                  <li>&nbsp;</li>
+                  <li>Email-ID</li>
+                  <li>닉네임</li>
+                  <li>나이</li>
+                  <li>성별</li>
+                  <li>연락처</li>
+                  <li>여행 선호방식</li>
+                  <li>신고 횟수</li>
+                  <li>자기소개</li>
+                </ul>
+                <ul class="rightInfo">
+                  <li>&nbsp;</li>
+                  <li>&nbsp;</li>
+                  <li>&nbsp;</li>
+                  <li>&nbsp;</li>
+                  <li><input type="text" value="Test1234@naver.com" class="emailInput" disabled></li>
+                  <li><input type="text" value="닉네임" class="nickInput"></li>
+                  <li><input type="number" min="14" max="100" class="ageInput"></li>
+                  <li><input type="radio" name="gender" value="male"> 남성 &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"
+                      name="gender" value="female"> 여성</li>
+                  <li><input type="text" value="걍 합쳐버릴까.." class="phoneInput"></li>
+                  <li>
+                    <select class="preferenceInput">
+                      <option value="0">선택하세요</option>
+                      <option value="1">여행선호1</option>
+                      <option value="2">여행선호3</option>
+                      <option value="3">여행선호3</option>
+                      <option value="4">여행선호4</option>
+                      <option value="5">여행선호5</option>
+                    </select>
+                  </li>
+                  <li>0</li>
+                  <li><textarea cols="50" rows="5" maxlength="120" style="resize: none;"
+                      placeholder="자기소개를 입력해주세요."></textarea></li>
+                </ul>
+                <button type="button" class="infoChangeBtn">하이</button>
+              </form>
             </div>
           </div>
         </div>
@@ -208,6 +262,17 @@
       <footer>
         푸우터
       </footer>
+
+      <script>
+        'use strict'
+        document.querySelector("#portraitInput").onchange = function(){
+          let reader = new FileReader();
+          reader.onload = function(e){
+            document.querySelector("#portraitPhoto").src = e.target.result;
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      </script>
     </body>
 
     </html>

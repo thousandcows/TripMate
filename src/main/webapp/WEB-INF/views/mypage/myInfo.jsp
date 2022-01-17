@@ -126,8 +126,8 @@
         }
 
         .contentsMiddleIn ul:first-child li {
-          height:80px;
-          margin-left: 100px;
+          height:70px;
+          margin-left: 120px;
           text-align: left;
         }
 
@@ -139,9 +139,26 @@
         }
 
         .contentsMiddleIn ul:last-child li {
-          height:80px;
+          height:70px;
         }
 
+        /* input들 */
+        .emailInput, .nickInput, .phoneInput{
+          width:280px;
+          height:40px;
+          padding-left:10px;
+          border-radius: 5px;
+          border:1px solid rgb(190, 190, 190);
+        }
+        .ageInput{
+          height:40px;
+          width:50px;
+          padding-left: 7px;
+        }
+        .preferenceInput{
+          width:340px;
+          height:40px;
+        }
 
         /* 정보수정 끝 */
         footer {
@@ -183,14 +200,14 @@
                 <li>자기소개</li>
               </ul>
               <ul>
-                <li><input type="text" value="Test1234@naver.com" disabled></li>
-                <li><input type="text" value="닉네임"></li>
-                <li><input type="number" min="14" max="100"></li>
+                <li><input type="text" value="Test1234@naver.com" class="emailInput" disabled></li>
+                <li><input type="text" value="닉네임" class="nickInput"></li>
+                <li><input type="number" min="14" max="100" class="ageInput"></li>
                 <li><input type="radio" name="gender" value="male"> 남성 &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female"> 여성</li>
-                <li><input type="text" value="걍 합쳐버릴까.."></li>
+                <li><input type="text" value="걍 합쳐버릴까.." class="phoneInput"></li>
                 <li>
-                  <select>
-                    <option value="">선택하세요</option>
+                  <select class="preferenceInput">
+                    <option value="0">선택하세요</option>
                     <option value="1">여행선호1</option>
                     <option value="2">여행선호3</option>
                     <option value="3">여행선호3</option>
