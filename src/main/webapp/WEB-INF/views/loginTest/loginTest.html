@@ -116,6 +116,11 @@
           color: cornflowerblue;
         }
 
+        .findPwEmailCheckConfirm {
+          text-align: left;
+          padding-left: 50px;
+        }
+
         .emailIdConfirm {
           text-align: left;
         }
@@ -235,6 +240,33 @@
         .findPwBtn:hover {
           opacity: 0.9;
         }
+
+        /* 변경할 비밀번호 입력하는 창 */
+        .verificationOk {
+          display:none;
+        }
+        .changePwInput{
+          width: 64%;
+          height: 40px;
+          border: 1px solid gray;
+          padding-left: 10px;
+          border-radius: 5px;
+        }
+        .changePwBtn{
+          border: none;
+          height: 38px;
+          width: 60px;
+          background-color: #20B2AA;
+          border-radius: 5px;
+          color: white;
+          font-size: 16px;
+          margin-left: 8px;
+        }
+        .changePwBtn:hover{opacity: 0.9;}
+        .changePwConfirm{
+          text-align: left;
+          padding-left: 50px;
+        }
       </style>
     </head>
 
@@ -284,7 +316,7 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body modal-signupBody">
-                  <form action="/member/normalSignup" method="post" onsubmit="return signupGo()">
+                  <form action="/member/normalSignup" method="post" id="signupForm">
                     <div class="signupBoxs">
                       <input type="text" placeholder="이메일 주소" id="signupEmail" class="signupEmailInput" name="emailID"
                         required><button type="button" class="signupCheckBtn" id="signupEmailCheckBtn">중복확인</button>
@@ -300,7 +332,7 @@
                       <input type="text" maxlength="4" placeholder="1234" class="phoneInput" id="signupPhone2" required>
                       -
                       <input type="text" maxlength="4" placeholder="5678" class="phoneInput" id="signupPhone3"
-                        required><button type="button" class="signupCheckBtn" id="signupPhoneCheckBtn">인증?</button>
+                        required><button type="button" class="signupCheckBtn" id="signupPhoneCheckBtn">체크</button>
                       <div class="phoneConfirm signupInputConfirm"></div>
                       <input type="text" name="phone" id="signupPhone">
                     </div>
@@ -316,7 +348,7 @@
                       <div class="pwReConfirm signupInputConfirm"></div>
                     </div>
                     <div class="signupBoxs">
-                      <button class="signupGoBtn">회원가입</button>
+                      <button type="button" class="signupGoBtn" id="signupGoBtn">회원가입</button>
                     </div>
                   </form>
                 </div>
@@ -340,9 +372,17 @@
                   <div class="loginInputBox">
                     <input type="text" class="findPwInput" id="findPwInput" placeholder="찾으실 Email을 입력해주세요." required>
                     <button type="button" class="findPwBtn" id="findPwBtn">발송</button>
-                    <div class="signupInputConfirm normalLoginConfirm">테스트텍스트</div>
-                    <input type="text" class="findPwInput" placeholder="인증번호 입력">
-                    <button type="button" class="findPwBtn">인증</button>
+                    <div class="findPwEmailCheckConfirm signupInputConfirm"></div>
+                    <input type="text" class="findPwInput" id="verificationInput" placeholder="인증번호 입력">
+                    <button type="button" class="findPwBtn" id="verificationBtn">인증</button>
+                    <div class="verificationCodeConfirm signupInputConfirm"></div>
+                  </div>
+                  <div class="verificationOk">
+                    <form action="/member/findPwChange" method="post" id="changePwForm">
+                      <input type="text" class="changePwInput" id="changePwInput" name="pw" placeholder="변경할 비밀번호를 입력해주세요."><button type="button"
+                        class="changePwBtn" id="changePwBtn">변경</button>
+                        <div class="changePwConfirm signupInputConfirm"></div>
+                    </form>
                   </div>
                   <div class="modal-footer">
                     <button class="btn btn-primary signupBack" data-bs-target="#exampleModalToggle"
@@ -468,6 +508,18 @@
               pwSubmitCheck = false;
             }
             if (signupPw.value == signupPwRe.value) {
+              document.querySelector(".pwReConfirm").innerHTML = "";
+              pwReSubmitCheck = true;
+            } else {
+              document.querySelector(".pwReConfirm").innerHTML = "";
+              pwReSubmitCheck = false;
+            }
+          });
+          signupPwRe.addEventListener("input", () => {
+            if(signupPwRe.value == ""){
+              document.querySelector(".pwReConfirm").innerHTML = "";
+              pwReSubmitCheck = false;
+            } else if (signupPw.value == signupPwRe.value && signupPwRe.value != "") {
               document.querySelector(".pwReConfirm").style.color = "cornflowerblue";
               document.querySelector(".pwReConfirm").innerHTML = "PW가 일치합니다.";
               pwReSubmitCheck = true;
@@ -477,19 +529,8 @@
               pwReSubmitCheck = false;
             }
           });
-          signupPwRe.addEventListener("input", () => {
-            if (signupPw.value == signupPwRe.value) {
-              document.querySelector(".pwReConfirm").style.color = "cornflowerblue";
-              document.querySelector(".pwReConfirm").innerHTML = "PW가 일치합니다.";
-              pwReSubmitCheck = true;
-            } else {
-              document.querySelector(".pwReConfirm").style.color = "red";
-              document.querySelector(".pwReConfirm").innerHTML = "PW가 일치하지 않습니다.";
-              pwReSubmitCheck = false;
-            }
-          })
-          // 회원가입 완료 버튼
-          function signupGo() {
+          // 회원가입 완료 버튼 onsubmit="return 메서드()" 쓰면 편한데 알수없는 에러나서 그냥 이방식으로 결정
+          document.querySelector("#signupGoBtn").addEventListener("click", () => {
             if (!emailSubmitCheck) {
               alert("이메일을 확인해주세요.");
               return false;
@@ -514,7 +555,12 @@
               alert("입력된 비밀번호가 다릅니다.");
               return false;
             }
-          }
+            if(confirm("해당 정보로 가입하시겠습니까?")){
+              document.querySelector("#signupForm").submit();
+            }
+            return false;
+          });
+
           // 일반 회원가입 끝
 
           // 일반 로그인 시작
@@ -538,7 +584,7 @@
                 location.reload();
               }
             })
-          })
+          });
 
           // 카카오 로그인
           document.querySelector("#kakaoLogin").addEventListener("click", () => {
@@ -548,7 +594,61 @@
             }).done(function (res) {
               location.href = res;
             })
-          })
+          });
+
+          // 비밀번호 찾기
+          let verificationCode = null; // 인증코드
+          let findPwEmail = null; // 찾을 이메일
+          document.querySelector("#findPwBtn").addEventListener("click", () => {
+            findPwEmail = document.querySelector("#findPwInput").value;
+            $.ajax({
+              url: '/member/findPw',
+              type: 'post',
+              data: { "emailID": findPwEmail }
+            }).done(function (res) {
+              if (res == 0) {
+                document.querySelector(".findPwEmailCheckConfirm").style.color = "red";
+                document.querySelector(".findPwEmailCheckConfirm").innerHTML = "카카오계정 회원이거나 등록되지 않은 Email입니다.";
+              } else {
+                alert("이메일로 인증번호가 발송되었습니다.");
+                document.querySelector(".findPwEmailCheckConfirm").innerHTML = "";
+                verificationCode = "";
+                verificationCode = res;
+                console.log(verificationCode);
+              }
+            })
+          });
+
+          // 비밀번호 인증코드 확인
+          document.querySelector("#verificationBtn").addEventListener("click", () => {
+            let verificationInput = document.querySelector("#verificationInput").value;
+            if (verificationInput != verificationCode) {
+              document.querySelector(".verificationCodeConfirm").style.color = "red";
+              document.querySelector(".verificationCodeConfirm").innerHTML = "인증번호가 맞지않습니다.";
+            } else {
+              document.querySelector(".verificationCodeConfirm").innerHTML = "";
+              document.querySelector(".verificationOk").style.display = "block";
+            }
+          });
+
+          // 비밀번호 변경
+          document.querySelector("#changePwBtn").addEventListener("click", () => {
+            let pwRegex = /^[A-Za-z0-9\S]{8,16}$/;
+            let changePw = document.querySelector("#changePwInput").value;
+            if(!pwRegex.test(changePw)){
+              document.querySelector(".changePwConfirm").style.color = "red";
+              document.querySelector(".changePwConfirm").innerHTML = "공백 없는 8~16자로 입력해주세요.";
+              return false;
+            }
+            // 컨펌창 하나 띄워서 확인
+            if(confirm("변경하시겠습니까?")){
+              alert("변경되었습니다.");
+              document.querySelector("#changePwForm").submit();
+            } else {
+              return false;
+            }
+          });
+
         }
       </script>
 

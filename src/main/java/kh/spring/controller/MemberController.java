@@ -1,10 +1,15 @@
 package kh.spring.controller;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,12 +75,15 @@ public class MemberController {
 		return String.valueOf(memberService.phoneCheck(phone));
 	}
 
-	// 일반 회원가입
+	// 일반 회원가입&즉시 로그인
 	@RequestMapping("normalSignup")
 	public String normalSignup(String emailID, String nick, String phone, String pw) {
 		memberService.normalSignup(emailID, nick, phone, pw);
+		MemberDTO dto = memberService.normalLoginSelectAll(emailID, pw);
+		session.setAttribute("loginSeq", dto.getSeq());
+		session.setAttribute("loginEmailID", dto.getEmailID());
+		session.setAttribute("loginNick", dto.getNick());
 		return "redirect:/";
-		// 바로 로그인되게 해버릴까 고민중
 	}
 
 	// 일반 로그인
@@ -97,12 +105,58 @@ public class MemberController {
 		}
 	}
 	
+	String findPwTargetEmail = "";
 	// PW 찾기
-	@RequestMapping("pwFindPopup")
-	public String pwFindPopup () {
-		return "/loginTest/popTest";
+	@ResponseBody
+	@RequestMapping(value = "findPw", produces = "application/text;charset=utf-8")
+	public String pwFindPopup (String emailID) throws AddressException, MessagingException {
+		System.out.println("PW찾을 email : " + emailID);
+		int result = memberService.emailCheck(emailID);
+		if (result == 0) {
+			return "0";
+		}
+		// 이메일 발송 시작
+		findPwTargetEmail = emailID; // 받는사람의 이메일
+		
+		// 보내는 개발자?의 메일계정
+		String user = "sfchampion724@naver.com";
+		String password = "wkdfmshd9922";
+		
+		// SMTP 서버 정보 설정
+		Properties props = new Properties();
+		props.put("mail.smtp.host", "smtp.naver.com");
+		props.put("mail.smtp.port", 465);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.ssl.trust", "smtp.naver.com");
+		
+		// SMTP 서버정보랑 사용자등록해서 Session 인스턴스 생성
+		Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(user, password);
+			}
+		});
+		
+		// Message 클래스로 수신자랑 내용 제목의 메세지 전달
+		MimeMessage message = new MimeMessage(mailSession);
+		message.setFrom(new InternetAddress(user));
+		message.addRecipient(Message.RecipientType.TO, new InternetAddress(findPwTargetEmail));
+		message.setSubject("TripMate PW찾기 인증번호입니다.");
+		int verificationCode = (int) (Math.random() * (9999 - 1000)) + 1000;
+		message.setText("TripMate PW찾기 인증번호는 : " + verificationCode + " 입니다.");
+		Transport.send(message);
+		return String.valueOf(verificationCode);
 	}
-
+	
+	// PW찾기 후 비밀번호 변경
+	@RequestMapping("findPwChange")
+	public String findPwChange(String pw) {
+		System.out.println("변경할 대상 이메일 : " + findPwTargetEmail);
+		memberService.findPwChange(findPwTargetEmail, pw);
+		return "redirect:/";
+	}
+	
+	
 	///////////// 카카오 로그인 시작 /////////////
 	private final String CLIENT_ID = "b7b0a7f6722957ddef971b2ff4061bd7"; // REST ID
 	private final String REDIRECT_URL = "http://localhost/member/kakaoLogin"; // 리퀘스트시킬 URL(나중엔 아이피로 변경 카카오 디벨로퍼에서도
@@ -129,8 +183,8 @@ public class MemberController {
 
 		Gson gson = new Gson();
 		// POST방식으로 key=value 데이터를 요청(카카오쪽으로)
-		RestTemplate rt = new RestTemplate(); // 기본제공되는 API
-
+		RestTemplate rt = new RestTemplate(); // 곧 지원중지될 API라 WebClient이걸 공부해야될듯
+		
 		// HttpHeader 오브젝트 생성
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); // 내가 보낼 데이터 타입이 key=value값이다

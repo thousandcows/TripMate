@@ -56,6 +56,14 @@ public class MemberDAO {
 		return mybatis.selectOne("Member.normalLoginSelectAll", map);
 	}
 	
+	// PW찾기 비밀번호 변경
+	public int findPwChange(String findPwTargetEmail, String encryptPw) {
+		Map<String, String> map = new HashMap<>();
+		map.put("findPwTargetEmail", findPwTargetEmail);
+		map.put("encryptPw", encryptPw);
+		return mybatis.update("Member.findPwChange", map);
+	}
+	
 	// 카카오 회원가입여부 확인
 	public int kakaoLoginLookup(String kakaoLoginEmail) {
 		return mybatis.selectOne("Member.kakaoLoginLookup", kakaoLoginEmail);
