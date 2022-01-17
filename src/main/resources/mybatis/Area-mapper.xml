@@ -34,8 +34,12 @@
 	</select>
 	
 	<update id="replyUpdate">
-		update area_reply set mem_nick = #{mem_nick}, photo = #{photo}, text = #{text}, rate=${rate}
+		update area_reply set mem_nick = #{mem_nick}, photo = #{photo}, text = #{text} where seq=#{seq}
 	</update>
+	
+	<select id="findPhoto" resultType="string">
+		select photo from area_reply where seq = #{value}
+	</select>
 	
 	<select id="countRate" resultType="double">
 		select avg(rate) from area_reply where area_seq = #{value}
