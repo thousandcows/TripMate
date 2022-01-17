@@ -46,6 +46,12 @@ public class MemberService {
 		return memberDao.normalLoginSelectAll(emailID, encryptPw);
 	}
 	
+	// PW찾기 패스워드 변경
+	public int findPwChange(String findPwTargetEmail, String pw) {
+		String encryptPw = EncryptUtils.getSHA512(pw);
+		return memberDao.findPwChange(findPwTargetEmail, encryptPw);
+	}
+	
 	///// 카카오 로그인 /////
 	// 카카오 사용자 가입여부 확인
 	public int kakaoLoginLookup(String kakaoLoginEmail) {
