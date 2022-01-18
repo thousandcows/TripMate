@@ -143,7 +143,7 @@
             <div> > </div>
             <div class="community"><a href="">커뮤니티</a></div>
             <div> > </div>
-            <div class="partyboard"><a href="">동행게시판</a></div>
+            <div class="partyboard"><a href="/companyboard/list?cpage=1">동행게시판</a></div>
         </div>
 
         <div class="searchbar">
@@ -188,7 +188,7 @@
 
         <div class="page">
 			<div class="paging">
-                ${navi  }
+               <div>${navi  }</div>
             </div>
 		</div>
     </div>

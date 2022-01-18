@@ -170,6 +170,23 @@
             text-align: right;
             padding: 20px 5px 0px 0px;
         }
+        
+        /* 좋아요, 댓글란  */
+        .like_n_rep{
+        	border: 1px solid red;
+        	width: 100%;
+        	height: 30px;
+        	text-align: right;
+        }
+        
+        .like_n_rep>div{
+        	border: 1px solid red;
+        	height:30px;
+        	width: 55px;
+        	text-align:center;
+        	float: left;
+        	line-height:30px;
+        }
     </style>
     
 </head>
@@ -247,7 +264,7 @@
                 </div>
     
                 <div class="write_con">
-                    <textarea id="summernote"  name="contents" style="display:none">${dto.contents }</textarea>
+                    <textarea id="summernote"  name="contents">${dto.contents }</textarea>
                 </div>
     
                 <div class="button">
@@ -257,6 +274,15 @@
                     <button type=button id=recruitEnd>모집마감</button>
                     <button type=button id=modOk style="display: none;">수정완료</button>
                     <button type=button id=modCancel style="display: none;">취소</button>
+                </div>
+                
+                <div class="like_n_rep">
+                	<div id=like_icon>
+                		<a class="heart">
+           					<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${rec_count}</span>
+       					</a>
+                	</div>
+                	<div id=rep_icon></div>
                 </div>
             </div>
         </form>
@@ -268,8 +294,8 @@
 		var $j360 = jQuery.noConflict();
 	
 	
-		$j360("#back").on("click", () => {
-			location.href="/companyboard/list";
+		$j360("#back").on("click", function(){
+			history.back();
 		})
 		
 		$j360("#delete").on("click", function(){
@@ -298,7 +324,7 @@
 			backupEndDate = $("#endDateBefore").val();
 			backupGender = $("#genderInput").val();
 			backupTitle = $("#title").val();
-			backupContents = $("#contents").val();		
+			backupContents = $("#summernote").val();		
 
 			// 폼 형태 바꾸기 및 읽기 전용 해제
 			$("#tourInput").css("display", "none");
@@ -412,5 +438,50 @@
     	$('#summernote').summernote('disable');
     });
     </script> 
+    
+    <!-- 좋아요 -->
+    <script>
+    $(document).ready(function () {
+
+        var heartval = ${heart};
+
+        if(heartval>0) {
+            console.log("하트값..?" + heartval);
+            $("#heart").prop("src", "/images/like.png");
+            $(".heart").prop('name',heartval)
+        }
+        else {
+            console.log("하트값..?" + heartval);
+            $("#heart").prop("src", "/images/dislike.png");
+            $(".heart").prop('name',heartval)
+        }
+
+        $(".heart").on("click", function () {
+
+            var that = $(".heart");
+            
+            console.log("여기까지 작동함?");
+
+            var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name')};
+            
+            console.log("여기까지 작동함2?");
+            
+            $.ajax({
+                url :'/companyboard/heart',
+                type :'POST',
+                data : sendData,
+                success : function(data){
+                    that.prop('name',data);
+                    if(data==1) {
+                        $('#heart').prop("src","/images/like.png");
+                    }
+                    else{
+                        $('#heart').prop("src","/images/dislike.png");
+                    }
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>

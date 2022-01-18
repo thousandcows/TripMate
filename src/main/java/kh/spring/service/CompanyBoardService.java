@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.CompanyBoardDAO;
+import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.CompanyBoardDTO;
 import kh.spring.statics.Statics;
 
@@ -19,8 +20,8 @@ public class CompanyBoardService {
 		return cdao.insert(dto);
 	}
 	
-	public List<CompanyBoardDTO> selectAll(){
-		return cdao.selectAll();
+	public List<CompanyBoardDTO> selectAll(int start, int end){
+		return cdao.selectAll(start, end);
 	}
 	
 	public CompanyBoardDTO selectBySeq(int seq) {
@@ -46,7 +47,7 @@ public class CompanyBoardService {
 	
 	public String getPageNavi(int currentPage) throws Exception{
 
-		int recordTotalCount = this.getRecordCount(); 
+		int recordTotalCount = cdao.getRecordCount(); 
 		int pageTotalCount = 0;
 			
 		if(recordTotalCount % Statics.RECORD_COUNT_PER_PAGE == 0) {
@@ -55,11 +56,11 @@ public class CompanyBoardService {
 			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE + 1;
 		}
 
-		if(currentPage < 1) {
-			currentPage = 1;
-		}else if(currentPage > pageTotalCount) {
-			currentPage = pageTotalCount;
-		} 
+//		if(currentPage < 1) {
+//			currentPage = 1;
+//		}else if(currentPage > pageTotalCount) {
+//			currentPage = pageTotalCount;
+//		} 
 			
 		int startNavi = (currentPage-1) / Statics.NAVI_COUNT_PER_PAGE   * Statics.NAVI_COUNT_PER_PAGE + 1;	
 		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;
@@ -83,15 +84,15 @@ public class CompanyBoardService {
 		String pageNavi = "";
 
 		if(needPrev) {
-			pageNavi += "<a href='/list.board?cpage="+(startNavi-1)+"'><</a> "; 
+			pageNavi += "<a href='/companyboard/list?cpage="+(startNavi-1)+"'><</a> "; 
 		}
 			
 		for(int i = startNavi ; i <= endNavi; i++) {
-			pageNavi += "<a href='/list.board?cpage="+i+"'>" + i + "</a> ";
+			pageNavi += "<a href='/companyboard/list?cpage="+i+"'>" + i + "</a> ";
 		}
 		
 		if(needNext) {
-			pageNavi += "<a href='/list.board?cpage="+(endNavi+1)+"'>></a>";
+			pageNavi += "<a href='/companyboard/list?cpage="+(endNavi+1)+"'>></a>";
 		}
 
 		return pageNavi;	
@@ -100,7 +101,7 @@ public class CompanyBoardService {
 
 	public int getPageTotalCount() throws Exception{
 
-		int recordTotalCount = this.getRecordCount();
+		int recordTotalCount = cdao.getRecordCount();
 
 		int pageTotalCount = 0;
 
@@ -111,4 +112,19 @@ public class CompanyBoardService {
 		}
 		return pageTotalCount;	
 	}
+	
+	// 좋아요
+	public void insertBoardLike(ComBoardLikeDTO dto) throws Exception {
+        cdao.insertBoardLike(dto);
+        cdao.updateBoardLike(dto.getPar_seq());
+    }
+	
+	public void deleteBoardLike(ComBoardLikeDTO dto) throws Exception {
+        cdao.deleteBoardLike(dto);
+        cdao.updateBoardLike(dto.getPar_seq());
+    }
+	
+	public  int getBoardLike(ComBoardLikeDTO dto) throws Exception {
+        return cdao.getBoardLike(dto);
+}
 }

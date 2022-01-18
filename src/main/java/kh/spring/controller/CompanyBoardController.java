@@ -2,12 +2,19 @@ package kh.spring.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.CompanyBoardDTO;
+import kh.spring.dto.MemberDTO;
 import kh.spring.service.CompanyBoardService;
 import kh.spring.statics.Statics;
 
@@ -18,11 +25,32 @@ public class CompanyBoardController {
 	@Autowired
 	private CompanyBoardService cbs;
 	
+	@Autowired
+	private HttpSession session;
+	
 	@RequestMapping("list")
-	public String list(Model model) {
+	public String list(Model model, HttpServletRequest request) throws Exception {
+		String cpage = request.getParameter("cpage");
+		if(cpage == null) {cpage = "1";}
 		
-		List<CompanyBoardDTO> list = cbs.selectAll();
-		model.addAttribute("list",list);
+		int currentPage = Integer.parseInt(request.getParameter("cpage"));
+		int pageTotalCount = cbs.getPageTotalCount();
+		
+		if(currentPage < 1) {
+			currentPage = 1;
+		}
+		if(currentPage > pageTotalCount) {
+			currentPage = pageTotalCount;
+		}
+		
+		int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
+		int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
+		
+		String navi = cbs.getPageNavi(currentPage);	
+		
+		List<CompanyBoardDTO> list = cbs.selectAll(start, end);
+		model.addAttribute("list", list);
+		model.addAttribute("navi", navi);
 		
 		return "companyboard/list";
 	}
@@ -37,16 +65,27 @@ public class CompanyBoardController {
 	@RequestMapping("writeProc")
 	public String writeProc(CompanyBoardDTO dto) {
 		int result = cbs.insert(dto);
-		return "redirect:/companyboard/list"; 
+		return "redirect:/companyboard/list?cpage=1"; 
 	}
 	
 	// 글 제목 클릭시 상세페이지 이동 메소드
 	@RequestMapping("detail")
-	public String detail(int seq, Model model) {
+	public String detail(int seq, Model model) throws Exception {
+		
+		//int userid = (int) session.getAttribute("loginSeq");
+		
 		CompanyBoardDTO dto = cbs.selectBySeq(seq);
 		int result = cbs.addViewCount(seq);
-		
 		model.addAttribute("dto",dto);
+		
+		// 좋아요 반영
+		ComBoardLikeDTO c_dto = new ComBoardLikeDTO();
+		c_dto.setPar_seq(seq);
+		c_dto.setMem_seq(1);
+		int boardlike = cbs.getBoardLike(c_dto);
+		
+		model.addAttribute("heart", boardlike);
+		
 		return "companyboard/detail";
 	}
 	
@@ -61,7 +100,38 @@ public class CompanyBoardController {
 	@RequestMapping("deleteProc")
 	public String deleteProc(int seq) throws Exception{
 		int result = cbs.delete(seq);
-		return "redirect:/companyboard/list";
+		return "redirect:/companyboard/list?cpage=1";
 	}	
+	
+	// 좋아요
+	@ResponseBody
+    @RequestMapping(value = "heart", method = RequestMethod.POST, produces = "application/json")
+    public int heart(HttpServletRequest httpRequest) throws Exception {
+
+		
+        int heart = Integer.parseInt(httpRequest.getParameter("heart"));
+        //int userid = (int) session.getAttribute("loginSeq");
+        
+        int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));
+
+        ComBoardLikeDTO dto = new ComBoardLikeDTO();
+
+        dto.setPar_seq(boardId);
+        dto.setMem_seq(1);
+        
+        if(heart >= 1) {
+            cbs.deleteBoardLike(dto);
+            heart=0;
+        } else {
+            cbs.insertBoardLike(dto);
+            heart=1;
+        }
+
+        return heart;
+
+    }
+	
+	
+	
 
 }
