@@ -76,12 +76,14 @@ public class MemberController {
 
 	// 일반 회원가입&즉시 로그인
 	@RequestMapping("normalSignup")
-	public String normalSignup(String emailID, String nick, String phone, String pw) {
-		memberService.normalSignup(emailID, nick, phone, pw);
+	public String normalSignup(String emailID, String nick, String phone, String pw, String gender) {
+		memberService.normalSignup(emailID, nick, phone, pw, gender);
+		System.out.println("회원가입 사용자 성별 : " + gender);
 		MemberDTO dto = memberService.normalLoginSelectAll(emailID, pw);
 		session.setAttribute("loginSeq", dto.getSeq());
 		session.setAttribute("loginEmailID", dto.getEmailID());
 		session.setAttribute("loginNick", dto.getNick());
+		session.setAttribute("loginGender", dto.getGender());
 		return "redirect:/";
 	}
 

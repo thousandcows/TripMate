@@ -18,7 +18,7 @@
 	</select>
 	
 	<insert id="normalSignup">
-		insert into member (seq, emailid, pw, nick, phone, violation) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, 0)
+		insert into member (seq, emailid, pw, nick, phone, gender, violation) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, #{gender}, 0)
 	</insert>
 	
 	<select id="normalLoginCheck" resultType="int">

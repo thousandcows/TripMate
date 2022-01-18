@@ -125,6 +125,7 @@
         pwReSubmitCheck = false;
       }
     });
+
     // 회원가입 완료 버튼 onsubmit="return 메서드()" 쓰면 편한데 알수없는 에러나서 그냥 이방식으로 결정
     document.querySelector("#signupGoBtn").addEventListener("click", () => {
       if (!emailSubmitCheck) {
@@ -144,6 +145,18 @@
 
       if (!pwSubmitCheck) {
         alert("비밀번호를 확인해주세요.");
+        return false;
+      }
+      // 성별 체크
+      let genderCheck = false;
+      for(let i = 0; i < 2; i++){
+        if(document.querySelectorAll('.genderInput')[i].checked){
+          genderCheck = true;
+        }
+      }
+      console.log("체크된 성별값:" + genderCheck);
+      if(!genderCheck){
+        alert("성별을 체크해주세요.");
         return false;
       }
 

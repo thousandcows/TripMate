@@ -34,9 +34,9 @@ public class MemberService {
 	}
 	
 	// 일반 회원가입
-	public int normalSignup(String emailID, String nick, String phone, String pw) {
+	public int normalSignup(String emailID, String nick, String phone, String pw, String gender) {
 		String encryptPw = EncryptUtils.getSHA512(pw);
-		return memberDao.normalSignup(emailID, nick, phone, encryptPw);
+		return memberDao.normalSignup(emailID, nick, phone, encryptPw, gender);
 	}
 	
 	// 일반 로그인체크
