@@ -13,12 +13,13 @@ public class MemberDTO {
 	private String text;
 	private String photo;
 	private int violation;
+	private int sns_division;
 	public MemberDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public MemberDTO(int seq, String emailID, String pw, String nick, String gender, int age, String phone,
-			String ph_Open, String preference, String text, String photo, int violation) {
+			String ph_Open, String preference, String text, String photo, int violation, int sns_division) {
 		super();
 		this.seq = seq;
 		this.emailID = emailID;
@@ -32,6 +33,7 @@ public class MemberDTO {
 		this.text = text;
 		this.photo = photo;
 		this.violation = violation;
+		this.sns_division = sns_division;
 	}
 	public int getSeq() {
 		return seq;
@@ -104,5 +106,11 @@ public class MemberDTO {
 	}
 	public void setViolation(int violation) {
 		this.violation = violation;
+	}
+	public int getSns_division() {
+		return sns_division;
+	}
+	public void setSns_division(int sns_division) {
+		this.sns_division = sns_division;
 	}
 }

@@ -170,14 +170,9 @@
         }
 
         .rp_btns{
-            overflow: auto;
             width:10%;
             text-align: center;
-        }
-
-        .rp_btns>div{
-            float: right;
-        }        
+        }  
         
         /* 링크 속성 지우기 */
         a { text-decoration:none  } 
@@ -260,24 +255,60 @@
    	         <div class="rp_write" style="text-align: right;"><button type=submit id="write_btn">작성하기</button></div>
  	      </div>
         </form>
+        <c:forEach var="rp" items="${rp_list }">
+        <form action="/tourreply/modify" method="post" id="frmRpMod" enctype="multipart/form-data">
         <div class="reply_list">
             <hr>
-            <c:forEach var="i" items="${list }">
             <div class="reply_title">
-                <div class="rp_id">${i.mem_seq }</div>
-                <div class="rp_time">${i.writen_time }</div>
+           		<input type=hidden value="${rp.seq}" name=seq>
+            	<input type=hidden value="${rp.par_seq}" name=par_seq>
+                <div class="rp_id">${rp.mem_seq }</div>
+                <div class="rp_time" name="writen_date">${rp.writen_time }</div>
             </div>
-            <br>
+            <br>            
             <div class="reply_contents " style="text-align: right;">
-                <div class="rp_content"><input type=text value="${i.contents }"></div>
+                <div class="rp_content"><input type=text value="${rp.contents }" class="rp_contents" id="rp_contents${rp.seq }" name="contents" readonly></div>
                 <div class="rp_btns">
-                    <div class="rp_delete"><button type=button id="rp_del_btn" style="color: red;"><b>X</b></button></div>
-                    <div class="rp_modify"><button type=button id="rp_mod_btn"><i class="fas fa-tools"></i></button></div>                    
+                    <button type=button class="rp_mod_btn" id="rp_mod_btn${rp.seq }">fix</button>
+                    <button type=button class="rp_del_btn" id="rp_del_btn${rp.seq }" style="color: red;"><b>del</b></button>
+                    <button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none;">mod</button>  
+                    <button type=button class="rp_cancle_btn" id="rp_cancle_btn${rp.seq }" style="color: red; display: none;"><b>can</b></button>                                       
                 </div>                
-            </div>
-            </c:forEach>
+            </div><br>
         </div>
+        </form>
+        </c:forEach>
     </div>    
+	
+	<script>
+	$(".rp_del_btn").on("click", function(){
+		
+		if(confirm("댓글을 삭제하시겠습니까?")){
+			let id= this.id.substr(10);
+			location.href = "/tourreply/delete?rpseq="+id+"&bseq=${dto.seq}";
+		}
+	})
+	</script>
+	
+	<script>
+	$(".rp_mod_btn").on("click", function(){
+		let id= this.id.substr(10);
+		
+		rpContents = $("#contents"+id).val();
+		$("#rp_mod_btn"+id).css("display", "none");
+		$("#rp_del_btn"+id).css("display", "none");
+		$("#rp_cancle_btn"+id).css("display", "inline");
+		$("#rp_modOk_btn"+id).css("display", "inline");
+		$("#rp_contents"+id).removeAttr("readonly");
+	})
+	</script>		
+	
+	<script>
+	$(".rp_cancle_btn").on("click", function(){
+		
+			location.reload();
+	})
+	</script>	
     
     <script>
     $("#write_btn").on("click", function() {
@@ -296,7 +327,7 @@
     <script>
     $("#del").on("click", function() {
 		if (confirm("정말 삭제하시겠습니까?")) {
-			location.href = "/tourboard/delete?seq=${dto.seq}";
+			location.href = "/tourboard/delete?seq=${dto.seq}&par_seq=${rp.par_seq}";
 		}
 	});
     </script>
@@ -307,10 +338,16 @@
     </script>
     
     <script>
+    
+    let bkTitle = "";
+    let bkContents = "";
+    
     $("#mod").on("click", function() {
 
 			bkTitle = $("#title").val();
-			bkContents = $("#contents").val();
+			bkContents = $("#summernote").val();
+			
+			console.log("bkTitle : " + bkTitle + "bkContents : " + bkContents);
 
 			$("#title").removeAttr("readonly");
 			$("#contents").removeAttr("readonly");
@@ -323,36 +360,46 @@
 			
 			// 서머노트 쓰기 활성화
 			$('#summernote').summernote('enable');
-		});
+		});    
+    </script>
+    
+    <script>
+    $("#modCancel").on("click", function() {
+		if (confirm("정말 취소하시겠습니까?")) {
+			
+			location.reload();
+			
+			// 서머노트 쓰기 비활성화
+			$('#summernote').summernote('disable');
+		}
+	})
     </script>
     
     <script>
     $("#modOk").on("click", function() {
-			if (confirm("이대로 수정하시겠습니까?")) {
+    	if($("#modcategory").val()==""){
+    		
+    		alert("말머리를 선택해주세요");
+    		return false;
+    	}
+    	
+    	if($("#title").val()==""){
+    		
+    		alert("제목을 입력해주세요");
+    		return false;
+    	}
+    	
+    	if($("#summernote").val()==""){
+    		
+    		alert("내용을 입력해주세요");
+    		return false;
+    	}   	
+
+		if (confirm("이대로 작성하시겠습니까?")) {
 				$("#frmDetail").submit();
 			}
-		});
+		});   
     </script>
-
-	<script>
-		$("#modCancel").on("click", function() {
-			if (confirm("정말 취소하시겠습니까?")) {
-				$("#title").val(bkTitle);
-				$("#contents").val(bkContents);
-				$("#title").attr("readonly", "");
-				$("#contents").attr("readonly", "");
-				$("#mod").css("display", "inline");
-				$("#del").css("display", "inline");
-				$("#modOk").css("display", "none");
-				$("#modCancel").css("display", "none");
-				$("#discategory").css("display", "inline");
-				$("#modcategory").css("display", "none");
-				
-				// 서머노트 쓰기 비활성화
-				$('#summernote').summernote('disable');
-			}
-		})
-	</script>
 	
 	<script>
     $(document).ready(function() {

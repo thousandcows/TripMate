@@ -1,6 +1,9 @@
 package kh.spring.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
+import java.util.UUID;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -18,12 +21,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
@@ -41,12 +46,6 @@ public class MemberController {
 
 	@Autowired
 	private HttpSession session;
-
-	// 임시로 만든 버튼이동용 메서드
-	@RequestMapping("Proc")
-	public String Proc() {
-		return "/loginTest/loginTest";
-	}
 
 	// 이메일 체크
 	@ResponseBody
@@ -120,7 +119,7 @@ public class MemberController {
 		
 		// 보내는 개발자?의 메일계정
 		String user = "sfchampion724@naver.com";
-		String password = "xptmxmdlqslek";
+		String password = "wkdfmshd9922";
 		
 		// SMTP 서버 정보 설정
 		Properties props = new Properties();
@@ -232,19 +231,23 @@ public class MemberController {
 		// 회원가입처리시켜버리면되겠다.
 		String kakaoLoginEmail = kProfile.kakao_account.email + "/kakao";
 		String kakaoLoginNick = kProfile.properties.nickname;
-
-		int kakaoResult = memberService.kakaoLoginLookup(kakaoLoginEmail);
+		// 이메일 동의 거부했을 경우 id로 구분해야한다
+		int kakaoLoginId = kProfile.id;
+		
+		int kakaoResult = memberService.kakaoLoginLookup(kakaoLoginId);
 		if (kakaoResult == 1) { // 가입내역이 있다면 정보를 빼서 세션에 담고
-			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginEmail);
+			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginId);
 			session.setAttribute("loginSeq", kakaoDto.getSeq());
 			session.setAttribute("loginEmailID", kakaoDto.getEmailID());
 			session.setAttribute("loginNick", kakaoDto.getNick());
+			session.setAttribute("loginKakaoID", kakaoDto.getSns_division());
 		} else { // 가입내역이 없다면 회원가입을 시키고 이메일이랑 닉네임만 세션에 바로 담아버리면 될듯했는데 seq때문에 또 빼와야하네
-			memberService.kakaoSignup(kakaoLoginEmail, kakaoLoginNick);
-			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginEmail);
+			memberService.kakaoSignup(kakaoLoginEmail, kakaoLoginNick, kakaoLoginId);
+			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginId);
 			session.setAttribute("loginSeq", kakaoDto.getSeq());
 			session.setAttribute("loginEmailID", kakaoDto.getEmailID());
 			session.setAttribute("loginNick", kakaoDto.getNick());
+			session.setAttribute("loginKakaoID", kakaoDto.getSns_division());
 		}
 
 		System.out.println("로그인한 카카오 이메일 : " + kProfile.kakao_account.email);
@@ -262,6 +265,26 @@ public class MemberController {
 		session.invalidate(); // 이게 맞을듯
 		return "redirect:/";
 		// 나중에 현재페이지 로그인&로그아웃으로 변경할것
+	}
+	
+	// 마이페이지 이동시 정보 빼오기
+	@RequestMapping("mypageGo")
+	public String mypageGo(Model model) {
+		int loginSeq = (int) session.getAttribute("loginSeq");
+		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
+		System.out.println("보내는 회원정보 : " + dto.getEmailID());
+		System.out.println("보내는 회원정보 : " + dto.getNick());
+		System.out.println("보내는 회원정보 : " + dto.getPhone());
+		model.addAttribute("loginInfo", dto);
+		return "mypage/myInfo";
+	}
+	
+	// 일반회원 정보수정Ok
+	@RequestMapping("myInfoChangeOk")
+	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
+		String realPath = session.getServletContext().getRealPath("myPhoto");
+		memberService.myInfoChangeOk(dto, file, realPath);
+		return "redirect:/member/mypageGo";
 	}
 
 	@ExceptionHandler
