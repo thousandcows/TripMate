@@ -228,7 +228,7 @@
           </div>
           <div class="contentsMiddle">
             <div class="contentsMiddleIn">
-              <form action="#" method="post">
+              <form action="/member/myInfoChangeOk" method="post">
                 <div class="sideMyPortrait">
                   <img src="/resources/images/default_profile.png" class="portraitPhoto" id="portraitPhoto">
                   <input type="file" class="portraitInput" id="portraitInput" name="photo">
@@ -262,11 +262,11 @@
                   </tr>
                   <tr>
                     <th>연락처</th>
-                    <td><input type="text" value="${loginInfo.phone}" class="longInput" name="phone"></td>
+                    <td><input type="text" value=${loginInfo.phone} class="longInput" name="phone"></td>
                   </tr>
                   <tr>
                     <th>여행 선호방식</th>
-                    <td><select class="preferenceInput" name="preference">
+                    <td><select class="preferenceInput" name="preference" value=${loginInfo.preference}>
                         <option value="0">선택하세요</option>
                         <option value="1">여행선호1</option>
                         <option value="2">여행선호3</option>
@@ -277,17 +277,17 @@
                   </tr>
                   <tr>
                     <th>신고 횟수</th>
-                    <td>0</td>
+                    <td>${loginInfo.violation}</td>
                   </tr>
                   <tr>
                     <th calss="txtHead">자기 소개</th>
                     <td><textarea cols="50" rows="5" maxlength="120" style="resize: none;" placeholder="자기소개를 입력해주세요."
-                        class="txtInput" name="text" value="${loginInfo.text}"></textarea></td>
+                        class="txtInput" name="text" value=${loginInfo.text}></textarea></td>
                   </tr>
                 </table>
                 <div class="submitBtnss">
                   <div class="submitBtns">
-                    <button type="button" class="changeSubmitBtn">수정버튼</button>
+                    <button class="changeSubmitBtn">수정버튼</button>
                     <a href="#" class="deleteAccountBtn">탈퇴버튼</a>
                     <a href="#" class="deleteAccountBtn">카카오 탈퇴버튼</a>
                   </div>

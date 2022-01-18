@@ -228,15 +228,15 @@
           </div>
           <div class="contentsMiddle">
             <div class="contentsMiddleIn">
-              <form action="/member/myInfoChangeOk" method="post">
+              <form action="/member/myInfoChangeOk" method="post" enctype="multipart/form-data">
                 <div class="sideMyPortrait">
                   <img src="/resources/images/default_profile.png" class="portraitPhoto" id="portraitPhoto">
-                  <input type="file" class="portraitInput" id="portraitInput" name="photo">
+                  <input type="file" class="portraitInput" id="portraitInput" name="file">
                 </div>
                 <table class="myInfoForm">
                   <tr>
                     <th>Email</th>
-                    <td><input type="text" value=${loginInfo.emailID} readonly class="longInput"></td>
+                    <td><input type="text" value=${loginInfo.emailID} readonly class="longInput" name="emailID"></td>
                   </tr>
                   <tr>
                     <th>비밀번호</th>

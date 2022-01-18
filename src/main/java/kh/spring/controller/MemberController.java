@@ -1,6 +1,9 @@
 package kh.spring.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
+import java.util.UUID;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
@@ -115,7 +119,7 @@ public class MemberController {
 		
 		// 보내는 개발자?의 메일계정
 		String user = "sfchampion724@naver.com";
-		String password = "xptmxmdlqslek";
+		String password = "wkdfmshd9922";
 		
 		// SMTP 서버 정보 설정
 		Properties props = new Properties();
@@ -275,19 +279,12 @@ public class MemberController {
 		return "mypage/myInfo";
 	}
 	
-	// 마이페이지 정보수정완료버튼 클릭시 오는곳
+	// 일반회원 정보수정Ok
 	@RequestMapping("myInfoChangeOk")
-	public String myInfoChangeOk(MemberDTO dto) {
-		System.out.println("들어오는 회원email : " + dto.getEmailID());
-		System.out.println("들어오는 회원pw : " + dto.getPw());
-		System.out.println("들어오는 회원nick : " + dto.getNick());
-		System.out.println("들어오는 회원gender : " + dto.getGender());
-		System.out.println("들어오는 회원age : " + dto.getAge());
-		System.out.println("들어오는 회원phone : " + dto.getPhone());
-		System.out.println("들어오는 회원preference : " + dto.getPreference());
-		System.out.println("들어오는 회원text : " + dto.getText());
-		System.out.println("들어오는 회원phote : " + dto.getPhoto());
-		return "redirect:mypage/mypageGo";
+	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
+		String realPath = session.getServletContext().getRealPath("myPhoto");
+		memberService.myInfoChangeOk(dto, file, realPath);
+		return "redirect:/member/mypageGo";
 	}
 
 	@ExceptionHandler
