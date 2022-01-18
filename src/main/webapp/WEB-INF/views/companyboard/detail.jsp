@@ -279,7 +279,7 @@
                 <div class="like_n_rep">
                 	<div id=like_icon>
                 		<a class="heart">
-           					<img id="heart" src="" style="width:20px; height:20px;">
+           					<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${rec_count}</span>
        					</a>
                 	</div>
                 	<div id=rep_icon></div>
