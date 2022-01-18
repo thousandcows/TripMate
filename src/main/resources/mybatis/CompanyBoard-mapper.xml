@@ -12,7 +12,7 @@
  		</insert>
  		
  		<select id="selectAll" resultType="kh.spring.dto.CompanyBoardDTO">
- 			select * from company_board order by seq desc
+ 			select * from (select company_board.*, row_number() over(order by seq desc) rn from company_board) where rn between #{start} and #{end}
  		</select>
  		
  		<select id="selectBySeq" resultType="kh.spring.dto.CompanyBoardDTO">
@@ -32,7 +32,33 @@
 			update company_board set view_count = view_count + 1 where seq = #{seq}
 		</update>
 		
-		<select id="getTotalCount" resultType="int">
-			select count(*) from company_bord;
-		</select>
+		<!-- 페이징 -->
+		<select id="recordCount" resultType="int">
+     		select count(*) from company_board
+     	</select>
+     	
+     	<!-- 좋아요 -->
+     	<insert id="createBoardLike">
+            insert into cb_heart values (cb_heart_seq.nextval, #{par_seq}, #{mem_seq})
+        </insert>
+
+        <delete id="deleteBoardLike">
+            delete from cb_heart
+            where par_seq = #{par_seq} AND mem_seq = #{mem_seq}
+        </delete>
+
+        <select id="updateBoardLike">
+            update company_board
+            set
+            rec_count = (select count(*)
+            from cb_heart
+            where par_seq = #{value})
+            where seq = #{value}
+        </select>
+
+        <select id="getBoardLike" resultType="int">
+            select count(seq) from cb_heart 
+            	where par_seq = #{par_seq} and mem_seq = #{mem_seq}
+        </select>
+
   </mapper>

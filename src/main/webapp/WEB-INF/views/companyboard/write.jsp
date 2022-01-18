@@ -259,9 +259,9 @@
 	<script>
 		var $j360 = jQuery.noConflict();
 	
-		$j360("#back").on("click", () => {
-			location.href="/companyboard/list";
-		})
+		$j360("#back").on("click", function(){
+	    	history.back();
+	    })
 	</script>
 	
 <!-- 썸머노트  -->
