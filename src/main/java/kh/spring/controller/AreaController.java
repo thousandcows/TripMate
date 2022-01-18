@@ -39,44 +39,8 @@ public class AreaController {
 	
 	@RequestMapping(value="main", method=RequestMethod.GET, params= {"page","area","contentType"}) //기본 출력
 	public String main(int page,int area,int contentType, Model model) throws Exception{
-		URL url = aService.listBuild(page,contentType,area); //DTO 리스트
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode());
-		BufferedReader rd;
-		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} else {
-			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-		}
-		StringBuilder sb = new StringBuilder();
-		String line;
-		while ((line = rd.readLine()) != null) {
-			sb.append(line);
-		}
-		rd.close();
-		conn.disconnect();
-
-		List<AreaListDTO> list = aService.list(sb.toString());
-
-		url = aService.pageCountBuild(page, contentType, area);
-		conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode());
-		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} else {
-			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-		}
-		sb = new StringBuilder();
-		while ((line = rd.readLine()) != null) {
-			sb.append(line);
-		}
-		rd.close();
-		conn.disconnect();
-		int[] count = aService.pageCount(sb.toString()); //전체페이지, 현재페이지
+		List<AreaListDTO> list = aService.listBuild(page,contentType,area); //DTO 리스트
+		int[] count = aService.pageCountBuild(page, contentType, area);
 		List<Integer> pageView = aService.paging(count[0],count[1]); //페이지 숫자 출력
 		model.addAttribute("list",list);
 		model.addAttribute("pageNo",count[1]);
@@ -88,46 +52,8 @@ public class AreaController {
 	
 	@RequestMapping(value="main", params= {"page","area","contentType","target"}) //검색 출력
 	public String main(int page, int area,int contentType, String target, Model model) throws Exception{
-		URL url = aService.searchBuild(page, contentType, area, target);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode());
-		BufferedReader rd;
-		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} else {
-			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-		}
-		StringBuilder sb = new StringBuilder();
-		String line;
-		while ((line = rd.readLine()) != null) {
-			sb.append(line);
-		}
-		rd.close();
-		conn.disconnect();
-		
-		List<AreaListDTO> list = aService.search(sb.toString()); //검색결과 리스트
-		url = aService.searchBuild(page, contentType, area, target);
-
-		conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode());
-		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} else {
-			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-		}
-		sb = new StringBuilder();
-		while ((line = rd.readLine()) != null) {
-			sb.append(line);
-		}
-		rd.close();
-		conn.disconnect();
-
-
-		int[] count = aService.searchCount(sb.toString()); //전체페이지,현재페이지
+		List<AreaListDTO> list = aService.searchBuild(page, contentType, area, target);
+		int[] count = aService.searchCountBuild(page, contentType, area, target); //전체페이지,현재페이지
 		List<Integer> pageView = aService.paging(count[0],count[1]); //페이지 숫자 출력
 		model.addAttribute("list",list);
 		model.addAttribute("pageNo",count[1]);
@@ -140,27 +66,7 @@ public class AreaController {
 	
 	@RequestMapping("detail") //상세페이지
 	public String detail(int num,Model model) throws Exception{
-		URL url = aService.detailBuild(num); //조건 설정
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode());
-		BufferedReader rd;
-		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} else {
-			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-		}
-		StringBuilder sb = new StringBuilder();
-		String line;
-		while ((line = rd.readLine()) != null) {
-			sb.append(line);
-		}
-		rd.close();
-		conn.disconnect();
-		
-		AreaDTO dto = aService.detail(sb.toString()); //데이터 출력
-
+		AreaDTO dto = aService.detailBuild(num); //조건 설
 		int loginSeq = 0;
 		if(session.getAttribute("loginSeq") != null) { //로그인 여부 확인, seq 주입
 			loginSeq = (int)session.getAttribute("loginSeq");			
@@ -177,25 +83,7 @@ public class AreaController {
 			model.addAttribute("rate",rate);			
 		}
 		
-		url = aService.rcmdBuild(dto.getCategory(),dto.getCat2(),dto.getCat3());
-		conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode());
-		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} else {
-			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-		}
-		sb = new StringBuilder();
-		while ((line = rd.readLine()) != null) {
-			sb.append(line);
-		}
-		rd.close();
-		conn.disconnect();
-		
-		
-		List<AreaRcmdDTO> rcmd = aService.rcmd(sb.toString()); //추천 여행지 리스트
+		List<AreaRcmdDTO> rcmd = aService.rcmdBuild(dto.getCategory(),dto.getCat2(),dto.getCat3());
 		dto.setCategory(aService.categorySort(dto.getCategory())); //카테고리 한글변경
 		model.addAttribute("rcmdCheck",rcmdCheck);
 		model.addAttribute("dto",dto);

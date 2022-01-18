@@ -46,30 +46,41 @@
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.red { color: #B22222; }
+ul {
+  list-style-type: none;
+}
+ul>li{
+  float:left;
+}
+
+#mainImg{
+	max-height:500px;
+}
 </style>
-<script>
-	$(document).ready(function(){
-		$(".updateSubmit").hide();
-		$(".cancel").hide();
-	})
-</script>
+
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
-			<img class="img-fluid" src="${dto.photo}"><br>
+			<img class="img-fluid" id="mainImg" src="${dto.photo}"><br>
 		</div>
 		</div>
 
-		<div class="row mt-5">
-			<div class="col">
+		<div class="row mt-5 border">
+			<div class="col border">
 				<div class="row">
-					<div class="col-11 fs-2 fw-bolder">
+					<div class="col-10 fs-2 fw-bolder">
 						${dto.name }
 					</div>
-					<div class="col-1" id="recommand">
-						<span class="material-icons" id=save>
+					<div class="col-2 text-end" id="recommand">
+						<span class="material-icons md-36 red" id=save>
 							<c:if test = "${rcmdCheck eq 0}">
 									favorite_border
 							</c:if>
@@ -80,11 +91,11 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">
+					<div class="col md-col-9">
 					<c:if test="${!empty rate }">
-						<ul class="list-group-horizontal">
+						<ul class="list-group-horizontal p-0">
 						<c:forEach var='cnt' begin='1' end='5'>
-							<li><svg xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;"
+							<li><svg xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;" class="float-start p-0"
 									viewBox="0 0 20 20" fill="currentColor">
 							    <defs>
 							        <linearGradient id="half_grad${cnt }">
@@ -112,23 +123,46 @@
 						</ul>
 					</c:if>
 					</div>
-					<div class="col">
-						${rate }
+					<div class="col md-col-3 text-end">
+						<c:if test="${!empty rate}">
+						평점 : ${rate }
+						</c:if>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">
+					<div class="col-12 lg-col-7">
 						분류 : ${dto.category }<br>
 						주소 : ${dto.lo_detail }<br>
 						연락처 : ${dto.phone }<br>
 						홈페이지 : ${dto.homepage }<br>
 						<div>
-							상세 정보 : ${dto.detail }											
+							<button type="button" class="btn btn-primary"
+								data-bs-toggle="modal" data-bs-target="#exampleModal"
+								id="showMore">상세정보</button>
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModal" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Modal
+												title</h5>
+											<button type="button" class="btn-close"
+												data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">${dto.detail }</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col mt-12">
+			<div class="col-12 lg-col-5 mt-12">
 				<div id="map" style="width:500px;height:400px;"></div>
 			</div>
 		</div>
@@ -197,22 +231,21 @@
 		</form>
 		
 		<c:forEach var="i" items="${reply }" >
-		<div class="row border">
-			<form action="/area/replyUpdate" method="post" enctype="multipart/form-data">
+		<form action="/area/replyUpdate" method="post" enctype="multipart/form-data">
+		<div class="row border replyContainer">
 			<input type="hidden" name=seq value=${i.seq }>
 			<input type="hidden" name=area_seq value=${i.area_seq }>
 			<div class="col-3">
-				<label class="w-100 h-100">
-				<div id="ph">
+				<label>
+				<div class="img" id="replyPhoto${i.seq }">
 				<c:if test="${i.photo ne null }">
-					<img src="/resources/${i.photo }" class="w-100 h-100">
+					<img src="/images/${i.photo }" class="w-100 h-100">
 				</c:if>
 				<c:if test="${i.photo eq null }">
-				
+					<img src="/images/noPhoto.png" class="w-100 h-100">
 				</c:if>
-				<input accept="image/*" id="img${i.seq }" type="file" class="opacity-0" class="replyimg" name="picture" style="display:none;" disabled/>
-				
 				</div>
+				<input accept="image/*" id="img${i.seq }" type="file" class="opacity-0 replyimg" name="picture" style="display:none;" disabled/>
 				</label>
 			</div>
 			<div class="col-9">
@@ -236,13 +269,13 @@
 				
 					<div class="col-2 text-end">
 						<button type="button" class="btn btn-success update" id="${i.seq }">수정</button>
-						<button type="submit" class="btn btn-success updateSubmit" id="replySubmit${i.seq }">등록</button>						
+						<button type="submit" class="btn btn-success updateSubmit" id="replySubmit${i.seq }"  style="display:none">등록</button>						
 					</div>
 				</form>
 					<div class="col-2 text-end">
 						<form action="replyDelete">
 						<button type="submit" class="btn btn-success delete" id="replyDel${i.seq }">삭제</button>
-						<button type="button" class="btn btn-success cancel" id="replyCancel${i.seq }">취소</button>
+						<button type="button" class="btn btn-success cancel" id="replyCancel${i.seq }"  style="display:none">취소</button>
 						<input type="hidden" name="area_seq" value=${area_seq } >
 						<input type="hidden" name="seq" value=${i.seq }>
 						</form>
@@ -282,7 +315,8 @@
 	})
 	
 	//댓글 수정
-	$(".update").on("click",function(){
+	$(document).on("click",".update",function(){
+		console.log("hi");
 		let seq = "#replyTxt"+this.id;
 		$(seq).removeAttr("readonly");
 		$(this).hide();
@@ -293,7 +327,7 @@
 		$("#img"+this.id).prop("disabled",false);
 	})
 	
-	$(".cancel").on("click",function(){
+	$(document).on("click",".cancel",function(){
 		$(this).hide();
 		let id = this.id.substr(11);
 		let seq = "#replyTxt"+id;
@@ -324,17 +358,25 @@
 	    		dataType:"json",
 	    		success:function(result){
 		    		printNum = printNum+staticNo;
-		    		console.log(printNum);
-		    		console.log(replyCount);
 		    		if(replyCount <= printNum){
 		    			$("#seeMoreTag").empty();		
 		    		}
-	    			console.log(result);
+	    			console.log(result);	
 	    			for(var i in result)
 					$("#seeMoreTag").before(
+							
+							'<form action="/area/replyUpdate" method="post" enctype="multipart/form-data">'+
 							'<div class="row border">'+
+							'<input type="hidden" name=seq value='+result[i].seq+'>'+
+							'<input type="hidden" name="area_seq" value='+result[i].area_seq+'>'+
 							'<div class="col-3">'+
-							(result[i].photo != null ? '<img src="/resource/"+i.photo+"\"" class="w-100 h-100">' : "")+
+							'<label>'+
+							'<div class="img" id="replyPhoto'+result[i].seq+'">'+
+							
+							(result[i].photo != null ? '<img src="/images/'+result[i].photo+'" class="w-100 h-100">' : '<img src="/images/noPhoto.png" class="w-100 h-100">')+
+						'</div>'+
+						'<input accept="image/*" id="img'+result[i].seq+'" type="file" class="opacity-0 replyimg" name="picture" style="display:none;" disabled/>'+
+						'</label>'+
 						'</div>'+
 						'<div class="col-9">'+
 							'<div class="row">'+
@@ -346,19 +388,25 @@
 								'</div>'+
 							'</div>'+
 							'<div class="row">'+
-								'<div class="col">'+
+								'<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 100px;resize:none;" readonly id="replyTxt'+result[i].seq+'">'+
 									result[i].text+
-								'</div>'+
+								'</textarea>'+
+								'<input type="hidden" value="'+result[i].text+'" id="replyHidden'+result[i].seq+'">'+
+
 							'</div>'+
 							(result[i].mem_seq == loginSeq ?
 								'<div class="row">'+
 								'<div class="col-8">'+
 								'</div>'+
 								'<div class="col-2 text-end">'+
-									'<button type="button" class="btn btn-success">수정</button>'+
+									'<button type="button" class="btn btn-success update" id='+result[i].seq+'>수정</button>'+
+									'<button type="submit" class="btn btn-success updateSubmit" id="replySubmit'+result[i].seq+'" style="display:none">등록</button>'+
 								'</div>'+
 								'<div class="col-2 text-end">'+
-									'<button type="button" class="btn btn-success">삭제</button>'+
+									'<button type="button" class="btn btn-success delete" id="replyDel'+result[i].seq+'">삭제</button>'+
+									'<button type="button" class="btn btn-success cancel" id="replyCancel'+result[i].seq+'" style="display:none">취소</button>'+
+									'<input type="hidden" name="area_seq" value='+result[i].area_seq+'>'+
+									'<input type="hidden" name="seq" value='+result[i].seq+'>'+
 								'</div>'+
 								'</div>'
 								:
@@ -384,6 +432,15 @@
 			    $("#ph").html("<img class='w-100 h-100' src = "+URL.createObjectURL(file)+">");
 			  }
 			})
+
+		$(document).on("change",".replyimg",function(){
+			let id = this.id.substr(3);
+			console.log(id);
+			let file = this.files[0];
+			if (file) {
+			    $("#replyPhoto"+id).html("<img class='w-100 h-100' src = "+URL.createObjectURL(file)+">");
+			  }
+		})
 			
 		//찜
 		  $("#save").on("click",function(){
