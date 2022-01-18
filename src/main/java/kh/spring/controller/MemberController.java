@@ -118,8 +118,8 @@ public class MemberController {
 		findPwTargetEmail = emailID; // 받는사람의 이메일
 		
 		// 보내는 개발자?의 메일계정
-		String user = "sfchampion724@naver.com";
-		String password = "wkdfmshd9922";
+		String user = "wlsrb2611@naver.com";
+		String password = "";
 		
 		// SMTP 서버 정보 설정
 		Properties props = new Properties();

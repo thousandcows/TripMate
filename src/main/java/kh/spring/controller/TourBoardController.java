@@ -53,8 +53,7 @@ public class TourBoardController {
 		int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
 		int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
 		
-		String navi = bservice.getPageNavi(currentPage);		
-		
+		String navi = bservice.getPageNavi(currentPage);
 		
 		List<TourBoardDTO> list = bservice.selectAll(start, end);
 		model.addAttribute("list", list);
@@ -89,12 +88,15 @@ public class TourBoardController {
 	@RequestMapping("detail")
 	public String detail(int seq, Model model) {
         TourBoardDTO dto = bservice.selectBySeq(seq);
-        int result = bservice.addViewCount(seq);        
         
+        bservice.addViewCount(seq);
+        int replyCount = bservice.replyCount(seq);
+        
+        dto.setRep_count(replyCount);
         List<TourReplyDTO> rp_list = rservice.selectAll(seq);
- 
+        
 //		int parentSeq = bdto.getSeq();        
-//		List<FilesDTO> files = fservice.selectByParentSeq(parentSeq);WWW
+//		List<FilesDTO> files = fservice.selectByParentSeq(parentSeq);
 
         
         model.addAttribute("dto", dto);
@@ -112,7 +114,7 @@ public class TourBoardController {
 	}
 
 	@RequestMapping("delete")
-	public String delete(int seq, int par_seq) throws Exception{
+	public String delete(int seq) throws Exception{
 
 		int result = bservice.delete(seq);
 		return "redirect:/tourboard/list?cpage=1";
