@@ -97,7 +97,7 @@
 			<version>1.4</version>
 		</dependency>
 
-		<!-- mail용 의존성 -->
+		<!-- com.sun.mail -->
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
