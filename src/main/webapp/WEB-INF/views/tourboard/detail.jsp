@@ -231,7 +231,7 @@
                 </div>
             </div><br>
             <div class="contents" style="margin-left:80px; readonly">
- 				<textarea id="summernote" rows="5" name="explanation">${dto.contents }</textarea>
+ 				<textarea id="summernote" rows="5" name="explanation" style="height:300px;">${dto.contents }</textarea>
  			</div>
         </div>
         <div class="ft_btn">
@@ -245,7 +245,7 @@
         <br>
         <div class="icons">
             <div class="icon_recommand"><i class="fas fa-thumbs-up fa-lg"> 3</i></div>
-            <div class="icon_reply"><i class="far fa-comment-dots fa-lg"> 3</i></div>
+            <div class="icon_reply"><i class="far fa-comment-dots fa-lg"> ${dto.rep_count }</i></div>
         </div>
         <br>
         <form action="/tourreply/reply" method="post" id="frmReply" enctype="multipart/form-data">
@@ -327,10 +327,12 @@
     <script>
     $("#del").on("click", function() {
 		if (confirm("정말 삭제하시겠습니까?")) {
-			location.href = "/tourboard/delete?seq=${dto.seq}&par_seq=${rp.par_seq}";
+			
+			location.href = "/tourboard/delete?seq=${dto.seq}";
 		}
 	});
     </script>
+    
     <script>
     $("#list_btn").on("click", function(){
 	    	history.back();
@@ -404,15 +406,16 @@
 	<script>
     $(document).ready(function() {
     	//여기 아래 부분
-    	$('#summernote').summernote('disable', {
+    	$('#summernote').summernote({
     		  height: 300,                 // 에디터 높이
-    		  minHeight: null,             // 최소 높이
+    		  minHeight: 300,             // 최소 높이
     		  maxHeight: null,             // 최대 높이
     		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
     		  lang: "ko-KR",					// 한글 설정
     		 
     		  placeholder: '최대 2048자까지 쓸 수 있습니다' 	//placeholder 설정
     	});
+    	$('#summernote').summernote('disable');
     });
     </script> 
 

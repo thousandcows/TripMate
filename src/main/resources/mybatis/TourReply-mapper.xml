@@ -22,4 +22,9 @@
 		
 		delete from tour_reply where seq=#{seq}		
 	</delete>
+	
+	<delete id="deleteAll">
+		
+		delete from tour_reply where par_seq=#{seq}		
+	</delete>
 </mapper>
