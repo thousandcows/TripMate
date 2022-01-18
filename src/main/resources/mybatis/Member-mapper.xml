@@ -35,16 +35,24 @@
 
 	<!-- 카카오 로그인시작 -->
 	<select id="kakaoLoginLookup" resultType="int">
-		select count(*) from member where emailid = #{value}
+		select count(*) from member where sns_division = #{value}
 	</select>
 	
 	<select id="kakaoLoginSelectAll" resultType="kh.spring.dto.MemberDTO">
-		select * from member where emailid = #{value}
+		select * from member where sns_division = #{value}
 	</select>
 	
 	<insert id="kakaoSignup">
-		insert into member (seq, emailid, nick, violation) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0)
+		insert into member (seq, emailid, nick, violation, sns_division) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0, #{kakaoId})
 	</insert>
 	
+	<!-- 마이페이지 -->
+	<select id="myInfoSelectAll" resultType="kh.spring.dto.MemberDTO">
+		select * from member where seq = #{value}
+	</select>
+	
+	<insert id="myInfoChangeOk">
+		insert into member(pw, nick, gender, age, phone, ph_open, preference, text, photo) values(#{pw}, #{nick}, #{gender}, #{age}, #{phone}, #{ph_Open}, #{preference}, #{text}, #{photo})
+	</insert>
 	
 </mapper>

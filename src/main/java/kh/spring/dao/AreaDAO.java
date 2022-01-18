@@ -55,4 +55,8 @@ public class AreaDAO {
 	public double countRate(int area_seq) {
 		return mybatis.selectOne("Area.countRate",area_seq);
 	}
+	
+	public String findPhoto(int seq) {
+		return mybatis.selectOne("Area.findPhoto",seq);
+	}
 }

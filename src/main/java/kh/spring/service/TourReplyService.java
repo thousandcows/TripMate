@@ -22,7 +22,17 @@ public class TourReplyService {
 		return rdao.insert(rseq, reply);
 	}
 	
-	public List<TourReplyDTO> selectAll() {
-		return rdao.selectAll();
+	public List<TourReplyDTO> selectAll(int seq) {
+		return rdao.selectAll(seq);
+	}
+	
+	public int modify(TourReplyDTO rdto) {
+		
+		return rdao.modify(rdto);
+	}
+	
+	public int delete(int seq) {
+		
+		return rdao.delete(seq);
 	}
 }
