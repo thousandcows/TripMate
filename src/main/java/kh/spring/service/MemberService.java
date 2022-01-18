@@ -1,7 +1,12 @@
 package kh.spring.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dao.MemberDAO;
 import kh.spring.dto.MemberDTO;
@@ -74,7 +79,31 @@ public class MemberService {
 		return memberDao.myInfoSelectAll(loginSeq);
 	}
 	
-	
+	// 마이페이지 정보수정
+	public int myInfoChangeOk(MemberDTO dto, MultipartFile file, String realPath) throws IllegalStateException, IOException {
+		if(!file.isEmpty()) {
+			System.out.println("파일 리얼패스 : " + realPath);
+			File realPathFile = new File(realPath);
+			if(!realPathFile.exists()) {
+				realPathFile.mkdir();
+			}
+			String oriName = file.getOriginalFilename();
+			String sysName = UUID.randomUUID() + "_" + oriName;
+			file.transferTo(new File(realPath + "/" + sysName));
+			dto.setPhoto(sysName);
+		}
+		dto.setPw(EncryptUtils.getSHA512(dto.getPw()));
+		System.out.println("들어오는 회원email : " + dto.getEmailID());
+		System.out.println("들어오는 회원pw : " + dto.getPw());
+		System.out.println("들어오는 회원nick : " + dto.getNick());
+		System.out.println("들어오는 회원gender : " + dto.getGender());
+		System.out.println("들어오는 회원age : " + dto.getAge());
+		System.out.println("들어오는 회원phone : " + dto.getPhone());
+		System.out.println("들어오는 회원preference : " + dto.getPreference());
+		System.out.println("들어오는 회원text : " + dto.getText());
+		System.out.println("들어오는 회원photo : " + dto.getPhoto());
+		return memberDao.myInfoChangeOk(dto);		
+	}
 	
 	
 }

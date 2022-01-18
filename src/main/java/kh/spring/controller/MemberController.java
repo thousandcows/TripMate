@@ -1,6 +1,9 @@
 package kh.spring.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
+import java.util.UUID;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
@@ -42,12 +46,6 @@ public class MemberController {
 
 	@Autowired
 	private HttpSession session;
-
-	// 임시로 만든 버튼이동용 메서드
-	@RequestMapping("Proc")
-	public String Proc() {
-		return "/loginTest/loginTest";
-	}
 
 	// 이메일 체크
 	@ResponseBody
@@ -121,7 +119,7 @@ public class MemberController {
 		
 		// 보내는 개발자?의 메일계정
 		String user = "sfchampion724@naver.com";
-		String password = "xptmxmdlqslek";
+		String password = "wkdfmshd9922";
 		
 		// SMTP 서버 정보 설정
 		Properties props = new Properties();
@@ -274,8 +272,19 @@ public class MemberController {
 	public String mypageGo(Model model) {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
+		System.out.println("보내는 회원정보 : " + dto.getEmailID());
+		System.out.println("보내는 회원정보 : " + dto.getNick());
+		System.out.println("보내는 회원정보 : " + dto.getPhone());
 		model.addAttribute("loginInfo", dto);
 		return "mypage/myInfo";
+	}
+	
+	// 일반회원 정보수정Ok
+	@RequestMapping("myInfoChangeOk")
+	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
+		String realPath = session.getServletContext().getRealPath("myPhoto");
+		memberService.myInfoChangeOk(dto, file, realPath);
+		return "redirect:/member/mypageGo";
 	}
 
 	@ExceptionHandler
