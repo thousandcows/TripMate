@@ -96,6 +96,7 @@ public class TourBoardController {
 //		int parentSeq = bdto.getSeq();        
 //		List<FilesDTO> files = fservice.selectByParentSeq(parentSeq);WWW
 
+        
         model.addAttribute("dto", dto);
         model.addAttribute("rp_list", rp_list);        
 //        model.addAttribute("files", files);

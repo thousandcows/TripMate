@@ -327,10 +327,12 @@
     <script>
     $("#del").on("click", function() {
 		if (confirm("정말 삭제하시겠습니까?")) {
+			console.log(${dto.seq});
 			location.href = "/tourboard/delete?seq=${dto.seq}&par_seq=${rp.par_seq}";
 		}
 	});
     </script>
+    
     <script>
     $("#list_btn").on("click", function(){
 	    	history.back();
