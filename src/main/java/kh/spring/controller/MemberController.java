@@ -43,12 +43,6 @@ public class MemberController {
 	@Autowired
 	private HttpSession session;
 
-	// 임시로 만든 버튼이동용 메서드
-	@RequestMapping("Proc")
-	public String Proc() {
-		return "/loginTest/loginTest";
-	}
-
 	// 이메일 체크
 	@ResponseBody
 	@RequestMapping(value = "emailCheck", produces = "application/text;charset=utf-8")
@@ -274,8 +268,26 @@ public class MemberController {
 	public String mypageGo(Model model) {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
+		System.out.println("보내는 회원정보 : " + dto.getEmailID());
+		System.out.println("보내는 회원정보 : " + dto.getNick());
+		System.out.println("보내는 회원정보 : " + dto.getPhone());
 		model.addAttribute("loginInfo", dto);
 		return "mypage/myInfo";
+	}
+	
+	// 마이페이지 정보수정완료버튼 클릭시 오는곳
+	@RequestMapping("myInfoChangeOk")
+	public String myInfoChangeOk(MemberDTO dto) {
+		System.out.println("들어오는 회원email : " + dto.getEmailID());
+		System.out.println("들어오는 회원pw : " + dto.getPw());
+		System.out.println("들어오는 회원nick : " + dto.getNick());
+		System.out.println("들어오는 회원gender : " + dto.getGender());
+		System.out.println("들어오는 회원age : " + dto.getAge());
+		System.out.println("들어오는 회원phone : " + dto.getPhone());
+		System.out.println("들어오는 회원preference : " + dto.getPreference());
+		System.out.println("들어오는 회원text : " + dto.getText());
+		System.out.println("들어오는 회원phote : " + dto.getPhoto());
+		return "redirect:mypage/mypageGo";
 	}
 
 	@ExceptionHandler
