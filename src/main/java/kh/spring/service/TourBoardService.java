@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.TourBoardDAO;
 import kh.spring.dto.TourBoardDTO;
+import kh.spring.dto.TourReplyDTO;
 import kh.spring.statics.Statics;
 
 @Service
@@ -22,9 +23,9 @@ public class TourBoardService {
 		return dao.selectAll(start, end);
 	}
 	
-	public int writeProc(TourBoardDTO dto) {
+	public int writeProc(TourBoardDTO bdto) {
 		
-		return dao.insert(dto);
+		return dao.insert(bdto);
 	}
 	
 	public TourBoardDTO selectBySeq(int seq) {
