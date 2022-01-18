@@ -21,13 +21,13 @@ public class TourBoardDAO {
 		Map<String, String> map = new HashMap<>();
 		map.put("start", String.valueOf(start));
 		map.put("end", String.valueOf(end));
+		
 		return mybatis.selectList("TourBoard.selectAll", map);
 	}
 
-	public int insert(TourBoardDTO dto) {
+	public int insert(TourBoardDTO bdto) {
 
-		System.out.println(dto.getCategory() + " : " + dto.getTitle() + " : " + dto.getContents());
-		return mybatis.insert("TourBoard.insert", dto);
+		return mybatis.insert("TourBoard.insert", bdto);
 	}
 
 	public TourBoardDTO selectBySeq(int seq) {

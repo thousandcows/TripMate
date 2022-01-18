@@ -70,7 +70,7 @@ public class TourBoardController {
 	}
 	
 	@RequestMapping("writeProc")
-	public String writeProc(TourBoardDTO dto, MultipartFile[] file) {
+	public String writeProc(TourBoardDTO bdto, MultipartFile[] file) {
 		
 //		String writer = (String) session.getAttribute("loginID");
 //		dto.setWriter(writer);	
@@ -81,7 +81,7 @@ public class TourBoardController {
 //		System.out.println("explanation : " + explanation);
 //		String contents = explanation;
 		
-		bservice.writeProc(dto);
+		bservice.writeProc(bdto);
 		
 		return "redirect:/tourboard/list?cpage=1";
 	}
@@ -89,28 +89,15 @@ public class TourBoardController {
 	@RequestMapping("detail")
 	public String detail(int seq, Model model) {
         TourBoardDTO dto = bservice.selectBySeq(seq);
-        int result = bservice.addViewCount(seq);
+        int result = bservice.addViewCount(seq);        
         
-        
-        
-        List<TourReplyDTO> list = rservice.selectAll();
-        
-        
-        
-        for(TourReplyDTO rp_list : list) {
-        	if(seq==rp_list.getPar_seq()){
-        		System.out.println("seq : par_seq = " + seq + " : " + rp_list.getPar_seq() + " : " + rp_list.getContents());
-        	}
-        	model.addAttribute("list", rp_list);
-        }
-        
-		
-        
-        
+        List<TourReplyDTO> rp_list = rservice.selectAll(seq);
+ 
 //		int parentSeq = bdto.getSeq();        
-//		List<FilesDTO> files = fservice.selectByParentSeq(parentSeq);
+//		List<FilesDTO> files = fservice.selectByParentSeq(parentSeq);WWW
 
         model.addAttribute("dto", dto);
+        model.addAttribute("rp_list", rp_list);        
 //        model.addAttribute("files", files);
         return "tourboard/detail";
     }
@@ -124,7 +111,7 @@ public class TourBoardController {
 	}
 
 	@RequestMapping("delete")
-	public String delete(int seq) throws Exception{
+	public String delete(int seq, int par_seq) throws Exception{
 
 		int result = bservice.delete(seq);
 		return "redirect:/tourboard/list?cpage=1";

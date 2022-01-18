@@ -133,7 +133,13 @@
                 <option value="search_title">제목</option>
                 <option value="search_writer">작성자</option>
             </select>
-            <input type=text placeholder="input search content">
+            <input type=text list="trip" placeholder="input search content">
+            	<datalist id="trip">
+            		<option value="여행지 추천">
+            		<option value="맛집">
+            		<option value="명소">
+            		<option value="재미있게 다녀오는 방법">
+            	</datalist>
             <input type=button id="search" value="검색">
         </div>
         <div class="board">
