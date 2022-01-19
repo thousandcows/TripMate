@@ -31,12 +31,13 @@ public class MemberDAO {
 	}
 	
 	// 일반 회원가입
-	public int normalSignup(String emailID, String nick, String phone, String encryptPw) {
+	public int normalSignup(String emailID, String nick, String phone, String encryptPw, String gender) {
 		Map<String, String> map = new HashMap<>();
 		map.put("emailID", emailID);
 		map.put("nick", nick);
 		map.put("phone", phone);
 		map.put("encryptPw", encryptPw);
+		map.put("gender", gender);
 		return mybatis.insert("Member.normalSignup", map);
 	}
 	
@@ -91,6 +92,16 @@ public class MemberDAO {
 	// 마이페이지 정보 수정
 	public int myInfoChangeOk(MemberDTO dto) {
 		return mybatis.insert("Member.myInfoChangeOk", dto);
+	}
+	
+	// 일반 비밀번호 변경
+	public int myInfoPwChange(String encryptPw) {
+		return mybatis.update("Member.myInfoPwChange", encryptPw);
+	}
+	
+	// 회원탈퇴
+	public int deleteAccount(int seq) {
+		return mybatis.delete("Member.deleteAccount", seq);
 	}
 	
 }

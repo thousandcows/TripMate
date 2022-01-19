@@ -76,12 +76,14 @@ public class MemberController {
 
 	// 일반 회원가입&즉시 로그인
 	@RequestMapping("normalSignup")
-	public String normalSignup(String emailID, String nick, String phone, String pw) {
-		memberService.normalSignup(emailID, nick, phone, pw);
+	public String normalSignup(String emailID, String nick, String phone, String pw, String gender) {
+		memberService.normalSignup(emailID, nick, phone, pw, gender);
+		System.out.println("회원가입 사용자 성별 : " + gender);
 		MemberDTO dto = memberService.normalLoginSelectAll(emailID, pw);
 		session.setAttribute("loginSeq", dto.getSeq());
 		session.setAttribute("loginEmailID", dto.getEmailID());
 		session.setAttribute("loginNick", dto.getNick());
+		session.setAttribute("loginGender", dto.getGender());
 		return "redirect:/";
 	}
 
@@ -272,9 +274,9 @@ public class MemberController {
 	public String mypageGo(Model model) {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
-		System.out.println("보내는 회원정보 : " + dto.getEmailID());
-		System.out.println("보내는 회원정보 : " + dto.getNick());
-		System.out.println("보내는 회원정보 : " + dto.getPhone());
+		String filePath = "\\images" + "\\" + dto.getPhoto();
+		System.out.println(filePath);
+		dto.setPhoto(filePath);
 		model.addAttribute("loginInfo", dto);
 		return "mypage/myInfo";
 	}
@@ -282,11 +284,37 @@ public class MemberController {
 	// 일반회원 정보수정Ok
 	@RequestMapping("myInfoChangeOk")
 	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
-		String realPath = session.getServletContext().getRealPath("myPhoto");
+		dto.setSeq((int)session.getAttribute("loginSeq"));
+		System.out.println("선호" + dto.getPreference());
+		String realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
 		memberService.myInfoChangeOk(dto, file, realPath);
 		return "redirect:/member/mypageGo";
 	}
-
+	
+	// 비밀번호 수정
+	@RequestMapping("myInfoPwChange")
+	public String myInfoPwChange(String pw) {
+		memberService.myInfoPwChange(pw);
+		return "redirect:/member/mypageGo";
+	}
+	
+	// 회원탈퇴
+	@RequestMapping("deleteAccount")
+	public String deleteAccount(int seq) {
+		System.out.println("넘어온 탈퇴 seq : " + seq);
+		memberService.deleteAccount(seq);
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	// 카카오 로그아웃
+	@ResponseBody
+	@RequestMapping("kakaoLogOut")
+	public String kakaoLogOut(int seq) {
+		session.invalidate();
+		return "https://kauth.kakao.com/oauth/logout?client_id=b7b0a7f6722957ddef971b2ff4061bd7&logout_redirect_uri=http://localhost";
+	}
+	
 	@ExceptionHandler
 	public String ExceptionHandler(Exception e) {
 		e.printStackTrace();
