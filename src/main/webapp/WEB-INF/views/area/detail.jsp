@@ -12,6 +12,9 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a5fa8abac646238f15601b89cae524ec&libraries=services"></script>
 <script src="https://kit.fontawesome.com/cbcad42a26.js" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="/js/jquery.raty.js"></script>
+<link rel="/css/stylesheet" href="jquery.raty.css">
+
 <style>
 @font-face {
   font-family: 'Material Icons';
@@ -46,30 +49,41 @@
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.red { color: #B22222; }
+ul {
+  list-style-type: none;
+}
+ul>li{
+  float:left;
+}
+
+#mainImg{
+	max-height:500px;
+}
 </style>
-<script>
-	$(document).ready(function(){
-		$(".updateSubmit").hide();
-		$(".cancel").hide();
-	})
-</script>
+
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
-			<img class="img-fluid" src="${dto.photo}"><br>
+			<img class="img-fluid" id="mainImg" src="${dto.photo}"><br>
 		</div>
 		</div>
 
-		<div class="row mt-5">
-			<div class="col">
+		<div class="row mt-5 r">
+			<div class="col-12 col-md-8 ">
 				<div class="row">
-					<div class="col-11 fs-2 fw-bolder">
+					<div class="col col-md-10 fs-2 fw-bolder">
 						${dto.name }
 					</div>
-					<div class="col-1" id="recommand">
-						<span class="material-icons" id=save>
+					<div class="col-2 text-end" id="recommand">
+						<span class="material-icons md-36 red" id=save>
 							<c:if test = "${rcmdCheck eq 0}">
 									favorite_border
 							</c:if>
@@ -80,22 +94,22 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">
-					<c:if test="${!empty rate }">
-						<ul class="list-group-horizontal">
+					<div class="col col-md-9">
+					<c:if test="${!empty score }">
+						<ul class="list-group-horizontal p-0">
 						<c:forEach var='cnt' begin='1' end='5'>
-							<li><svg xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;"
+							<li><svg xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;" class="float-start p-0"
 									viewBox="0 0 20 20" fill="currentColor">
 							    <defs>
 							        <linearGradient id="half_grad${cnt }">
 							        	<c:choose>
-								        	<c:when test="${cnt<=rate }">
+								        	<c:when test="${cnt<=score }">
 								        		<stop offset="100%" stop-color="orange" />
 								        	</c:when>
-								        	<c:when test="${cnt>rate and cnt-1<rate }">
-								        		<stop offset="${100-(cnt-rate)*100 }%"
+								        	<c:when test="${cnt>score and cnt-1<score }">
+								        		<stop offset="${100-(cnt-score)*100 }%"
 												stop-color="orange" />
-								        		<stop offset="${(cnt-rate)*100 }%" stop-color="white" />
+								        		<stop offset="${(cnt-score)*100 }%" stop-color="white" />
 								        	</c:when>
 											<c:otherwise>
 									            <stop offset="100%" stop-color="white"
@@ -112,32 +126,56 @@
 						</ul>
 					</c:if>
 					</div>
-					<div class="col">
-						${rate }
+					<div class="col-12 col-md-3 text-end">
+						<c:if test="${!empty score}">
+						평점 : ${score }
+						</c:if>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col">
+					<div class="co">
 						분류 : ${dto.category }<br>
 						주소 : ${dto.lo_detail }<br>
 						연락처 : ${dto.phone }<br>
 						홈페이지 : ${dto.homepage }<br>
 						<div>
-							상세 정보 : ${dto.detail }											
+							<button type="button" class="btn btn-primary"
+								data-bs-toggle="modal" data-bs-target="#exampleModal"
+								id="showMore">상세정보</button>
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModal" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Modal
+												title</h5>
+											<button type="button" class="btn-close"
+												data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">${dto.detail }</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
+					</div>
 				</div>
-			</div>
-			<div class="col mt-12">
-				<div id="map" style="width:500px;height:400px;"></div>
-			</div>
-		</div>
-		
-		<div class="row border">
+
+					<div class="col col-md-4">
+						<div id="map" class="w-100" style="height: 300px;"></div>
+					</div>
+				</div>
+
+				<div class="row mt-4">
 			<c:forEach var="i" items="${rcmd }">
-			<div class="col-3 rcmd" id="${i.seq }">
+			<div class="col-3 rcmd text-center " id="${i.seq }">
 				<div>
-				<img src="${i.photo }" style="width:100px;height:100px;">
+				<img src="${i.photo }" class="w-100" style="height:200px;">
 				</div>
 				<div>
 				${i.title }
@@ -148,11 +186,11 @@
 		</div>
 
 		<form action="/area/replySubmit" method="post" enctype="multipart/form-data">
-			<div class="row border">
+			<div class="row border mt-4">
 				<div class="col-2">
-				<label class="w-100 h-100">
+				<label class="w-100" style="height:100px;">
 				<div id="ph">
-					<svg xmlns="http://www.w3.org/2000/svg" class="img-fluid w-100 h-100" viewBox="0 0 20 20" fill="currentColor">
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-100" style="height:100px;" viewBox="0 0 20 20" fill="currentColor">
 					   <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
 					 </svg>
 				</div>
@@ -161,58 +199,45 @@
 				</label>
 				<div class="col-10">
 					<div class="row">
-						<div class="form-floating col-12">
-						  <textarea class="form-control" placeholder="댓글작성" id="replyText" name="text" style="height: 100px;resize:none;"></textarea>
-						  <label for="replyText">댓글 작성</label>
+						<div class="form-floating col-12 p-0">
+						  <textarea class="form-control p-0" placeholder="댓글작성" id="replyText" name="text" style="height: 100px;resize:none;"></textarea>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-2 form-check">
-							<input class="form-check-input" type="radio" name="rate" id="star1" value=1>
-							<label class="form-check-label" for="star1"> 별 1개 </label>
+					<div class="row mt-1 mb-2">
+						<div class="col-6 mt-2" id="starRate">
 						</div>
-						<div class="col-2 form-check">
-							<input class="form-check-input" type="radio" name="rate" id="star2" value=2>
-							<label class="form-check-label" for="star2"> 별 2개 </label>
-						</div>
-						<div class="col-2 form-check">
-							<input class="form-check-input" type="radio" name="rate" id="star3" value=3>
-							<label class="form-check-label" for="star3"> 별 3개 </label>
-						</div>
-						<div class="col-2 form-check">
-							<input class="form-check-input" type="radio" name="rate" id="star4" value=4>
-							<label class="form-check-label" for="star4"> 별 4개 </label>
-						</div>
-						<div class="col-2 form-check">
-							<input class="form-check-input" type="radio" name="rate" id="star5" value=5 checked>
-							<label class="form-check-label" for="star5"> 별 5개 </label>
-						</div>
+
 						<input type="hidden" value="${area_seq }" name="area_seq">
-						  <div class="col-2 text-end">
-						    <button type="submit" class="btn btn-success">작성</button>
+						  <div class="col-6 text-end">
+						    <button type="submit" class="btn btn-success ">작성</button>
 						  </div>
 					</div>
 				</div>
 			</div>		
 		</form>
 		
+		<div class="row mt-4">
+			<div class="col border text-center">
+				이용자들의 후기
+			</div>
+		</div>
+		
 		<c:forEach var="i" items="${reply }" >
-		<div class="row border">
-			<form action="/area/replyUpdate" method="post" enctype="multipart/form-data">
+		<form action="/area/replyUpdate" method="post" enctype="multipart/form-data">
+		<div class="row replyContainer mt-4">
 			<input type="hidden" name=seq value=${i.seq }>
 			<input type="hidden" name=area_seq value=${i.area_seq }>
-			<div class="col-3">
-				<label class="w-100 h-100">
-				<div id="ph">
+			<div class="col-3 text-center align-self-center">
+				<label>
+				<div class="img" id="replyPhoto${i.seq }">
 				<c:if test="${i.photo ne null }">
-					<img src="/resources/${i.photo }" class="w-100 h-100">
+					<img src="/images/${i.photo }" class="w-100" style="height:200px;">
 				</c:if>
 				<c:if test="${i.photo eq null }">
-				
+					<img src="/images/noPhoto.png" class="w-100 h-100" style="height:200px;">
 				</c:if>
-				<input accept="image/*" id="img${i.seq }" type="file" class="opacity-0" class="replyimg" name="picture" style="display:none;" disabled/>
-				
 				</div>
+				<input accept="image/*" id="img${i.seq }" type="file" class="opacity-0 replyimg" name="picture" style="display:none;" disabled/>
 				</label>
 			</div>
 			<div class="col-9">
@@ -220,29 +245,28 @@
 					<div class="col">
 						${i.mem_nick }
 					</div>
-					<div class="col text-end">
-						${i.rate }
+					<div class="col text-end starRate${i.score }">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col">
-						<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 100px;resize:none;" readonly id="replyTxt${i.seq }">${i.text }</textarea>
+						<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt${i.seq }">${i.text }</textarea>
 						<input type="hidden" value="${i.text }" id="replyHidden${i.seq }">
 					</div>
 				</div>
 				<c:if test="${i.mem_seq eq loginSeq}">
-				<div class="row">
-					<div class="col-8"></div>
+				<div class="row mt-2">
+					<div class="col-6 col-xxl-8"></div>
 				
-					<div class="col-2 text-end">
+					<div class="col-3 col-xxl-3 text-end">
 						<button type="button" class="btn btn-success update" id="${i.seq }">수정</button>
-						<button type="submit" class="btn btn-success updateSubmit" id="replySubmit${i.seq }">등록</button>						
+						<button type="submit" class="btn btn-success updateSubmit" id="replySubmit${i.seq }"  style="display:none">등록</button>						
 					</div>
 				</form>
-					<div class="col-2 text-end">
+					<div class="col-3 col-xxl-1 text-end">
 						<form action="replyDelete">
 						<button type="submit" class="btn btn-success delete" id="replyDel${i.seq }">삭제</button>
-						<button type="button" class="btn btn-success cancel" id="replyCancel${i.seq }">취소</button>
+						<button type="button" class="btn btn-success cancel" id="replyCancel${i.seq }"  style="display:none">취소</button>
 						<input type="hidden" name="area_seq" value=${area_seq } >
 						<input type="hidden" name="seq" value=${i.seq }>
 						</form>
@@ -262,8 +286,8 @@
 		</c:forEach>		
 		
 		<c:if test="${printNum < replyCount }">
-		<div class="row" id="seeMoreTag">
-			<div class="col">
+		<div class="row mt-4 mb-4" id="seeMoreTag">
+			<div class="col text-center">
 				<button type="button" class="btn btn-success" id="seeMore">더보기</button>
 			</div>
 		</div>
@@ -276,13 +300,20 @@
 	<c:if test="${!empty loginSeq}">
 		loginSeq = ${loginSeq};
 	</c:if>
+	$('.starRate1').raty({ readOnly:true, score: 1	 });
+	$('.starRate2').raty({ readOnly:true, score: 2	 });
+	$('.starRate3').raty({ readOnly:true, score: 3	 });
+	$('.starRate4').raty({ readOnly:true, score: 4	 });
+	$('.starRate5').raty({ readOnly:true, score: 5	 });	
+
 	
 	$(".rcmd").on("click",function(){
 		location.href="/area/detail?num="+this.id;
 	})
 	
 	//댓글 수정
-	$(".update").on("click",function(){
+	$(document).on("click",".update",function(){
+		console.log("hi");
 		let seq = "#replyTxt"+this.id;
 		$(seq).removeAttr("readonly");
 		$(this).hide();
@@ -293,7 +324,7 @@
 		$("#img"+this.id).prop("disabled",false);
 	})
 	
-	$(".cancel").on("click",function(){
+	$(document).on("click",".cancel",function(){
 		$(this).hide();
 		let id = this.id.substr(11);
 		let seq = "#replyTxt"+id;
@@ -324,41 +355,54 @@
 	    		dataType:"json",
 	    		success:function(result){
 		    		printNum = printNum+staticNo;
-		    		console.log(printNum);
-		    		console.log(replyCount);
 		    		if(replyCount <= printNum){
 		    			$("#seeMoreTag").empty();		
 		    		}
-	    			console.log(result);
+	    			console.log(result);	
 	    			for(var i in result)
 					$("#seeMoreTag").before(
-							'<div class="row border">'+
-							'<div class="col-3">'+
-							(result[i].photo != null ? '<img src="/resource/"+i.photo+"\"" class="w-100 h-100">' : "")+
+							
+							'<form action="/area/replyUpdate" method="post" enctype="multipart/form-data">'+
+							'<div class="row mt-4">'+
+							'<input type="hidden" name=seq value='+result[i].seq+'>'+
+							'<input type="hidden" name="area_seq" value='+result[i].area_seq+'>'+
+							'<div class="col-3 text-center align-self-center">'+
+							'<label>'+
+							'<div class="img" id="replyPhoto'+result[i].seq+'">'+
+							
+							(result[i].photo != null ? '<img src="/images/'+result[i].photo+'" class="w-100" style="height:200px;">' : '<img src="/images/noPhoto.png" class="w-100 h-100" style="height:200px;">')+
+						'</div>'+
+						'<input accept="image/*" id="img'+result[i].seq+'" type="file" class="opacity-0 replyimg" name="picture" style="display:none;" disabled/>'+
+						'</label>'+
 						'</div>'+
 						'<div class="col-9">'+
 							'<div class="row">'+
 								'<div class="col">'+
 									result[i].mem_nick+
 								'</div>'+
-								'<div class="col text-end">'+
-									result[i].rate+
+								'<div class="col text-end starRate'+result[i].score+'">'+
 								'</div>'+
 							'</div>'+
 							'<div class="row">'+
-								'<div class="col">'+
+								'<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt'+result[i].seq+'">'+
 									result[i].text+
-								'</div>'+
+								'</textarea>'+
+								'<input type="hidden" value="'+result[i].text+'" id="replyHidden'+result[i].seq+'">'+
+
 							'</div>'+
 							(result[i].mem_seq == loginSeq ?
-								'<div class="row">'+
-								'<div class="col-8">'+
+								'<div class="row mt-2">'+
+								'<div class="col-6 col-xxl-8">'+
 								'</div>'+
-								'<div class="col-2 text-end">'+
-									'<button type="button" class="btn btn-success">수정</button>'+
+								'<div class="col-3 col-xxl-3 text-end">'+
+									'<button type="button" class="btn btn-success update" id='+result[i].seq+'>수정</button>'+
+									'<button type="submit" class="btn btn-success updateSubmit" id="replySubmit'+result[i].seq+'" style="display:none">등록</button>'+
 								'</div>'+
-								'<div class="col-2 text-end">'+
-									'<button type="button" class="btn btn-success">삭제</button>'+
+								'<div class="col-3 col-xxl-1 text-end">'+
+									'<button type="button" class="btn btn-success delete" id="replyDel'+result[i].seq+'">삭제</button>'+
+									'<button type="button" class="btn btn-success cancel" id="replyCancel'+result[i].seq+'" style="display:none">취소</button>'+
+									'<input type="hidden" name="area_seq" value='+result[i].area_seq+'>'+
+									'<input type="hidden" name="seq" value='+result[i].seq+'>'+
 								'</div>'+
 								'</div>'
 								:
@@ -373,7 +417,11 @@
 					)
 	    		}
 	    	  }).done(function(param){
-
+				let i;
+	    		  for(i = 1; i<6;i++){
+						$(".starRate"+i).html("");
+			  			$(".starRate"+i).raty({ readOnly:true, score: i	 });
+				}
 	    	  });
 	   })
 	
@@ -381,9 +429,18 @@
 		$("#img").on("change",function(){
 			let file = this.files[0];
 			if (file) {
-			    $("#ph").html("<img class='w-100 h-100' src = "+URL.createObjectURL(file)+">");
+			    $("#ph").html("<img class='w-100' style='height:150px;'  src = "+URL.createObjectURL(file)+">");
 			  }
 			})
+
+		$(document).on("change",".replyimg",function(){
+			let id = this.id.substr(3);
+			console.log(id);
+			let file = this.files[0];
+			if (file) {
+			    $("#replyPhoto"+id).html("<img class='w-100'  style='height:200px;' src = "+URL.createObjectURL(file)+">");
+			  }
+		})
 			
 		//찜
 		  $("#save").on("click",function(){
@@ -408,7 +465,7 @@
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
 			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-			level : 3
+			level : 5
 		// 지도의 확대 레벨
 		};
 
@@ -418,6 +475,18 @@
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
 
+		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+		var mapTypeControl = new kakao.maps.MapTypeControl();
+
+		// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+		// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+		map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+		var zoomControl = new kakao.maps.ZoomControl();
+		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+		
+		
 		// 주소로 좌표를 검색합니다
 		geocoder
 				.addressSearch(
@@ -439,8 +508,21 @@
 
 								// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 								map.setCenter(coords);
+								
+								var iwContent = '<div style="padding:5px;">${dto.name}</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+							    iwPosition = coords, //인포윈도우 표시 위치입니다
+							    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+								// 인포윈도우를 생성하고 지도에 표시합니다
+								var infowindow = new kakao.maps.InfoWindow({
+								    map: map, // 인포윈도우가 표시될 지도
+								    position : iwPosition, 
+								    content : iwContent,
+								    removable : iwRemoveable
+								});
 							}
 						});
+
 	</script>
 </body>
 </html>
