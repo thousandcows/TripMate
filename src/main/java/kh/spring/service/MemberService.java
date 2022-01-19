@@ -81,28 +81,25 @@ public class MemberService {
 	
 	// 마이페이지 정보수정
 	public int myInfoChangeOk(MemberDTO dto, MultipartFile file, String realPath) throws IllegalStateException, IOException {
-		if(!file.isEmpty()) {
-			System.out.println("파일 리얼패스 : " + realPath);
-			File realPathFile = new File(realPath);
-			if(!realPathFile.exists()) {
-				realPathFile.mkdir();
+		String fileObjectChangeString = String.valueOf(file);
+		boolean isFile = fileObjectChangeString.contains("size=0");
+		if(isFile) {
+			return memberDao.myInfoChangeOkNoFile(dto);
+		} else {
+			if(!file.isEmpty()) {
+				System.out.println("파일 리얼패스 : " + realPath);
+				File realPathFile = new File(realPath);
+				if(!realPathFile.exists()) {
+					realPathFile.mkdir();
+				}
+				String oriName = file.getOriginalFilename();
+				String sysName = UUID.randomUUID() + "_" + oriName;
+				file.transferTo(new File(realPath + "/" + sysName));
+				dto.setPhoto(sysName);
 			}
-			String oriName = file.getOriginalFilename();
-			String sysName = UUID.randomUUID() + "_" + oriName;
-			file.transferTo(new File(realPath + "/" + sysName));
-			dto.setPhoto(sysName);
+			return memberDao.myInfoChangeOk(dto);
 		}
-		System.out.println("들어오는 회원 seq : " + dto.getSeq());
-		System.out.println("들어오는 회원email : " + dto.getEmailID());
-		System.out.println("들어오는 회원nick : " + dto.getNick());
-		System.out.println("들어오는 회원gender : " + dto.getGender());
-		System.out.println("들어오는 회원age : " + dto.getAge());
-		System.out.println("들어오는 회원phone : " + dto.getPhone());
-		System.out.println("돌아오는 회원phone_Open : " + dto.getPh_Open());
-		System.out.println("들어오는 회원preference : " + dto.getPreference());
-		System.out.println("들어오는 회원text : " + dto.getText());
-		System.out.println("들어오는 회원photo : " + dto.getPhoto());
-		return memberDao.myInfoChangeOk(dto);		
+
 	}
 	
 	// 마이페이지 비밀번호 수정

@@ -91,7 +91,12 @@ public class MemberDAO {
 	
 	// 마이페이지 정보 수정
 	public int myInfoChangeOk(MemberDTO dto) {
-		return mybatis.insert("Member.myInfoChangeOk", dto);
+		return mybatis.update("Member.myInfoChangeOk", dto);
+	}
+	
+	// 사진수정 안한 마이페이지 정보 수정
+	public int myInfoChangeOkNoFile(MemberDTO dto) {
+		return mybatis.update("Member.myInfoChangeOkNoFile", dto);
 	}
 	
 	// 일반 비밀번호 변경
