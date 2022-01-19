@@ -274,6 +274,9 @@ public class MemberController {
 	public String mypageGo(Model model) {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
+		String filePath = "\\images" + "\\" + dto.getPhoto();
+		System.out.println(filePath);
+		dto.setPhoto(filePath);
 		model.addAttribute("loginInfo", dto);
 		return "mypage/myInfo";
 	}
@@ -282,12 +285,18 @@ public class MemberController {
 	@RequestMapping("myInfoChangeOk")
 	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
 		dto.setSeq((int)session.getAttribute("loginSeq"));
-//		널값 처리 해야됨
-		String realPath = session.getServletContext().getRealPath("myPhoto");
+		String realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
 		memberService.myInfoChangeOk(dto, file, realPath);
 		return "redirect:/member/mypageGo";
 	}
-
+	
+	// 비밀번호 수정
+	@RequestMapping("myInfoPwChange")
+	public String myInfoPwChange(String pw) {
+		memberService.myInfoPwChange(pw);
+		return "redirect:/member/mypageGo";
+	}
+	
 	@ExceptionHandler
 	public String ExceptionHandler(Exception e) {
 		e.printStackTrace();

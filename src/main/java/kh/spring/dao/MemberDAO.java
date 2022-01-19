@@ -94,4 +94,9 @@ public class MemberDAO {
 		return mybatis.insert("Member.myInfoChangeOk", dto);
 	}
 	
+	// 일반 비밀번호 변경
+	public int myInfoPwChange(String encryptPw) {
+		return mybatis.update("Member.myInfoPwChange", encryptPw);
+	}
+	
 }
