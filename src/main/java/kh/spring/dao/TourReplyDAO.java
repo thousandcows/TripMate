@@ -54,4 +54,9 @@ public class TourReplyDAO {
 		
 		return mybatis.delete("TourReply.delete", seq);
 	}
+	
+	public int deleteAll(int seq) {
+		
+		return mybatis.delete("TourReply.deleteAll", seq);
+	}
 }
