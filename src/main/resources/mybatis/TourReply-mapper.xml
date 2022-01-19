@@ -27,4 +27,13 @@
 		
 		delete from tour_reply where par_seq=#{seq}		
 	</delete>
+	
+	<insert id="reinsert">
+		insert into tour_reply_reply values(tourrr_seq.nextval, #{rpseq}, 1, #{recontent}, default)
+		
+	</insert>
+	
+	<select id="selectReAll" resultType="kh.spring.dto.TourReplyReplyDTO">
+		select p.seq, p.par_seq, p.mem_seq, p.contents, p.writen_time from tour_board b join tour_reply r on(b.seq=r.par_seq) join tour_reply_reply p on(r.seq=p.par_seq) order by p.writen_time desc
+	</select>
 </mapper>
