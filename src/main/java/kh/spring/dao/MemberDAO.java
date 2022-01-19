@@ -99,4 +99,9 @@ public class MemberDAO {
 		return mybatis.update("Member.myInfoPwChange", encryptPw);
 	}
 	
+	// 회원탈퇴
+	public int deleteAccount(int seq) {
+		return mybatis.delete("Member.deleteAccount", seq);
+	}
+	
 }

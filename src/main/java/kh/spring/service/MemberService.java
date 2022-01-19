@@ -110,4 +110,11 @@ public class MemberService {
 		String encryptPw = EncryptUtils.getSHA512(pw);
 		return memberDao.myInfoPwChange(encryptPw);
 	}
+	
+	// 회원탈퇴
+	public int deleteAccount(int seq) {
+		return memberDao.deleteAccount(seq);
+	}
+	
+	
 }

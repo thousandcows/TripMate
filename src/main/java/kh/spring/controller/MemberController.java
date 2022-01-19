@@ -297,6 +297,23 @@ public class MemberController {
 		return "redirect:/member/mypageGo";
 	}
 	
+	// 회원탈퇴
+	@RequestMapping("deleteAccount")
+	public String deleteAccount(int seq) {
+		System.out.println("넘어온 탈퇴 seq : " + seq);
+		memberService.deleteAccount(seq);
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	// 카카오 로그아웃
+	@ResponseBody
+	@RequestMapping("kakaoLogOut")
+	public String kakaoLogOut(int seq) {
+		session.invalidate();
+		return "https://kauth.kakao.com/oauth/logout?client_id=b7b0a7f6722957ddef971b2ff4061bd7&logout_redirect_uri=http://localhost";
+	}
+	
 	@ExceptionHandler
 	public String ExceptionHandler(Exception e) {
 		e.printStackTrace();

@@ -179,6 +179,7 @@
         }
 
         .deleteAccountBtn:hover {
+          cursor: pointer;
           color: lightslategray;
           border-bottom: 1px solid gray;
         }
@@ -269,7 +270,15 @@
           border: 1px solid gray;
           background-color: white;
           border-radius: 3px;
-          margin-top:10px;
+          margin-top: 10px;
+        }
+
+        /* 회원탈퇴용 폼 */
+        #deleteAccountForm{
+          display:none;
+        }
+        .deleteAccountInput{
+          display:none;
         }
 
         /* 정보수정 끝 */
@@ -379,12 +388,16 @@
                 <div class="submitBtnss">
                   <div class="submitBtns">
                     <button type="button" class="changeSubmitBtn" id="myInfoChangeGo">수정버튼</button>
-                    <a href="#" class="deleteAccountBtn">탈퇴하기</a>
-                    <!-- 추가 세션비우는작업 해줘야함 -->
-                    <a href="https://kauth.kakao.com/oauth/logout?client_id=b7b0a7f6722957ddef971b2ff4061bd7&logout_redirect_uri=http://localhost"
-                      class="deleteAccountBtn">카카오 탈퇴버튼</a>
+                    <button type="button" class="deleteAccountBtn" id="deleteAccountBtn">탈퇴하기</button>
+                    <c:if test="${loginInfo.sns_division != 0}">
+                      <!-- 세션비우는작업 추가로 해줘야함 ajax로 받아서 -->
+                      <button type="button" id="kakaoLogOutBtn" class="deleteAccountBtn">카카오 로그아웃</a>
+                    </c:if>
                   </div>
                 </div>
+              </form>
+              <form action="/member/deleteAccount" method="post" id="deleteAccountForm">
+                <input type="text" value=${loginInfo.seq} name="seq" class="deleteAccountInput">
               </form>
             </div>
           </div>
@@ -401,7 +414,8 @@
             </div>
             <div class="modal-body">
               <form action="/member/myInfoPwChange" method="post" class="myInfoPwChangeForm" id="myInfoPwChangeForm">
-                <input type="password" placeholder="새로운 비밀번호 입력" class="myInfoPwChangeInput" id="myInfoPwChangeInput" name="pw">
+                <input type="password" placeholder="새로운 비밀번호 입력" class="myInfoPwChangeInput" id="myInfoPwChangeInput"
+                  name="pw">
                 <div class="myInfoCheckTxt myInfoPwChangeConfirm">&nbsp;</div>
                 <input type="password" placeholder="비밀번호 확인" class="myInfoPwChangeInput" id="myInfoPwChangeInputRe">
                 <button type="button" class="myInfoPwChangeBtn" id="myInfoPwChangeBtn">변경</button>
@@ -417,7 +431,7 @@
 
       <script>
         'use strict'
-        console.log("${loginInfo.photo}");
+        console.log("${loginInfo.sns_division}");
         // 사진 미리보기및 파일 용량 제한
         document.querySelector("#portraitInput").onchange = function () {
           let maxSize = "5242880";
@@ -571,23 +585,46 @@
           }
         });
 
+        // 비밀번호 변경
         document.querySelector("#myInfoPwChangeBtn").addEventListener("click", () => {
           let pwRegex = /^[A-Za-z0-9\S]{8,16}$/;
           let myInfoPwChangeInput = document.querySelector("#myInfoPwChangeInput").value;
           let myInfoPwChangeInputRe = document.querySelector("#myInfoPwChangeInputRe").value;
-          if(myInfoPwChangeInput != myInfoPwChangeInputRe){
+          if (myInfoPwChangeInput != myInfoPwChangeInputRe) {
             document.querySelector(".myInfoPwChangeConfirm").style.color = "red";
             document.querySelector(".myInfoPwChangeConfirm").innerHTML = "입력된 비밀번호가 다릅니다.";
             return false;
           }
-          if(!pwRegex.test(myInfoPwChangeInput)){
+          if (!pwRegex.test(myInfoPwChangeInput)) {
             document.querySelector(".myInfoPwChangeConfirm").style.color = "red";
             document.querySelector(".myInfoPwChangeConfirm").innerHTML = "공백 없는 8~16자로 입력해주세요.";
             return false;
           }
-          if(confirm("비밀번호를 변경하시겠습니까?")){
+          if (confirm("비밀번호를 변경하시겠습니까?")) {
             document.querySelector("#myInfoPwChangeForm").submit();
           }
+        });
+
+        // 회원 탈퇴
+        document.querySelector("#deleteAccountBtn").addEventListener("click", () => {
+          if (confirm("모든정보가 삭제됩니다. 정말 탈퇴하시겠습니까?")) {
+            alert("탈퇴되었습니다. 이용해주셔서 감사합니다.");
+            document.getElementById("deleteAccountForm").submit();
+          }
+        });
+    
+        document.querySelector("#kakaoLogOutBtn").addEventListener("click", () => {
+          let seq = "${loginInfo.seq}";
+          alert("사이트에서 로그아웃 되었습니다.");
+          console.log(seq);
+          $.ajax({
+            type: "post",
+            url: "/member/kakaoLogOut",
+            data: {seq : seq}
+          }).done(function(res){
+            console.log(res);
+            location.href=res;
+          })
         });
       </script>
     </body>

@@ -59,4 +59,8 @@
 		update member set pw = #{value}
 	</update>
 	
+	<delete id='deleteAccount'>
+		delete from member where seq = #{value}
+	</delete>
+	
 </mapper>
