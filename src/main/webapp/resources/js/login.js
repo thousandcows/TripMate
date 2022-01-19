@@ -128,6 +128,80 @@
 
     // 회원가입 완료 버튼 onsubmit="return 메서드()" 쓰면 편한데 알수없는 에러나서 그냥 이방식으로 결정
     document.querySelector("#signupGoBtn").addEventListener("click", () => {
+      let emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      let signupEmailValue = document.querySelector("#signupEmail").value
+      if (emailRegex.test(signupEmailValue)) {
+        $.ajax({
+          type: "post",
+          url: "/member/emailCheck",
+          data: { email: signupEmailValue }
+        }).done(function (res) {
+          if (res == "1") {
+            document.querySelector(".emailConfirm").style.color = "red";
+            document.querySelector(".emailConfirm").innerHTML = "사용중인 이메일입니다.";
+            emailSubmitCheck = false;
+          } else {
+            document.querySelector(".emailConfirm").style.color = "cornflowerblue";
+            document.querySelector(".emailConfirm").innerHTML = "사용 가능한 이메일입니다.";
+            emailSubmitCheck = true;
+          }
+        })
+      } else {
+        document.querySelector(".emailConfirm").style.color = "red";
+        document.querySelector(".emailConfirm").innerHTML = "이메일 양식을 확인해주세요.";
+        emailSubmitCheck = false;
+      }
+
+      let nickNameRegex = /^([a-zA-Z0-9가-힣]){1,8}$/;
+      let signupNickNameValue = document.querySelector("#signupNickName").value
+      if (nickNameRegex.test(signupNickNameValue)) {
+        $.ajax({
+          url: "/member/nickNameCheck",
+          data: { nickName: signupNickNameValue }
+        }).done(function (res) {
+          if (res == "1") {
+            document.querySelector(".nickNameConfirm").style.color = "red";
+            document.querySelector(".nickNameConfirm").innerHTML = "사용중인 닉네임입니다.";
+            nickNameSubmitCheck = false;
+          } else {
+            document.querySelector(".nickNameConfirm").style.color = "cornflowerblue";
+            document.querySelector(".nickNameConfirm").innerHTML = "사용 가능한 닉네임입니다.";
+            nickNameSubmitCheck = true;
+          }
+        })
+      } else {
+        document.querySelector(".nickNameConfirm").style.color = "red";
+        document.querySelector(".nickNameConfirm").innerHTML = "완성된 한글, 영문, 숫자를 포함한 8글자 이내";
+        nickNameSubmitCheck = false;
+      }
+
+      let phoneRegex = /^[0-9]{11}$/;
+      let phone1 = document.querySelector("#signupPhone1").value
+      let phone2 = document.querySelector("#signupPhone2").value
+      let phone3 = document.querySelector("#signupPhone3").value
+      let phone4 = phone1 + phone2 + phone3 + "";
+      document.querySelector("#signupPhone").value = phone4;
+      if (phoneRegex.test(phone4)) {
+        $.ajax({
+          url: "/member/phoneCheck",
+          data: { phone: phone4 }
+        }).done(function (res) {
+          if (res == "1") {
+            document.querySelector(".phoneConfirm").style.color = "red";
+            document.querySelector(".phoneConfirm").innerHTML = "사용중인 번호입니다.";
+            phoneSubmitCheck = false;
+          } else {
+            document.querySelector(".phoneConfirm").style.color = "cornflowerblue";
+            document.querySelector(".phoneConfirm").innerHTML = "사용가능한 번호입니다.";
+            phoneSubmitCheck = true;
+          }
+        })
+      } else {
+        document.querySelector(".phoneConfirm").style.color = "red";
+        document.querySelector(".phoneConfirm").innerHTML = "유효한 번호를 입력해주세요.";
+        phoneSubmitCheck = false;
+      }
+
       if (!emailSubmitCheck) {
         alert("이메일을 확인해주세요.");
         return false;

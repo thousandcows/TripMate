@@ -54,7 +54,7 @@
 
     <body>
       <!-- 로그인 모달창 -->
-      <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+      <div class="modal" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -80,7 +80,7 @@
         </div>
       </div>
       <!-- 회원가입 모달창 -->
-      <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+      <div class="modal" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content modal-signup-content">
@@ -136,7 +136,7 @@
         </div>
       </div>
       <!-- PW찾기 모달창 -->
-      <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+      <div class="modal" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
