@@ -1,5 +1,6 @@
 package kh.spring.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -100,34 +101,52 @@ public class CompanyBoardController {
 	@RequestMapping("deleteProc")
 	public String deleteProc(int seq) throws Exception{
 		int result = cbs.delete(seq);
+		cbs.delete2(seq);
+		
 		return "redirect:/companyboard/list?cpage=1";
 	}	
 	
 	// 좋아요
 	@ResponseBody
     @RequestMapping(value = "heart", method = RequestMethod.POST, produces = "application/json")
-    public int heart(HttpServletRequest httpRequest) throws Exception {
+    public HashMap<String, Integer> heart(HttpServletRequest httpRequest) throws Exception {
 
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		
         int heart = Integer.parseInt(httpRequest.getParameter("heart"));
-        //int userid = (int) session.getAttribute("loginSeq");
-        
-        int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));
+        //int userid = (int) session.getAttribute("loginSeq");     
+        int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));   
+        int rec_count_no = Integer.parseInt(httpRequest.getParameter("rec_count_no"));
 
         ComBoardLikeDTO dto = new ComBoardLikeDTO();
-
+        CompanyBoardDTO dto2 = cbs.selectBySeq(boardId);
+        
         dto.setPar_seq(boardId);
         dto.setMem_seq(1);
-        
+ 
         if(heart >= 1) {
             cbs.deleteBoardLike(dto);
             heart=0;
+            dto2.setRec_count(dto2.getRec_count()-1);
+            rec_count_no = dto2.getRec_count();
+            //System.out.println("컨트롤러 추천수 heart=0: " +  dto2.getRec_count());
+            
+            map.put("heart", heart);
+            map.put("rec_count_no", rec_count_no);
         } else {
             cbs.insertBoardLike(dto);
             heart=1;
+            dto2.setRec_count(dto2.getRec_count()+1); 
+            rec_count_no = dto2.getRec_count();
+            //System.out.println("컨트롤러 추천수 heart=1 : " +  dto2.getRec_count());
+            
+            map.put("heart", heart);
+            map.put("rec_count_no", rec_count_no);
         }
+        
+        //System.out.println(dto2.getRec_count());
 
-        return heart;
+        return map;
 
     }
 	

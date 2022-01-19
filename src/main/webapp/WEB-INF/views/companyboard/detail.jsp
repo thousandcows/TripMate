@@ -187,6 +187,10 @@
         	float: left;
         	line-height:30px;
         }
+        
+        #heart{
+        	cursor: pointer;
+        }
     </style>
     
 </head>
@@ -279,7 +283,7 @@
                 <div class="like_n_rep">
                 	<div id=like_icon>
                 		<a class="heart">
-           					<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${rec_count}</span>
+           					<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count">${dto.rec_count}</span>
        					</a>
                 	</div>
                 	<div id=rep_icon></div>
@@ -446,40 +450,47 @@
         var heartval = ${heart};
 
         if(heartval>0) {
-            console.log("하트값..?" + heartval);
+        	 //console.log("heartval>0 "+heartval + " : " + ${heart});
             $("#heart").prop("src", "/images/like.png");
             $(".heart").prop('name',heartval)
         }
         else {
-            console.log("하트값..?" + heartval);
+        	 //console.log("else "+heartval + " : " + ${heart});
             $("#heart").prop("src", "/images/dislike.png");
             $(".heart").prop('name',heartval)
         }
 
-        $(".heart").on("click", function () {
+    });
+    
+    $(".heart").on("click", function () {
 
-            var that = $(".heart");
-            
-            console.log("여기까지 작동함?");
+        var that = $(".heart");
 
-            var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name')};
-            
-            console.log("여기까지 작동함2?");
-            
-            $.ajax({
-                url :'/companyboard/heart',
-                type :'POST',
-                data : sendData,
-                success : function(data){
-                    that.prop('name',data);
-                    if(data==1) {
-                        $('#heart').prop("src","/images/like.png");
-                    }
-                    else{
-                        $('#heart').prop("src","/images/dislike.png");
-                    }
+        var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name'), 'rec_count_no' : '${dto.rec_count}'};
+        
+        //console.log(that.prop('name'));
+        
+        $.ajax({
+            url :'/companyboard/heart',
+            type :'POST',
+            data : sendData,
+            success : function(data){
+                that.prop('name',data.heart);   
+    		    
+                var heart = data.heart;
+                var rec_count_no = data.rec_count_no;
+                
+                if(heart==1) {
+                    $('#heart').prop("src","/images/like.png");
+                    console.log("heart값이 1일때 dto의 추천수 : " + rec_count_no);
+                    $('#rec_count').html(data.rec_count_no);
                 }
-            });
+                else{
+                    $('#heart').prop("src","/images/dislike.png");
+                    console.log("heart값이 0일때 dto의 추천수 : " + rec_count_no);
+                    $('#rec_count').html(data.rec_count_no);
+                }
+            }
         });
     });
     </script>
