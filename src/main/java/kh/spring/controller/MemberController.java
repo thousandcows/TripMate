@@ -285,6 +285,7 @@ public class MemberController {
 	@RequestMapping("myInfoChangeOk")
 	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
 		dto.setSeq((int)session.getAttribute("loginSeq"));
+		System.out.println("선호" + dto.getPreference());
 		String realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
 		memberService.myInfoChangeOk(dto, file, realPath);
 		return "redirect:/member/mypageGo";

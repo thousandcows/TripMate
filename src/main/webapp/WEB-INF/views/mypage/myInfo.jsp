@@ -323,16 +323,20 @@
                       id="myInfoNickInput">
                     <button type="button" class="myInfoNickCheck" id="myInfoNickCheck">중복확인</button>
                     <div class="myInfoCheckTxt myInfoNickConfirm">테스트텍스트</div>
+                    <c:if test="${loginInfo.sns_division == 0}">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                       비밀번호 변경
                     </button>
+                    </c:if>
                   </div>
                 </div>
                 <table class="myInfoForm">
+                <c:if test="${loginInfo.sns_division == 0}">
                   <tr>
                     <th class="text-center">Email</th>
                     <td><input type="text" value=${loginInfo.emailID} readonly class="longInput" name="emailID"></td>
                   </tr>
+                </c:if>
                   <tr>
                     <th class="text-center">나이</th>
                     <td><input type="number" min="14" max="100" class="ageInput" name="age" value=${loginInfo.age}></td>
@@ -361,7 +365,7 @@
                   </tr>
                   <tr>
                     <th class="text-center">연락처</th>
-                    <td><input type="text" value=${loginInfo.phone} maxlength="11" class="longInput"
+                    <td><input type="text" value="${loginInfo.phone}" maxlength="11" class="longInput"
                         id="myInfoPhoneInput" name="phone">
                       <button type="button" class="myInfoPhoneCheck" id="myInfoPhoneCheck">중복확인</button><input
                         type="checkbox" class="phOpen" name="ph_Open"><span class="phOpenTxt">공개</span>
@@ -371,12 +375,12 @@
                   <tr>
                     <th class="text-center">여행 선호방식</th>
                     <td><select class="preferenceInput" name="preference" value=${loginInfo.preference}>
-                        <option value="0">선택해주세요.</option>
-                        <option value="1">힐링여행</option>
-                        <option value="2">먹거리 여행</option>
-                        <option value="3">관광지 투어</option>
-                        <option value="4">액티비티</option>
-                        <option value="5">기분따라</option>
+                        <option value="0" <c:if test="${loginInfo.preference == 0}">selected</c:if>>선택해주세요.</option>
+                        <option value="1" <c:if test="${loginInfo.preference == 1}">selected</c:if>>힐링여행</option>
+                        <option value="2" <c:if test="${loginInfo.preference == 2}">selected</c:if>>먹거리 여행</option>
+                        <option value="3" <c:if test="${loginInfo.preference == 3}">selected</c:if>>관광지 투어</option>
+                        <option value="4" <c:if test="${loginInfo.preference == 4}">selected</c:if>>액티비티</option>
+                        <option value="5" <c:if test="${loginInfo.preference == 5}">selected</c:if>>기분따라</option>
                       </select></td>
                   </tr>
                   <tr>
@@ -431,6 +435,7 @@
 
       <script>
         'use strict'
+        console.log("${loginInfo.preference}");
         console.log("${loginInfo.sns_division}");
         // 사진 미리보기및 파일 용량 제한
         document.querySelector("#portraitInput").onchange = function () {
