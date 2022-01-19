@@ -126,5 +126,9 @@ public class CompanyBoardService {
 	
 	public  int getBoardLike(ComBoardLikeDTO dto) throws Exception {
         return cdao.getBoardLike(dto);
-}
+	}
+	
+	public int delete2(int seq) {
+		return cdao.delete2(seq);
+	}
 }

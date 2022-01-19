@@ -37,6 +37,11 @@ public class CompanyBoardDAO {
 		return mybatis.delete("CompanyBoard.delete", seq);
 	}
 	
+	//좋아요 테이블 삭제
+	public int delete2(int seq) {
+		return mybatis.delete("CompanyBoard.delete2",seq);
+	}
+	
 	public int modify(CompanyBoardDTO dto) {
 		return mybatis.update("CompanyBoard.modify", dto);
 	}
@@ -67,5 +72,5 @@ public class CompanyBoardDAO {
 	public void updateBoardLike(int boardId) throws Exception {
         mybatis.update("CompanyBoard.updateBoardLike",boardId);
     }
-	
+
 }
