@@ -241,8 +241,8 @@
             <div class="contentsMiddleIn">
               <form action="/member/myInfoChangeOk" method="post" enctype="multipart/form-data">
                 <div class="sideMyPortrait">
-                  <img src="/resources/images/default_profile.png" class="portraitPhoto" id="portraitPhoto">
-                  <input type="file" class="portraitInput" id="portraitInput" name="file">
+                  <img src="/resources/images/default_profile.png" class="portraitPhoto" id="portraitPhoto" onchange="">
+                  <input type="file" class="portraitInput" id="portraitInput" name="file" accept="image/gif, image/jpeg, image/png">
                 </div>
                 <table class="myInfoForm">
                   <tr>
@@ -325,6 +325,7 @@
 
       <script>
         'use strict'
+        // 사진 미리보기
         document.querySelector("#portraitInput").onchange = function () {
           let reader = new FileReader();
           reader.onload = function (e) {
@@ -332,7 +333,10 @@
           }
           reader.readAsDataURL(this.files[0]);
         }
-        console.log("${loginInfo.gender}");
+
+        function fileCheck(){
+
+        }
       </script>
     </body>
 
