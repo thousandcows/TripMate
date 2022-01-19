@@ -76,8 +76,8 @@ ul>li{
 		</div>
 		</div>
 
-		<div class="row mt-5 border">
-			<div class="col-12 col-md-8 border">
+		<div class="row mt-5 r">
+			<div class="col-12 col-md-8 ">
 				<div class="row">
 					<div class="col col-md-10 fs-2 fw-bolder">
 						${dto.name }
@@ -171,11 +171,11 @@ ul>li{
 					</div>
 				</div>
 
-				<div class="row border mt-2">
+				<div class="row mt-4">
 			<c:forEach var="i" items="${rcmd }">
-			<div class="col-3 rcmd text-center border" id="${i.seq }">
+			<div class="col-3 rcmd text-center " id="${i.seq }">
 				<div>
-				<img src="${i.photo }" class="w-100" style="height:150px;">
+				<img src="${i.photo }" class="w-100" style="height:200px;">
 				</div>
 				<div>
 				${i.title }
@@ -186,11 +186,11 @@ ul>li{
 		</div>
 
 		<form action="/area/replySubmit" method="post" enctype="multipart/form-data">
-			<div class="row border mt-2">
+			<div class="row border mt-4">
 				<div class="col-2">
-				<label class="w-100 h-100">
+				<label class="w-100" style="height:100px;">
 				<div id="ph">
-					<svg xmlns="http://www.w3.org/2000/svg" class="img-fluid w-100 h-100" viewBox="0 0 20 20" fill="currentColor">
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-100" style="height:100px;" viewBox="0 0 20 20" fill="currentColor">
 					   <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
 					 </svg>
 				</div>
@@ -203,8 +203,8 @@ ul>li{
 						  <textarea class="form-control p-0" placeholder="댓글작성" id="replyText" name="text" style="height: 100px;resize:none;"></textarea>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-6" id="starRate">
+					<div class="row mt-1 mb-2">
+						<div class="col-6 mt-2" id="starRate">
 						</div>
 
 						<input type="hidden" value="${area_seq }" name="area_seq">
@@ -216,19 +216,25 @@ ul>li{
 			</div>		
 		</form>
 		
+		<div class="row mt-4">
+			<div class="col border text-center">
+				이용자들의 후기
+			</div>
+		</div>
+		
 		<c:forEach var="i" items="${reply }" >
 		<form action="/area/replyUpdate" method="post" enctype="multipart/form-data">
-		<div class="row border replyContainer">
+		<div class="row replyContainer mt-4">
 			<input type="hidden" name=seq value=${i.seq }>
 			<input type="hidden" name=area_seq value=${i.area_seq }>
-			<div class="col-3">
+			<div class="col-3 text-center align-self-center">
 				<label>
 				<div class="img" id="replyPhoto${i.seq }">
 				<c:if test="${i.photo ne null }">
-					<img src="/images/${i.photo }" class="w-100 h-100">
+					<img src="/images/${i.photo }" class="w-100" style="height:200px;">
 				</c:if>
 				<c:if test="${i.photo eq null }">
-					<img src="/images/noPhoto.png" class="w-100 h-100">
+					<img src="/images/noPhoto.png" class="w-100 h-100" style="height:200px;">
 				</c:if>
 				</div>
 				<input accept="image/*" id="img${i.seq }" type="file" class="opacity-0 replyimg" name="picture" style="display:none;" disabled/>
@@ -239,26 +245,25 @@ ul>li{
 					<div class="col">
 						${i.mem_nick }
 					</div>
-					<div class="col text-end">
-						${i.score }
+					<div class="col text-end starRate${i.score }">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col">
-						<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 100px;resize:none;" readonly id="replyTxt${i.seq }">${i.text }</textarea>
+						<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt${i.seq }">${i.text }</textarea>
 						<input type="hidden" value="${i.text }" id="replyHidden${i.seq }">
 					</div>
 				</div>
 				<c:if test="${i.mem_seq eq loginSeq}">
-				<div class="row">
-					<div class="col-8"></div>
+				<div class="row mt-2">
+					<div class="col-6 col-xxl-8"></div>
 				
-					<div class="col-2 text-end">
+					<div class="col-3 col-xxl-3 text-end">
 						<button type="button" class="btn btn-success update" id="${i.seq }">수정</button>
 						<button type="submit" class="btn btn-success updateSubmit" id="replySubmit${i.seq }"  style="display:none">등록</button>						
 					</div>
 				</form>
-					<div class="col-2 text-end">
+					<div class="col-3 col-xxl-1 text-end">
 						<form action="replyDelete">
 						<button type="submit" class="btn btn-success delete" id="replyDel${i.seq }">삭제</button>
 						<button type="button" class="btn btn-success cancel" id="replyCancel${i.seq }"  style="display:none">취소</button>
@@ -281,8 +286,8 @@ ul>li{
 		</c:forEach>		
 		
 		<c:if test="${printNum < replyCount }">
-		<div class="row" id="seeMoreTag">
-			<div class="col">
+		<div class="row mt-4 mb-4" id="seeMoreTag">
+			<div class="col text-center">
 				<button type="button" class="btn btn-success" id="seeMore">더보기</button>
 			</div>
 		</div>
@@ -295,8 +300,11 @@ ul>li{
 	<c:if test="${!empty loginSeq}">
 		loginSeq = ${loginSeq};
 	</c:if>
-	
-	$('#starRate').raty({ score: 5	 })
+	$('.starRate1').raty({ readOnly:true, score: 1	 });
+	$('.starRate2').raty({ readOnly:true, score: 2	 });
+	$('.starRate3').raty({ readOnly:true, score: 3	 });
+	$('.starRate4').raty({ readOnly:true, score: 4	 });
+	$('.starRate5').raty({ readOnly:true, score: 5	 });	
 
 	
 	$(".rcmd").on("click",function(){
@@ -355,14 +363,14 @@ ul>li{
 					$("#seeMoreTag").before(
 							
 							'<form action="/area/replyUpdate" method="post" enctype="multipart/form-data">'+
-							'<div class="row border">'+
+							'<div class="row mt-4">'+
 							'<input type="hidden" name=seq value='+result[i].seq+'>'+
 							'<input type="hidden" name="area_seq" value='+result[i].area_seq+'>'+
-							'<div class="col-3">'+
+							'<div class="col-3 text-center align-self-center">'+
 							'<label>'+
 							'<div class="img" id="replyPhoto'+result[i].seq+'">'+
 							
-							(result[i].photo != null ? '<img src="/images/'+result[i].photo+'" class="w-100 h-100">' : '<img src="/images/noPhoto.png" class="w-100 h-100">')+
+							(result[i].photo != null ? '<img src="/images/'+result[i].photo+'" class="w-100" style="height:200px;">' : '<img src="/images/noPhoto.png" class="w-100 h-100" style="height:200px;">')+
 						'</div>'+
 						'<input accept="image/*" id="img'+result[i].seq+'" type="file" class="opacity-0 replyimg" name="picture" style="display:none;" disabled/>'+
 						'</label>'+
@@ -372,26 +380,25 @@ ul>li{
 								'<div class="col">'+
 									result[i].mem_nick+
 								'</div>'+
-								'<div class="col text-end">'+
-									result[i].score+
+								'<div class="col text-end starRate'+result[i].score+'">'+
 								'</div>'+
 							'</div>'+
 							'<div class="row">'+
-								'<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 100px;resize:none;" readonly id="replyTxt'+result[i].seq+'">'+
+								'<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt'+result[i].seq+'">'+
 									result[i].text+
 								'</textarea>'+
 								'<input type="hidden" value="'+result[i].text+'" id="replyHidden'+result[i].seq+'">'+
 
 							'</div>'+
 							(result[i].mem_seq == loginSeq ?
-								'<div class="row">'+
-								'<div class="col-8">'+
+								'<div class="row mt-2">'+
+								'<div class="col-6 col-xxl-8">'+
 								'</div>'+
-								'<div class="col-2 text-end">'+
+								'<div class="col-3 col-xxl-3 text-end">'+
 									'<button type="button" class="btn btn-success update" id='+result[i].seq+'>수정</button>'+
 									'<button type="submit" class="btn btn-success updateSubmit" id="replySubmit'+result[i].seq+'" style="display:none">등록</button>'+
 								'</div>'+
-								'<div class="col-2 text-end">'+
+								'<div class="col-3 col-xxl-1 text-end">'+
 									'<button type="button" class="btn btn-success delete" id="replyDel'+result[i].seq+'">삭제</button>'+
 									'<button type="button" class="btn btn-success cancel" id="replyCancel'+result[i].seq+'" style="display:none">취소</button>'+
 									'<input type="hidden" name="area_seq" value='+result[i].area_seq+'>'+
@@ -410,7 +417,11 @@ ul>li{
 					)
 	    		}
 	    	  }).done(function(param){
-
+				let i;
+	    		  for(i = 1; i<6;i++){
+						$(".starRate"+i).html("");
+			  			$(".starRate"+i).raty({ readOnly:true, score: i	 });
+				}
 	    	  });
 	   })
 	
@@ -418,7 +429,7 @@ ul>li{
 		$("#img").on("change",function(){
 			let file = this.files[0];
 			if (file) {
-			    $("#ph").html("<img class='w-100 h-100' src = "+URL.createObjectURL(file)+">");
+			    $("#ph").html("<img class='w-100' style='height:150px;'  src = "+URL.createObjectURL(file)+">");
 			  }
 			})
 
@@ -427,7 +438,7 @@ ul>li{
 			console.log(id);
 			let file = this.files[0];
 			if (file) {
-			    $("#replyPhoto"+id).html("<img class='w-100 h-100' src = "+URL.createObjectURL(file)+">");
+			    $("#replyPhoto"+id).html("<img class='w-100'  style='height:200px;' src = "+URL.createObjectURL(file)+">");
 			  }
 		})
 			
