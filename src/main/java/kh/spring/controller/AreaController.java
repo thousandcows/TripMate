@@ -80,7 +80,7 @@ public class AreaController {
 
 		if(replyCount>0) {//댓글 1개이상 존재시, 평점 출력
 			double rate = aService.countRate(num);
-			model.addAttribute("rate",rate);			
+			model.addAttribute("score",rate);			
 		}
 		
 		List<AreaRcmdDTO> rcmd = aService.rcmdBuild(dto.getCategory(),dto.getCat2(),dto.getCat3());

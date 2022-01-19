@@ -12,6 +12,9 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a5fa8abac646238f15601b89cae524ec&libraries=services"></script>
 <script src="https://kit.fontawesome.com/cbcad42a26.js" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="/js/jquery.raty.js"></script>
+<link rel="/css/stylesheet" href="jquery.raty.css">
+
 <style>
 @font-face {
   font-family: 'Material Icons';
@@ -74,9 +77,9 @@ ul>li{
 		</div>
 
 		<div class="row mt-5 border">
-			<div class="col border">
+			<div class="col-12 col-md-8 border">
 				<div class="row">
-					<div class="col-10 fs-2 fw-bolder">
+					<div class="col col-md-10 fs-2 fw-bolder">
 						${dto.name }
 					</div>
 					<div class="col-2 text-end" id="recommand">
@@ -91,8 +94,8 @@ ul>li{
 					</div>
 				</div>
 				<div class="row">
-					<div class="col md-col-9">
-					<c:if test="${!empty rate }">
+					<div class="col col-md-9">
+					<c:if test="${!empty score }">
 						<ul class="list-group-horizontal p-0">
 						<c:forEach var='cnt' begin='1' end='5'>
 							<li><svg xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;" class="float-start p-0"
@@ -100,13 +103,13 @@ ul>li{
 							    <defs>
 							        <linearGradient id="half_grad${cnt }">
 							        	<c:choose>
-								        	<c:when test="${cnt<=rate }">
+								        	<c:when test="${cnt<=score }">
 								        		<stop offset="100%" stop-color="orange" />
 								        	</c:when>
-								        	<c:when test="${cnt>rate and cnt-1<rate }">
-								        		<stop offset="${100-(cnt-rate)*100 }%"
+								        	<c:when test="${cnt>score and cnt-1<score }">
+								        		<stop offset="${100-(cnt-score)*100 }%"
 												stop-color="orange" />
-								        		<stop offset="${(cnt-rate)*100 }%" stop-color="white" />
+								        		<stop offset="${(cnt-score)*100 }%" stop-color="white" />
 								        	</c:when>
 											<c:otherwise>
 									            <stop offset="100%" stop-color="white"
@@ -123,14 +126,14 @@ ul>li{
 						</ul>
 					</c:if>
 					</div>
-					<div class="col md-col-3 text-end">
-						<c:if test="${!empty rate}">
-						평점 : ${rate }
+					<div class="col-12 col-md-3 text-end">
+						<c:if test="${!empty score}">
+						평점 : ${score }
 						</c:if>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-12 lg-col-7">
+					<div class="co">
 						분류 : ${dto.category }<br>
 						주소 : ${dto.lo_detail }<br>
 						연락처 : ${dto.phone }<br>
@@ -160,18 +163,19 @@ ul>li{
 							</div>
 						</div>
 					</div>
+					</div>
 				</div>
-			</div>
-			<div class="col-12 lg-col-5 mt-12">
-				<div id="map" style="width:500px;height:400px;"></div>
-			</div>
-		</div>
-		
-		<div class="row border">
+
+					<div class="col col-md-4">
+						<div id="map" class="w-100" style="height: 300px;"></div>
+					</div>
+				</div>
+
+				<div class="row border mt-2">
 			<c:forEach var="i" items="${rcmd }">
-			<div class="col-3 rcmd" id="${i.seq }">
+			<div class="col-3 rcmd text-center border" id="${i.seq }">
 				<div>
-				<img src="${i.photo }" style="width:100px;height:100px;">
+				<img src="${i.photo }" class="w-100" style="height:150px;">
 				</div>
 				<div>
 				${i.title }
@@ -182,7 +186,7 @@ ul>li{
 		</div>
 
 		<form action="/area/replySubmit" method="post" enctype="multipart/form-data">
-			<div class="row border">
+			<div class="row border mt-2">
 				<div class="col-2">
 				<label class="w-100 h-100">
 				<div id="ph">
@@ -195,35 +199,17 @@ ul>li{
 				</label>
 				<div class="col-10">
 					<div class="row">
-						<div class="form-floating col-12">
-						  <textarea class="form-control" placeholder="댓글작성" id="replyText" name="text" style="height: 100px;resize:none;"></textarea>
-						  <label for="replyText">댓글 작성</label>
+						<div class="form-floating col-12 p-0">
+						  <textarea class="form-control p-0" placeholder="댓글작성" id="replyText" name="text" style="height: 100px;resize:none;"></textarea>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-2 form-check">
-							<input class="form-check-input" type="radio" name="rate" id="star1" value=1>
-							<label class="form-check-label" for="star1"> 별 1개 </label>
+						<div class="col-6" id="starRate">
 						</div>
-						<div class="col-2 form-check">
-							<input class="form-check-input" type="radio" name="rate" id="star2" value=2>
-							<label class="form-check-label" for="star2"> 별 2개 </label>
-						</div>
-						<div class="col-2 form-check">
-							<input class="form-check-input" type="radio" name="rate" id="star3" value=3>
-							<label class="form-check-label" for="star3"> 별 3개 </label>
-						</div>
-						<div class="col-2 form-check">
-							<input class="form-check-input" type="radio" name="rate" id="star4" value=4>
-							<label class="form-check-label" for="star4"> 별 4개 </label>
-						</div>
-						<div class="col-2 form-check">
-							<input class="form-check-input" type="radio" name="rate" id="star5" value=5 checked>
-							<label class="form-check-label" for="star5"> 별 5개 </label>
-						</div>
+
 						<input type="hidden" value="${area_seq }" name="area_seq">
-						  <div class="col-2 text-end">
-						    <button type="submit" class="btn btn-success">작성</button>
+						  <div class="col-6 text-end">
+						    <button type="submit" class="btn btn-success ">작성</button>
 						  </div>
 					</div>
 				</div>
@@ -254,7 +240,7 @@ ul>li{
 						${i.mem_nick }
 					</div>
 					<div class="col text-end">
-						${i.rate }
+						${i.score }
 					</div>
 				</div>
 				<div class="row">
@@ -309,6 +295,9 @@ ul>li{
 	<c:if test="${!empty loginSeq}">
 		loginSeq = ${loginSeq};
 	</c:if>
+	
+	$('#starRate').raty({ score: 5	 })
+
 	
 	$(".rcmd").on("click",function(){
 		location.href="/area/detail?num="+this.id;
@@ -384,7 +373,7 @@ ul>li{
 									result[i].mem_nick+
 								'</div>'+
 								'<div class="col text-end">'+
-									result[i].rate+
+									result[i].score+
 								'</div>'+
 							'</div>'+
 							'<div class="row">'+
@@ -465,7 +454,7 @@ ul>li{
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
 			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-			level : 3
+			level : 5
 		// 지도의 확대 레벨
 		};
 
@@ -475,6 +464,18 @@ ul>li{
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
 
+		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+		var mapTypeControl = new kakao.maps.MapTypeControl();
+
+		// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+		// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+		map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+		var zoomControl = new kakao.maps.ZoomControl();
+		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+		
+		
 		// 주소로 좌표를 검색합니다
 		geocoder
 				.addressSearch(
@@ -496,8 +497,21 @@ ul>li{
 
 								// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 								map.setCenter(coords);
+								
+								var iwContent = '<div style="padding:5px;">${dto.name}</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+							    iwPosition = coords, //인포윈도우 표시 위치입니다
+							    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+								// 인포윈도우를 생성하고 지도에 표시합니다
+								var infowindow = new kakao.maps.InfoWindow({
+								    map: map, // 인포윈도우가 표시될 지도
+								    position : iwPosition, 
+								    content : iwContent,
+								    removable : iwRemoveable
+								});
 							}
 						});
+
 	</script>
 </body>
 </html>

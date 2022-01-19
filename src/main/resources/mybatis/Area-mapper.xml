@@ -18,7 +18,7 @@
 	</delete>
 	
 	<insert id="replyInsert">
-		insert into area_reply values(area_re_seq.nextval, #{mem_seq}, #{area_seq}, #{mem_nick}, #{photo}, #{text}, #{rate} )
+		insert into area_reply values(area_re_seq.nextval, #{mem_seq}, #{area_seq}, #{mem_nick}, #{photo}, #{text}, #{score} )
 	</insert>
 	
 	<select id="replyCount" resultType="int">
@@ -42,7 +42,7 @@
 	</select>
 	
 	<select id="countRate" resultType="double">
-		select avg(rate) from area_reply where area_seq = #{value}
+		select avg(score) from area_reply where area_seq = #{value}
 	</select>
 	
 </mapper>
