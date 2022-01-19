@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.TourReplyDTO;
+import kh.spring.dto.TourReplyReplyDTO;
 
 @Repository
 public class TourReplyDAO {
@@ -58,5 +59,19 @@ public class TourReplyDAO {
 	public int deleteAll(int seq) {
 		
 		return mybatis.delete("TourReply.deleteAll", seq);
+	}
+	
+	public int reinsert(int rpseq, String recontent) {
+
+		Map<String, String> map = new HashMap<>();
+		map.put("rpseq", String.valueOf(rpseq));
+		map.put("recontent", recontent);
+
+		return mybatis.insert("TourReply.reinsert", map);
+	}
+	
+	public List<TourReplyReplyDTO> selectReAll(){
+		
+		return mybatis.selectList("TourReply.selectReAll");
 	}
 }
