@@ -92,10 +92,8 @@ public class MemberService {
 			file.transferTo(new File(realPath + "/" + sysName));
 			dto.setPhoto(sysName);
 		}
-		dto.setPw(EncryptUtils.getSHA512(dto.getPw()));
 		System.out.println("들어오는 회원 seq : " + dto.getSeq());
 		System.out.println("들어오는 회원email : " + dto.getEmailID());
-		System.out.println("들어오는 회원pw : " + dto.getPw());
 		System.out.println("들어오는 회원nick : " + dto.getNick());
 		System.out.println("들어오는 회원gender : " + dto.getGender());
 		System.out.println("들어오는 회원age : " + dto.getAge());
@@ -105,6 +103,17 @@ public class MemberService {
 		System.out.println("들어오는 회원text : " + dto.getText());
 		System.out.println("들어오는 회원photo : " + dto.getPhoto());
 		return memberDao.myInfoChangeOk(dto);		
+	}
+	
+	// 마이페이지 비밀번호 수정
+	public int myInfoPwChange(String pw) {
+		String encryptPw = EncryptUtils.getSHA512(pw);
+		return memberDao.myInfoPwChange(encryptPw);
+	}
+	
+	// 회원탈퇴
+	public int deleteAccount(int seq) {
+		return memberDao.deleteAccount(seq);
 	}
 	
 	

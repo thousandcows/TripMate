@@ -52,7 +52,15 @@
 	</select>
 	
 	<update id="myInfoChangeOk">
-		update member set pw = #{pw}, nick = #{nick}, gender = #{gender}, age = #{age}, phone = #{phone}, ph_open = #{ph_Open}, preference = #{preference}, text = #{text}, photo = #{photo} where seq = #{seq}
+		update member set nick = #{nick}, gender = #{gender}, age = #{age}, phone = #{phone}, ph_open = #{ph_Open}, preference = #{preference}, text = #{text}, photo = #{photo} where seq = #{seq}
 	</update>
+	
+	<update id="myInfoPwChange">
+		update member set pw = #{value}
+	</update>
+	
+	<delete id='deleteAccount'>
+		delete from member where seq = #{value}
+	</delete>
 	
 </mapper>

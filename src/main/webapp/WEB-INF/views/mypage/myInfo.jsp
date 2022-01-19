@@ -115,9 +115,11 @@
           height: 1050px;
           background-color: cornsilk;
         }
-        .myInfoForm{
-          margin-top:10px;
+
+        .myInfoForm {
+          margin-top: 10px;
         }
+
         .myInfoForm th {
           width: 200px;
           height: 70px;
@@ -157,34 +159,40 @@
           vertical-align: top;
         }
 
-        .phOpenTxt{
-          padding-left:2px;
-          margin-bottom:5px;
-          font-size:14px;
-          color:rgb(77, 77, 77);
+        .phOpenTxt {
+          padding-left: 2px;
+          margin-bottom: 5px;
+          font-size: 14px;
+          color: rgb(77, 77, 77);
         }
-        .phOpen{
-          margin-left:15px;
-          width:15px;
-          height:15px;
+
+        .phOpen {
+          margin-left: 15px;
+          width: 15px;
+          height: 15px;
         }
+
         /* 탈퇴&수정버튼들 */
-        .deleteAccountBtn{
-          color:gray;
-          font-size:14px;
+        .deleteAccountBtn {
+          color: gray;
+          font-size: 14px;
         }
-        .deleteAccountBtn:hover{
-          color:lightslategray;
-          border-bottom:1px solid gray;
+
+        .deleteAccountBtn:hover {
+          cursor: pointer;
+          color: lightslategray;
+          border-bottom: 1px solid gray;
         }
-        .changeSubmitBtn{
-          width:250px;
-          height:40px;
-          border:none;
+
+        .changeSubmitBtn {
+          width: 250px;
+          height: 40px;
+          border: none;
           border-radius: 5px;
           box-shadow: 1px 1px 2px 1px rgb(177, 177, 177);
-          background-color:greenyellow;
+          background-color: greenyellow;
         }
+
         /* 사진 수정 */
         .portraitInput {
           width: 150px;
@@ -201,13 +209,76 @@
         }
 
         .submitBtnss {
-          margin-top:50px;
+          margin-top: 50px;
           width: 100%;
           height: 70px;
           background-color: hotpink;
         }
-        .submitBtns{
+
+        .submitBtns {
           text-align: right;
+        }
+
+        .contentsTop {
+          width: 1000px;
+          background-color: bisque;
+          height: 50px;
+          line-height: 50px;
+          text-align: center;
+          font-size: 26px;
+        }
+
+        /* 확인텍스트 */
+        .myInfoCheckTxt {
+          color: black;
+          font-size: 12px;
+        }
+
+        .myInfoNickBox {
+          width: 400px;
+        }
+
+        /* 닉네임 체크 버튼 */
+        .myInfoNickCheck,
+        .myInfoPhoneCheck {
+          display: inline;
+          width: 80px;
+          height: 30px;
+          border-radius: 5px;
+          border: 1px solid gray;
+          background-color: hotpink;
+        }
+
+        /* 비밀번호 수정 폼 */
+        .myInfoPwChangeForm {
+          margin: auto;
+          width: 250px;
+        }
+
+        .myInfoPwChangeInput {
+          width: 250px;
+          height: 40px;
+          border-radius: 5px;
+          border: 1px solid gray;
+          margin: auto;
+          padding-left: 10px;
+        }
+
+        .myInfoPwChangeBtn {
+          width: 100px;
+          height: 40px;
+          border: 1px solid gray;
+          background-color: white;
+          border-radius: 3px;
+          margin-top: 10px;
+        }
+
+        /* 회원탈퇴용 폼 */
+        #deleteAccountForm{
+          display:none;
+        }
+        .deleteAccountInput{
+          display:none;
         }
 
         /* 정보수정 끝 */
@@ -223,14 +294,14 @@
       <div class="myPageContainer">
         <div class="sideBar">
           <div class="sideMyPortrait">
-            <img src="/resources/images/default_profile.png" class="portraitPhoto">
+            <img src="${loginInfo.photo}" class="portraitPhoto">
           </div>
           <div class="sideMyNick">${loginInfo.nick}</div>
           <ul class="sideBarMenuBox">
-            <li><a href="#">개인정보 수정</a></li>
-            <li><a href="#">여행 기록</a></li>
-            <li><a href="#">찜 여행 목록</a></li>
-            <li><a href="#">게시글 관리</a></li>
+            <li><a href="/member/mypageGo">개인정보 수정</a></li>
+            <li><a href="/member/tourList">여행 기록</a></li>
+            <li><a href="/member/saveList">찜 여행 목록</a></li>
+            <li><a href="/member/writenList">게시글 관리</a></li>
           </ul>
         </div>
         <div class="contentsBox">
@@ -239,94 +310,140 @@
           </div>
           <div class="contentsMiddle">
             <div class="contentsMiddleIn">
-              <form action="/member/myInfoChangeOk" method="post" enctype="multipart/form-data">
-                <div class="sideMyPortrait">
-                  <img src="/resources/images/default_profile.png" class="portraitPhoto" id="portraitPhoto" onchange="">
-                  <input type="file" class="portraitInput" id="portraitInput" name="file" accept="image/gif, image/jpeg, image/png">
+              <form action="/member/myInfoChangeOk" method="post" enctype="multipart/form-data" id="myInfoChangeForm">
+                <div class=" row mt-4">
+                  <div class="col-6 sideMyPortrait">
+                    <img src="${loginInfo.photo}" class="portraitPhoto" id="portraitPhoto" onchange="">
+                    <input type="file" class="portraitInput" id="portraitInput" name="file"
+                      accept="image/gif, image/jpeg, image/png">
+                  </div>
+                  <div class="col-6 mt-4 mx-auto myInfoNickBox">
+                    <label for="nickname">닉네임</label><br>
+                    <input type="text" value=${loginInfo.nick} class="longInput myInfoNickInput" name="nick"
+                      id="myInfoNickInput">
+                    <button type="button" class="myInfoNickCheck" id="myInfoNickCheck">중복확인</button>
+                    <div class="myInfoCheckTxt myInfoNickConfirm">테스트텍스트</div>
+                    <c:if test="${loginInfo.sns_division == 0}">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      비밀번호 변경
+                    </button>
+                    </c:if>
+                  </div>
                 </div>
                 <table class="myInfoForm">
+                <c:if test="${loginInfo.sns_division == 0}">
                   <tr>
-                    <th>Email</th>
+                    <th class="text-center">Email</th>
                     <td><input type="text" value=${loginInfo.emailID} readonly class="longInput" name="emailID"></td>
                   </tr>
+                </c:if>
                   <tr>
-                    <th>비밀번호</th>
-                    <td><input type="password" class="longInput"></td>
-                  </tr>
-                  <tr>
-                    <th>비밀번호 확인</th>
-                    <td><input type="password" class="longInput" name="pw"></td>
-                  </tr>
-                  <tr>
-                    <th>닉네임</th>
-                    <td><input type="text" value=${loginInfo.nick} class="longInput" name="nick"></td>
-                  </tr>
-                  <tr>
-                    <th>나이</th>
+                    <th class="text-center">나이</th>
                     <td><input type="number" min="14" max="100" class="ageInput" name="age" value=${loginInfo.age}></td>
                   </tr>
                   <tr>
-                    <th>성별</th>
+                    <th class="text-center">성별</th>
                     <td>
                       <c:choose>
                         <c:when test="${loginInfo.gender == 'male'}">
                           <input type="radio" name="gender" value="male" class="genderInput" checked> 남성
-                      &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" class="genderInput"> 여성
+                          &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" class="genderInput">
+                          여성
                         </c:when>
                         <c:when test="${loginInfo.gender == 'female'}">
                           <input type="radio" name="gender" value="male" class="genderInput"> 남성
-                      &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" class="genderInput" checked> 여성
+                          &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" class="genderInput"
+                            checked> 여성
                         </c:when>
                         <c:otherwise>
                           <input type="radio" name="gender" value="male" class="genderInput"> 남성
-                      &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" class="genderInput"> 여성
+                          &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" class="genderInput">
+                          여성
                         </c:otherwise>
                       </c:choose>
                     </td>
                   </tr>
                   <tr>
-                    <th>연락처</th>
-                    <td><input type="text" value=${loginInfo.phone} class="longInput" name="phone">
-                      <input type="checkbox" class="phOpen" name="ph_Open"><span class="phOpenTxt">공개</span>
+                    <th class="text-center">연락처</th>
+                    <td><input type="text" value="${loginInfo.phone}" maxlength="11" class="longInput"
+                        id="myInfoPhoneInput" name="phone">
+                      <button type="button" class="myInfoPhoneCheck" id="myInfoPhoneCheck">중복확인</button><input
+                        type="checkbox" class="phOpen" name="ph_Open"><span class="phOpenTxt">공개</span>
+                      <div class="myInfoCheckTxt myInfoPhoneConfirm">테스트텍스트</div>
                     </td>
                   </tr>
                   <tr>
-                    <th>여행 선호방식</th>
+                    <th class="text-center">여행 선호방식</th>
                     <td><select class="preferenceInput" name="preference" value=${loginInfo.preference}>
-                        <option value="0">선택하세요</option>
-                        <option value="1">여행선호1</option>
-                        <option value="2">여행선호3</option>
-                        <option value="3">여행선호3</option>
-                        <option value="4">여행선호4</option>
-                        <option value="5">여행선호5</option>
+                        <option value="0" <c:if test="${loginInfo.preference == 0}">selected</c:if>>선택해주세요.</option>
+                        <option value="1" <c:if test="${loginInfo.preference == 1}">selected</c:if>>힐링여행</option>
+                        <option value="2" <c:if test="${loginInfo.preference == 2}">selected</c:if>>먹거리 여행</option>
+                        <option value="3" <c:if test="${loginInfo.preference == 3}">selected</c:if>>관광지 투어</option>
+                        <option value="4" <c:if test="${loginInfo.preference == 4}">selected</c:if>>액티비티</option>
+                        <option value="5" <c:if test="${loginInfo.preference == 5}">selected</c:if>>기분따라</option>
                       </select></td>
                   </tr>
                   <tr>
-                    <th calss="txtHead">자기 소개</th>
+                    <th class="txtHead text-center">자기 소개</th>
                     <td><textarea cols="50" rows="5" maxlength="120" style="resize: none;" placeholder="자기소개를 입력해주세요."
                         class="txtInput" name="text" value=${loginInfo.text}></textarea></td>
                   </tr>
                 </table>
                 <div class="submitBtnss">
                   <div class="submitBtns">
-                    <button class="changeSubmitBtn">수정버튼</button>
-                    <a href="#" class="deleteAccountBtn">탈퇴버튼</a>
-                    <a href="#" class="deleteAccountBtn">카카오 탈퇴버튼</a>
+                    <button type="button" class="changeSubmitBtn" id="myInfoChangeGo">수정버튼</button>
+                    <button type="button" class="deleteAccountBtn" id="deleteAccountBtn">탈퇴하기</button>
+                    <c:if test="${loginInfo.sns_division != 0}">
+                      <!-- 세션비우는작업 추가로 해줘야함 ajax로 받아서 -->
+                      <button type="button" id="kakaoLogOutBtn" class="deleteAccountBtn">카카오 로그아웃</a>
+                    </c:if>
                   </div>
                 </div>
+              </form>
+              <form action="/member/deleteAccount" method="post" id="deleteAccountForm">
+                <input type="text" value=${loginInfo.seq} name="seq" class="deleteAccountInput">
               </form>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- 비밀번호 변경Modal -->
+      <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">비밀번호 변경</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="/member/myInfoPwChange" method="post" class="myInfoPwChangeForm" id="myInfoPwChangeForm">
+                <input type="password" placeholder="새로운 비밀번호 입력" class="myInfoPwChangeInput" id="myInfoPwChangeInput"
+                  name="pw">
+                <div class="myInfoCheckTxt myInfoPwChangeConfirm">&nbsp;</div>
+                <input type="password" placeholder="비밀번호 확인" class="myInfoPwChangeInput" id="myInfoPwChangeInputRe">
+                <button type="button" class="myInfoPwChangeBtn" id="myInfoPwChangeBtn">변경</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <footer>
         푸우터
       </footer>
 
       <script>
         'use strict'
-        // 사진 미리보기
+        console.log("${loginInfo.preference}");
+        console.log("${loginInfo.sns_division}");
+        // 사진 미리보기및 파일 용량 제한
         document.querySelector("#portraitInput").onchange = function () {
+          let maxSize = "5242880";
+          if (this.files[0].size > maxSize) {
+            alert("5MB이하의 파일만 가능합니다.");
+            return false;
+          }
           let reader = new FileReader();
           reader.onload = function (e) {
             document.querySelector("#portraitPhoto").src = e.target.result;
@@ -334,9 +451,186 @@
           reader.readAsDataURL(this.files[0]);
         }
 
-        function fileCheck(){
+        // 일반사용자 가입폼 정규식
+        let myInfoNickSubmitCheck = false;
+        let myInfoPhoneSubmitCheck = false;
 
-        }
+        // 현재 닉네임
+        let nowNick = "${loginInfo.nick}";
+        document.querySelector("#myInfoNickCheck").addEventListener("click", () => {
+          if (document.querySelector("#myInfoNickInput").value == nowNick) {
+            document.querySelector(".myInfoNickConfirm").style.color = "cornflowerblue";
+            document.querySelector(".myInfoNickConfirm").innerHTML = "현재 닉네임을 유지합니다.";
+            myInfoNickSubmitCheck = true;
+          } else {
+            let nickNameRegex = /^([a-zA-Z0-9가-힣]){1,8}$/;
+            let myInfoNickInput = document.querySelector("#myInfoNickInput").value
+            if (nickNameRegex.test(myInfoNickInput)) {
+              $.ajax({
+                url: "/member/nickNameCheck",
+                data: { nickName: myInfoNickInput }
+              }).done(function (res) {
+                if (res == "1") {
+                  document.querySelector(".myInfoNickConfirm").style.color = "red";
+                  document.querySelector(".myInfoNickConfirm").innerHTML = "사용중인 닉네임입니다.";
+                  myInfoNickSubmitCheck = false;
+                } else {
+                  document.querySelector(".myInfoNickConfirm").style.color = "cornflowerblue";
+                  document.querySelector(".myInfoNickConfirm").innerHTML = "사용 가능한 닉네임입니다.";
+                  myInfoNickSubmitCheck = true;
+                }
+              })
+            } else {
+              document.querySelector(".myInfoNickConfirm").style.color = "red";
+              document.querySelector(".myInfoNickConfirm").innerHTML = "완성된 한글, 영문, 숫자를 포함한 8글자 이내";
+              myInfoNickSubmitCheck = false;
+            }
+          }
+        });
+
+        // 현재 핸드폰 번호
+        let nowPhone = "${loginInfo.phone}";
+        document.querySelector("#myInfoPhoneCheck").addEventListener("click", () => {
+          if (document.querySelector("#myInfoPhoneInput").value == nowPhone) {
+            document.querySelector(".myInfoPhoneConfirm").style.color = "cornflowerblue";
+            document.querySelector(".myInfoPhoneConfirm").innerHTML = "현재 연락처를 유지합니다.";
+            myInfoPhoneSubmitCheck = true;
+          } else {
+            let phoneRegex = /^[0-9]{11}$/;
+            let myInfoPhoneInput = document.querySelector("#myInfoPhoneInput").value
+            if (phoneRegex.test(myInfoPhoneInput)) {
+              $.ajax({
+                url: "/member/phoneCheck",
+                data: { phone: myInfoPhoneInput }
+              }).done(function (res) {
+                if (res == "1") {
+                  document.querySelector(".myInfoPhoneConfirm").style.color = "red";
+                  document.querySelector(".myInfoPhoneConfirm").innerHTML = "사용중인 번호입니다.";
+                  myInfoPhoneSubmitCheck = false;
+                } else {
+                  document.querySelector(".myInfoPhoneConfirm").style.color = "cornflowerblue";
+                  document.querySelector(".myInfoPhoneConfirm").innerHTML = "사용가능한 번호입니다.";
+                  myInfoPhoneSubmitCheck = true;
+                }
+              })
+            } else {
+              document.querySelector(".myInfoPhoneConfirm").style.color = "red";
+              document.querySelector(".myInfoPhoneConfirm").innerHTML = "유효한 번호를 입력해주세요.";
+              myInfoPhoneSubmitCheck = false;
+            }
+          }
+        });
+
+        // 일반회원 수정완료 누르기
+        document.querySelector("#myInfoChangeGo").addEventListener("click", () => {
+          if (document.querySelector("#myInfoNickInput").value == nowNick) {
+            myInfoNickSubmitCheck = true;
+          } else {
+            let nickNameRegex = /^([a-zA-Z0-9가-힣]){1,8}$/;
+            let myInfoNickInput = document.querySelector("#myInfoNickInput").value
+            if (nickNameRegex.test(myInfoNickInput)) {
+              $.ajax({
+                url: "/member/nickNameCheck",
+                data: { nickName: myInfoNickInput }
+              }).done(function (res) {
+                if (res == "1") {
+                  document.querySelector(".myInfoNickConfirm").style.color = "red";
+                  document.querySelector(".myInfoNickConfirm").innerHTML = "사용중인 닉네임입니다.";
+                  myInfoNickSubmitCheck = false;
+                } else {
+                  document.querySelector(".myInfoNickConfirm").style.color = "cornflowerblue";
+                  document.querySelector(".myInfoNickConfirm").innerHTML = "사용 가능한 닉네임입니다.";
+                  myInfoNickSubmitCheck = true;
+                }
+              })
+            } else {
+              document.querySelector(".myInfoNickConfirm").style.color = "red";
+              document.querySelector(".myInfoNickConfirm").innerHTML = "완성된 한글, 영문, 숫자를 포함한 8글자 이내";
+              myInfoNickSubmitCheck = false;
+            }
+          }
+
+          if (document.querySelector("#myInfoPhoneInput").value == nowPhone) {
+            myInfoPhoneSubmitCheck = true;
+          } else {
+            let phoneRegex = /^[0-9]{11}$/;
+            let myInfoPhoneInput = document.querySelector("#myInfoPhoneInput").value
+            if (phoneRegex.test(myInfoPhoneInput)) {
+              $.ajax({
+                url: "/member/phoneCheck",
+                data: { phone: myInfoPhoneInput }
+              }).done(function (res) {
+                if (res == "1") {
+                  document.querySelector(".myInfoPhoneConfirm").style.color = "red";
+                  document.querySelector(".myInfoPhoneConfirm").innerHTML = "사용중인 번호입니다.";
+                  myInfoPhoneSubmitCheck = false;
+                } else {
+                  document.querySelector(".myInfoPhoneConfirm").style.color = "cornflowerblue";
+                  document.querySelector(".myInfoPhoneConfirm").innerHTML = "사용가능한 번호입니다.";
+                  myInfoPhoneSubmitCheck = true;
+                }
+              })
+            } else {
+              document.querySelector(".myInfoPhoneConfirm").style.color = "red";
+              document.querySelector(".myInfoPhoneConfirm").innerHTML = "유효한 번호를 입력해주세요.";
+              myInfoPhoneSubmitCheck = false;
+            }
+          }
+
+          if (!myInfoNickSubmitCheck) {
+            alert("닉네임을 확인 해주세요.");
+            return false;
+          }
+          if (!myInfoPhoneSubmitCheck) {
+            alert("연락처를 확인 해주세요.");
+            return false;
+          }
+          if (confirm("수정하시겠습니까?")) {
+            document.querySelector("#myInfoChangeForm").submit();
+          }
+        });
+
+        // 비밀번호 변경
+        document.querySelector("#myInfoPwChangeBtn").addEventListener("click", () => {
+          let pwRegex = /^[A-Za-z0-9\S]{8,16}$/;
+          let myInfoPwChangeInput = document.querySelector("#myInfoPwChangeInput").value;
+          let myInfoPwChangeInputRe = document.querySelector("#myInfoPwChangeInputRe").value;
+          if (myInfoPwChangeInput != myInfoPwChangeInputRe) {
+            document.querySelector(".myInfoPwChangeConfirm").style.color = "red";
+            document.querySelector(".myInfoPwChangeConfirm").innerHTML = "입력된 비밀번호가 다릅니다.";
+            return false;
+          }
+          if (!pwRegex.test(myInfoPwChangeInput)) {
+            document.querySelector(".myInfoPwChangeConfirm").style.color = "red";
+            document.querySelector(".myInfoPwChangeConfirm").innerHTML = "공백 없는 8~16자로 입력해주세요.";
+            return false;
+          }
+          if (confirm("비밀번호를 변경하시겠습니까?")) {
+            document.querySelector("#myInfoPwChangeForm").submit();
+          }
+        });
+
+        // 회원 탈퇴
+        document.querySelector("#deleteAccountBtn").addEventListener("click", () => {
+          if (confirm("모든정보가 삭제됩니다. 정말 탈퇴하시겠습니까?")) {
+            alert("탈퇴되었습니다. 이용해주셔서 감사합니다.");
+            document.getElementById("deleteAccountForm").submit();
+          }
+        });
+    
+        document.querySelector("#kakaoLogOutBtn").addEventListener("click", () => {
+          let seq = "${loginInfo.seq}";
+          alert("사이트에서 로그아웃 되었습니다.");
+          console.log(seq);
+          $.ajax({
+            type: "post",
+            url: "/member/kakaoLogOut",
+            data: {seq : seq}
+          }).done(function(res){
+            console.log(res);
+            location.href=res;
+          })
+        });
       </script>
     </body>
 

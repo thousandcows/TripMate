@@ -94,4 +94,14 @@ public class MemberDAO {
 		return mybatis.insert("Member.myInfoChangeOk", dto);
 	}
 	
+	// 일반 비밀번호 변경
+	public int myInfoPwChange(String encryptPw) {
+		return mybatis.update("Member.myInfoPwChange", encryptPw);
+	}
+	
+	// 회원탈퇴
+	public int deleteAccount(int seq) {
+		return mybatis.delete("Member.deleteAccount", seq);
+	}
+	
 }
