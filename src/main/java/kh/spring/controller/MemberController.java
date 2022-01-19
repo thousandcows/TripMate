@@ -282,7 +282,6 @@ public class MemberController {
 	@RequestMapping("myInfoChangeOk")
 	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
 		dto.setSeq((int)session.getAttribute("loginSeq"));
-		dto.setPhoto(dto.getPhoto() + "");
 //		널값 처리 해야됨
 		String realPath = session.getServletContext().getRealPath("myPhoto");
 		memberService.myInfoChangeOk(dto, file, realPath);
