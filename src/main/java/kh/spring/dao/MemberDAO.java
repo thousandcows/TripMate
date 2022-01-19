@@ -99,6 +99,11 @@ public class MemberDAO {
 		return mybatis.update("Member.myInfoChangeOkNoFile", dto);
 	}
 	
+	// 기존 사진정보 가져오기
+	public String existingPhotoStr(int seq) {
+		return mybatis.selectOne("Member.existingPhotoStr", seq);
+	}
+	
 	// 일반 비밀번호 변경
 	public int myInfoPwChange(String encryptPw) {
 		return mybatis.update("Member.myInfoPwChange", encryptPw);

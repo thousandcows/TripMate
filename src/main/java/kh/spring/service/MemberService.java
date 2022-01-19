@@ -88,6 +88,9 @@ public class MemberService {
 		} else {
 			if(!file.isEmpty()) {
 				System.out.println("파일 리얼패스 : " + realPath);
+				String existingPhotoStr = memberDao.existingPhotoStr(dto.getSeq());
+				File deleteFile = new File(realPath + "\\" + existingPhotoStr);
+				deleteFile.delete(); // 기존 파일삭제
 				File realPathFile = new File(realPath);
 				if(!realPathFile.exists()) {
 					realPathFile.mkdir();
@@ -99,7 +102,11 @@ public class MemberService {
 			}
 			return memberDao.myInfoChangeOk(dto);
 		}
-
+	}
+	
+	// 마이페이지 기존프로필사진 정보 불러오기
+	public String existingPhotoStr(int seq) {
+		return memberDao.existingPhotoStr(seq);
 	}
 	
 	// 마이페이지 비밀번호 수정

@@ -67,4 +67,8 @@
 		delete from member where seq = #{value}
 	</delete>
 	
+	<select id="existingPhotoStr" resultType="String">
+		select photo from member where seq = #{value}
+	</select>
+	
 </mapper>
