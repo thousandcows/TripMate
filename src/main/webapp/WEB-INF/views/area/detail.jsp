@@ -200,7 +200,7 @@ ul>li{
 				<div class="col-10">
 					<div class="row">
 						<div class="form-floating col-12 p-0">
-						  <textarea class="form-control p-0" placeholder="댓글작성" id="replyText" name="text" style="height: 100px;resize:none;"></textarea>
+						  <textarea class="form-control p-0" minlength=5 placeholder="댓글작성" id="replyText" name="text" style="height: 100px;resize:none;" required></textarea>
 						</div>
 					</div>
 					<div class="row mt-1 mb-2">
@@ -209,7 +209,7 @@ ul>li{
 
 						<input type="hidden" value="${area_seq }" name="area_seq">
 						  <div class="col-6 text-end">
-						    <button type="submit" class="btn btn-success ">작성</button>
+						    <button type="submit" class="btn btn-success" id="replyBtn">작성</button>
 						  </div>
 					</div>
 				</div>
@@ -250,7 +250,7 @@ ul>li{
 				</div>
 				<div class="row">
 					<div class="col">
-						<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt${i.seq }">${i.text }</textarea>
+						<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt${i.seq }" minlength=5 required>${i.text }</textarea>
 						<input type="hidden" value="${i.text }" id="replyHidden${i.seq }">
 					</div>
 				</div>
@@ -309,6 +309,13 @@ ul>li{
 	
 	$(".rcmd").on("click",function(){
 		location.href="/area/detail?num="+this.id;
+	})
+	
+	$("#replyBtn").on("click",function(){
+		if(loginSeq==0){
+			alert("로그인 후 이용해주세요.");
+			return false;
+		}
 	})
 	
 	//댓글 수정
@@ -384,7 +391,7 @@ ul>li{
 								'</div>'+
 							'</div>'+
 							'<div class="row">'+
-								'<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt'+result[i].seq+'">'+
+								'<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt'+result[i].seq+'"  minlength=5 required>'+
 									result[i].text+
 								'</textarea>'+
 								'<input type="hidden" value="'+result[i].text+'" id="replyHidden'+result[i].seq+'">'+
