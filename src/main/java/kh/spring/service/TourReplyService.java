@@ -35,4 +35,5 @@ public class TourReplyService {
 		
 		return rdao.delete(seq);
 	}
+
 }
