@@ -7,7 +7,7 @@ public class AreaReplyDTO {
 	private String mem_nick;
 	private String photo;
 	private String text;
-	private int rate;
+	private int score;
 	public int getSeq() {
 		return seq;
 	}
@@ -44,20 +44,20 @@ public class AreaReplyDTO {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public int getRate() {
-		return rate;
+	public int getscore() {
+		return score;
 	}
-	public void setRate(int rate) {
-		this.rate = rate;
+	public void setscore(int score) {
+		this.score = score;
 	}
-	public AreaReplyDTO(int seq, int mem_seq, int area_seq, String mem_nick, String photo, String text, int rate) {
+	public AreaReplyDTO(int seq, int mem_seq, int area_seq, String mem_nick, String photo, String text, int score) {
 		this.seq = seq;
 		this.mem_seq = mem_seq;
 		this.area_seq = area_seq;
 		this.mem_nick = mem_nick;
 		this.photo = photo;
 		this.text = text;
-		this.rate = rate;
+		this.score = score;
 	}
 	public AreaReplyDTO() {
 	}

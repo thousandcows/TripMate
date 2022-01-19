@@ -90,8 +90,29 @@ public class AreaService {
 		return result;
 
 	}
+	
+	public String post(URL url) throws Exception{
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		BufferedReader rd;
+		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+		return sb.toString();
+	}
 
-	public URL detailBuild(int target) throws Exception {
+	public AreaDTO detailBuild(int target) throws Exception {
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
 		urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰),AND(안드로이드),WIN(원도우폰),ETC*/
@@ -104,7 +125,9 @@ public class AreaService {
 		urlBuilder.append("&" + URLEncoder.encode("addrinfoYN","UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); /*주소, 상세주소 조회여부*/
 		urlBuilder.append("&" + URLEncoder.encode("overviewYN","UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); /*콘텐츠 개요 조회여부*/
 		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
-		return new URL(urlBuilder.toString());
+		
+		String result= post(new URL(urlBuilder.toString()));
+		return detail(result);
 	}
 	
 	public AreaDTO detail(String target) throws Exception{
@@ -149,7 +172,7 @@ public class AreaService {
 		return dto;
 	}
 
-	public URL rcmdBuild(String cat1, String cat2, String cat3) throws Exception{
+	public List<AreaRcmdDTO> rcmdBuild(String cat1, String cat2, String cat3) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
 		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + Statics.areaRecommandNo); /*한 페이지 결과 수*/
@@ -160,7 +183,8 @@ public class AreaService {
 		urlBuilder.append("&" + URLEncoder.encode("cat2","UTF-8") + "=" + URLEncoder.encode(cat2, "UTF-8")); /*조회순 정렬*/
 		urlBuilder.append("&" + URLEncoder.encode("cat3","UTF-8") + "=" + URLEncoder.encode(cat3, "UTF-8")); /*조회순 정렬*/		
 		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
-		return new URL(urlBuilder.toString());
+		String target= post(new URL(urlBuilder.toString()));
+		return rcmd(target);
 	}
 	
 	public List<AreaRcmdDTO> rcmd(String target) throws Exception{
@@ -211,7 +235,7 @@ public class AreaService {
 	
 	
 	//리스트 빌드
-	public URL listBuild(int pageNum, int conID, int areaCode) throws Exception{
+	public List<AreaListDTO> listBuild(int pageNum, int conID, int areaCode) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
 		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + Statics.areaViewNo); /*한 페이지 결과 수*/
@@ -226,7 +250,8 @@ public class AreaService {
 			urlBuilder.append("&" + URLEncoder.encode("areaCode","UTF-8") + "=" + areaCode); /*지역코드*/			
 		}
 		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
-		return new URL(urlBuilder.toString());
+		String target = post(new URL(urlBuilder.toString()));
+		return list(target);
 	}
 	
 	//일반
@@ -270,7 +295,7 @@ public class AreaService {
 	}
 
 	//검색 빌드
-	public URL searchBuild(int pageNum, int conID, int areaCode, String target) throws Exception{
+	public List<AreaListDTO> searchBuild(int pageNum, int conID, int areaCode, String target) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
 		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + Statics.areaViewNo); /*한 페이지 결과 수*/
@@ -286,7 +311,8 @@ public class AreaService {
 		}
 		urlBuilder.append("&" + URLEncoder.encode("keyword","UTF-8") + "=" + URLEncoder.encode(target, "UTF-8")); /*검색어*/
 		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
-		return new URL(urlBuilder.toString());
+		String result= post(new URL(urlBuilder.toString()));
+		return search(result);
 	}
 	//검색
 	public List<AreaListDTO> search(String target) throws Exception{
@@ -361,7 +387,7 @@ public class AreaService {
 	}
 
 	//페이지 빌드
-	public URL pageCountBuild(int pageNum, int conID, int areaCode) throws Exception{
+	public int[] pageCountBuild(int pageNum, int conID, int areaCode) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
 		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + Statics.areaViewNo); /*한 페이지 결과 수*/
@@ -376,7 +402,8 @@ public class AreaService {
 			urlBuilder.append("&" + URLEncoder.encode("areaCode","UTF-8") + "=" + areaCode); /*지역코드*/			
 		}
 		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
-		return new URL(urlBuilder.toString());
+		String target = post(new URL(urlBuilder.toString()));
+		return pageCount(target);
 	}
 	//페이지수 계산
 	public int[] pageCount(String target) throws Exception{
@@ -391,7 +418,7 @@ public class AreaService {
 	}
 
 	//검색 페이지 빌드
-	public URL searchCountBuild(int pageNum, int conID, int areaCode, String target) throws Exception{
+	public int[] searchCountBuild(int pageNum, int conID, int areaCode, String target) throws Exception{
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
 		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + Statics.areaViewNo); /*한 페이지 결과 수*/
@@ -407,7 +434,8 @@ public class AreaService {
 		}
 		urlBuilder.append("&" + URLEncoder.encode("keyword","UTF-8") + "=" + URLEncoder.encode(target, "UTF-8")); /*검색어*/
 		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
-		return new URL(urlBuilder.toString());
+		String result = post(new URL(urlBuilder.toString()));
+		return searchCount(result);
 	}
 	
 	//검색 페이지수 계산
