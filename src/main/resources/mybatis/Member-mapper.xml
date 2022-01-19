@@ -18,7 +18,7 @@
 	</select>
 	
 	<insert id="normalSignup">
-		insert into member (seq, emailid, pw, nick, phone, violation) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, 0)
+		insert into member (seq, emailid, pw, nick, phone, gender, violation) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, #{gender}, 0)
 	</insert>
 	
 	<select id="normalLoginCheck" resultType="int">
@@ -51,8 +51,8 @@
 		select * from member where seq = #{value}
 	</select>
 	
-	<insert id="myInfoChangeOk">
-		insert into member(pw, nick, gender, age, phone, ph_open, preference, text, photo) values(#{pw}, #{nick}, #{gender}, #{age}, #{phone}, #{ph_Open}, #{preference}, #{text}, #{photo})
-	</insert>
+	<update id="myInfoChangeOk">
+		update member set pw = #{pw}, nick = #{nick}, gender = #{gender}, age = #{age}, phone = #{phone}, ph_open = #{ph_Open}, preference = #{preference}, text = #{text}, photo = #{photo} where seq = #{seq}
+	</update>
 	
 </mapper>

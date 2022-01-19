@@ -34,9 +34,9 @@ public class MemberService {
 	}
 	
 	// 일반 회원가입
-	public int normalSignup(String emailID, String nick, String phone, String pw) {
+	public int normalSignup(String emailID, String nick, String phone, String pw, String gender) {
 		String encryptPw = EncryptUtils.getSHA512(pw);
-		return memberDao.normalSignup(emailID, nick, phone, encryptPw);
+		return memberDao.normalSignup(emailID, nick, phone, encryptPw, gender);
 	}
 	
 	// 일반 로그인체크
@@ -93,12 +93,14 @@ public class MemberService {
 			dto.setPhoto(sysName);
 		}
 		dto.setPw(EncryptUtils.getSHA512(dto.getPw()));
+		System.out.println("들어오는 회원 seq : " + dto.getSeq());
 		System.out.println("들어오는 회원email : " + dto.getEmailID());
 		System.out.println("들어오는 회원pw : " + dto.getPw());
 		System.out.println("들어오는 회원nick : " + dto.getNick());
 		System.out.println("들어오는 회원gender : " + dto.getGender());
 		System.out.println("들어오는 회원age : " + dto.getAge());
 		System.out.println("들어오는 회원phone : " + dto.getPhone());
+		System.out.println("돌아오는 회원phone_Open : " + dto.getPh_Open());
 		System.out.println("들어오는 회원preference : " + dto.getPreference());
 		System.out.println("들어오는 회원text : " + dto.getText());
 		System.out.println("들어오는 회원photo : " + dto.getPhoto());

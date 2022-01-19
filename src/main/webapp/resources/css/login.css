@@ -145,6 +145,10 @@
   #signupPhone {
     display: none;
   }
+  .genderHead{
+    color:rgb(80, 80, 80);
+    margin-right: 15px;
+  }
 
   /* 회원가입Go버튼 */
   .signupGoBtn {
