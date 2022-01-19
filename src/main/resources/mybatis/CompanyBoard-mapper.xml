@@ -5,12 +5,66 @@
   
   <mapper namespace="CompanyBoard">
   	
+  	
+  		<!-- CRUD -->
  		<insert id="insert">
- 			insert into company_board values(com_seq.nextval, 1, #{title}, #{contents}, #{recruit}, 0, #{tour}, #{gender}, #{start_date}, #{end_date}, default, default, 0, 0, 0)
+ 			insert into company_board values(com_seq.nextval, 1, #{title}, #{contents}, #{recruit}, 0, #{tour}, #{gender}, #{start_date}, #{end_date}, default, default, default, default, default)
  		</insert>
  		
  		<select id="selectAll" resultType="kh.spring.dto.CompanyBoardDTO">
- 			select * from company_board order by seq
+ 			select * from (select company_board.*, row_number() over(order by seq desc) rn from company_board) where rn between #{start} and #{end}
  		</select>
-  
+ 		
+ 		<select id="selectBySeq" resultType="kh.spring.dto.CompanyBoardDTO">
+ 			select * from company_board where seq = #{value}
+ 		</select>
+    	
+    	<delete id="delete">
+    		delete from company_board where seq=#{value}
+    	</delete>
+    	
+    	<!-- 좋아요관련 테이블 삭제 -->
+    	<delete id="delete2">
+    		delete from cb_heart where par_seq=#{value}
+    	</delete>
+    	
+    	<update id="modify">
+    		update company_board set title=#{title}, contents=#{contents}, recruit=#{recruit}, tour=#{tour}, gender=#{gender}, start_date=#{start_date}, end_date=#{end_date} where seq = #{seq}
+    	</update> 
+    	
+    	<!-- 조회수 -->
+    	<update id="addViewCount">
+			update company_board set view_count = view_count + 1 where seq = #{seq}
+		</update>
+		
+		<!-- 페이징 -->
+		<select id="recordCount" resultType="int">
+     		select count(*) from company_board
+     	</select>
+     	
+     	<!-- 좋아요 -->
+     	<insert id="createBoardLike">
+            insert into cb_heart values (cb_heart_seq.nextval, #{par_seq}, #{mem_seq})
+        </insert>
+
+        <delete id="deleteBoardLike">
+            delete from cb_heart
+            where par_seq = #{par_seq} AND mem_seq = #{mem_seq}
+        </delete>
+
+        <select id="updateBoardLike">
+            update company_board
+            set
+            rec_count = (select count(*)
+            from cb_heart
+            where par_seq = #{value})
+            where seq = #{value}
+        </select>
+
+        <select id="getBoardLike" resultType="int">
+            select count(seq) from cb_heart 
+            	where par_seq = #{par_seq} and mem_seq = #{mem_seq}
+        </select>
+        
+
   </mapper>

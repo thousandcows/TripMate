@@ -18,7 +18,7 @@
 	</select>
 	
 	<insert id="normalSignup">
-		insert into member (seq, emailid, pw, nick, phone, violation) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, 0)
+		insert into member (seq, emailid, pw, nick, phone, gender, violation) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, #{gender}, 0)
 	</insert>
 	
 	<select id="normalLoginCheck" resultType="int">
@@ -28,19 +28,39 @@
 	<select id="normalLoginSelectAll" resultType="kh.spring.dto.MemberDTO">
 		select * from member where emailid = #{emailID} and pw = #{encryptPw}
 	</select>
+	
+	<update id="findPwChange">
+		update member set pw = #{encryptPw} where emailid = #{findPwTargetEmail}
+	</update>
 
 	<!-- 카카오 로그인시작 -->
 	<select id="kakaoLoginLookup" resultType="int">
-		select count(*) from member where emailid = #{value}
+		select count(*) from member where sns_division = #{value}
 	</select>
 	
 	<select id="kakaoLoginSelectAll" resultType="kh.spring.dto.MemberDTO">
-		select * from member where emailid = #{value}
+		select * from member where sns_division = #{value}
 	</select>
 	
 	<insert id="kakaoSignup">
-		insert into member (seq, emailid, nick, violation) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0)
+		insert into member (seq, emailid, nick, violation, sns_division) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0, #{kakaoId})
 	</insert>
 	
+	<!-- 마이페이지 -->
+	<select id="myInfoSelectAll" resultType="kh.spring.dto.MemberDTO">
+		select * from member where seq = #{value}
+	</select>
+	
+	<update id="myInfoChangeOk">
+		update member set nick = #{nick}, gender = #{gender}, age = #{age}, phone = #{phone}, ph_open = #{ph_Open}, preference = #{preference}, text = #{text}, photo = #{photo} where seq = #{seq}
+	</update>
+	
+	<update id="myInfoPwChange">
+		update member set pw = #{value}
+	</update>
+	
+	<delete id='deleteAccount'>
+		delete from member where seq = #{value}
+	</delete>
 	
 </mapper>

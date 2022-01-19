@@ -65,7 +65,7 @@
         }
 
        .writeForm{
-            border: 1px solid red;
+            border:1px solid red;
         }
         
         .catetitle{
@@ -79,7 +79,7 @@
         }
         
         .title{
-        	border: 1px solid red;
+        	border:1px solid red;
         	width:90%;
         	float:left;
         }
@@ -89,7 +89,7 @@
         }        
         
          .writeForm>div{ 
-             border: 1px solid red; 
+             border:1px solid red; 
          }
          
          .contents{
@@ -97,10 +97,82 @@
         }
         
         .ft_btn{
-            border: 1px solid red;
+            border:1px solid red;
             width: 100%;
             text-align: right;
+            padding: 0px 80px 0px 80px;  
         }
+
+        .icons{
+            border:1px solid red;
+            padding: 0px 80px 0px 80px;  
+            overflow: auto;
+        }
+
+        .icons>div{
+            float: left;
+            border:1px solid red;
+            padding-right: 20px;
+        }
+
+        .reply{
+            border:1px solid red;
+            padding: 0px 80px 0px 80px;  
+        }
+
+        .reply>div{
+            border:1px solid red;            
+        }
+
+        .reply_list{
+            border:1px solid red;
+            padding: 0px 80px 0px 80px;  
+        }
+        .reply_title{
+            border:1px solid red;
+            overflow: auto;
+        }
+
+        .reply_title>div{
+            float: left;
+            border:1px solid red;
+        }
+
+        .reply_title>.rp_id{
+            border:1px solid red;
+            width: 90%; 
+            padding-left: 10px;
+        }
+
+        .reply_title>.rp_time{
+           width: 10%; 
+           text-align: center;
+        }
+
+        .reply_contents{
+            overflow: auto;
+            border:1px solid red;
+            width: 100%;
+        }
+
+        .reply_contents>div{
+            float:left;
+            border:1px solid red;
+        }
+
+        .reply_contents>.rp_content{
+            border:1px solid red;
+            width: 90%;
+        }
+
+        .rp_content>input{
+            width: 100%;
+        }
+
+        .rp_btns{
+            width:10%;
+            text-align: center;
+        }  
         
         /* 링크 속성 지우기 */
         a { text-decoration:none  } 
@@ -112,13 +184,21 @@
         .fa-home{
             color: rgb(56, 181, 174);
         }
+
+        .fa-thumbs-up, .fa-comment-dots{
+            color: rgb(151, 151, 151);
+        }
+        
+        .icon_recommand :hover{
+            cursor:pointer;
+        }
         
         
 	</style>
 </head>
    
 <body>
-	<form action="/tourboard/modify" method="post" id="frmDetail" enctype="multipart/form-data">
+	
     <!-- .banner에 이미지 추가해야한다.-->
     <div class="banner">
         <div class="banner_title" href="">여행지 게시판</div>
@@ -126,22 +206,23 @@
     </div>
     <div class="container">
         <div class="root">
-            <div class="home"><i class="fas fa-home" href=""></i></div>
+            <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
             <div class="community" href="">커뮤니티</div>
             <div> > </div>
-            <div class="tourboard" href="">여행지 게시판</div>
+            <div class="tourboard"><a href="/tourboard/list?cpage=1">여행지 게시판</a></div>
         </div>
+        <form action="/tourboard/modify" method="post" id="frmDetail" enctype="multipart/form-data">
         <div class="writeForm">
         	<div class="catetitle">        		
                 <div class="category" >
                 	<input type=text value="[${dto.category }]" id="discategory" style="border:0px; text-align:center; width:100%;" readonly>
-                    <select style="display:none"; id="modcategory">
+                    <select style="display:none"; id="modcategory" name="category">
                         <option value="">말머리</option>
-                        <option value="">명소</option>
-                        <option value="">문화</option>
-                        <option value="">생태</option>
-                        <option value="">체험</option>
+                        <option value="명소">명소</option>
+                        <option value="문화">문화</option>
+                        <option value="생태">생태</option>
+                        <option value="체험">체험</option>
                     </select>
                 </div>
                 <div class="title">
@@ -150,27 +231,108 @@
                 </div>
             </div><br>
             <div class="contents" style="margin-left:80px; readonly">
- 				<textarea id="summernote" rows="5" name="explanation" style="width:100%; height:250px;" style="display:none; height:300px;">${dto.contents }</textarea>
+ 				<textarea id="summernote" rows="5" name="explanation" style="height:300px;">${dto.contents }</textarea>
  			</div>
         </div>
         <div class="ft_btn">
-        	<a href="/tourboard/list"><button type=button>목록으로</button></a>
-<%--         	<c:if test="${dto.writer == loginID}"> --%>
+        	<a href="/tourboard/list?cpage=1"><button type=button>목록으로</button></a>
 			<button type=button id=mod>수정하기</button>
 			<button type=button id=del>삭제하기</button>
 			<button type=button id=modOk style="display: none;">수정완료</button>
 			<button type=button id=modCancel style="display: none;">취소</button>
-<%-- 			</c:if> --%>
         </div>
+        </form>
+        <br>
+        <div class="icons">
+            <div class="icon_recommand"><i class="fas fa-thumbs-up fa-lg"> 3</i></div>
+            <div class="icon_reply"><i class="far fa-comment-dots fa-lg"> ${dto.rep_count }</i></div>
+        </div>
+        <br>
+        <form action="/tourreply/reply" method="post" id="frmReply" enctype="multipart/form-data">
+      	  <div class="reply">
+ 	         <input type=hidden value="${dto.seq}" name=rseq>
+   	         <div class="rp_input"><input type=text placeholder="댓글을 입력하세요" style="width:100%; height: 30px;" name="reply"></div>
+   	         <div class="rp_write" style="text-align: right;"><button type=submit id="write_btn">작성하기</button></div>
+ 	      </div>
+        </form>
+        <c:forEach var="rp" items="${rp_list }">
+        <form action="/tourreply/modify" method="post" id="frmRpMod" enctype="multipart/form-data">
+        <div class="reply_list">
+            <hr>
+            <div class="reply_title">
+           		<input type=hidden value="${rp.seq}" name=seq>
+            	<input type=hidden value="${rp.par_seq}" name=par_seq>
+                <div class="rp_id">${rp.mem_seq }</div>
+                <div class="rp_time" name="writen_date">${rp.writen_time }</div>
+            </div>
+            <br>            
+            <div class="reply_contents " style="text-align: right;">
+                <div class="rp_content"><input type=text value="${rp.contents }" class="rp_contents" id="rp_contents${rp.seq }" name="contents" readonly></div>
+                <div class="rp_btns">
+                    <button type=button class="rp_mod_btn" id="rp_mod_btn${rp.seq }">fix</button>
+                    <button type=button class="rp_del_btn" id="rp_del_btn${rp.seq }" style="color: red;"><b>del</b></button>
+                    <button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none;">mod</button>  
+                    <button type=button class="rp_cancle_btn" id="rp_cancle_btn${rp.seq }" style="color: red; display: none;"><b>can</b></button>                                       
+                </div>                
+            </div><br>
+        </div>
+        </form>
+        </c:forEach>
     </div>    
-    </form>
+	
+	<script>
+	$(".rp_del_btn").on("click", function(){
+		
+		if(confirm("댓글을 삭제하시겠습니까?")){
+			let id= this.id.substr(10);
+			location.href = "/tourreply/delete?rpseq="+id+"&bseq=${dto.seq}";
+		}
+	})
+	</script>
+	
+	<script>
+	$(".rp_mod_btn").on("click", function(){
+		let id= this.id.substr(10);
+		
+		rpContents = $("#contents"+id).val();
+		$("#rp_mod_btn"+id).css("display", "none");
+		$("#rp_del_btn"+id).css("display", "none");
+		$("#rp_cancle_btn"+id).css("display", "inline");
+		$("#rp_modOk_btn"+id).css("display", "inline");
+		$("#rp_contents"+id).removeAttr("readonly");
+	})
+	</script>		
+	
+	<script>
+	$(".rp_cancle_btn").on("click", function(){
+		
+			location.reload();
+	})
+	</script>	
+    
+    <script>
+    $("#write_btn").on("click", function() {
+			if (confirm("이대로 작성하시겠습니까?")) {
+				$("#frmReply").submit();
+			}
+		});
+    </script>
+
+	<script>
+	$(".icon_recommand").on("click", function(){
+		location.href = "/tourboard/like";
+	})
+	</script>
+	
     <script>
     $("#del").on("click", function() {
 		if (confirm("정말 삭제하시겠습니까?")) {
+			
 			location.href = "/tourboard/delete?seq=${dto.seq}";
 		}
 	});
     </script>
+    
     <script>
     $("#list_btn").on("click", function(){
 	    	history.back();
@@ -178,10 +340,16 @@
     </script>
     
     <script>
+    
+    let bkTitle = "";
+    let bkContents = "";
+    
     $("#mod").on("click", function() {
 
 			bkTitle = $("#title").val();
-			bkContents = $("#contents").val();
+			bkContents = $("#summernote").val();
+			
+			console.log("bkTitle : " + bkTitle + "bkContents : " + bkContents);
 
 			$("#title").removeAttr("readonly");
 			$("#contents").removeAttr("readonly");
@@ -194,49 +362,60 @@
 			
 			// 서머노트 쓰기 활성화
 			$('#summernote').summernote('enable');
-		});
+		});    
+    </script>
+    
+    <script>
+    $("#modCancel").on("click", function() {
+		if (confirm("정말 취소하시겠습니까?")) {
+			
+			location.reload();
+			
+			// 서머노트 쓰기 비활성화
+			$('#summernote').summernote('disable');
+		}
+	})
     </script>
     
     <script>
     $("#modOk").on("click", function() {
-			if (confirm("이대로 수정하시겠습니까?")) {
+    	if($("#modcategory").val()==""){
+    		
+    		alert("말머리를 선택해주세요");
+    		return false;
+    	}
+    	
+    	if($("#title").val()==""){
+    		
+    		alert("제목을 입력해주세요");
+    		return false;
+    	}
+    	
+    	if($("#summernote").val()==""){
+    		
+    		alert("내용을 입력해주세요");
+    		return false;
+    	}   	
+
+		if (confirm("이대로 작성하시겠습니까?")) {
 				$("#frmDetail").submit();
 			}
-		});
+		});   
     </script>
-
-	<script>
-		$("#modCancel").on("click", function() {
-			if (confirm("정말 취소하시겠습니까?")) {
-				$("#title").val(bkTitle);
-				$("#contents").val(bkContents);
-				$("#title").attr("readonly", "");
-				$("#contents").attr("readonly", "");
-				$("#mod").css("display", "inline");
-				$("#del").css("display", "inline");
-				$("#modOk").css("display", "none");
-				$("#modCancel").css("display", "none");
-				$("#discategory").css("display", "inline");
-				$("#modcategory").css("display", "none");
-				
-				// 서머노트 쓰기 비활성화
-				$('#summernote').summernote('disable');
-			}
-		})
-	</script>
 	
 	<script>
     $(document).ready(function() {
     	//여기 아래 부분
-    	$('#summernote').summernote('disable', {
+    	$('#summernote').summernote({
     		  height: 300,                 // 에디터 높이
-    		  minHeight: null,             // 최소 높이
+    		  minHeight: 300,             // 최소 높이
     		  maxHeight: null,             // 최대 높이
     		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
     		  lang: "ko-KR",					// 한글 설정
     		 
     		  placeholder: '최대 2048자까지 쓸 수 있습니다' 	//placeholder 설정
     	});
+    	$('#summernote').summernote('disable');
     });
     </script> 
 

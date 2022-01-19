@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Area">
+	
+	<select id="saveCheck" resultType="int">
+		select count(*) from saved where mem_seq = ${mem_seq} and area_seq = ${area_seq}
+	</select>
+	
+	<insert id="saveInsert">
+		insert into saved values (saved_seq.nextval, #{mem_seq}, #{area_seq})
+	</insert>
+	
+	<delete id="saveDelete">
+		delete from saved where mem_seq = ${mem_seq} and area_seq = ${area_seq}
+	</delete>
+	
+	<insert id="replyInsert">
+		insert into area_reply values(area_re_seq.nextval, #{mem_seq}, #{area_seq}, #{mem_nick}, #{photo}, #{text}, #{score} )
+	</insert>
+	
+	<select id="replyCount" resultType="int">
+		select count(*) from area_reply where area_seq = #{value}
+	</select>
+	
+	<select id="replyPrint" resultType="kh.spring.dto.AreaReplyDTO">
+		select * from (select area_reply.* , row_number() over(order by seq desc) rn from area_reply)where rn between #{start} and #{end}
+	</select>
+	
+	<select id="replyDelete">
+		delete from area_reply where seq = ${value}
+	</select>
+	
+	<update id="replyUpdate">
+		update area_reply set mem_nick = #{mem_nick}, photo = #{photo}, text = #{text} where seq=#{seq}
+	</update>
+	
+	<select id="findPhoto" resultType="string">
+		select photo from area_reply where seq = #{value}
+	</select>
+	
+	<select id="countRate" resultType="double">
+		select avg(score) from area_reply where area_seq = #{value}
+	</select>
+	
+</mapper>

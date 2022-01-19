@@ -102,6 +102,15 @@
         <src="/images/trip-1.jpg" class="d-block w-100" alt="…">
         
 	<form action="/area/main">
+		<input type="text" name="target">
+			<input type="hidden" value=1 name="page">
+	<input type="hidden" value="${contentType }" name="contentType">
+	<input type = "hidden" value="${areaCode }" name="area">
+	
+		<input type="submit">
+	</form>
+
+	<form action="/area/main">
 	<select id=area name="area">
 		<option value="1">서울</option>
 		<option value ="2">인천</option>
@@ -124,6 +133,9 @@
 	<input type=submit>
 	<input type="hidden" value=1 name="page">
 	<input type="hidden" value="${contentType }" name="contentType">
+		<c:if test="${target ne null}">
+			<input type="hidden" value="${target }" name="target">
+		</c:if>
 
 	</form>
 
@@ -140,6 +152,9 @@
 		</select>		 
 		<input type = "hidden" value=1 name="page">
 		<input type = "hidden" value="${areaCode }" name="area">
+		<c:if test="${target ne null}">
+			<input type="hidden" value="${target }" name="target">
+		</c:if>
 		<input type=submit>
 		
 	</form>
@@ -163,8 +178,7 @@
 	<script>
 		$(".page").on("click",function(){
 			let val = 0;
-			let back = 1;
-			let arr = ${pageView}
+			let arr = ${pageView};
 				if(this.id==-1){
 					val = arr[1]-1;
 				}else if(this.id==-2){
@@ -172,7 +186,12 @@
 				}else{
 					val = this.id;
 				}
-			location.href="/area/main?area="+${areaCode}+"&contentType="+${contentType}+"&page="+val;
+			let target =${target};
+			if(target ==null){
+				location.href="/area/main?area="+${areaCode}+"&contentType="+${contentType}+"&page="+val;				
+			}else{
+				location.href="/area/main?area="+${areaCode}+"&contentType="+${contentType}+"&target="+target+"&page="+val;
+			}
 		})
 	</script>
 	<br>

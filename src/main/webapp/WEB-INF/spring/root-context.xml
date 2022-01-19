@@ -26,6 +26,7 @@
    <!-- mybatis database setting -->
    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
       <property name="dataSource" ref="dataSource"/>
+      <property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"></property>
       <!-- mybatis는 xml문서를 참조해서 사용해야하는데 그 위치를 묻는 코드이다.(classpath : src/main/resources) -->
       <property name="mapperLocations" value="classpath:/mybatis/*-mapper.xml"/>
    </bean>

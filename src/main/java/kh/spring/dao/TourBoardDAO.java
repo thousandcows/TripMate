@@ -16,19 +16,18 @@ public class TourBoardDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
-	public List<TourBoardDTO> selectAll() {
+	public List<TourBoardDTO> selectAll(int start, int end) {
 
-		return mybatis.selectList("TourBoard.selectAll");
+		Map<String, String> map = new HashMap<>();
+		map.put("start", String.valueOf(start));
+		map.put("end", String.valueOf(end));
+		
+		return mybatis.selectList("TourBoard.selectAll", map);
 	}
 
-	public int insert(String title, String contents) {
+	public int insert(TourBoardDTO bdto) {
 
-		System.out.println("DAO에서의 title : " + title);
-		System.out.println("DAO에서의 contents : " + contents);
-		Map<String, String> map = new HashMap<>();
-		map.put("title", title);
-		map.put("contents", contents);
-		return mybatis.insert("TourBoard.insert", map);
+		return mybatis.insert("TourBoard.insert", bdto);
 	}
 
 	public TourBoardDTO selectBySeq(int seq) {
@@ -36,11 +35,17 @@ public class TourBoardDAO {
 		return mybatis.selectOne("TourBoard.selectBySeq", seq);
 	}
 	
-	public int modify(int seq, String title, String contents) {
+	public int addViewCount(int seq) {
+
+		return mybatis.update("TourBoard.addViewCount", seq);
+	}
+	
+	public int modify(int seq, String title, String contents, String category) {
 		
 		Map<String, String> map = new HashMap<>();
 		map.put("title", title);
 		map.put("contents", contents);
+		map.put("category",  category);
 		map.put("seq", String.valueOf(seq));
 
 		return mybatis.update("TourBoard.modify", map);
@@ -51,8 +56,16 @@ public class TourBoardDAO {
 		return mybatis.delete("TourBoard.delete", seq);
 	}
 	
+	public int getRecordCount() throws Exception{
+		
+		return mybatis.selectOne("TourBoard.recordCount");
+	}
 	
-	
-	
+	public int replyCount(int seq) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("seq", String.valueOf(seq));
+		return mybatis.selectOne("TourBoard.replyCount", map);
+	}
 	
 }

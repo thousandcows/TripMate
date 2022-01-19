@@ -122,18 +122,24 @@
     </div>
     <div class="container">
         <div class="root">
-            <div class="home"><i class="fas fa-home" href=""></i></div>
+            <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
             <div class="community" href="">커뮤니티</div>
             <div> > </div>
-            <div class="tourboard" href="">여행지 게시판</div>
+            <div class="tourboard"><a href="/tourboard/list?cpage=1">여행지 게시판</a></div>
         </div>
         <div class="searchbar">
             <select>
                 <option value="search_title">제목</option>
                 <option value="search_writer">작성자</option>
             </select>
-            <input type=text placeholder="input search content">
+            <input type=text list="trip" placeholder="input search content">
+            	<datalist id="trip">
+            		<option value="여행지 추천">
+            		<option value="맛집">
+            		<option value="명소">
+            		<option value="재미있게 다녀오는 방법">
+            	</datalist>
             <input type=button id="search" value="검색">
         </div>
         <div class="board">
@@ -149,7 +155,7 @@
             <c:forEach var="i" items="${list }">
     	  		<div class="board_enroll">
        		        <div class="seq" style="width: 10%;">${i.seq }</div>
-       		        <div class="category" style="width: 10%;">${i.category }</div>
+       		        <div class="category" style="width: 10%;">[${i.category }]</div>
        		        <div class="title" style="width: 30%;"><a href="/tourboard/detail?seq=${i.seq}">${i.title }</a></div>
        		        <div class="mem_seq" style="width: 10%;">${i.mem_seq }</div>
        		        <div class="writen_time" style="width: 20%;">${i.writen_time }</div>
@@ -163,7 +169,7 @@
         </div>
         <div class="page">
             <div class="paging">
-                <div>1 2 3 4 5 6 7 8 9 10</div>
+                <div>${navi  }</div>
             </div>
         </div>       
     </div>

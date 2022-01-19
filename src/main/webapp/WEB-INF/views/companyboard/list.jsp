@@ -125,6 +125,10 @@
         }
 
     </style>
+    
+    <style type="text/css">
+			li {list-style: none; float: left; padding: 6px;}
+	</style>
 
 </head>
 <body>
@@ -139,7 +143,7 @@
             <div> > </div>
             <div class="community"><a href="">커뮤니티</a></div>
             <div> > </div>
-            <div class="partyboard"><a href="">동행게시판</a></div>
+            <div class="partyboard"><a href="/companyboard/list?cpage=1">동행게시판</a></div>
         </div>
 
         <div class="searchbar">
@@ -168,7 +172,7 @@
             	<c:forEach var="l" items="${list }">
             		<div class="seq" style="width: 5%;">${l.seq }</div>
                 	<div class="tour" style="width: 7%;">${l.tour }</div>
-                	<div class="title" style="width: 44%;"><a href="/companyboard/detail?seq=z${l.seq}">${l.title }</a></div>
+                	<div class="title" style="width: 44%;"><a href="/companyboard/detail?seq=${l.seq}">${l.title }</a></div>
                 	<div class="recruit" style="width: 9%;">${l.recruit }</div>
                 	<div class="mem_seq" style="width: 10%;">${l.mem_seq}</div>
                 	<div class="writen_date" style="width: 10%;">${l.writen_date }</div>
@@ -183,10 +187,10 @@
         </div>
 
         <div class="page">
-            <div class="paging">
-                <div>1 2 3 4 5 6 7 8 9 10</div>
+			<div class="paging">
+               <div>${navi  }</div>
             </div>
-        </div>
+		</div>
     </div>
     
     <script>
