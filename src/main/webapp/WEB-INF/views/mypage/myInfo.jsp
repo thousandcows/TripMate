@@ -36,7 +36,7 @@
         /* 사이드바 시작 */
         .sideBar {
           width: 200px;
-          height: 100%;
+          height: 1200px;
           background-color: rgb(240, 240, 240);
         }
 
@@ -55,7 +55,7 @@
           height: 40px;
           line-height: 40px;
           text-align: center;
-          background-color: aqua;
+          /* background-color: aqua; */
         }
 
         /* 사이드바 메뉴 */
@@ -106,7 +106,7 @@
 
         .contentsMiddle {
           width: 100%;
-          background-color: rgb(153, 204, 245);
+          /* background-color: rgb(153, 204, 245); */
         }
 
         .contentsMiddleIn {
@@ -145,7 +145,7 @@
         }
 
         .preferenceInput {
-          width: 300px;
+          width: 320px;
           height: 40px;
         }
 
@@ -157,6 +157,17 @@
           vertical-align: top;
         }
 
+        .phOpenTxt{
+          padding-left:2px;
+          margin-bottom:5px;
+          font-size:14px;
+          color:rgb(77, 77, 77);
+        }
+        .phOpen{
+          margin-left:15px;
+          width:15px;
+          height:15px;
+        }
         /* 탈퇴&수정버튼들 */
         .deleteAccountBtn{
           color:gray;
@@ -252,17 +263,32 @@
                   </tr>
                   <tr>
                     <th>나이</th>
-                    <td><input type="number" min="14" max="100" class="ageInput" name="age" value="${loginInfo.age}"></td>
+                    <td><input type="number" min="14" max="100" class="ageInput" name="age" value=${loginInfo.age}></td>
                   </tr>
                   <tr>
                     <th>성별</th>
-                    <td><input type="radio" name="gender" value="male" class="genderInput"> 남성
+                    <td>
+                      <c:choose>
+                        <c:when test="${loginInfo.gender == 'male'}">
+                          <input type="radio" name="gender" value="male" class="genderInput" checked> 남성
                       &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" class="genderInput"> 여성
+                        </c:when>
+                        <c:when test="${loginInfo.gender == 'female'}">
+                          <input type="radio" name="gender" value="male" class="genderInput"> 남성
+                      &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" class="genderInput" checked> 여성
+                        </c:when>
+                        <c:otherwise>
+                          <input type="radio" name="gender" value="male" class="genderInput"> 남성
+                      &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female" class="genderInput"> 여성
+                        </c:otherwise>
+                      </c:choose>
                     </td>
                   </tr>
                   <tr>
                     <th>연락처</th>
-                    <td><input type="text" value=${loginInfo.phone} class="longInput" name="phone"></td>
+                    <td><input type="text" value=${loginInfo.phone} class="longInput" name="phone">
+                      <input type="checkbox" class="phOpen" name="ph_Open"><span class="phOpenTxt">공개</span>
+                    </td>
                   </tr>
                   <tr>
                     <th>여행 선호방식</th>
@@ -274,10 +300,6 @@
                         <option value="4">여행선호4</option>
                         <option value="5">여행선호5</option>
                       </select></td>
-                  </tr>
-                  <tr>
-                    <th>신고 횟수</th>
-                    <td>${loginInfo.violation}</td>
                   </tr>
                   <tr>
                     <th calss="txtHead">자기 소개</th>
@@ -310,6 +332,7 @@
           }
           reader.readAsDataURL(this.files[0]);
         }
+        console.log("${loginInfo.gender}");
       </script>
     </body>
 

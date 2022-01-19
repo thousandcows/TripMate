@@ -61,6 +61,11 @@ public class TourBoardDAO {
 		return mybatis.selectOne("TourBoard.recordCount");
 	}
 	
-	
+	public int replyCount(int seq) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("seq", String.valueOf(seq));
+		return mybatis.selectOne("TourBoard.replyCount", map);
+	}
 	
 }

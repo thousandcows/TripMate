@@ -31,12 +31,13 @@ public class MemberDAO {
 	}
 	
 	// 일반 회원가입
-	public int normalSignup(String emailID, String nick, String phone, String encryptPw) {
+	public int normalSignup(String emailID, String nick, String phone, String encryptPw, String gender) {
 		Map<String, String> map = new HashMap<>();
 		map.put("emailID", emailID);
 		map.put("nick", nick);
 		map.put("phone", phone);
 		map.put("encryptPw", encryptPw);
+		map.put("gender", gender);
 		return mybatis.insert("Member.normalSignup", map);
 	}
 	
