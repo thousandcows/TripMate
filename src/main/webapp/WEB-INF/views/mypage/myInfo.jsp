@@ -241,8 +241,8 @@
             <div class="contentsMiddleIn">
               <form action="/member/myInfoChangeOk" method="post" enctype="multipart/form-data">
                 <div class="sideMyPortrait">
-                  <img src="/resources/images/default_profile.png" class="portraitPhoto" id="portraitPhoto" onchange="">
-                  <input type="file" class="portraitInput" id="portraitInput" name="file" accept="image/gif, image/jpeg, image/png">
+                  <img src=${loginInfo.photo} class="portraitPhoto" id="portraitPhoto">
+                  <input type="file" class="portraitInput" id="portraitInput" name="file" accept="image/gif, image/jpeg, image/png" onchange="portraitCheck(this)">
                 </div>
                 <table class="myInfoForm">
                   <tr>
@@ -327,15 +327,16 @@
         'use strict'
         // 사진 미리보기
         document.querySelector("#portraitInput").onchange = function () {
+          let maxSize = "5242880";
+          if(this.files[0].size > maxSize){
+            alert("5MB이하의 파일만 가능합니다.");
+            return false;
+          }
           let reader = new FileReader();
           reader.onload = function (e) {
             document.querySelector("#portraitPhoto").src = e.target.result;
           }
           reader.readAsDataURL(this.files[0]);
-        }
-
-        function fileCheck(){
-
         }
       </script>
     </body>
