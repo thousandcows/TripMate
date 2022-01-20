@@ -274,6 +274,9 @@ public class MemberController {
 	public String mypageGo(Model model) {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
+		String filePath = "\\images" + "\\" + dto.getPhoto();
+		System.out.println(filePath);
+		dto.setPhoto(filePath);
 		model.addAttribute("loginInfo", dto);
 		return "mypage/myInfo";
 	}
@@ -281,13 +284,46 @@ public class MemberController {
 	// 일반회원 정보수정Ok
 	@RequestMapping("myInfoChangeOk")
 	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
+		System.out.println("들어오는 회원seq : " + dto.getSeq());
+		System.out.println("들어오는 회원email : " + dto.getEmailID());
+		System.out.println("들어오는 회원nick : " + dto.getNick());
+		System.out.println("들어오는 회원gender : " + dto.getGender());
+		System.out.println("들어오는 회원age : " + dto.getAge());
+		System.out.println("들어오는 회원phone : " + dto.getPhone());
+		System.out.println("돌아오는 회원phone_Open : " + dto.getPh_Open());
+		System.out.println("들어오는 회원preference : " + dto.getPreference());
+		System.out.println("들어오는 회원text : " + dto.getText());
+		System.out.println("들어오는 회원photo : " + dto.getPhoto());
 		dto.setSeq((int)session.getAttribute("loginSeq"));
-//		널값 처리 해야됨
-		String realPath = session.getServletContext().getRealPath("myPhoto");
+		String realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
 		memberService.myInfoChangeOk(dto, file, realPath);
 		return "redirect:/member/mypageGo";
 	}
-
+	
+	// 비밀번호 수정
+	@RequestMapping("myInfoPwChange")
+	public String myInfoPwChange(String pw) {
+		memberService.myInfoPwChange(pw);
+		return "redirect:/member/mypageGo";
+	}
+	
+	// 회원탈퇴
+	@RequestMapping("deleteAccount")
+	public String deleteAccount(int seq) {
+		System.out.println("넘어온 탈퇴 seq : " + seq);
+		memberService.deleteAccount(seq);
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	// 카카오 로그아웃
+	@ResponseBody
+	@RequestMapping("kakaoLogOut")
+	public String kakaoLogOut(int seq) {
+		session.invalidate();
+		return "https://kauth.kakao.com/oauth/logout?client_id=b7b0a7f6722957ddef971b2ff4061bd7&logout_redirect_uri=http://localhost";
+	}
+	
 	@ExceptionHandler
 	public String ExceptionHandler(Exception e) {
 		e.printStackTrace();

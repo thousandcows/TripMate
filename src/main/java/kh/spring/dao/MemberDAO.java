@@ -91,7 +91,27 @@ public class MemberDAO {
 	
 	// 마이페이지 정보 수정
 	public int myInfoChangeOk(MemberDTO dto) {
-		return mybatis.insert("Member.myInfoChangeOk", dto);
+		return mybatis.update("Member.myInfoChangeOk", dto);
+	}
+	
+	// 사진수정 안한 마이페이지 정보 수정
+	public int myInfoChangeOkNoFile(MemberDTO dto) {
+		return mybatis.update("Member.myInfoChangeOkNoFile", dto);
+	}
+	
+	// 기존 사진정보 가져오기
+	public String existingPhotoStr(int seq) {
+		return mybatis.selectOne("Member.existingPhotoStr", seq);
+	}
+	
+	// 일반 비밀번호 변경
+	public int myInfoPwChange(String encryptPw) {
+		return mybatis.update("Member.myInfoPwChange", encryptPw);
+	}
+	
+	// 회원탈퇴
+	public int deleteAccount(int seq) {
+		return mybatis.delete("Member.deleteAccount", seq);
 	}
 	
 }

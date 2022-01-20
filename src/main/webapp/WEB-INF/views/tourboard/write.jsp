@@ -160,11 +160,6 @@
         </div>
     </div>    
     </form>
-    <script>
-    $("#list_btn").on("click", function(){
-	    	history.back();
-	    })
-    </script>
     
     <script>
     $(document).ready(function() {
@@ -178,7 +173,15 @@
     		  placeholder: '최대 2048자까지 쓸 수 있습니다' 	//placeholder 설정
     	});
     });
-    </script>    
+    </script>
+	
+    <script>
+    $("#list_btn").on("click", function(){
+	    	history.back();
+	    })
+    </script>
+    
+
     
     <script>
     $("#write_btn").on("click", function() {
