@@ -371,7 +371,7 @@ a:active {
 							<button type=button class="rp_reply_btn" id="rp_reply_btn${rp.seq }">rep</button>
 							<button type=button class="rp_mod_btn" id="rp_mod_btn${rp.seq }">mod</button>
 							<button type=button class="rp_del_btn" id="rp_del_btn${rp.seq }" style="color: red;"><b>del</b></button>
-							<button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none;">ok</button>
+							<button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none;" formaction="/tourreply/modify">ok</button>
 							<button type=button class="rp_cancle_btn" id="rp_cancle_btn${rp.seq }" style="color: red; display: none;"><b>can</b></button>
 						</div>
 						
@@ -380,18 +380,19 @@ a:active {
 							<c:when test="${re.par_seq == rp.seq}">
                        			<div class="re_reply" id="re_reply${rp.seq }">
                             		<div class="re_rp_title">
-                                		<div class="re_rp_id">${re.mem_seq }</div>
-                                		<div class="re_rp_time">${re.writen_time }</div>
+                                		<div class="re_rp_id" style="text-align:left;"> ${re.mem_seq }</div>
+                                		<div class="re_rp_time" style="text-align:center;">${re.writen_time }</div>
                             		</div>
                             		<br>
                             		<div class="re_rp_contents">
 		                                <div class="re_rp_content">
-                                			<input type=text style="width:100%;" id="re_contents${re.seq }" value="@${rp.mem_seq } ${re.contents}" readonly>
+		                                	<input type=text style="width:4%; border:0px;" value="@${rp.mem_seq }" readonly>
+                                			<input type=text style="width:95%;" id="recontent${re.seq }" name="recontent" value="${re.contents}" readonly>
                                 		</div>
-                                		<div class="re_rp_btns">
+                                		<div class="re_rp_btns" style="text-align:center">
                                 			<button type=button class="re_mod_btn" id="re_mod_btn${re.seq }">mod</button>
                                 			<button type=button class="re_del_btn" id="re_del_btn${re.seq }">del</button>
-                                			<button type=submit class="re_modOk_btn" id="re_modOk_btn${re.seq }" style="display: none;" formaction="/tourreply/remodify">ok</button>
+                                			<button type=submit class="re_modOk_btn" id="re_modOk_btn${re.seq }" style="display: none;" >ok</button>
                                 			<button type=button class="re_cancle_btn" id="re_cancle_btn${re.seq }" style="display: none;">can</button>
                                 		</div>
                             		</div>
@@ -418,6 +419,17 @@ a:active {
 		</div>        
 
 	</div>
+	
+	<script>
+		$(".re_modOk_btn").on("click", function(){
+			
+			let id = this.id.substr(12);
+			let recontent = $("#recontent${re.seq }"+id).val();
+			console.log(recontent);
+			
+			location.href = "/tourreply/remodify?writeseq=${dto.seq}&rpseq=${rp.seq}&recontent=recontent";
+		})
+	</script>
 	
 	<script>
 		$(".re_cancle_btn").on("click", function(){
@@ -586,9 +598,10 @@ a:active {
 				focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 				lang : "ko-KR", // 한글 설정
 
-				placeholder : '최대 2048자까지 쓸 수 있습니다' //placeholder 설정
+				placeholder : '최대 2048자까지 쓸 수 있습니다', //placeholder 설정
+				airMode: true
 			});
-			$('#summernote').summernote('disable');
+// 			$('#summernote').summernote('disable');
 		});
 	</script>
 

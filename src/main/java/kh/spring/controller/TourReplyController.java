@@ -44,8 +44,14 @@ public class TourReplyController {
 	@RequestMapping("rereply")
 	public String rereply(int writeseq, int rpseq, String recontents) {
 		
-		System.out.println("submit 도착 : " + writeseq + " : " + rpseq + " : " + recontents);
 		rservice.reinsert(rpseq, recontents);
+		return "redirect:/tourboard/detail?seq="+writeseq;
+	}
+	
+	@RequestMapping("remodify")
+	public String remodify(int writeseq, int rpseq, String recontent) {
+		
+		System.out.println("writeseq : rpseq + re_content = " + writeseq + " : " + rpseq + " : " + recontent);
 		return "redirect:/tourboard/detail?seq="+writeseq;
 	}
 }

@@ -65,6 +65,7 @@ public class TourBoardDAO {
 		
 		Map<String, String> map = new HashMap<>();
 		map.put("seq", String.valueOf(seq));
+		System.out.println("bdao replycount : " + map);
 		return mybatis.selectOne("TourBoard.replyCount", map);
 	}
 	
