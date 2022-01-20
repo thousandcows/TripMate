@@ -55,6 +55,10 @@
 		update member set nick = #{nick}, gender = #{gender}, age = #{age}, phone = #{phone}, ph_open = #{ph_Open}, preference = #{preference}, text = #{text}, photo = #{photo} where seq = #{seq}
 	</update>
 	
+	<update id="myInfoChangeOkNoFile">
+		update member set nick = #{nick}, gender = #{gender}, age = #{age}, phone = #{phone}, ph_open = #{ph_Open}, preference = #{preference}, text = #{text} where seq = #{seq}
+	</update>
+	
 	<update id="myInfoPwChange">
 		update member set pw = #{value}
 	</update>
@@ -62,5 +66,9 @@
 	<delete id='deleteAccount'>
 		delete from member where seq = #{value}
 	</delete>
+	
+	<select id="existingPhotoStr" resultType="String">
+		select photo from member where seq = #{value}
+	</select>
 	
 </mapper>

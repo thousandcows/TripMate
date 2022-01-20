@@ -284,8 +284,17 @@ public class MemberController {
 	// 일반회원 정보수정Ok
 	@RequestMapping("myInfoChangeOk")
 	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
+		System.out.println("들어오는 회원seq : " + dto.getSeq());
+		System.out.println("들어오는 회원email : " + dto.getEmailID());
+		System.out.println("들어오는 회원nick : " + dto.getNick());
+		System.out.println("들어오는 회원gender : " + dto.getGender());
+		System.out.println("들어오는 회원age : " + dto.getAge());
+		System.out.println("들어오는 회원phone : " + dto.getPhone());
+		System.out.println("돌아오는 회원phone_Open : " + dto.getPh_Open());
+		System.out.println("들어오는 회원preference : " + dto.getPreference());
+		System.out.println("들어오는 회원text : " + dto.getText());
+		System.out.println("들어오는 회원photo : " + dto.getPhoto());
 		dto.setSeq((int)session.getAttribute("loginSeq"));
-		System.out.println("선호" + dto.getPreference());
 		String realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
 		memberService.myInfoChangeOk(dto, file, realPath);
 		return "redirect:/member/mypageGo";
