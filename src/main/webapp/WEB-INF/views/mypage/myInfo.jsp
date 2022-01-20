@@ -13,6 +13,7 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
       <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+      <jsp:include page="../base/header.jsp"></jsp:include>
       <style>
         /* 간단세팅 나중에 css파일 따로 뺄거*/
         * {

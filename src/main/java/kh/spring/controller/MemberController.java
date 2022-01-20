@@ -297,6 +297,12 @@ public class MemberController {
 		return "https://kauth.kakao.com/oauth/logout?client_id=b7b0a7f6722957ddef971b2ff4061bd7&logout_redirect_uri=http://localhost";
 	}
 	
+	///////////////// 찜목록 시작///////////////
+	@RequestMapping("saveList")
+	public String saveList() {
+		return "mypage/saveList";
+	}
+	
 	@ExceptionHandler
 	public String ExceptionHandler(Exception e) {
 		e.printStackTrace();

@@ -14,7 +14,6 @@
         crossorigin="anonymous"></script>
       <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      
       <style>
         /* 간단세팅 나중에 css파일 따로 뺄거*/
         * {
