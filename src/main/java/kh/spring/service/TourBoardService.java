@@ -23,6 +23,7 @@ public class TourBoardService {
 	public TourBoardService bservice;
 	
 	public List<TourBoardDTO> selectAll(int start, int end) {
+		
 		return bdao.selectAll(start, end);
 	}
 	
@@ -32,18 +33,22 @@ public class TourBoardService {
 	}
 	
 	public TourBoardDTO selectBySeq(int seq) {
+		
 		return bdao.selectBySeq(seq);
 	}
 	
 	public int addViewCount(int seq) {
+		
 		return bdao.addViewCount(seq);
 	}
 	
 	public int modify(int seq, String title, String contents, String category) {
+		
 		return bdao.modify(seq, title, contents, category);
 	}
 	
 	public int delete(int seq) {
+		
 		rdao.deleteAll(seq);
 		return bdao.delete(seq);
 	}	
