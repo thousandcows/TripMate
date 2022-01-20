@@ -136,7 +136,7 @@
         }
 
         .ageInput {
-          width: 50px;
+          width: 70px;
           height: 40px;
           padding-left: 10px;
         }
@@ -274,11 +274,12 @@
         }
 
         /* 회원탈퇴용 폼 */
-        #deleteAccountForm{
-          display:none;
+        #deleteAccountForm {
+          display: none;
         }
-        .deleteAccountInput{
-          display:none;
+
+        .deleteAccountInput {
+          display: none;
         }
 
         /* 정보수정 끝 */
@@ -322,24 +323,26 @@
                     <input type="text" value=${loginInfo.nick} class="longInput myInfoNickInput" name="nick"
                       id="myInfoNickInput">
                     <button type="button" class="myInfoNickCheck" id="myInfoNickCheck">중복확인</button>
-                    <div class="myInfoCheckTxt myInfoNickConfirm">테스트텍스트</div>
+                    <div class="myInfoCheckTxt myInfoNickConfirm">&nbsp;</div>
                     <c:if test="${loginInfo.sns_division == 0}">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      비밀번호 변경
-                    </button>
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        비밀번호 변경
+                      </button>
                     </c:if>
                   </div>
                 </div>
                 <table class="myInfoForm">
-                <c:if test="${loginInfo.sns_division == 0}">
-                  <tr>
-                    <th class="text-center">Email</th>
-                    <td><input type="text" value=${loginInfo.emailID} readonly class="longInput" name="emailID"></td>
-                  </tr>
-                </c:if>
+                  <c:if test="${loginInfo.sns_division == 0}">
+                    <tr>
+                      <th class="text-center">Email</th>
+                      <td><input type="text" value=${loginInfo.emailID} readonly class="longInput" name="emailID"></td>
+                    </tr>
+                  </c:if>
                   <tr>
                     <th class="text-center">나이</th>
-                    <td><input type="number" min="14" max="100" class="ageInput" name="age" value=${loginInfo.age}></td>
+                    <td><input type="number" min="0" max="100" class="ageInput" id="ageInput" name="age"
+                        value=${loginInfo.age}> 세</td>
                   </tr>
                   <tr>
                     <th class="text-center">성별</th>
@@ -368,8 +371,9 @@
                     <td><input type="text" value="${loginInfo.phone}" maxlength="11" class="longInput"
                         id="myInfoPhoneInput" name="phone">
                       <button type="button" class="myInfoPhoneCheck" id="myInfoPhoneCheck">중복확인</button><input
-                        type="checkbox" class="phOpen" name="ph_Open"><span class="phOpenTxt">공개</span>
-                      <div class="myInfoCheckTxt myInfoPhoneConfirm">테스트텍스트</div>
+                        type="checkbox" class="phOpen" name="ph_Open" <c:if test="${loginInfo.ph_Open == 'on'}">checked
+                      </c:if>><span class="phOpenTxt">공개</span>
+                      <div class="myInfoCheckTxt myInfoPhoneConfirm">&nbsp;</div>
                     </td>
                   </tr>
                   <tr>
@@ -386,7 +390,7 @@
                   <tr>
                     <th class="txtHead text-center">자기 소개</th>
                     <td><textarea cols="50" rows="5" maxlength="120" style="resize: none;" placeholder="자기소개를 입력해주세요."
-                        class="txtInput" name="text" value=${loginInfo.text}></textarea></td>
+                        class="txtInput" name="text">${loginInfo.text}</textarea></td>
                   </tr>
                 </table>
                 <div class="submitBtnss">
@@ -394,7 +398,6 @@
                     <button type="button" class="changeSubmitBtn" id="myInfoChangeGo">수정버튼</button>
                     <button type="button" class="deleteAccountBtn" id="deleteAccountBtn">탈퇴하기</button>
                     <c:if test="${loginInfo.sns_division != 0}">
-                      <!-- 세션비우는작업 추가로 해줘야함 ajax로 받아서 -->
                       <button type="button" id="kakaoLogOutBtn" class="deleteAccountBtn">카카오 로그아웃</a>
                     </c:if>
                   </div>
@@ -585,6 +588,17 @@
             alert("연락처를 확인 해주세요.");
             return false;
           }
+
+          let ageInput = document.querySelector("#ageInput").value
+          if (!(0 <= ageInput && ageInput <= 100)) {
+            alert("나이를 정수로 입력해주세요.");
+            return false;
+          }
+          if (ageInput == "") {
+            alert("나이를 정수로 입력해주세요.");
+            return false;
+          }
+          console.log(ageInput);
           if (confirm("수정하시겠습니까?")) {
             document.querySelector("#myInfoChangeForm").submit();
           }
@@ -617,20 +631,22 @@
             document.getElementById("deleteAccountForm").submit();
           }
         });
-    
-        document.querySelector("#kakaoLogOutBtn").addEventListener("click", () => {
-          let seq = "${loginInfo.seq}";
-          alert("사이트에서 로그아웃 되었습니다.");
-          console.log(seq);
-          $.ajax({
-            type: "post",
-            url: "/member/kakaoLogOut",
-            data: {seq : seq}
-          }).done(function(res){
-            console.log(res);
-            location.href=res;
-          })
-        });
+
+        if (document.querySelector("#kakaoLogOutBtn") != null) {
+          document.querySelector("#kakaoLogOutBtn").addEventListener("click", () => {
+            let seq = "${loginInfo.seq}";
+            alert("사이트에서 로그아웃 되었습니다.");
+            console.log(seq);
+            $.ajax({
+              type: "post",
+              url: "/member/kakaoLogOut",
+              data: { seq: seq }
+            }).done(function (res) {
+              console.log(res);
+              location.href = res;
+            })
+          });
+        }
       </script>
     </body>
 
