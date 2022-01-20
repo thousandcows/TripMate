@@ -33,7 +33,9 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	<jsp:include page="../base/header.jsp"></jsp:include>
 <style>
+
 * {
 	box-sizing: border-box;
 }
@@ -320,7 +322,7 @@ a:active {
 				</div>
 				<br>
 				<div class="contents" style="margin-left: 80px;">
-					<textarea id="summernote" rows="5" name="explanation" style="height: 300px;">${dto.contents }</textarea>
+					<textarea class="summernote" id="summernote" rows="5" name="explanation" style="height: 300px;">${dto.contents }</textarea>
 				</div>
 			</div>
 			<div class="ft_btn">
@@ -371,7 +373,7 @@ a:active {
 							<button type=button class="rp_reply_btn" id="rp_reply_btn${rp.seq }">rep</button>
 							<button type=button class="rp_mod_btn" id="rp_mod_btn${rp.seq }">mod</button>
 							<button type=button class="rp_del_btn" id="rp_del_btn${rp.seq }" style="color: red;"><b>del</b></button>
-							<button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none;">ok</button>
+							<button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none;" formaction="/tourreply/modify">ok</button>
 							<button type=button class="rp_cancle_btn" id="rp_cancle_btn${rp.seq }" style="color: red; display: none;"><b>can</b></button>
 						</div>
 						
@@ -380,15 +382,21 @@ a:active {
 							<c:when test="${re.par_seq == rp.seq}">
                        			<div class="re_reply" id="re_reply${rp.seq }">
                             		<div class="re_rp_title">
-                                		<div class="re_rp_id">${re.mem_seq }</div>
-                                		<div class="re_rp_time">${re.writen_time }</div>
+                                		<div class="re_rp_id" style="text-align:left;"> ${re.mem_seq }</div>
+                                		<div class="re_rp_time" style="text-align:center;">${re.writen_time }</div>
                             		</div>
                             		<br>
                             		<div class="re_rp_contents">
 		                                <div class="re_rp_content">
-                                			<input type=text value="${re.contents}">
+		                                	<input type=text style="width:4%; border:0px;" value="@${rp.mem_seq }" readonly>
+                                			<input type=text style="width:95%;" id="recontent${re.seq }" name="recontent" value="${re.contents}" readonly>
                                 		</div>
-                                		<div class="re_rp_btns"></div>
+                                		<div class="re_rp_btns" style="text-align:center">
+                                			<button type=button class="re_mod_btn" id="re_mod_btn${re.seq }" rpseq=${rp.seq }>mod</button>
+                                			<button type=button class="re_del_btn" id="re_del_btn${re.seq }">del</button>
+                                			<button type=button class="re_modOk_btn" id="re_modOk_btn${re.seq }" rpseq=${rp.seq } style="display: none;">ok</button>
+                                			<button type=button class="re_cancle_btn" id="re_cancle_btn${re.seq }" style="display: none;">can</button>
+                                		</div>
                             		</div>
                         		</div>
                         	</c:when>
@@ -403,6 +411,7 @@ a:active {
                             </div>
                             <div class="re_reply_input_btn">
                                 <button type=submit formaction="/tourreply/rereply">ok</button>
+                                <button type=button class="rp_reply_cancle_btn" id="rp_reply_cancle_btn${rp.seq }">can</button>
                             </div>
                         </div>
 					</div>
@@ -414,9 +423,56 @@ a:active {
 	</div>
 	
 	<script>
+		$(".re_del_btn").on("click", function(){
+			
+			let id = this.id.substr(10);
+			location.href = "/tourreply/redelete?idseq="+id+"&writeseq=${dto.seq}";
+		})
+	</script>
+	
+	<script>
+		$(".re_modOk_btn").on("click", function(){
+// 			re_modOk_btn${re.seq}${rp.seq }
+			let id = this.id.substr(12);
+			let rp = $(this).attr(rpseq);
+			console.log("id : rp = " + id + " : " + rp);
+			let recontent = $("#recontent${re.seq }"+id).val();
+			
+			location.href = "/tourreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;
+		})
+	</script>
+	
+	<script>
+		$(".re_cancle_btn").on("click", function(){
+					
+			location.reload();
+		})
+	</script>
+	
+	<script>
+		$(".re_mod_btn").on("click", function(){
+			let id = this.id.substr(10);
+			let mod_id = $(this).attr("rpseq");
+			
+			console.log("mod_btn 눌렀을 때 id : mod_id = " + id + " : " + mod_id);
+			$("#re_mod_btn"+id+mod_id).css("display","none");
+			$("#re_del_btn"+id).css("display","none");
+			$("#re_modOk_btn"+id+mod_id).css("display","inline");
+			$("#re_cancle_btn"+id).css("display","inline");	
+			$("#recontent"+id).removeAttr("readonly");
+		})
+		
+	</script>
+	
+	<script>
+		$(".rp_reply_cancle_btn").on("click", function(){
+			let id = this.id.substr(19)
+			$("#re_reply_input"+id).css("display", "none");
+		})
+	</script>
+	<script>
 		$(".rp_reply_btn").on("click", function(){
 			let id = this.id.substr(12);
-			console.log(id);
 			$("#re_reply_input"+id).css("display", "inline");
 		})
 	</script>
@@ -500,20 +556,21 @@ a:active {
 			$("#modCancel").css("display", "inline");
 			$("#discategory").css("display", "none");
 			$("#modcategory").css("display", "inline");
-
+			
+			$('.summernote').summernote({
+				airMode : false
+			});
+			
 			// 서머노트 쓰기 활성화
 			$('#summernote').summernote('enable');
 		});
-	</script>
+	</script>	
 
 	<script>
 		$("#modCancel").on("click", function() {
 			if (confirm("정말 취소하시겠습니까?")) {
 
 				location.reload();
-
-				// 서머노트 쓰기 비활성화
-				$('#summernote').summernote('disable');
 			}
 		})
 	</script>
@@ -553,7 +610,22 @@ a:active {
 				maxHeight : null, // 최대 높이
 				focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 				lang : "ko-KR", // 한글 설정
-
+				airMode: false,
+				
+				toolbar: [
+				    // [groupName, [list of button]]
+				    ['fontname', ['fontname']],
+				    ['fontsize', ['fontsize']],
+				    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				    ['color', ['forecolor','color']],
+				    ['table', ['table']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['height', ['height']],
+				    ['insert',['picture','link','video']],
+				    ['view', ['fullscreen', 'help']]
+				  ],
+				fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+				fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
 				placeholder : '최대 2048자까지 쓸 수 있습니다' //placeholder 설정
 			});
 			$('#summernote').summernote('disable');

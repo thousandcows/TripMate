@@ -52,6 +52,12 @@ public class TourBoardService {
 		
 		return bdao.replyCount(seq);
 	}
+	
+	public int replyReplyCount(int seq) {
+		
+		return bdao.replyReplyCount(seq);
+	}
+	
 	public int getPageTotalCount() throws Exception{
 
 		int recordTotalCount = bdao.getRecordCount();
