@@ -33,7 +33,9 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	<jsp:include page="../base/header.jsp"></jsp:include>
 <style>
+
 * {
 	box-sizing: border-box;
 }
@@ -320,7 +322,7 @@ a:active {
 				</div>
 				<br>
 				<div class="contents" style="margin-left: 80px;">
-					<textarea id="summernote" rows="5" name="explanation" style="height: 300px;">${dto.contents }</textarea>
+					<textarea class="summernote" id="summernote" rows="5" name="explanation" style="height: 300px;">${dto.contents }</textarea>
 				</div>
 			</div>
 			<div class="ft_btn">
@@ -390,9 +392,9 @@ a:active {
                                 			<input type=text style="width:95%;" id="recontent${re.seq }" name="recontent" value="${re.contents}" readonly>
                                 		</div>
                                 		<div class="re_rp_btns" style="text-align:center">
-                                			<button type=button class="re_mod_btn" id="re_mod_btn${re.seq }">mod</button>
+                                			<button type=button class="re_mod_btn" id="re_mod_btn${re.seq }" rpseq=${rp.seq }>mod</button>
                                 			<button type=button class="re_del_btn" id="re_del_btn${re.seq }">del</button>
-                                			<button type=submit class="re_modOk_btn" id="re_modOk_btn${re.seq }" style="display: none;" >ok</button>
+                                			<button type=button class="re_modOk_btn" id="re_modOk_btn${re.seq }" rpseq=${rp.seq } style="display: none;">ok</button>
                                 			<button type=button class="re_cancle_btn" id="re_cancle_btn${re.seq }" style="display: none;">can</button>
                                 		</div>
                             		</div>
@@ -421,13 +423,22 @@ a:active {
 	</div>
 	
 	<script>
+		$(".re_del_btn").on("click", function(){
+			
+			let id = this.id.substr(10);
+			location.href = "/tourreply/redelete?idseq="+id+"&writeseq=${dto.seq}";
+		})
+	</script>
+	
+	<script>
 		$(".re_modOk_btn").on("click", function(){
-			
+// 			re_modOk_btn${re.seq}${rp.seq }
 			let id = this.id.substr(12);
+			let rp = $(this).attr(rpseq);
+			console.log("id : rp = " + id + " : " + rp);
 			let recontent = $("#recontent${re.seq }"+id).val();
-			console.log(recontent);
 			
-			location.href = "/tourreply/remodify?writeseq=${dto.seq}&rpseq=${rp.seq}&recontent=recontent";
+			location.href = "/tourreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;
 		})
 	</script>
 	
@@ -440,18 +451,19 @@ a:active {
 	
 	<script>
 		$(".re_mod_btn").on("click", function(){
-			
 			let id = this.id.substr(10);
+			let mod_id = $(this).attr("rpseq");
 			
-			console.log(id);
-			$("#re_mod_btn"+id).css("display","none");
+			console.log("mod_btn 눌렀을 때 id : mod_id = " + id + " : " + mod_id);
+			$("#re_mod_btn"+id+mod_id).css("display","none");
 			$("#re_del_btn"+id).css("display","none");
-			$("#re_modOk_btn"+id).css("display","inline");
+			$("#re_modOk_btn"+id+mod_id).css("display","inline");
 			$("#re_cancle_btn"+id).css("display","inline");	
-			$("#re_contents"+id).removeAttr("readonly");
+			$("#recontent"+id).removeAttr("readonly");
 		})
 		
 	</script>
+	
 	<script>
 		$(".rp_reply_cancle_btn").on("click", function(){
 			let id = this.id.substr(19)
@@ -544,20 +556,21 @@ a:active {
 			$("#modCancel").css("display", "inline");
 			$("#discategory").css("display", "none");
 			$("#modcategory").css("display", "inline");
-
+			
+			$('.summernote').summernote({
+				airMode : false
+			});
+			
 			// 서머노트 쓰기 활성화
 			$('#summernote').summernote('enable');
 		});
-	</script>
+	</script>	
 
 	<script>
 		$("#modCancel").on("click", function() {
 			if (confirm("정말 취소하시겠습니까?")) {
 
 				location.reload();
-
-				// 서머노트 쓰기 비활성화
-				$('#summernote').summernote('disable');
 			}
 		})
 	</script>
@@ -597,10 +610,25 @@ a:active {
 				maxHeight : null, // 최대 높이
 				focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 				lang : "ko-KR", // 한글 설정
-
-				placeholder : '최대 2048자까지 쓸 수 있습니다', //placeholder 설정
-				airMode: true
+				airMode: false,
+				
+				toolbar: [
+				    // [groupName, [list of button]]
+				    ['fontname', ['fontname']],
+				    ['fontsize', ['fontsize']],
+				    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				    ['color', ['forecolor','color']],
+				    ['table', ['table']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['height', ['height']],
+				    ['insert',['picture','link','video']],
+				    ['view', ['fullscreen', 'help']]
+				  ],
+				fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+				fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+				placeholder : '최대 2048자까지 쓸 수 있습니다' //placeholder 설정
 			});
+			$('#summernote').summernote('disable');
 		});
 	</script>
 

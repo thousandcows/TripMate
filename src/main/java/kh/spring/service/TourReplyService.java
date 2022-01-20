@@ -43,6 +43,17 @@ public class TourReplyService {
 	}
 	
 	public List<TourReplyReplyDTO> selectReAll(){
+	
 		return rdao.selectReAll();
+	}
+	
+	public int remodify(int idseq, String content) {
+		
+		return rdao.remodify(idseq, content);
+	}
+	
+	public int redelete(int idseq) {
+		
+		return rdao.redelete(idseq);
 	}
 }
