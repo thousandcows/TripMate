@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.TourReplyDAO;
 import kh.spring.dto.TourReplyDTO;
+import kh.spring.dto.TourReplyReplyDTO;
 
 @Service
 public class TourReplyService {
@@ -36,4 +37,23 @@ public class TourReplyService {
 		return rdao.delete(seq);
 	}
 
+	public int reinsert(int rpseq, String recontent) {
+		
+		return rdao.reinsert(rpseq, recontent);
+	}
+	
+	public List<TourReplyReplyDTO> selectReAll(){
+	
+		return rdao.selectReAll();
+	}
+	
+	public int remodify(int idseq, String content) {
+		
+		return rdao.remodify(idseq, content);
+	}
+	
+	public int redelete(int idseq) {
+		
+		return rdao.redelete(idseq);
+	}
 }

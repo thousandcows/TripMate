@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.TourReplyDTO;
+import kh.spring.dto.TourReplyReplyDTO;
 
 @Repository
 public class TourReplyDAO {
@@ -51,12 +52,44 @@ public class TourReplyDAO {
 	}
 	
 	public int delete(int seq) {
-		
+		System.out.println("매퍼에서 seq : " + seq);
+		mybatis.delete("TourReply.deleteReply", seq);		
 		return mybatis.delete("TourReply.delete", seq);
 	}
 	
 	public int deleteAll(int seq) {
 		
 		return mybatis.delete("TourReply.deleteAll", seq);
+	}
+	
+	public int reinsert(int rpseq, String recontent) {
+
+		Map<String, String> map = new HashMap<>();
+		map.put("rpseq", String.valueOf(rpseq));
+		map.put("recontent", recontent);
+
+		return mybatis.insert("TourReply.reinsert", map);
+	}
+	
+	public List<TourReplyReplyDTO> selectReAll(){
+		
+		return mybatis.selectList("TourReply.selectReAll");
+	}
+	
+	public int remodify(int idseq, String recontent) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("idseq", String.valueOf(idseq));
+		map.put("recontent", recontent);
+
+		return mybatis.update("TourReply.remodify", map);
+	}
+	
+	public int redelete(int idseq) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("idseq", String.valueOf(idseq));
+		System.out.println(idseq);
+		return mybatis.delete("TourReply.redelete", map);
 	}
 }

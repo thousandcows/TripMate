@@ -66,9 +66,11 @@ ul>li{
 	max-height:500px;
 }
 </style>
+	<jsp:include page="../base/header.jsp"></jsp:include>
 
 </head>
 <body>
+
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
@@ -200,7 +202,7 @@ ul>li{
 				<div class="col-10">
 					<div class="row">
 						<div class="form-floating col-12 p-0">
-						  <textarea class="form-control p-0" placeholder="댓글작성" id="replyText" name="text" style="height: 100px;resize:none;"></textarea>
+						  <textarea class="form-control p-0" minlength=5 placeholder="댓글작성" id="replyText" name="text" style="height: 100px;resize:none;" required></textarea>
 						</div>
 					</div>
 					<div class="row mt-1 mb-2">
@@ -209,7 +211,7 @@ ul>li{
 
 						<input type="hidden" value="${area_seq }" name="area_seq">
 						  <div class="col-6 text-end">
-						    <button type="submit" class="btn btn-success ">작성</button>
+						    <button type="submit" class="btn btn-success" id="replyBtn">작성</button>
 						  </div>
 					</div>
 				</div>
@@ -243,14 +245,16 @@ ul>li{
 			<div class="col-9">
 				<div class="row">
 					<div class="col">
-						${i.mem_nick }
+						<span class="reply_id" value="${i.mem_seq }">${i.mem_nick }</span>
 					</div>
+
+					
 					<div class="col text-end starRate${i.score }">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col">
-						<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt${i.seq }">${i.text }</textarea>
+						<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt${i.seq }" minlength=5 required>${i.text }</textarea>
 						<input type="hidden" value="${i.text }" id="replyHidden${i.seq }">
 					</div>
 				</div>
@@ -295,11 +299,71 @@ ul>li{
 	</div>
 
 
+
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered" role="document">
+			    <div class="modal-content">
+			        <div class="modal-header">
+			          <h4 class="modal-title text-center">프로필 조회</h4>
+			        </div>
+			      <div class="modal-body">
+			      	<img id="profileImg" style="width:100px;height:100px;">
+			        <span id="profileNick"></span><br>
+			        <span id="profilePreference"></span><br>
+			        <span id="profileGender"></span><br>
+			        <span id="profilePhone"></span><br>
+			        <span id="profileAge"></span><br>
+			        <span id="profileViolation"></span><br>
+			        <span id="profileTxt"></span>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" id="profileMsg" class="btn btn-primary">쪽지보내기</button>
+			        <button type="button" class="btn btn-secondary" id="modalCloseBtn" data-dismiss="modal">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
 	<script>
+	
+	$(document).on("click",".reply_id",function(){
+		let mem_seq = $(this).attr("value");
+		$.ajax({
+			url:"/tmp/showMember?mem_seq="+mem_seq,
+    		dataType:"json",
+    		success:function(result){
+    			$('#myModal').modal('toggle');
+    			if(result.photo!=undefined){
+        			$("#profileImg").attr("src","/images/"+result.photo);    				
+    			}else{
+    				$("#profileImg").attr("src","/images/noPhoto.png");
+    			}
+    			$("#profileNick").text("사용자 명 : "+result.nick);
+    			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
+    			$("#profileGender").text("성별 : "+result.gender);
+    			if(result.ph_Open=='on'){
+    				$("#profilePhone").text("연락처 : " + result.phone);    				
+    			}else{
+     				$("#profilePhone").text("연락처 : 비공개 연락처입니다.");    				 				
+    			}
+    			$("#profileAge").text("연령 : "+result.age);
+    			$("#profileViolation").text("신고 횟수 : " + result.violation);
+    			$("#profileTxt").text("자기소개 : "+result.text);
+    			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+    		}
+			
+		})
+	})
+	$('#modalCloseBtn').on("click",function(){
+		$("#myModal").modal("toggle");
+	})
+	
 	let loginSeq = 0;
 	<c:if test="${!empty loginSeq}">
 		loginSeq = ${loginSeq};
 	</c:if>
+	$('#starRate').raty({ score: 5	 });
 	$('.starRate1').raty({ readOnly:true, score: 1	 });
 	$('.starRate2').raty({ readOnly:true, score: 2	 });
 	$('.starRate3').raty({ readOnly:true, score: 3	 });
@@ -309,6 +373,13 @@ ul>li{
 	
 	$(".rcmd").on("click",function(){
 		location.href="/area/detail?num="+this.id;
+	})
+	
+	$("#replyBtn").on("click",function(){
+		if(loginSeq==0){
+			alert("로그인 후 이용해주세요.");
+			return false;
+		}
 	})
 	
 	//댓글 수정
@@ -378,13 +449,13 @@ ul>li{
 						'<div class="col-9">'+
 							'<div class="row">'+
 								'<div class="col">'+
-									result[i].mem_nick+
+									'<span class="reply_id" value="'+result[i].mem_seq+'">'+result[i].mem_nick+'</span>'+
 								'</div>'+
 								'<div class="col text-end starRate'+result[i].score+'">'+
 								'</div>'+
 							'</div>'+
 							'<div class="row">'+
-								'<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt'+result[i].seq+'">'+
+								'<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt'+result[i].seq+'"  minlength=5 required>'+
 									result[i].text+
 								'</textarea>'+
 								'<input type="hidden" value="'+result[i].text+'" id="replyHidden'+result[i].seq+'">'+

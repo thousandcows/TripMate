@@ -16,6 +16,7 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<jsp:include page="../base/header.jsp"></jsp:include>
  <style>
         * {box-sizing: border-box;}
 
@@ -160,11 +161,6 @@
         </div>
     </div>    
     </form>
-    <script>
-    $("#list_btn").on("click", function(){
-	    	history.back();
-	    })
-    </script>
     
     <script>
     $(document).ready(function() {
@@ -178,7 +174,15 @@
     		  placeholder: '최대 2048자까지 쓸 수 있습니다' 	//placeholder 설정
     	});
     });
-    </script>    
+    </script>
+	
+    <script>
+    $("#list_btn").on("click", function(){
+	    	history.back();
+	    })
+    </script>
+    
+
     
     <script>
     $("#write_btn").on("click", function() {
