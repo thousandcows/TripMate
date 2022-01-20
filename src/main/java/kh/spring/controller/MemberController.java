@@ -51,8 +51,6 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "emailCheck", produces = "application/text;charset=utf-8")
 	public String emailChek(String email) {
-		System.out.println("넘어온 일반회원가입 이메일값 : " + email);
-		System.out.println("보내는 일반회원가입 이메일 확인값 : " + memberService.emailCheck(email));
 		return String.valueOf(memberService.emailCheck(email));
 	}
 
@@ -60,8 +58,6 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "nickNameCheck", produces = "application/text;charset=utf-8")
 	public String nickNameCheck(String nickName) {
-		System.out.println("넘어온 일반회원가입 닉네임값 : " + nickName);
-		System.out.println("보내는 일반회원가입 닉네임 확인값 : " + memberService.nickNameCheck(nickName));
 		return String.valueOf(memberService.nickNameCheck(nickName));
 	}
 
@@ -69,8 +65,6 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "phoneCheck", produces = "application/text;charset=utf-8")
 	public String phoneCheck(String phone) {
-		System.out.println("넘어온 일반회원가입 휴대폰값 : " + phone);
-		System.out.println("보내는 일반회원가입 휴대폰 확인값 : " + memberService.phoneCheck(phone));
 		return String.valueOf(memberService.phoneCheck(phone));
 	}
 
@@ -78,7 +72,6 @@ public class MemberController {
 	@RequestMapping("normalSignup")
 	public String normalSignup(String emailID, String nick, String phone, String pw, String gender) {
 		memberService.normalSignup(emailID, nick, phone, pw, gender);
-		System.out.println("회원가입 사용자 성별 : " + gender);
 		MemberDTO dto = memberService.normalLoginSelectAll(emailID, pw);
 		session.setAttribute("loginSeq", dto.getSeq());
 		session.setAttribute("loginEmailID", dto.getEmailID());
@@ -91,8 +84,6 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "normalLogin", produces = "application/text;charset=utf-8")
 	public String normalLogin(String emailID, String pw) {
-		System.out.println("넘어온 일반로그인 아이디 : " + emailID);
-		System.out.println("넘어온 일반로그인 PW : " + pw);
 		int result = memberService.normalLoginCheck(emailID, pw);
 		System.out.println("로그인 조회 결과 : " + result);
 		if (result == 0) {
@@ -102,6 +93,7 @@ public class MemberController {
 			session.setAttribute("loginSeq", dto.getSeq());
 			session.setAttribute("loginEmailID", dto.getEmailID());
 			session.setAttribute("loginNick", dto.getNick());
+			session.setAttribute("loginGender", dto.getGender());
 			return "1";
 		}
 	}
@@ -111,7 +103,6 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "findPw", produces = "application/text;charset=utf-8")
 	public String pwFindPopup (String emailID) throws AddressException, MessagingException {
-		System.out.println("PW찾을 email : " + emailID);
 		int result = memberService.emailCheck(emailID);
 		if (result == 0) {
 			return "0";
@@ -119,7 +110,7 @@ public class MemberController {
 		// 이메일 발송 시작
 		findPwTargetEmail = emailID; // 받는사람의 이메일
 		
-		// 보내는 개발자?의 메일계정
+		// 보내는 메일계정
 		String user = "wlsrb2611@naver.com";
 		String password = "";
 		
@@ -152,7 +143,6 @@ public class MemberController {
 	// PW찾기 후 비밀번호 변경
 	@RequestMapping("findPwChange")
 	public String findPwChange(String pw) {
-		System.out.println("변경할 대상 이메일 : " + findPwTargetEmail);
 		memberService.findPwChange(findPwTargetEmail, pw);
 		return "redirect:/";
 	}
@@ -173,8 +163,6 @@ public class MemberController {
 
 	@RequestMapping("kakaoLogin") // 서비스레이어로 뺄까 고민했지만 Http통신이 있어 컨트롤러에 있는게 맞을듯
 	public String kakaoLogin(String code, String error) {
-		System.out.println("반환된 카카오로그인 코드 : " + code);
-		System.out.println("반환된 카카오로그인 에러코드 : " + error);
 		if (error != null) { // 에러코드가 있다면 사용자가 무언가 취소를 한것.(null이 아닐때 전부 메인으로 보내버리면될수도)
 			return "redirect:/";
 //			if(error.equals("")) {
@@ -251,13 +239,6 @@ public class MemberController {
 			session.setAttribute("loginNick", kakaoDto.getNick());
 			session.setAttribute("loginKakaoID", kakaoDto.getSns_division());
 		}
-
-		System.out.println("로그인한 카카오 이메일 : " + kProfile.kakao_account.email);
-		System.out.println("로그인한 카카오 id값 : " + kProfile.id);
-		System.out.println("로그인한 카카오 닉네임 : " + kProfile.properties.nickname);
-		System.out.println("로그인한 카카오 프로필이미지 : " + kProfile.properties.profile_image);
-		System.out.println("로그인한 카카오 성별 : " + kProfile.kakao_account.gender);
-
 		return "redirect:/";
 	}
 
@@ -284,19 +265,12 @@ public class MemberController {
 	// 일반회원 정보수정Ok
 	@RequestMapping("myInfoChangeOk")
 	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
-		System.out.println("들어오는 회원seq : " + dto.getSeq());
-		System.out.println("들어오는 회원email : " + dto.getEmailID());
-		System.out.println("들어오는 회원nick : " + dto.getNick());
-		System.out.println("들어오는 회원gender : " + dto.getGender());
-		System.out.println("들어오는 회원age : " + dto.getAge());
-		System.out.println("들어오는 회원phone : " + dto.getPhone());
-		System.out.println("돌아오는 회원phone_Open : " + dto.getPh_Open());
-		System.out.println("들어오는 회원preference : " + dto.getPreference());
-		System.out.println("들어오는 회원text : " + dto.getText());
-		System.out.println("들어오는 회원photo : " + dto.getPhoto());
 		dto.setSeq((int)session.getAttribute("loginSeq"));
 		String realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
+		System.out.println("리얼패스 : " + realPath);
 		memberService.myInfoChangeOk(dto, file, realPath);
+		session.setAttribute("loginNick", dto.getNick());
+		session.setAttribute("loginGender", dto.getGender());
 		return "redirect:/member/mypageGo";
 	}
 	
@@ -310,7 +284,6 @@ public class MemberController {
 	// 회원탈퇴
 	@RequestMapping("deleteAccount")
 	public String deleteAccount(int seq) {
-		System.out.println("넘어온 탈퇴 seq : " + seq);
 		memberService.deleteAccount(seq);
 		session.invalidate();
 		return "redirect:/";
