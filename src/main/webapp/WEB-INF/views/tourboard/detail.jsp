@@ -386,9 +386,14 @@ a:active {
                             		<br>
                             		<div class="re_rp_contents">
 		                                <div class="re_rp_content">
-                                			<input type=text value="${re.contents}">
+                                			<input type=text style="width:100%;" id="re_contents${re.seq }" value="@${rp.mem_seq } ${re.contents}" readonly>
                                 		</div>
-                                		<div class="re_rp_btns"></div>
+                                		<div class="re_rp_btns">
+                                			<button type=button class="re_mod_btn" id="re_mod_btn${re.seq }">mod</button>
+                                			<button type=button class="re_del_btn" id="re_del_btn${re.seq }">del</button>
+                                			<button type=submit class="re_modOk_btn" id="re_modOk_btn${re.seq }" style="display: none;" formaction="/tourreply/remodify">ok</button>
+                                			<button type=button class="re_cancle_btn" id="re_cancle_btn${re.seq }" style="display: none;">can</button>
+                                		</div>
                             		</div>
                         		</div>
                         	</c:when>
@@ -403,6 +408,7 @@ a:active {
                             </div>
                             <div class="re_reply_input_btn">
                                 <button type=submit formaction="/tourreply/rereply">ok</button>
+                                <button type=button class="rp_reply_cancle_btn" id="rp_reply_cancle_btn${rp.seq }">can</button>
                             </div>
                         </div>
 					</div>
@@ -414,9 +420,35 @@ a:active {
 	</div>
 	
 	<script>
+		$(".re_cancle_btn").on("click", function(){
+					
+			location.reload();
+		})
+	</script>
+	
+	<script>
+		$(".re_mod_btn").on("click", function(){
+			
+			let id = this.id.substr(10);
+			
+			console.log(id);
+			$("#re_mod_btn"+id).css("display","none");
+			$("#re_del_btn"+id).css("display","none");
+			$("#re_modOk_btn"+id).css("display","inline");
+			$("#re_cancle_btn"+id).css("display","inline");	
+			$("#re_contents"+id).removeAttr("readonly");
+		})
+		
+	</script>
+	<script>
+		$(".rp_reply_cancle_btn").on("click", function(){
+			let id = this.id.substr(19)
+			$("#re_reply_input"+id).css("display", "none");
+		})
+	</script>
+	<script>
 		$(".rp_reply_btn").on("click", function(){
 			let id = this.id.substr(12);
-			console.log(id);
 			$("#re_reply_input"+id).css("display", "inline");
 		})
 	</script>
