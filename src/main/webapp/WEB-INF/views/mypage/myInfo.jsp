@@ -36,7 +36,7 @@
         /* 사이드바 시작 */
         .sideBar {
           width: 200px;
-          height: 1200px;
+          height: 1000px;
           background-color: rgb(240, 240, 240);
         }
 
@@ -46,7 +46,6 @@
           height: 150px;
           margin-left: 25px;
           margin-top: 50px;
-          background-color: hotpink;
           position: relative;
         }
 
@@ -84,7 +83,7 @@
         }
 
         .sideBarMenuBox li:first-child a {
-          background-color: rgb(255, 228, 193);
+          background-color: rgb(255, 220, 174);
         }
 
         /* 사이드바 끝 */
@@ -112,8 +111,7 @@
         .contentsMiddleIn {
           width: 600px;
           margin: auto;
-          height: 1050px;
-          background-color: cornsilk;
+          height: 800px;
         }
 
         .myInfoForm {
@@ -128,7 +126,7 @@
 
         /* input들 */
         .longInput {
-          width: 250px;
+          width: 230px;
           height: 40px;
           border-radius: 5px;
           border: 1px solid rgb(173, 173, 173);
@@ -153,10 +151,7 @@
 
         .txtInput {
           margin-top: 30px;
-        }
-
-        .txtHead {
-          vertical-align: top;
+          padding: 5px;
         }
 
         .phOpenTxt {
@@ -175,6 +170,8 @@
         /* 탈퇴&수정버튼들 */
         .deleteAccountBtn {
           color: gray;
+          border: none;
+          background-color: white;
           font-size: 14px;
         }
 
@@ -185,19 +182,24 @@
         }
 
         .changeSubmitBtn {
-          width: 250px;
+          width: 200px;
           height: 40px;
+          margin: auto;
           border: none;
           border-radius: 5px;
-          box-shadow: 1px 1px 2px 1px rgb(177, 177, 177);
-          background-color: greenyellow;
+          border: 1px solid rgb(184, 184, 184);
+          color: #108b85;
+          background-color: white;
+        }
+
+        .changeSubmitBtn:hover {
+          box-shadow: 1px 1px 2px 1px rgb(233, 233, 233);
         }
 
         /* 사진 수정 */
         .portraitInput {
           width: 150px;
           height: 150px;
-          background-color: aliceblue;
           position: absolute;
           opacity: 0;
         }
@@ -212,7 +214,7 @@
           margin-top: 50px;
           width: 100%;
           height: 70px;
-          background-color: hotpink;
+          text-align: center;
         }
 
         .submitBtns {
@@ -242,14 +244,32 @@
         .myInfoNickCheck,
         .myInfoPhoneCheck {
           display: inline;
-          width: 80px;
+          width: 70px;
           height: 30px;
           border-radius: 5px;
-          border: 1px solid gray;
-          background-color: hotpink;
+          border: 1px solid rgb(194, 194, 194);
+          background-color: rgb(255, 255, 255);
+          font-size: 14px;
+        }
+
+        .myInfoNickCheck:hover,
+        .myInfoPhoneCheck:hover {
+          background-color: rgb(247, 247, 247);
         }
 
         /* 비밀번호 수정 폼 */
+        .changePwBtn {
+          background-color: white;
+          color: rgb(65, 65, 65);
+          border: 1px solid rgb(160, 160, 160);
+          font-size: 14px;
+        }
+
+        .changePwBtn:hover {
+          background-color: white;
+          color: rgb(65, 65, 65);
+        }
+
         .myInfoPwChangeForm {
           margin: auto;
           width: 250px;
@@ -325,7 +345,7 @@
                     <button type="button" class="myInfoNickCheck" id="myInfoNickCheck">중복확인</button>
                     <div class="myInfoCheckTxt myInfoNickConfirm">&nbsp;</div>
                     <c:if test="${loginInfo.sns_division == 0}">
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                      <button type="button" class="btn btn-primary changePwBtn" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                         비밀번호 변경
                       </button>
@@ -389,13 +409,13 @@
                   </tr>
                   <tr>
                     <th class="txtHead text-center">자기 소개</th>
-                    <td><textarea cols="50" rows="5" maxlength="120" style="resize: none;" placeholder="자기소개를 입력해주세요."
+                    <td><textarea cols="50" rows="5" maxlength="110" style="resize: none;" placeholder="자기소개를 입력해주세요."
                         class="txtInput" name="text">${loginInfo.text}</textarea></td>
                   </tr>
                 </table>
                 <div class="submitBtnss">
+                  <button type="button" class="changeSubmitBtn" id="myInfoChangeGo">정보 수정</button>
                   <div class="submitBtns">
-                    <button type="button" class="changeSubmitBtn" id="myInfoChangeGo">수정버튼</button>
                     <button type="button" class="deleteAccountBtn" id="deleteAccountBtn">탈퇴하기</button>
                     <c:if test="${loginInfo.sns_division != 0}">
                       <button type="button" id="kakaoLogOutBtn" class="deleteAccountBtn">카카오 로그아웃</a>
@@ -438,8 +458,7 @@
 
       <script>
         'use strict'
-        console.log("${loginInfo.preference}");
-        console.log("${loginInfo.sns_division}");
+        console.log("${loginInfo.nick}");
         // 사진 미리보기및 파일 용량 제한
         document.querySelector("#portraitInput").onchange = function () {
           let maxSize = "5242880";
@@ -598,7 +617,6 @@
             alert("나이를 정수로 입력해주세요.");
             return false;
           }
-          console.log(ageInput);
           if (confirm("수정하시겠습니까?")) {
             document.querySelector("#myInfoChangeForm").submit();
           }
