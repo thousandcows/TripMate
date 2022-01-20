@@ -1,9 +1,9 @@
 package kh.spring.controller;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
-import java.util.UUID;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -32,9 +32,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+import kh.spring.dto.AreaDTO;
 import kh.spring.dto.KakaoProfile;
 import kh.spring.dto.KakaoToken;
 import kh.spring.dto.MemberDTO;
+import kh.spring.service.AreaService;
 import kh.spring.service.MemberService;
 
 @Controller
@@ -43,6 +45,9 @@ public class MemberController {
 
 	@Autowired
 	public MemberService memberService;
+	
+	@Autowired
+	public AreaService areaService;
 
 	@Autowired
 	private HttpSession session;
@@ -297,9 +302,29 @@ public class MemberController {
 		return "https://kauth.kakao.com/oauth/logout?client_id=b7b0a7f6722957ddef971b2ff4061bd7&logout_redirect_uri=http://localhost";
 	}
 	
+	// 상대방 프로필 조회 by.임도혁
+	@ResponseBody
+	@RequestMapping("showMember")
+	public String showMember(int mem_seq) {
+		return memberService.showMember(mem_seq);
+	}
+	
 	///////////////// 찜목록 시작///////////////
 	@RequestMapping("saveList")
-	public String saveList() {
+	public String saveList(Model model) throws Exception {
+		int loginSeq = (int) session.getAttribute("loginSeq");
+		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
+		String filePath = "\\images" + "\\" + dto.getPhoto();
+		dto.setPhoto(filePath); // 프로필 사진 설정
+		
+		// 일단여기서 모두 작성
+		List<AreaDTO> adto = new ArrayList<>();
+		List<Integer>mySaveListSeq = memberService.mySaveListSeq(loginSeq);
+		for(int saveSeq : mySaveListSeq) {
+			adto.add(areaService.detailBuild(saveSeq));
+		}
+		model.addAttribute("saveList", adto);
+		model.addAttribute("loginInfo", dto);
 		return "mypage/saveList";
 	}
 	

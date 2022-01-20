@@ -2,11 +2,14 @@ package kh.spring.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.Gson;
 
 import kh.spring.dao.MemberDAO;
 import kh.spring.dto.MemberDTO;
@@ -119,6 +122,20 @@ public class MemberService {
 	// 회원탈퇴
 	public int deleteAccount(int seq) {
 		return memberDao.deleteAccount(seq);
+	}
+	
+	// 상대 회원 조회
+	public String showMember(int mem_seq) {
+		MemberDTO dto = memberDao.myInfoSelectAll(mem_seq);
+		Gson gson = new Gson();
+		dto.setPw("");
+		String result = gson.toJson(dto);
+		return result;
+	}
+	
+	///////// 찜목록 시작 ///////////
+	public List<Integer> mySaveListSeq(int loginSeq){
+		return memberDao.mySaveListSeq(loginSeq);
 	}
 	
 	

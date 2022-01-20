@@ -71,4 +71,9 @@
 		select photo from member where seq = #{value}
 	</select>
 	
+	<!-- 찜목록 시작 -->
+	<select id="mySaveListSeq" resultType="Integer">
+		select area_seq from saved where mem_seq = ${value} order by seq desc
+	</select>
+	
 </mapper>
