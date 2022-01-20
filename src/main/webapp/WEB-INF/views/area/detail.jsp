@@ -66,9 +66,11 @@ ul>li{
 	max-height:500px;
 }
 </style>
+	<jsp:include page="../base/header.jsp"></jsp:include>
 
 </head>
 <body>
+
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
@@ -306,16 +308,18 @@ ul>li{
 			          <h4 class="modal-title text-center">프로필 조회</h4>
 			        </div>
 			      <div class="modal-body">
-			        <span id="profileNick"></span>
-			        <span id="profileProference"></span>
-			        <span id="profileGender"></span>
-			        <span id="profilePhone"></span>
-			        <span id="profileAge"></span>
-			        <span id="profileViolation"></span>
+			      	<img id="profileImg" style="width:100px;height:100px;">
+			        <span id="profileNick"></span><br>
+			        <span id="profilePreference"></span><br>
+			        <span id="profileGender"></span><br>
+			        <span id="profilePhone"></span><br>
+			        <span id="profileAge"></span><br>
+			        <span id="profileViolation"></span><br>
+			        <span id="profileTxt"></span>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" id="profileMsg" class="btn btn-primary">쪽지보내기</button>
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+			        <button type="button" class="btn btn-secondary" id="modalCloseBtn" data-dismiss="modal">닫기</button>
 			      </div>
 			    </div>
 			  </div>
@@ -330,25 +334,36 @@ ul>li{
     		dataType:"json",
     		success:function(result){
     			$('#myModal').modal('toggle');
-    			$("#profileNick").text(result.nick);
-    			$("#profilepreference").text(result.preference);
-    			$("#profileGender").text(result.gender);
-    			if(result.ph_open=='O'){
-    				$("#profilePhone").text(result.phone);    				
+    			if(result.photo!=undefined){
+        			$("#profileImg").attr("src","/images/"+result.photo);    				
+    			}else{
+    				$("#profileImg").attr("src","/images/noPhoto.png");
     			}
-    			$("#profileAge").text(result.age);
-    			$("#profileViolation").text(result.violation);
+    			$("#profileNick").text("사용자 명 : "+result.nick);
+    			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
+    			$("#profileGender").text("성별 : "+result.gender);
+    			if(result.ph_Open=='on'){
+    				$("#profilePhone").text("연락처 : " + result.phone);    				
+    			}else{
+     				$("#profilePhone").text("연락처 : 비공개 연락처입니다.");    				 				
+    			}
+    			$("#profileAge").text("연령 : "+result.age);
+    			$("#profileViolation").text("신고 횟수 : " + result.violation);
+    			$("#profileTxt").text("자기소개 : "+result.text);
     			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
     		}
 			
 		})
 	})
-	
+	$('#modalCloseBtn').on("click",function(){
+		$("#myModal").modal("toggle");
+	})
 	
 	let loginSeq = 0;
 	<c:if test="${!empty loginSeq}">
 		loginSeq = ${loginSeq};
 	</c:if>
+	$('#starRate').raty({ score: 5	 });
 	$('.starRate1').raty({ readOnly:true, score: 1	 });
 	$('.starRate2').raty({ readOnly:true, score: 2	 });
 	$('.starRate3').raty({ readOnly:true, score: 3	 });
@@ -434,7 +449,7 @@ ul>li{
 						'<div class="col-9">'+
 							'<div class="row">'+
 								'<div class="col">'+
-									result[i].mem_nick+
+									'<span class="reply_id" value="'+result[i].mem_seq+'">'+result[i].mem_nick+'</span>'+
 								'</div>'+
 								'<div class="col text-end starRate'+result[i].score+'">'+
 								'</div>'+

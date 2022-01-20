@@ -23,6 +23,7 @@ public class tmp {
 	public String showMember(int mem_seq) {
 		//DAO
 		MemberDTO dto = mybatis.selectOne("Member.myInfoSelectAll",mem_seq);
+		System.out.println(dto.getPh_Open());
 		//Service
 		Gson gson = new Gson();
 		dto.setPw("");
