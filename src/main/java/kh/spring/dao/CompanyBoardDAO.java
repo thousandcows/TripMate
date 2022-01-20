@@ -72,5 +72,12 @@ public class CompanyBoardDAO {
 	public void updateBoardLike(int boardId) throws Exception {
         mybatis.update("CompanyBoard.updateBoardLike",boardId);
     }
+	
+	// 뎃글 카운트
+	public int replyCount(int seq) {
+		Map<String, String> map = new HashMap<>();
+		map.put("seq", String.valueOf(seq));
+		return mybatis.selectOne("CompanyBoard.replyCount", map);
+	}
 
 }

@@ -66,5 +66,8 @@
             	where par_seq = #{par_seq} and mem_seq = #{mem_seq}
         </select>
         
-
+        <!-- 댓글 개수 -->
+		<select id="replyCount" resultType="int">
+     		select count(*) from com_reply where par_seq = #{seq}
+     	</select>
   </mapper>

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>title here</title>
+<title>동향 게시판</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -90,7 +90,7 @@
 
         /* 컨테이너 ----------------------------------------------------- */
         .container {
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
 
         /* 미니 사이트맵 루트 */
@@ -100,7 +100,7 @@
         }
 
         .root>div {
-            border: 1px solid red;
+            /* border: 1px solid red; */
             float: left;
             margin: 40px 0px 40px 0px;
             padding-right: 10px;
@@ -112,7 +112,7 @@
 
         /* 제목, 글 */
         .board {
-            border: 1px solid red;
+            /* border: 1px solid red; */
             width: 100%;
             padding: 20px 80px 0px 80px;
         }
@@ -120,42 +120,42 @@
         .select_tour {
             width: 100%;
             padding: 10px;
-            border: 1px solid red;
+           	/* border: 1px solid red; */
         }
 
         .select_recruit {
             width: 100%;
             padding: 10px;
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
         
         .select_date {
             width: 100%;
             padding: 10px;
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
 
         .select_gender {
             width: 100%;
             padding: 10px;
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
 
         .title {
             width: 100%;
             padding: 5px;
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
 
-        .title>input {
-            width: 100%;
-            height: 30px;
+        #title{
+            /* width: 100%;
+            height: 30px;  */
         }
 
         .write_con {
             width: 100%;
             padding: 5px;
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
 
         .write_con>textarea {
@@ -166,21 +166,25 @@
 
         /* 버튼 */
         .button {
-            border: 1px solid red;
+            /* border: 1px solid red; */
             text-align: right;
             padding: 20px 5px 0px 0px;
         }
         
+        .button> button{
+        	margin: 2px;
+        }
+        
         /* 좋아요, 댓글란  */
         .like_n_rep{
-        	border: 1px solid red;
+        	/* border: 1px solid red; */
         	width: 100%;
         	height: 30px;
         	text-align: right;
         }
         
         .like_n_rep>div{
-        	border: 1px solid red;
+        	/* border: 1px solid red; */
         	height:30px;
         	width: 55px;
         	text-align:center;
@@ -191,9 +195,66 @@
         #heart{
         	cursor: pointer;
         }
+
+             
+         /* 작성자/조회수칸 */
+        .writer_con{
+            width: 100%;
+            height: 50px;
+        }
+
+        .view_con{
+            width: 100%;
+            height: 30px;
+            color: gray;
+        }
+        
+        /* input style */
+        input:focus {outline:none;}
+        
+        /* 댓글 쓰기창 */
+        .rep_con{
+            width: 100%;
+            height: 70px;
+            padding: 10px;
+            /* border: 1px solid red; */
+        }
+
+        .rep_con > textarea{
+            width: 100%;
+            height: 50px;
+            resize: none;
+        }
+
+        .button2 {
+           /*  border: 1px solid red; */
+            text-align: right;
+            padding: 5px 5px 0px 0px;
+            height: 50px;
+        }
+        
+        /* 댓글 리스트 */
+        .rep_list{ /* border: 1px solid red; */ padding:10px; margin-top:10px; }
+        
+        .each_rep{/*  border: 1px solid red; */ width: 100%; border-bottom: solid 1px rgb(190, 190, 190); padding-bottom:10px; }
+        
+        .rep_top{ /* border: 1px solid red; */ width: 100%; }
+        
+        .rep_txt{ /* border: 1px solid red; */ width: 100%; }
+        
+        .rep_btn{/*  border: 1px solid red; */ width: 100%; text-align:right; padding-right:20px; }
+        
+        .rep_writer{ font-weight: bolder; /* border: 1px solid red; */ width: 50%; display:inline-block; padding-left: 20px ; }
+        
+        .rep_date{ /* border: 1px solid red; */ color: gray; width:  49%; display:inline-block; text-align: right; padding-right: 20px; }
+        
+        .e_rep_con{ width: 100%; padding: 5px 20px 5px 20px; border: none; }
+        
+        .rep_btn > button {margin: 2px;}
     </style>
     
 </head>
+           
 <body>
 	<div class="banner">
         <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
@@ -203,17 +264,36 @@
     
     <div class="container">
         <div class="root">
-            <div class="home"><a href=""><i class="fas fa-home"></i></a></div>
+            <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
-            <div class="community"><a href="">커뮤니티</a></div>
+            <div class="community"><a href="/companyboard/list?cpage=1">커뮤니티</a></div>
             <div> > </div>
-            <div class="partyboard"><a href="">동행게시판</a></div>
+            <div class="partyboard"><a href="/companyboard/list?cpage=1">동행게시판</a></div>
         </div>
     
         <form action="/companyboard/modify" method="post" id="frmDetail">
             <div class="board">
             	<input type=hidden value="${dto.seq}" name=seq > <!-- 글 번호에 맞춰 불러오기 위한 꼼수 -->
-                <div class="select_tour">여행지 :
+            	
+            	<div class="title">
+                    <span style="width: 20%;">
+                        <h3 style="color: rgb(56, 181, 174); font-weight: bold; display: inline; padding: 5px;">${dto.tour}</h3> 
+                        <h3 style="display: inline; color: rgb(153, 153, 153); padding: 5px;">|</h3>
+                    </span>
+                    <span style="width: 80%;">
+                        <input type=text id=title name=title readonly value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; border: none; width: 90%;">
+                    </span>
+                </div>
+                <div class="writer_con">
+                    <div style="line-height: 50px; padding-left: 100px; padding-top: 10px;">작성자</div>
+                </div>
+                <div class="view_con">
+                    <div style="line-height: 30px; padding-left: 100px;">조회수 ${dto.view_count}</div>
+                </div>
+            	
+            	<hr style="margin:20px 0px 30px 0px;">
+ 
+                <div class="select_tour"><span style="font-weight: bold;">여행지 : </span>
                     <input type=text id=tourInput readonly value="${dto.tour }" style="border:none;">
                		<select id="tourSelect" name="tour" style="display:none">
                         <option value="서울">서울</option>
@@ -236,7 +316,7 @@
                     </select>              
                 </div>
     
-                <div class="select_recruit">모집 인원 :
+                <div class="select_recruit" ><span style="font-weight: bold;">모집 인원 : </span>
                     <input type=text id=recruitInput readonly value="${dto.recruit }" style="border:none;">
                 	<select id="recruitSelect" name="recruit" style="display:none">
                         <option value="1">1</option>
@@ -249,22 +329,17 @@
                 </div>
     
                 <div class="select_date">
-                     여행 기간 :
+                    <span style="font-weight: bold;">여행 기간 : </span>
                     <input type="text" id="startDateBefore" readonly value="${dto.start_date }" autocomplete='off' style="border:none; width:100px; text-align:center;"/> <span id="datetxt1"> ~ </span>
                     <input type="text" id="endDateBefore" readonly value="${dto.end_date }" autocomplete='off' style="border:none; width:100px; text-align:center;"/>
                     <input type="text" id="startDateAfter" name="start_date" readonly value="${dto.start_date }" style="display: none; width:100px; text-align:center;" autocomplete='off'/> <span style="display:none" id="datetxt2"> ~ </span>
                     <input type="text" id="endDateAfter" name="end_date" readonly value="${dto.end_date }" style="display: none; width:100px; text-align:center;" autocomplete='off'/>
                 </div>
     
-                <div class="select_gender">성별 :
+                <div class="select_gender"><span style="font-weight: bold;">성별 : </span>
                     <input type=text id=genderInput readonly value="${dto.gender }" style="border:none;">
                 	<input type="radio" id="manRadio" name="gender" value="남자" style="display:none"><p style="display:none" id="mantxt">남자</p>
                     <input type="radio" id="womanRadio" name="gender" value="여자" style="display:none"><p style="display:none" id="womantxt">여자</p>
-                </div>
-    
-                <div class="title">
-                    <input type=hidden value="${dto.seq}" name=seq>
-                    <input type=text id=title name=title readonly value="${dto.title }">
                 </div>
     
                 <div class="write_con">
@@ -272,24 +347,81 @@
                 </div>
     
                 <div class="button">
-                    <button type=button id=back>목록</button>
-                    <button type=button id=modify>수정</button>
-                    <button type=button id=delete>삭제</button>
-                    <button type=button id=recruitEnd>모집마감</button>
-                    <button type=button id=modOk style="display: none;">수정완료</button>
-                    <button type=button id=modCancel style="display: none;">취소</button>
+                	<button type=button id=back class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
+                	<button type=button id=modify class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">수정</span></button>
+                	<button type=button id=delete class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">삭제</span></button>
+                	<button type=button id=recruitEnd class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">모집마감</span></button>
+                	<button type=button id=modOk class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정완료</span></button>
+                	<button type=button id=modCancel class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">취소</span></button>
                 </div>
                 
                 <div class="like_n_rep">
                 	<div id=like_icon>
                 		<a class="heart">
-           					<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count">${dto.rec_count}</span>
+           					<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${dto.rec_count}</span>
        					</a>
                 	</div>
-                	<div id=rep_icon></div>
+                	<div id=rep_icon>
+                		<i class="far fa-comment-dots" style="color: black"></i><span id="rep_count" name="rep_count"> ${dto.rep_count}</span>
+                	</div>
                 </div>
-            </div>
-        </form>
+         	</form> 
+               	<form action="/comreply/reply" method="post" id="frmReply" enctype="multipart/form-data">
+					<input type=hidden value="${dto.seq}" name=rseq>
+					<div class="rep_con">
+                    	<textarea id=rep_con name=reply placeholder=" 댓글을 입력해주세요" ></textarea>
+                	</div>
+                	<div class="button2">
+                    	<button type="submit"  id="rep_write" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 작성</span></button>
+                	</div>
+                </form> 
+                <c:forEach var="repl" items="${rep_list }">
+                	<div class="rep_list">
+                    	<div class="each_rep">
+                        	<div class="rep_top">
+                        		<input type=hidden value="${repl.seq}" name=seq>
+            					<input type=hidden value="${repl.par_seq}" name=par_seq>
+                            	<span class="rep_writer">
+                                	${repl.mem_seq }
+                            	</span>
+                            	<span class="rep_date" > 
+                            		${repl.writen_date }
+                            	</span>
+                        	</div>
+                        	<div class="rep_txt">
+                            	<input type="text" id="e_rep_con${repl.seq }" class="e_rep_con"  name="contents" value=${repl.contents }  readonly>
+                        	</div>
+                        	<div class="rep_btn">
+                            	<button type=button id="rep_del${repl.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 삭제</span></button>
+                            	<button type=button id="rep_mod${repl.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 수정</span></button>
+                        		<button type=button id="rep_modok${repl.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 완료</span></button>
+                            	<button type=button id="rep_modcancel${repl.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 취소</span></button>
+                        	</div>
+                    	</div>
+                	</div>
+                </c:forEach>
+                
+                <%-- <form action="/comreply/modify" method="post" id="frmRpMod" enctype="multipart/form-data">
+        			<div class="reply_list">
+            			<hr>
+            			<div class="reply_title">
+           					<input type=hidden value="${rp.seq}" name=seq>
+            				<input type=hidden value="${rp.par_seq}" name=par_seq>
+                			<div class="rp_id">${rp.mem_seq }</div>
+                			<div class="rp_time" name="writen_date">${rp.writen_time }</div>
+            			</div>
+            			<br>            
+            			<div class="reply_contents " style="text-align: right;">
+                			<div class="rp_content"><input type=text value="${rp.contents }" class="rp_contents" id="rp_contents${rp.seq }" name="contents" readonly></div>
+                			<div class="rp_btns">
+                    			<button type=button class="rp_mod_btn" id="rp_mod_btn${rp.seq }">fix</button>
+                    			<button type=button class="rp_del_btn" id="rp_del_btn${rp.seq }" style="color: red;"><b>del</b></button>
+                    			<button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none;">mod</button>  
+                    			<button type=button class="rp_cancle_btn" id="rp_cancle_btn${rp.seq }" style="color: red; display: none;"><b>can</b></button>                                       
+                			</div>                
+           		 		</div><br>
+        			</div>
+        		</form> --%>
     </div>
     
     <!-- 목록으로 / 삭제하기 -->
@@ -299,7 +431,7 @@
 	
 	
 		$j360("#back").on("click", function(){
-			history.back();
+			location.href="/companyboard/list?cpage=1";
 		})
 		
 		$j360("#delete").on("click", function(){
@@ -348,6 +480,7 @@
 			$("#mantxt").css("display", "inline");
 			$("#womantxt").css("display", "inline");
 			$("#title").removeAttr("readonly");
+			$("#title").css("border", "1px solid gray");
 			$("#contents").removeAttr("readonly");
 			
 			
@@ -482,17 +615,26 @@
                 
                 if(heart==1) {
                     $('#heart').prop("src","/images/like.png");
-                    console.log("heart값이 1일때 dto의 추천수 : " + rec_count_no);
-                    $('#rec_count').html(data.rec_count_no);
+                   /*  console.log("heart값이 1일때 dto의 추천수 : " + rec_count_no); */
+                    $('#rec_count').html(" " + data.rec_count_no);
                 }
                 else{
                     $('#heart').prop("src","/images/dislike.png");
-                    console.log("heart값이 0일때 dto의 추천수 : " + rec_count_no);
-                    $('#rec_count').html(data.rec_count_no);
+                    /* console.log("heart값이 0일때 dto의 추천수 : " + rec_count_no); */
+                    $('#rec_count').html(" " + data.rec_count_no);
                 }
             }
         });
     });
     </script>
+    
+    <!-- 댓글 -->
+	<script>
+	 	$("#rep_write").on("click", function() {
+			if (confirm("이대로 작성하시겠습니까?")) {
+				$("#frmReply").submit();
+			}
+		});
+	</script>    
 </body>
 </html>

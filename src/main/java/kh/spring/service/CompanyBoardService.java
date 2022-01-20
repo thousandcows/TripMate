@@ -131,4 +131,9 @@ public class CompanyBoardService {
 	public int delete2(int seq) {
 		return cdao.delete2(seq);
 	}
+	
+	// 댓글 개수
+	public int replyCount(int seq) {
+		return cdao.replyCount(seq);
+	}
 }
