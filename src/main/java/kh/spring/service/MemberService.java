@@ -87,10 +87,11 @@ public class MemberService {
 			return memberDao.myInfoChangeOkNoFile(dto);
 		} else {
 			if(!file.isEmpty()) {
-				System.out.println("파일 리얼패스 : " + realPath);
 				String existingPhotoStr = memberDao.existingPhotoStr(dto.getSeq());
-				File deleteFile = new File(realPath + "\\" + existingPhotoStr);
-				deleteFile.delete(); // 기존 파일삭제
+				if(!existingPhotoStr.contains("default_profile.png")) {
+					File deleteFile = new File(realPath + "\\" + existingPhotoStr);
+					deleteFile.delete(); // 기존 파일삭제
+				}
 				File realPathFile = new File(realPath);
 				if(!realPathFile.exists()) {
 					realPathFile.mkdir();
