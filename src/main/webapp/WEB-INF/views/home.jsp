@@ -4,7 +4,7 @@
     <html>
     <head>
     <title>Trip Mate</title>
-    	<jsp:include page="base/header.jsp"></jsp:include>
+    	  <jsp:include page="../base/header.jsp"></jsp:include>
     
     </head>
     

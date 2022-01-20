@@ -601,7 +601,6 @@ a:active {
 				placeholder : '최대 2048자까지 쓸 수 있습니다', //placeholder 설정
 				airMode: true
 			});
-// 			$('#summernote').summernote('disable');
 		});
 	</script>
 
