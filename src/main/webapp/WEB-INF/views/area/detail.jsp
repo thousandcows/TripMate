@@ -243,8 +243,10 @@ ul>li{
 			<div class="col-9">
 				<div class="row">
 					<div class="col">
-						${i.mem_nick }
+						<span class="reply_id" value="${i.mem_seq }">${i.mem_nick }</span>
 					</div>
+
+					
 					<div class="col text-end starRate${i.score }">
 					</div>
 				</div>
@@ -295,7 +297,54 @@ ul>li{
 	</div>
 
 
+
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered" role="document">
+			    <div class="modal-content">
+			        <div class="modal-header">
+			          <h4 class="modal-title text-center">프로필 조회</h4>
+			        </div>
+			      <div class="modal-body">
+			        <span id="profileNick"></span>
+			        <span id="profileProference"></span>
+			        <span id="profileGender"></span>
+			        <span id="profilePhone"></span>
+			        <span id="profileAge"></span>
+			        <span id="profileViolation"></span>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" id="profileMsg" class="btn btn-primary">쪽지보내기</button>
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
 	<script>
+	
+	$(document).on("click",".reply_id",function(){
+		let mem_seq = $(this).attr("value");
+		$.ajax({
+			url:"/tmp/showMember?mem_seq="+mem_seq,
+    		dataType:"json",
+    		success:function(result){
+    			$('#myModal').modal('toggle');
+    			$("#profileNick").text(result.nick);
+    			$("#profilepreference").text(result.preference);
+    			$("#profileGender").text(result.gender);
+    			if(result.ph_open=='O'){
+    				$("#profilePhone").text(result.phone);    				
+    			}
+    			$("#profileAge").text(result.age);
+    			$("#profileViolation").text(result.violation);
+    			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+    		}
+			
+		})
+	})
+	
+	
 	let loginSeq = 0;
 	<c:if test="${!empty loginSeq}">
 		loginSeq = ${loginSeq};

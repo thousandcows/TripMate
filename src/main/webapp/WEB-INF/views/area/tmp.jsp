@@ -106,28 +106,25 @@
 	</script>
 	<br>
 	${pageNo }현재페이지<br>
-	
+	<div class="row">
 	<c:if test="${list.size() > 0}">
-	<c:forEach var="item" items="${list }">
-		<div class="detail" id="${item.contentid }">
-		${item.title }<br>
-		${item.contenttypeid }<br>
-		${item.addr1 }<br>
-		${item.areacode}<br>
-		${item.cat3}<br>
-		${item.cat1 }<br>
-		${item.readcount }<br>
-		<c:if test="${item.firstimage ne null }">
-			<img src="${item.firstimage}"><br>
-		</c:if>
+		<c:forEach var="item" items="${list }">
+			<div id="${item.contentid }" class="detail col-3 align-items-center justify-content-center text-center">
+				<c:if test="${item.firstimage ne null }">
+					<img src="${item.firstimage}" style="width: 200px; height: 200px;">
+				</c:if>
+				${item.title }<br> ${item.contenttypeid }<br> ${item.addr1 }<br>
+				${item.areacode}<br> ${item.cat3}<br> ${item.cat1 }<br>
+				${item.readcount }<br>
+
+				
+			</div>
+		</c:forEach>
 		</div>
-		
-		<p></p> 
-	</c:forEach>
 	</c:if>
 	<script>
-		$(".detail").on("click",function(){
-			location.href = "/area/detail?num="+this.id;
+		$(".detail").on("click", function() {
+			location.href = "/area/detail?num=" + this.id;
 		})
 	</script>
 </body>
