@@ -169,7 +169,7 @@
 
           <!-- Brand -->
           <a class="navbar-brand d-none d-lg-block order-lg-1" href="/">
-            <img width="142" src="trip2.png" alt="TripMate" />
+            <!--<img width="142" src="trip2.png" alt="TripMate" />-->
           </a>
 
 

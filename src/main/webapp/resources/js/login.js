@@ -132,8 +132,8 @@ if (eventCheck != null) {
     let signupEmailValue = document.querySelector("#signupEmail").value
     if (emailRegex.test(signupEmailValue)) {
       $.ajax({
-        type: "post",
         url: "/member/emailCheck",
+        async: false,
         data: { email: signupEmailValue }
       }).done(function (res) {
         if (res == "1") {
@@ -157,6 +157,7 @@ if (eventCheck != null) {
     if (nickNameRegex.test(signupNickNameValue)) {
       $.ajax({
         url: "/member/nickNameCheck",
+        async: false,
         data: { nickName: signupNickNameValue }
       }).done(function (res) {
         if (res == "1") {
@@ -184,6 +185,7 @@ if (eventCheck != null) {
     if (phoneRegex.test(phone4)) {
       $.ajax({
         url: "/member/phoneCheck",
+        async: false,
         data: { phone: phone4 }
       }).done(function (res) {
         if (res == "1") {
@@ -238,10 +240,10 @@ if (eventCheck != null) {
       alert("입력된 비밀번호가 다릅니다.");
       return false;
     }
+
     if(confirm("해당정보로 가입하시겠습니까?")){
       document.querySelector("#signupForm").submit();
     }
-    return false;
   });
 
   // 일반 회원가입 끝
