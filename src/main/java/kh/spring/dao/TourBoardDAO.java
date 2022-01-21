@@ -73,7 +73,6 @@ public class TourBoardDAO {
 		Map<String, String> map = new HashMap<>();
 		map.put("seq", String.valueOf(seq));
 		return mybatis.selectOne("TourBoard.relyReplyCount", map);
-	}
-	
+	}	
 
 }

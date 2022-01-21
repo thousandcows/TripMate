@@ -429,13 +429,12 @@ a:active {
 			location.href = "/tourreply/redelete?idseq="+id+"&writeseq=${dto.seq}";
 		})
 	</script>
-	
+
 	<script>
 		$(".re_modOk_btn").on("click", function(){
 // 			re_modOk_btn${re.seq}${rp.seq }
 			let id = this.id.substr(12);
-			let rp = $(this).attr(rpseq);
-			console.log("id : rp = " + id + " : " + rp);
+			
 			let recontent = $("#recontent${re.seq }"+id).val();
 			
 			location.href = "/tourreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;
@@ -455,9 +454,9 @@ a:active {
 			let mod_id = $(this).attr("rpseq");
 			
 			console.log("mod_btn 눌렀을 때 id : mod_id = " + id + " : " + mod_id);
-			$("#re_mod_btn"+id+mod_id).css("display","none");
+			$("#re_mod_btn"+id).css("display","none");
 			$("#re_del_btn"+id).css("display","none");
-			$("#re_modOk_btn"+id+mod_id).css("display","inline");
+			$("#re_modOk_btn"+id).css("display","inline");
 			$("#re_cancle_btn"+id).css("display","inline");	
 			$("#recontent"+id).removeAttr("readonly");
 		})
@@ -491,7 +490,6 @@ a:active {
 			//${rp.seq }
 			let id = this.id.substr(10);
 
-			rpContents = $("#contents" + id).val();
 			$("#rp_mod_btn" + id).css("display", "none");
 			$("#rp_del_btn" + id).css("display", "none");
 			$("#rp_cancle_btn" + id).css("display", "inline");

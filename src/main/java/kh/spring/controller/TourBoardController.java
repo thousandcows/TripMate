@@ -130,6 +130,7 @@ public class TourBoardController {
 	
 	@RequestMapping("detail")
 	public String detail(int seq, Model model) {
+		
         TourBoardDTO dto = bservice.selectBySeq(seq);
         
 //        System.out.println("번호 : " +seq);

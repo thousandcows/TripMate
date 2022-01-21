@@ -21,6 +21,7 @@ public class TourReplyController {
 	
 	@RequestMapping("reply")
 	public String reply(int rseq, String reply) {
+		
 		int seq = rseq;
 		rservice.reply(seq, reply);
 		return "redirect:/tourboard/detail?seq="+seq;
@@ -29,8 +30,7 @@ public class TourReplyController {
 	@RequestMapping("modify")
 	public String modify(TourReplyDTO rdto) {
 		
-		int result = rservice.modify(rdto);
-		
+		int result = rservice.modify(rdto);		
 		int bseq = rdto.getPar_seq();
 		return "redirect:/tourboard/detail?seq="+bseq;
 	}

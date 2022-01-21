@@ -23,7 +23,6 @@ public class TourReplyDAO {
 		Map<String, String> map = new HashMap<>();
 		map.put("rseq", String.valueOf(rseq));
 		map.put("reply", reply);
-
 		return mybatis.insert("TourReply.insert", map);
 	}
 
@@ -52,7 +51,7 @@ public class TourReplyDAO {
 	}
 	
 	public int delete(int seq) {
-		System.out.println("매퍼에서 seq : " + seq);
+		
 		mybatis.delete("TourReply.deleteReply", seq);		
 		return mybatis.delete("TourReply.delete", seq);
 	}
@@ -92,4 +91,5 @@ public class TourReplyDAO {
 		System.out.println(idseq);
 		return mybatis.delete("TourReply.redelete", map);
 	}
+	
 }
