@@ -39,6 +39,7 @@ import kh.spring.dto.KakaoToken;
 import kh.spring.dto.MemberDTO;
 import kh.spring.service.AreaService;
 import kh.spring.service.MemberService;
+import kh.spring.statics.Statics;
 
 @Controller
 @RequestMapping("/member/")
@@ -302,35 +303,34 @@ public class MemberController {
 		return "https://kauth.kakao.com/oauth/logout?client_id=b7b0a7f6722957ddef971b2ff4061bd7&logout_redirect_uri=http://localhost";
 	}
 	
+	// 상대방 프로필 조회
 	@ResponseBody
 	@RequestMapping("showMember")
 	public String showMember(int mem_seq) {
 		return memberService.showMember(mem_seq);
 	}
 	
-	///////////////// 찜목록 시작///////////////
+	// 찜목록 불러오기
 	@RequestMapping("saveList")
 	public String saveList(Model model) throws Exception {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
 		String filePath = "\\images" + "\\" + dto.getPhoto();
 		dto.setPhoto(filePath); // 프로필 사진 설정
-		
+		System.out.println("여기 옴?");
 		// 찜목록 조회 갯수
-		int start = 1;
-		int end = 7;
 		List<AreaDTO> adto = new ArrayList<>();
-		List<Integer> mySaveListSeq = memberService.mySaveListSeq(loginSeq, start, end);
+		List<Integer> mySaveListSeq = memberService.mySaveListSeq(loginSeq, Statics.SAVE_LIST_START, Statics.SAVE_LIST_END);
+		List<Integer> isMySaveListMore = memberService.mySaveListSeq(loginSeq, 8, 8);
+		System.out.println("찜목록 더있음? : " + isMySaveListMore);
+		System.out.println("seq들 : " + mySaveListSeq);
 		List<String> savedListRate = new ArrayList<>();
 		for(int saveSeq : mySaveListSeq) {
 			adto.add(areaService.detailBuild(saveSeq));
 			String rate = memberService.savedAreaGrade(saveSeq);
-			if(rate == null) {
-				savedListRate.add(rate);
-			} else {
-				savedListRate.add(rate.substring(0, 3));
-			}
+			savedListRate.add(rate);
 		}
+		model.addAttribute("isMySaveListMore", isMySaveListMore);
 		model.addAttribute("savedListRate", savedListRate);
 		model.addAttribute("mySaveListSeq", mySaveListSeq);
 		model.addAttribute("saveList", adto);
@@ -346,6 +346,7 @@ public class MemberController {
 		return memberService.moreSaving(loginSeq, btn);
 	}
 	
+	// 에러는 여기로
 	@ExceptionHandler
 	public String ExceptionHandler(Exception e) {
 		e.printStackTrace();

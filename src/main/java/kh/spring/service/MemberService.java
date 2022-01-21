@@ -16,6 +16,7 @@ import kh.spring.dao.MemberDAO;
 import kh.spring.dto.AreaDTO;
 import kh.spring.dto.AreaSavedDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.statics.Statics;
 import kh.spring.utils.EncryptUtils;
 
 @Service
@@ -151,7 +152,7 @@ public class MemberService {
 	public String moreSaving(int loginSeq, int btn) throws Exception{
 		Gson gson = new Gson();
 		int start = btn;
-		int end = start + 7;
+		int end = start + Statics.SAVE_LIST_MORE;
 		List<Integer>mySaveListSeq = mySaveListSeq(loginSeq, start, end);
 		List<AreaSavedDTO> dto = new ArrayList<>();
 		for(int saveSeq : mySaveListSeq) {
@@ -161,7 +162,7 @@ public class MemberService {
 			if(rate == null) {
 				adto.setSavedListRate("-");
 			} else {
-				adto.setSavedListRate(rate.substring(0, 3));
+				adto.setSavedListRate(rate);
 			}
 			tdto = aService.detailBuild(saveSeq);
 			adto.setSeq(saveSeq);

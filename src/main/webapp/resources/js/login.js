@@ -299,7 +299,6 @@ if (eventCheck != null) {
         document.querySelector(".findPwEmailCheckConfirm").innerHTML = "";
         verificationCode = "";
         verificationCode = res;
-        console.log(verificationCode);
       }
     })
   });
@@ -325,7 +324,6 @@ if (eventCheck != null) {
       document.querySelector(".changePwConfirm").innerHTML = "공백 없는 8~16자로 입력해주세요.";
       return false;
     }
-    // 컨펌창 하나 띄워서 확인
     if (confirm("변경하시겠습니까?")) {
       alert("변경되었습니다.");
       document.querySelector("#changePwForm").submit();
