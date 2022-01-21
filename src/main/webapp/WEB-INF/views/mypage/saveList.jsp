@@ -236,6 +236,7 @@
       <script>
         'use strict'
         let btn = 1;
+        let isMore;
         $("#seeMore").on("click", function () {
           btn += 7;
           $.ajax({
@@ -283,8 +284,9 @@
                   </div>
                 </div>`
               )
+              isMore = result[i].isMore;
             }
-            if (result.length < 7) {
+            if (isMore == 0) {
               $("#seeMoreDel").empty();
             }
           })

@@ -35,6 +35,8 @@ public class MemberService {
 	@Autowired
 	AreaService aService;
 
+	Gson gson = new Gson();
+
 	// 이메일 체크
 	public int emailCheck(String email) {
 		return memberDao.emailCheck(email);
@@ -67,7 +69,7 @@ public class MemberService {
 		String encryptPw = EncryptUtils.getSHA512(pw);
 		return memberDao.normalLoginSelectAll(emailID, encryptPw);
 	}
-	
+
 	// SMTP 서버 정보 설정
 	public Properties smtpSetting() {
 		Properties props = new Properties();
@@ -85,7 +87,6 @@ public class MemberService {
 		return memberDao.findPwChange(findPwTargetEmail, encryptPw);
 	}
 
-	///// 카카오 로그인 /////
 	// 카카오 사용자 가입여부 확인
 	public int kakaoLoginLookup(int kakaoLoginId) {
 		return memberDao.kakaoLoginLookup(kakaoLoginId);
@@ -100,7 +101,6 @@ public class MemberService {
 	public int kakaoSignup(String kakaoLoginEmail, String kakaoLoginNick, int kakaoLoginId) {
 		return memberDao.kakaoSignup(kakaoLoginEmail, kakaoLoginNick, kakaoLoginId);
 	}
-	///// 카카오 로그인 끝 /////
 
 	// 마이페이지 정보 빼오기
 	public MemberDTO myInfoSelectAll(int loginSeq) {
@@ -153,25 +153,26 @@ public class MemberService {
 	// 상대 회원 조회
 	public String showMember(int mem_seq) {
 		MemberDTO dto = memberDao.myInfoSelectAll(mem_seq);
-		Gson gson = new Gson();
 		dto.setPw("");
 		String result = gson.toJson(dto);
 		return result;
 	}
 
-	///////// 찜목록 시작 ///////////
+	// 찜한 여행지 seq 불러오기
 	public List<Integer> mySaveListSeq(int loginSeq, int start, int end) {
 		return memberDao.mySaveListSeq(loginSeq, start, end);
 	}
 
+	// 여행지 평점 불러오기
 	public String savedAreaGrade(int seq) {
 		return memberDao.savedAreaGrade(seq);
 	}
 
+	// 찜목록 더보기
 	public String moreSaving(int loginSeq, int btn) throws Exception {
-		Gson gson = new Gson();
 		int start = btn;
 		int end = start + Statics.SAVE_LIST_MORE;
+		List<Integer> isMySaveListMore = mySaveListSeq(loginSeq, end+1, end+1);
 		List<Integer> mySaveListSeq = mySaveListSeq(loginSeq, start, end);
 		List<AreaSavedDTO> dto = new ArrayList<>();
 		for (int saveSeq : mySaveListSeq) {
@@ -187,6 +188,7 @@ public class MemberService {
 			adto.setSeq(saveSeq);
 			adto.setName(tdto.getName());
 			adto.setPhoto(tdto.getPhoto());
+			adto.setIsMore(isMySaveListMore.size());
 			if (tdto.getPhone().equals("null")) {
 				adto.setPhone("등록된 번호가 없습니다.");
 			} else {

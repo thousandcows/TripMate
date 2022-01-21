@@ -47,7 +47,7 @@ public class MemberController {
 
 	@Autowired
 	public MemberService memberService;
-	
+
 	@Autowired
 	public AreaService areaService;
 
@@ -103,26 +103,27 @@ public class MemberController {
 			return "1";
 		}
 	}
-	
+
 	// PW 찾기
 	String findPwTargetEmail = ""; // 찾을 email을 기억
+
 	@ResponseBody
 	@RequestMapping(value = "findPw", produces = "application/text;charset=utf-8")
-	public String pwFindPopup (String emailID) throws AddressException, MessagingException {
+	public String pwFindPopup(String emailID) throws AddressException, MessagingException {
 		int result = memberService.emailCheck(emailID);
 		if (result == 0) {
 			return "0";
 		}
 		// 이메일 발송 시작
 		findPwTargetEmail = emailID; // 받는사람의 이메일
-		
+
 		// SMTP 서버정보랑 사용자등록해서 Session 인스턴스 생성
 		Session mailSession = Session.getDefaultInstance(memberService.smtpSetting(), new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(Statics.FIND_PW_CALLER_EMAIL, Statics.FIND_PW_CALLER_PW);
 			}
 		});
-		
+
 		// Message 클래스로 수신자랑 내용 제목의 메세지 전달
 		MimeMessage message = new MimeMessage(mailSession);
 		message.setFrom(new InternetAddress(Statics.FIND_PW_CALLER_EMAIL));
@@ -130,18 +131,18 @@ public class MemberController {
 		message.setSubject("TripMate PW찾기 인증번호입니다.");
 		int verificationCode = (int) (Math.random() * (9999 - 1000)) + 1000; // 얘때문에 애매하네
 		message.setText("TripMate PW찾기 인증번호는 : " + verificationCode + " 입니다.");
-		
+
 		Transport.send(message);
 		return String.valueOf(verificationCode);
 	}
-	
+
 	// PW찾기 후 비밀번호 변경
 	@RequestMapping("findPwChange")
 	public String findPwChange(String pw) {
 		memberService.findPwChange(findPwTargetEmail, pw);
 		return "redirect:/";
 	}
-	
+
 	// 카카오 코드생성
 	@ResponseBody
 	@RequestMapping("getKakaoAuthUrl")
@@ -164,7 +165,7 @@ public class MemberController {
 		Gson gson = new Gson();
 		// POST방식으로 key=value 데이터를 요청(카카오쪽으로)
 		RestTemplate rt = new RestTemplate(); // 곧 지원중지될 API라 WebClient이걸 공부해야될듯
-		
+
 		// HttpHeader 오브젝트 생성
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); // 내가 보낼 데이터 타입이 key=value값이다
@@ -214,7 +215,7 @@ public class MemberController {
 		String kakaoLoginNick = kProfile.properties.nickname;
 		// 이메일 동의 거부했을 경우 id로 구분해야한다
 		int kakaoLoginId = kProfile.id;
-		
+
 		int kakaoResult = memberService.kakaoLoginLookup(kakaoLoginId);
 		if (kakaoResult == 1) { // 가입내역이 있다면 정보를 빼서 세션에 담고
 			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginId);
@@ -240,7 +241,7 @@ public class MemberController {
 		return "redirect:/";
 		// 나중에 현재페이지 로그인&로그아웃으로 변경할것
 	}
-	
+
 	// 마이페이지 이동시 정보 빼오기
 	@RequestMapping("mypageGo")
 	public String mypageGo(Model model) {
@@ -251,26 +252,26 @@ public class MemberController {
 		model.addAttribute("loginInfo", dto);
 		return "mypage/myInfo";
 	}
-	
+
 	// 일반회원 정보수정Ok
 	@RequestMapping("myInfoChangeOk")
 	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
-		dto.setSeq((int)session.getAttribute("loginSeq"));
-		String realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
+		dto.setSeq((int) session.getAttribute("loginSeq"));
+		String realPath = session.getServletContext().getRealPath("") + "\\resources\\images";
 		System.out.println("리얼패스 : " + realPath);
 		memberService.myInfoChangeOk(dto, file, realPath);
 		session.setAttribute("loginNick", dto.getNick());
 		session.setAttribute("loginGender", dto.getGender());
 		return "redirect:/member/mypageGo";
 	}
-	
+
 	// 비밀번호 수정
 	@RequestMapping("myInfoPwChange")
 	public String myInfoPwChange(String pw) {
 		memberService.myInfoPwChange(pw);
 		return "redirect:/member/mypageGo";
 	}
-	
+
 	// 회원탈퇴
 	@RequestMapping("deleteAccount")
 	public String deleteAccount(int seq) {
@@ -278,23 +279,24 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
+
 	// 카카오 로그아웃
 	@ResponseBody
 	@RequestMapping("kakaoLogOut")
 	public String kakaoLogOut(int seq) {
 		session.invalidate();
+		// 여기도 추후 AWS IP로 변경
 		return "https://kauth.kakao.com/oauth/logout?client_id=b7b0a7f6722957ddef971b2ff4061bd7&logout_redirect_uri=http://localhost";
 	}
-	
+
 	// 상대방 프로필 조회
 	@ResponseBody
 	@RequestMapping("showMember")
 	public String showMember(int mem_seq) {
 		return memberService.showMember(mem_seq);
 	}
-	
-	// 찜목록 불러오기
+
+	// 찜목록 처음불러오기
 	@RequestMapping("saveList")
 	public String saveList(Model model) throws Exception {
 		int loginSeq = (int) session.getAttribute("loginSeq");
@@ -303,10 +305,12 @@ public class MemberController {
 		dto.setPhoto(filePath); // 프로필 사진 설정
 		// 찜목록 조회 갯수
 		List<AreaDTO> adto = new ArrayList<>();
-		List<Integer> mySaveListSeq = memberService.mySaveListSeq(loginSeq, Statics.SAVE_LIST_START, Statics.SAVE_LIST_END);
-		List<Integer> isMySaveListMore = memberService.mySaveListSeq(loginSeq, Statics.IS_MY_SAVE_LIST_MORE, Statics.IS_MY_SAVE_LIST_MORE);
+		List<Integer> mySaveListSeq = memberService.mySaveListSeq(loginSeq, Statics.SAVE_LIST_START,
+				Statics.SAVE_LIST_END);
+		List<Integer> isMySaveListMore = memberService.mySaveListSeq(loginSeq, Statics.IS_MY_SAVE_LIST_MORE,
+				Statics.IS_MY_SAVE_LIST_MORE);
 		List<String> savedListRate = new ArrayList<>();
-		for(int saveSeq : mySaveListSeq) {
+		for (int saveSeq : mySaveListSeq) {
 			adto.add(areaService.detailBuild(saveSeq));
 			String rate = memberService.savedAreaGrade(saveSeq);
 			savedListRate.add(rate);
@@ -318,15 +322,15 @@ public class MemberController {
 		model.addAttribute("loginInfo", dto);
 		return "mypage/saveList";
 	}
-	
-	// 찜목록 더보기 버튼 누를시 7개씩 추가
+
+	// 찜목록 더보기
 	@ResponseBody
-	@RequestMapping(value="moreSaving", produces = "application/text;charset=utf-8")
+	@RequestMapping(value = "moreSaving", produces = "application/text;charset=utf-8")
 	public String moreSaving(int btn) throws Exception {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		return memberService.moreSaving(loginSeq, btn);
 	}
-	
+
 	// 에러는 여기로
 	@ExceptionHandler
 	public String ExceptionHandler(Exception e) {

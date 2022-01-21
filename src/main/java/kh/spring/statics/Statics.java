@@ -10,7 +10,7 @@ public class Statics {
 	
 	public static int SAVE_LIST_START = 1;
 	public static int SAVE_LIST_END = 7;
-	public static int SAVE_LIST_MORE = 7;
+	public static int SAVE_LIST_MORE = 6;
 	public static int IS_MY_SAVE_LIST_MORE = 8;
 	public static String FIND_PW_CALLER_EMAIL = "wlsrb2611@naver.com";
 	public static String FIND_PW_CALLER_PW = "";
