@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ComReply"> 
+  	<insert id="insert">
+		insert into com_reply values(comr_seq.nextval, #{rseq}, 1, #{reply}, default)
+	</insert>
+	
+	<select id="selectAll" resultType="kh.spring.dto.ComReplyDTO">
+		select r.seq, r.par_seq, r.mem_seq, r.contents, r.writen_date from com_reply r join company_board b on(r.par_seq=b.seq) order by r.writen_date desc
+	</select>
+	
+	<update id="modify">
+		update com_reply set contents=#{contents} where seq=#{seq}
+		
+	</update>
+
+	<delete id="delete">
+		delete from com_reply where seq=#{seq}		
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from com_reply where par_seq=#{seq}		
+	</delete>
+	
+	<insert id="reinsert">
+		insert into com_reply_reply values(comrr_seq.nextval, #{rpseq}, 1, #{recontent}, default)
+	</insert>
+	
+	<select id="selectReAll" resultType="kh.spring.dto.ComReplyReplyDTO">
+		select p.seq, p.par_seq, p.mem_seq, p.contents, p.writen_date from company_board b join com_reply r on(b.seq=r.par_seq) join com_reply_reply p on(r.seq=p.par_seq) order by p.writen_date desc
+	</select>
+	
+	<update id="remodify">
+		update com_reply_reply set contents=#{recontent} where seq=#{idseq}
+	</update>
+	
+	<delete id="redelete">	
+		delete from com_reply_reply where seq = #{idseq}
+	</delete>
+	
+	<delete id="deleteReply">
+		delete from com_reply_reply where par_seq=#{seq}
+	</delete>
+  </mapper>
