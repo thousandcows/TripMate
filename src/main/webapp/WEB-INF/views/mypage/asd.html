@@ -286,10 +286,8 @@
           $.ajax({
             url: "/area/save?area_seq="+$HEART.prev().val()
           }).done(function(res){
-            
+            $HEART.parents(".delParent").remove();
           })
-          console.log($HEART.prev().val());
-          // $HEART.parents(".delParent").remove();
         })
 
       </script>
