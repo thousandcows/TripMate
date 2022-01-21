@@ -286,7 +286,9 @@
            					<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count">${dto.rec_count}</span>
        					</a>
                 	</div>
-                	<div id=rep_icon></div>
+                	<div id=rep_icon>
+                		<i class="far fa-comment-dots" style="color: black"></i><span id="rep_count" name="rep_count"> ${dto.rep_count}</span>
+                	</div>
                 </div>
             </div>
         </form>
@@ -381,7 +383,6 @@
 				$("#frmDetail").submit(); // 수정완료시 submit
 			}
 		})
-		
 		
 		$("#modCancel").on("click", function(){
 			if(confirm("정말 취소하시겠습니까?")){

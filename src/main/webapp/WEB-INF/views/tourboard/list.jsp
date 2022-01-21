@@ -129,20 +129,23 @@
             <div> > </div>
             <div class="tourboard"><a href="/tourboard/list?cpage=1">여행지 게시판</a></div>
         </div>
+        <form action="/tourboard/list?cpage=1" method="post" id="frmSearch">
+        <input type=hidden name="cpage" value=1>
         <div class="searchbar">
-            <select>
-                <option value="search_title">제목</option>
-                <option value="search_writer">작성자</option>
+            <select name="searchOption">            	
+                <option name="searchTitle" value="search_title">제목</option>
+                <option name="searchId" value="search_writer">작성자</option>
             </select>
-            <input type=text list="trip" placeholder="input search content">
+            <input type=text list="trip" placeholder="input search content" id="searchText" name="searchText">
             	<datalist id="trip">
             		<option value="여행지 추천">
             		<option value="맛집">
             		<option value="명소">
             		<option value="재미있게 다녀오는 방법">
             	</datalist>
-            <input type=button id="search" value="검색">
+            <input type=submit id="search_btn" value="검색">
         </div>
+        </form>
         <div class="board">
             <div class="board_header">
                 <div class="seq" style="width: 10%;">번호</div>
@@ -174,6 +177,20 @@
             </div>
         </div>       
     </div>
+    
+    <script>
+    $("#search_btn").on("click", function(){
+		
+    	if($("#searchText").val()==""){
+    		alert("검색어를 입력해주세요");
+    		return false;
+    	}
+    	if($("#searchOption").val()==""){
+    		alert("검색어를 선택해주세요");
+    		return false;
+    	}
+    })
+    </script>
     
     <script>
     $("#toWrite_btn").on("click", function(){
