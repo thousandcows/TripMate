@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.spring.dto.ComBoardLikeDTO;
+import kh.spring.dto.ComReplyDTO;
+import kh.spring.dto.ComReplyReplyDTO;
 import kh.spring.dto.CompanyBoardDTO;
-import kh.spring.dto.MemberDTO;
+import kh.spring.service.ComReplyService;
 import kh.spring.service.CompanyBoardService;
 import kh.spring.statics.Statics;
 
@@ -28,6 +30,9 @@ public class CompanyBoardController {
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	public ComReplyService crs;
 	
 	@RequestMapping("list")
 	public String list(Model model, HttpServletRequest request) throws Exception {
@@ -75,6 +80,7 @@ public class CompanyBoardController {
 		
 		//int userid = (int) session.getAttribute("loginSeq");
 		
+		// dto, 조회수
 		CompanyBoardDTO dto = cbs.selectBySeq(seq);
 		int result = cbs.addViewCount(seq);
 		model.addAttribute("dto",dto);
@@ -86,6 +92,20 @@ public class CompanyBoardController {
 		int boardlike = cbs.getBoardLike(c_dto);
 		
 		model.addAttribute("heart", boardlike);
+		
+		//댓글+대댓글 갯수
+//		System.out.println("seq : " + seq);
+		int replyCount = cbs.replyCount(seq);
+//		System.out.println("replyCount : " + replyCount);
+		int replyReplyCount = cbs.replyReplyCount(seq);
+//		System.out.println("replyReplyCount : " + replyReplyCount);
+		dto.setRep_count(replyCount+replyReplyCount);
+        List<ComReplyDTO> rep_list = crs.selectAll(seq);
+        List<ComReplyReplyDTO> re_rep_list = crs.selectReAll();
+
+        model.addAttribute("rep_list", rep_list);
+        model.addAttribute("re_rep_list", re_rep_list);
+        
 		
 		return "companyboard/detail";
 	}

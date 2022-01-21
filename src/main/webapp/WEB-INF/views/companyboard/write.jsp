@@ -5,10 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>title here</title>
+<title>동행 게시판</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+<jsp:include page="../base/header.jsp"></jsp:include>
 
 <!-- fontawesome cdn -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
@@ -89,7 +91,7 @@
 
         /* 컨테이너 ----------------------------------------------------- */
         .container {
-            border: 1px solid red;
+           /*  border: 1px solid red; */
         }
 
         /* 미니 사이트맵 루트 */
@@ -99,7 +101,7 @@
         }
 
         .root>div {
-            border: 1px solid red;
+           /*  border: 1px solid red; */
             float: left;
             margin: 40px 0px 40px 0px;
             padding-right: 10px;
@@ -111,7 +113,7 @@
 
         /* 글쓰기 창 */
         .board {
-            border: 1px solid red;
+           /*  border: 1px solid red; */
             width: 100%;
             padding: 20px 80px 0px 80px;
         }
@@ -119,31 +121,31 @@
         .select_tour {
             width: 100%;
             padding: 10px;
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
 
         .select_recruit {
             width: 100%;
             padding: 10px;
-            border: 1px solid red;
+           /*  border: 1px solid red; */
         }
         
         .select_date {
             width: 100%;
             padding: 10px;
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
 
         .select_gender {
             width: 100%;
             padding: 10px;
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
 
         .title {
             width: 100%;
             padding: 5px;
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
 
         .title>input {
@@ -154,7 +156,7 @@
         .write_con {
             width: 100%;
             padding: 5px;
-            border: 1px solid red;
+            /* border: 1px solid red; */
         }
 
         .write_con>textarea {
@@ -165,9 +167,12 @@
 
         /* 버튼 */
         .button {
-            border: 1px solid red;
+            /* border: 1px solid red; */
             text-align: right;
             padding: 20px 5px 0px 0px;
+        }
+        .button> button{
+        	margin: 2px;
         }
     </style>
     
@@ -181,17 +186,17 @@
 
     <div class="container">
         <div class="root">
-            <div class="home"><a href=""><i class="fas fa-home"></i></a></div>
+            <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
-            <div class="community"><a href="">커뮤니티</a></div>
+            <div class="community"><a href="/companyboard/list?cpage=1">커뮤니티</a></div>
             <div> > </div>
-            <div class="partyboard"><a href="">동행게시판</a></div>
+            <div class="partyboard"><a href="/companyboard/list?cpage=1">동행게시판</a></div>
         </div>
 
         <!-- enctype="multipart/form-data" -->
         <form action="/companyboard/writeProc" method="post" >
             <div class="board">
-                <div class="select_tour">여행지 :
+                <div class="select_tour"><span style="font-weight: bold;">여행지 : </span>
                     <select name="tour">
                     	<option value="" selected disabeled hidden>여행지</option>
                         <option value="서울">서울</option>
@@ -214,7 +219,7 @@
                     </select>
                 </div>
 
-                <div class="select_recruit">모집 인원 :
+                <div class="select_recruit"><span style="font-weight: bold;">모집 인원 : </span>
                     <select name="recruit">
                     	<option value="" selected disabeled hidden>인원</option>
                         <option value="1">1</option>
@@ -227,13 +232,13 @@
                 </div>
 
                 <div class="select_date">
-                    [ 여행 기간 ]<br>
+                    <span style="font-weight: bold;">여행 기간 : </span>
 					<input type="text" id="startDate" name="start_date" autocomplete='off' style="width:100px; text-align:center;"/> ~ 
                     <input type="text" id="endDate" name="end_date" autocomplete='off' style="width:100px; text-align:center;"/>
                     
                 </div>
 
-                <div class="select_gender">성별 :
+                <div class="select_gender"><span style="font-weight: bold;">성별 : </span>
                     <input type="radio" name="gender" value="남자" >남자
                     <input type="radio" name="gender" value="여자">여자
                 </div>
@@ -247,8 +252,8 @@
                 </div>
 
                 <div class="button">
-                    <button id="back" type=button>목록</button>
-                    <button>작성 완료</button>
+                	<button type=button id=back class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
+                    <button class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성완료</span></button>
                 </div>
             </div>
         </form>
@@ -260,7 +265,7 @@
 		var $j360 = jQuery.noConflict();
 	
 		$j360("#back").on("click", function(){
-	    	history.back();
+			location.href="/companyboard/list?cpage=1";
 	    })
 	</script>
 	

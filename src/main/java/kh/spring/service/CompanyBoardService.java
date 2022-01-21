@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.spring.dao.ComReplyDAO;
 import kh.spring.dao.CompanyBoardDAO;
 import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.CompanyBoardDTO;
@@ -15,6 +16,9 @@ public class CompanyBoardService {
 
 	@Autowired
 	private CompanyBoardDAO cdao;
+	
+	@Autowired
+	private ComReplyDAO rdao;
 	
 	public int insert(CompanyBoardDTO dto) {
 		return cdao.insert(dto);
@@ -29,6 +33,8 @@ public class CompanyBoardService {
 	}
 	
 	public int delete(int seq) {
+		rdao.deleteAllRe(seq);
+		rdao.deleteAll(seq);
 		return cdao.delete(seq);
 	}
 	
@@ -130,5 +136,15 @@ public class CompanyBoardService {
 	
 	public int delete2(int seq) {
 		return cdao.delete2(seq);
+	}
+	
+	// 댓글 개수
+	public int replyCount(int seq) {
+		return cdao.replyCount(seq);
+	}
+	
+	// 대댓글 개수
+	public int replyReplyCount(int seq) {
+		return cdao.replyReplyCount(seq);
 	}
 }

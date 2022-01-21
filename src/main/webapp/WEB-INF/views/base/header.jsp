@@ -169,7 +169,7 @@
 
           <!-- Brand -->
           <a class="navbar-brand d-none d-lg-block order-lg-1" href="/">
-            <img width="142" src="trip2.png" alt="TripMate" />
+            <img width="142" src="/images/trip2.png" alt="TripMate" />
           </a>
 
 
@@ -194,7 +194,7 @@
             <hr class="d-lg-none my-3">
             <ul class="navbar-nav">
               <li class="nav-item active"><a class="nav-link" id="triplist">여행지</a></li>
-              <li class="nav-item"><a class="nav-link" href="">여행일정</a></li>
+              <li class="nav-item"><a class="nav-link" id="tripPlan">여행일정</a></li>
               <li class="nav-item active"><a class="nav-link" id="tourboard">여행게시판</a></li>
               <li class="nav-item"><a class="nav-link" id="companyboard">동행게시판</a></li>
               <li class="searchbar"> <i class="fas fa-search"></i><input class="form-control rounded-start" type="text"
@@ -224,16 +224,19 @@
         $("#tourboard").on("click", function () {
           location.href = "/tourboard/list?cpage=1";
         })
-      </script>
-
-      <script>
+        
+        $("#tripPlan").on("click",function(){
+        	if(${loginEmailID ne null}){
+            	location.href = "/plan/main";        		
+        	}else{
+        		alert("회원 전용 기능입니다.");
+        	}
+        })
         $("#companyboard").on("click", function () {
           location.href = "/companyboard/list?cpage=1";
 
         })
-      </script>
-
-      <script>
+        
         $("#triplist").on("click", function () {
           location.href = "/area/main?area=0&contentType=0&page=1";
         })

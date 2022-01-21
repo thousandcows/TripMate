@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Plan">
+
+	
+	<select id="callPlan" resultType="kh.spring.dto.PlanDTO">
+		select * from plan where seq = #{value}  
+	</select>
+	
+	<insert id="createTheme">
+		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
+			select plan_seq.nextval from dual  
+		</selectKey>
+		insert into plan values (#{seq}, #{mem_seq}, #{title},#{startDate},#{endDate},#{theme},0,'')
+	</insert>
+	
+	<update id="changeTheme">
+		update plan set title = #{title},startDate=#{startDate},endDate=#{endDate},theme=#{theme} where seq = #{seq}
+	</update>
+	
+	<insert id="saveList">
+		insert into detail_plan values(#{par_seq},#{area_seq},(select startDate from plan where seq=#{par_seq}))
+	</insert>
+
+
+</mapper>
