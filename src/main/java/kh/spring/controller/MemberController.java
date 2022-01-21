@@ -92,7 +92,6 @@ public class MemberController {
 	@RequestMapping(value = "normalLogin", produces = "application/text;charset=utf-8")
 	public String normalLogin(String emailID, String pw) {
 		int result = memberService.normalLoginCheck(emailID, pw);
-		System.out.println("로그인 조회 결과 : " + result);
 		if (result == 0) {
 			return "0";
 		} else {
@@ -105,8 +104,8 @@ public class MemberController {
 		}
 	}
 	
-	String findPwTargetEmail = "";
 	// PW 찾기
+	String findPwTargetEmail = ""; // 찾을 email을 기억
 	@ResponseBody
 	@RequestMapping(value = "findPw", produces = "application/text;charset=utf-8")
 	public String pwFindPopup (String emailID) throws AddressException, MessagingException {
@@ -117,32 +116,21 @@ public class MemberController {
 		// 이메일 발송 시작
 		findPwTargetEmail = emailID; // 받는사람의 이메일
 		
-		// 보내는 메일계정
-		String user = "wlsrb2611@naver.com";
-		String password = "";
-		
-		// SMTP 서버 정보 설정
-		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.naver.com");
-		props.put("mail.smtp.port", 465);
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.ssl.enable", "true");
-		props.put("mail.smtp.ssl.trust", "smtp.naver.com");
-		
 		// SMTP 서버정보랑 사용자등록해서 Session 인스턴스 생성
-		Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+		Session mailSession = Session.getDefaultInstance(memberService.smtpSetting(), new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(user, password);
+				return new PasswordAuthentication(Statics.FIND_PW_CALLER_EMAIL, Statics.FIND_PW_CALLER_PW);
 			}
 		});
 		
 		// Message 클래스로 수신자랑 내용 제목의 메세지 전달
 		MimeMessage message = new MimeMessage(mailSession);
-		message.setFrom(new InternetAddress(user));
+		message.setFrom(new InternetAddress(Statics.FIND_PW_CALLER_EMAIL));
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(findPwTargetEmail));
 		message.setSubject("TripMate PW찾기 인증번호입니다.");
-		int verificationCode = (int) (Math.random() * (9999 - 1000)) + 1000;
+		int verificationCode = (int) (Math.random() * (9999 - 1000)) + 1000; // 얘때문에 애매하네
 		message.setText("TripMate PW찾기 인증번호는 : " + verificationCode + " 입니다.");
+		
 		Transport.send(message);
 		return String.valueOf(verificationCode);
 	}
@@ -154,20 +142,16 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	
-	///////////// 카카오 로그인 시작 /////////////
-	private final String CLIENT_ID = "b7b0a7f6722957ddef971b2ff4061bd7"; // REST ID
-	private final String REDIRECT_URL = "http://localhost/member/kakaoLogin"; // 리퀘스트시킬 URL(나중엔 아이피로 변경 카카오 디벨로퍼에서도
-																				// 변경해줘야함.)
-
+	// 카카오 코드생성
 	@ResponseBody
 	@RequestMapping("getKakaoAuthUrl")
 	public String getKakaoAuthUrl() { // 로그인 ajax동작시 오는곳(카카오 자체 서버에서 코드를 받아와야하기때문)
-		String KaUrl = "https://kauth.kakao.com/oauth/authorize?client_id=" + CLIENT_ID + "&redirect_uri="
-				+ REDIRECT_URL + "&response_type=code";
-		return KaUrl; // 이러면 여기 코드가 왔겠지
+		String KaUrl = "https://kauth.kakao.com/oauth/authorize?client_id=" + Statics.KAKAO_CLIENT_ID + "&redirect_uri="
+				+ Statics.KAKAO_REDIRECT_URL + "&response_type=code";
+		return KaUrl;
 	}
 
+	// 카카오 로그인
 	@RequestMapping("kakaoLogin") // 서비스레이어로 뺄까 고민했지만 Http통신이 있어 컨트롤러에 있는게 맞을듯
 	public String kakaoLogin(String code, String error) {
 		if (error != null) { // 에러코드가 있다면 사용자가 무언가 취소를 한것.(null이 아닐때 전부 메인으로 보내버리면될수도)
@@ -188,8 +172,8 @@ public class MemberController {
 		// HttpBody 오브젝트 생성( POST방식은 Body에 담아 보내야 하니까 )
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "authorization_code");
-		params.add("client_id", CLIENT_ID);
-		params.add("redirect_uri", REDIRECT_URL);
+		params.add("client_id", Statics.KAKAO_CLIENT_ID);
+		params.add("redirect_uri", Statics.KAKAO_REDIRECT_URL);
 		params.add("code", code);
 
 		// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
@@ -262,7 +246,7 @@ public class MemberController {
 	public String mypageGo(Model model) {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
-		String filePath = "\\images" + "\\" + dto.getPhoto();
+		String filePath = "\\images" + "\\" + dto.getPhoto(); // \image를 안붙여주면 경로가 c에서부터 찾음
 		dto.setPhoto(filePath);
 		model.addAttribute("loginInfo", dto);
 		return "mypage/myInfo";
@@ -317,13 +301,10 @@ public class MemberController {
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
 		String filePath = "\\images" + "\\" + dto.getPhoto();
 		dto.setPhoto(filePath); // 프로필 사진 설정
-		System.out.println("여기 옴?");
 		// 찜목록 조회 갯수
 		List<AreaDTO> adto = new ArrayList<>();
 		List<Integer> mySaveListSeq = memberService.mySaveListSeq(loginSeq, Statics.SAVE_LIST_START, Statics.SAVE_LIST_END);
-		List<Integer> isMySaveListMore = memberService.mySaveListSeq(loginSeq, 8, 8);
-		System.out.println("찜목록 더있음? : " + isMySaveListMore);
-		System.out.println("seq들 : " + mySaveListSeq);
+		List<Integer> isMySaveListMore = memberService.mySaveListSeq(loginSeq, Statics.IS_MY_SAVE_LIST_MORE, Statics.IS_MY_SAVE_LIST_MORE);
 		List<String> savedListRate = new ArrayList<>();
 		for(int saveSeq : mySaveListSeq) {
 			adto.add(areaService.detailBuild(saveSeq));

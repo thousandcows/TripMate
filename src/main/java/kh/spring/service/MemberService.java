@@ -4,7 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.UUID;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,86 +31,98 @@ public class MemberService {
 
 	@Autowired
 	MemberDAO memberDao;
-	
+
 	@Autowired
 	AreaService aService;
-	
+
 	// 이메일 체크
-	public int emailCheck(String email){
+	public int emailCheck(String email) {
 		return memberDao.emailCheck(email);
 	}
-	
+
 	// 닉네임 체크
 	public int nickNameCheck(String nickName) {
 		return memberDao.nickNameCheck(nickName);
 	}
-	
+
 	// 휴대폰 체크
 	public int phoneCheck(String phone) {
 		return memberDao.phoneCheck(phone);
 	}
-	
+
 	// 일반 회원가입
 	public int normalSignup(String emailID, String nick, String phone, String pw, String gender) {
 		String encryptPw = EncryptUtils.getSHA512(pw);
 		return memberDao.normalSignup(emailID, nick, phone, encryptPw, gender);
 	}
-	
+
 	// 일반 로그인체크
 	public int normalLoginCheck(String emailID, String pw) {
 		String encryptPw = EncryptUtils.getSHA512(pw);
 		return memberDao.normalLoginCheck(emailID, encryptPw);
 	}
-	
+
 	// 일반 사용자정보 빼오기
-	public MemberDTO normalLoginSelectAll(String emailID, String pw){
+	public MemberDTO normalLoginSelectAll(String emailID, String pw) {
 		String encryptPw = EncryptUtils.getSHA512(pw);
 		return memberDao.normalLoginSelectAll(emailID, encryptPw);
 	}
 	
+	// SMTP 서버 정보 설정
+	public Properties smtpSetting() {
+		Properties props = new Properties();
+		props.put("mail.smtp.host", "smtp.naver.com");
+		props.put("mail.smtp.port", 465);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.ssl.trust", "smtp.naver.com");
+		return props;
+	}
+
 	// PW찾기 패스워드 변경
 	public int findPwChange(String findPwTargetEmail, String pw) {
 		String encryptPw = EncryptUtils.getSHA512(pw);
 		return memberDao.findPwChange(findPwTargetEmail, encryptPw);
 	}
-	
+
 	///// 카카오 로그인 /////
 	// 카카오 사용자 가입여부 확인
 	public int kakaoLoginLookup(int kakaoLoginId) {
 		return memberDao.kakaoLoginLookup(kakaoLoginId);
 	}
-	
+
 	// 카카오 사용자 정보 빼오기
 	public MemberDTO kakaoLoginSelectAll(int kakaoLoginId) { // 오버로딩해도 될거같은데 헷갈릴듯
 		return memberDao.kakaoLoginSelectAll(kakaoLoginId);
 	}
-	
+
 	// 카카오 로그인사용자 회원가입 시키기
 	public int kakaoSignup(String kakaoLoginEmail, String kakaoLoginNick, int kakaoLoginId) {
 		return memberDao.kakaoSignup(kakaoLoginEmail, kakaoLoginNick, kakaoLoginId);
 	}
 	///// 카카오 로그인 끝 /////
-	
+
 	// 마이페이지 정보 빼오기
 	public MemberDTO myInfoSelectAll(int loginSeq) {
 		return memberDao.myInfoSelectAll(loginSeq);
 	}
-	
+
 	// 마이페이지 정보수정
-	public int myInfoChangeOk(MemberDTO dto, MultipartFile file, String realPath) throws IllegalStateException, IOException {
+	public int myInfoChangeOk(MemberDTO dto, MultipartFile file, String realPath)
+			throws IllegalStateException, IOException {
 		String fileObjectChangeString = String.valueOf(file);
 		boolean isFile = fileObjectChangeString.contains("size=0");
-		if(isFile) {
+		if (isFile) {
 			return memberDao.myInfoChangeOkNoFile(dto);
 		} else {
-			if(!file.isEmpty()) {
+			if (!file.isEmpty()) {
 				String existingPhotoStr = memberDao.existingPhotoStr(dto.getSeq());
-				if(!existingPhotoStr.contains("default_profile.png")) {
+				if (!existingPhotoStr.contains("default_profileqwerkjhgdiute.jpg")) {
 					File deleteFile = new File(realPath + "\\" + existingPhotoStr);
 					deleteFile.delete(); // 기존 파일삭제
 				}
 				File realPathFile = new File(realPath);
-				if(!realPathFile.exists()) {
+				if (!realPathFile.exists()) {
 					realPathFile.mkdir();
 				}
 				String oriName = file.getOriginalFilename();
@@ -114,23 +133,23 @@ public class MemberService {
 			return memberDao.myInfoChangeOk(dto);
 		}
 	}
-	
+
 	// 마이페이지 기존프로필사진 정보 불러오기
 	public String existingPhotoStr(int seq) {
 		return memberDao.existingPhotoStr(seq);
 	}
-	
+
 	// 마이페이지 비밀번호 수정
 	public int myInfoPwChange(String pw) {
 		String encryptPw = EncryptUtils.getSHA512(pw);
 		return memberDao.myInfoPwChange(encryptPw);
 	}
-	
+
 	// 회원탈퇴
 	public int deleteAccount(int seq) {
 		return memberDao.deleteAccount(seq);
 	}
-	
+
 	// 상대 회원 조회
 	public String showMember(int mem_seq) {
 		MemberDTO dto = memberDao.myInfoSelectAll(mem_seq);
@@ -139,27 +158,27 @@ public class MemberService {
 		String result = gson.toJson(dto);
 		return result;
 	}
-	
+
 	///////// 찜목록 시작 ///////////
-	public List<Integer> mySaveListSeq(int loginSeq, int start, int end){
+	public List<Integer> mySaveListSeq(int loginSeq, int start, int end) {
 		return memberDao.mySaveListSeq(loginSeq, start, end);
 	}
-	
+
 	public String savedAreaGrade(int seq) {
 		return memberDao.savedAreaGrade(seq);
 	}
-	
-	public String moreSaving(int loginSeq, int btn) throws Exception{
+
+	public String moreSaving(int loginSeq, int btn) throws Exception {
 		Gson gson = new Gson();
 		int start = btn;
 		int end = start + Statics.SAVE_LIST_MORE;
-		List<Integer>mySaveListSeq = mySaveListSeq(loginSeq, start, end);
+		List<Integer> mySaveListSeq = mySaveListSeq(loginSeq, start, end);
 		List<AreaSavedDTO> dto = new ArrayList<>();
-		for(int saveSeq : mySaveListSeq) {
+		for (int saveSeq : mySaveListSeq) {
 			AreaSavedDTO adto = new AreaSavedDTO(); // 상속받았는데 왜 ArrayList가 안받아지는가
 			AreaDTO tdto = new AreaDTO();
 			String rate = savedAreaGrade(saveSeq);
-			if(rate == null) {
+			if (rate == null) {
 				adto.setSavedListRate("-");
 			} else {
 				adto.setSavedListRate(rate);
@@ -168,7 +187,7 @@ public class MemberService {
 			adto.setSeq(saveSeq);
 			adto.setName(tdto.getName());
 			adto.setPhoto(tdto.getPhoto());
-			if(tdto.getPhone().equals("null")) {
+			if (tdto.getPhone().equals("null")) {
 				adto.setPhone("등록된 번호가 없습니다.");
 			} else {
 				adto.setPhone(tdto.getPhone());
@@ -179,6 +198,5 @@ public class MemberService {
 		}
 		return gson.toJson(dto);
 	}
-	
-	
+
 }

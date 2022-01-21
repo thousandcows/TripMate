@@ -299,6 +299,7 @@ if (eventCheck != null) {
         document.querySelector(".findPwEmailCheckConfirm").innerHTML = "";
         verificationCode = "";
         verificationCode = res;
+        console.log(verificationCode);
       }
     })
   });
