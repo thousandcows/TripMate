@@ -10,7 +10,7 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <title>Trip Mate</title>
-    	<jsp:include page="base/header.jsp"></jsp:include>
+    	  <jsp:include page="base/header.jsp"></jsp:include>
     
     </head>
     

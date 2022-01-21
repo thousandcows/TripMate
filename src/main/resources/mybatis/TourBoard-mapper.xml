@@ -37,4 +37,8 @@
      	select count(*) from tour_reply where par_seq = #{seq}
      </select>
      
+     <select id="relyReplyCount" resultType="int">
+     	select count(*) from tour_board b join tour_reply r on(b.seq=r.par_seq) join tour_reply_reply p on(r.seq=p.par_seq) where r.par_seq = #{seq} 
+     </select>
+     
 </mapper>

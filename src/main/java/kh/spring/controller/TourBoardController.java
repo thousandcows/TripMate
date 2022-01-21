@@ -130,20 +130,28 @@ public class TourBoardController {
 	
 	@RequestMapping("detail")
 	public String detail(int seq, Model model) {
+		
         TourBoardDTO dto = bservice.selectBySeq(seq);
+        
+//        System.out.println("번호 : " +seq);
         
         bservice.addViewCount(seq);
         
-        int replyCount = bservice.replyCount(seq);        
-        dto.setRep_count(replyCount);
+        int replyCount = bservice.replyCount(seq);
+//        System.out.println("replyCount : " + replyCount);
+        int replyReplyCount = bservice.replyReplyCount(seq);
+//        System.out.println("replyReplyCount : " + replyReplyCount);
+        
+        dto.setRep_count(replyCount+replyReplyCount);
         
         List<TourReplyDTO> rp_list = rservice.selectAll(seq);
         
         List<TourReplyReplyDTO> re_list = rservice.selectReAll();
         
-        for(int i=0; i<re_list.size(); i++) {
-        	System.out.println(re_list.get(i).getSeq() + " : " + re_list.get(i).getPar_seq() + " : " + re_list.get(i).getContents());
-        }
+//        for(int i=0; i<re_list.size(); i++) {
+//        	System.out.println(re_list.get(i).getSeq() + " : " + re_list.get(i).getPar_seq() + " : " + re_list.get(i).getContents());
+//        }
+        
 //		int parentSeq = bdto.getSeq();        
 //		List<FilesDTO> files = fservice.selectByParentSeq(parentSeq);
 
