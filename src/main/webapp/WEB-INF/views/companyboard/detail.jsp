@@ -511,10 +511,12 @@
 	 			alert("댓글을 작성해주세요");
 	 			return false;
 	 		}else{ 
-	 			if(confirm("이대로 작성하시겠습니까?")){
+	 			var answer = confirm("이대로 작성하시겠습니까?");
+	 			
+	 			if(answer){
 	 				$("#frmReply").submit();
 	 			}else{
-	 				$("#rep_con").val() = "";
+	 				$("#rep_con").val("");
 		 			return false;
 		 		}
 	 		} 
