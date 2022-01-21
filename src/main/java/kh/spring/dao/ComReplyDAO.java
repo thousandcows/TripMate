@@ -42,6 +42,8 @@ public class ComReplyDAO {
 				dto.setWriten_date(list.get(i).getWriten_date());
 				rp_list.add(dto);
 			}
+			
+//			System.out.println("띄어쓰기 테스트 : " +  list.get(i).getContents());
 		}
 		return rp_list;
 	}

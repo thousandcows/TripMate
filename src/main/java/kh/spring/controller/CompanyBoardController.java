@@ -94,14 +94,18 @@ public class CompanyBoardController {
 		model.addAttribute("heart", boardlike);
 		
 		//댓글+대댓글 갯수
-		System.out.println("seq : " + seq);
+//		System.out.println("seq : " + seq);
 		int replyCount = cbs.replyCount(seq);
-		System.out.println("replyCount : " + replyCount);
+//		System.out.println("replyCount : " + replyCount);
 		int replyReplyCount = cbs.replyReplyCount(seq);
-		System.out.println("replyReplyCount : " + replyReplyCount);
+//		System.out.println("replyReplyCount : " + replyReplyCount);
 		dto.setRep_count(replyCount+replyReplyCount);
         List<ComReplyDTO> rep_list = crs.selectAll(seq);
         List<ComReplyReplyDTO> re_rep_list = crs.selectReAll();
+        
+        System.out.println("rep_list.get(0) : "  + rep_list.get(0).getContents());
+        System.out.println("rep_list.get(1) : "  + rep_list.get(1).getContents());
+        
         model.addAttribute("rep_list", rep_list);
         model.addAttribute("re_rep_list", re_rep_list);
         

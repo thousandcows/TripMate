@@ -396,13 +396,13 @@
                             		</span>
                         		</div>
                         		<div class="rep_txt">
-                          	  		<input type="text" id="e_rep_con${repl.seq }" class="e_rep_con"  name="contents" value=${repl.contents }  readonly>
+                          	  		<input type="text" id="e_rep_con${repl.seq }" class="e_rep_con"  name="contents" value="${repl.contents }"  readonly>
                         		</div>
                         		<div class="rep_btn">
                         			<button type=button id="re_rep_btn${repl.seq }" class="btn btn-primary btn-sm re_rep_btn" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">답글 달기</span></button>
                            		 	<button type=button id="rep_del${repl.seq }" class="btn btn-primary btn-sm rep_del" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 삭제</span></button>
                            	 		<button type=button id="rep_mod${repl.seq }" class="btn btn-primary btn-sm rep_mod" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 수정</span></button>
-                        			<button type=submit id="rep_modok${repl.seq }" class="btn btn-primary btn-sm rep_modok" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 완료</span></button>
+                        			<button type=submit id="rep_modok${repl.seq }" formaction="/comreply/modify" class="btn btn-primary btn-sm rep_modok" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 완료</span></button>
                             		<button type=button id="rep_modcancel${repl.seq }" class="btn btn-primary btn-sm rep_modcancel" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 취소</span></button>
                         		</div>
                         		
@@ -477,9 +477,9 @@
 	
 		$(".re_rep_modok").on("click", function(){
 			let id = this.id.substr(12);
-			let rp = $(this).attr(rpseq);
-			/* console.log("id : rp = " + id + " : " + rp); */
+			
 			let recontent = $("#recontent${rerepl.seq }"+id).val();
+			console.log(recontent + " : " + $("#recontent${rerepl.seq }").val());
 			
 			location.href = "/comreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;
 		})
@@ -506,9 +506,19 @@
     <!-- 댓글 -->
 	<script>
 	 	$("#rep_write").on("click", function() {
-			if (confirm("이대로 작성하시겠습니까?")) {
-				$("#frmReply").submit();
-			}
+	 		
+	 		if($("#rep_con").val() == ""){
+	 			alert("댓글을 작성해주세요");
+	 			return false;
+	 		}else{ 
+	 			if(confirm("이대로 작성하시겠습니까?")){
+	 				$("#frmReply").submit();
+	 			}else{
+	 				$("#rep_con").val() = "";
+		 			return false;
+		 		}
+	 		} 
+			
 		});
 	 	
 	 	$(".rep_del").on("click", function() {
@@ -522,17 +532,16 @@
 			//${rp.seq }
 			let id = this.id.substr(7);
 
-			/* rpContents = $("#contents" + id).val(); */
 			$("#rep_mod" + id).css("display", "none");
 			$("#rep_del" + id).css("display", "none");
 			$("#rep_modcancel" + id).css("display", "inline");
 			$("#rep_modok" + id).css("display", "inline");
-			/* $("#rep_reply" + id).css("display", "none"); */
+			$("#re_rep_btn" + id).css("display", "none");
 			$("#e_rep_con" + id).removeAttr("readonly");
 			$("#e_rep_con" + id).css("border", "1px solid gray");
 		})
 	 	
-		$(".rep_modcancle").on("click", function() {
+		$(".rep_modcancel").on("click", function() {
 			location.reload();
 		})
 	</script>    
