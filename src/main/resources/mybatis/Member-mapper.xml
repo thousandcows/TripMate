@@ -18,7 +18,7 @@
 	</select>
 	
 	<insert id="normalSignup">
-		insert into member (seq, emailid, pw, nick, phone, gender, violation, photo) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, #{gender}, 0, 'default_profile.png')
+		insert into member (seq, emailid, pw, nick, phone, gender, violation, photo) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, #{gender}, 0, 'default_profileqwerkjhgdiute.jpg')
 	</insert>
 	
 	<select id="normalLoginCheck" resultType="int">
@@ -43,7 +43,7 @@
 	</select>
 	
 	<insert id="kakaoSignup">
-		insert into member (seq, emailid, nick, violation, sns_division, photo) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0, #{kakaoId}, 'default_profile.png')
+		insert into member (seq, emailid, nick, violation, sns_division, photo) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0, #{kakaoId}, 'default_profileqwerkjhgdiute.jpg')
 	</insert>
 	
 	<!-- 마이페이지 -->
@@ -73,11 +73,11 @@
 	
 	<!-- 찜목록 시작 -->
 	<select id="mySaveListSeq" resultType="Integer">
-		select area_seq from (select saved.*, row_number() over(order by seq desc)rn from saved) where (rn between #{start} and #{end}) and mem_seq = #{loginSeq}
+		select area_seq from (select saved.*, row_number() over(order by seq desc)rn from saved where mem_seq = #{loginSeq}) where (rn between #{start} and #{end})
 	</select>
 	
 	<select id="savedAreaGrade" resultType="String">
-		select avg(score) from area_reply where area_seq = #{value}
+		select round(avg(score),2) from area_reply where area_seq = ${value}
 	</select>
 	
 </mapper>
