@@ -14,6 +14,7 @@
         crossorigin="anonymous"></script>
       <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <jsp:include page="../base/header.jsp"></jsp:include>
       <style>
         /* 간단세팅 나중에 css파일 따로 뺄거*/
         * {
@@ -82,8 +83,8 @@
           box-shadow: 1px 1px 2px 1px rgb(211, 211, 211);
         }
 
-        .sideBarMenuBox li:first-child a {
-          background-color: rgb(255, 228, 193);
+        .sideBarMenuBox li:nth-child(3) a {
+          background-color: rgb(255, 223, 181);
         }
 
         .portraitPhoto {
@@ -132,8 +133,12 @@
           padding-left: 10px;
         }
 
-        .delSeq{
-          display:none;
+        .delSeq {
+          display: none;
+        }
+
+        .myHeart {
+          cursor: pointer;
         }
 
         footer {
@@ -169,34 +174,36 @@
                   <div class="row">
                     <div class="col-4">
                       <a href="/area/detail?num=${mySaveListSeq[status.index]}">
-                        <img style="height:160px;" class="w-100" src="${cnt.photo}">
+                        <img style="height:170px;" class="w-100" src="${cnt.photo}">
                       </a>
                     </div>
                     <div class="col-8">
                       <div class="row">
-                        <a href="/area/detail?num=${mySaveListSeq[status.index]}">
-                          <div class="col-10">${cnt.name}</div>
-                        </a>
+                        <div class="col-10"><a href="/area/detail?num=${mySaveListSeq[status.index]}">${cnt.name}</a>
+                        </div>
                         <div class="col-2 text-end">
                           <input type="text" class="delSeq" value="${mySaveListSeq[status.index]}">
                           <span class="material-icons md-36 red myHeart" id=save>
-                            favorite</span>
+                            close</span>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col">${cnt.lo_detail}</div>
                       </div>
                       <div class="row">
-                        <div class="col">${cnt.phone}</div>
+                        <div class="col">
+                          <c:if test="${cnt.phone == 'null'}">등록된 번호가 없습니다.</c:if>
+                          <c:if test="${cnt.phone != 'null'}">${cnt.phone}</c:if>
+                        </div>
                       </div>
                       <div class="row align-items-end mb-0  h-50">
                         <div class="col-10 detailEllipsis">${cnt.detail}</div>
                         <div class="col-2">
                           <ul class="list-group-horizontal star p-0">
-                            <li>평점</li>
+                            <li>평점 :&nbsp;</li>
                             <li>
                               <c:if test="${empty savedListRate[status.index]}">
-                                등록된 평점이 없습니다.
+                                -
                               </c:if>
                               ${savedListRate[status.index]}
                             </li>
@@ -207,9 +214,10 @@
                   </div>
                 </div>
               </c:forEach>
+              <div id="seeMoreTag"></div>
             </div>
 
-            <div class="row mt-4 mb-4" id="seeMoreTag">
+            <div class="row mt-4 mb-4" id="seeMoreDel">
               <div class="col text-center">
                 <button type="button" class="btn btn-success" id="seeMore">더보기</button>
               </div>
@@ -238,19 +246,18 @@
                 `<div class="col-9 align-self-center mt-4 delParent">
                   <div class="row">
                     <div class="col-4">
-                    <a href="/area/detail?num=\${result[i].seq}">
-                      <img style="height:160px;" class="w-100" src="\${result[i].photo}">
-                    </a>
+                      <a href="/area/detail?num=\${result[i].seq}">
+                        <img style="height:170px;" class="w-100" src="\${result[i].photo}">
+                      </a>
                     </div>
                     <div class="col-8">
                       <div class="row">
-                        <a href="/area/detail?num=\${result[i].seq}">
-                        <div class="col-10">\${result[i].name}</div>
-                        </a>
+                        <div class="col-10"><a
+                            href="/area/detail?num=\${result[i].seq}">\${result[i].name}</a></div>
                         <div class="col-2 text-end">
                           <input type="text" class="delSeq" value="\${result[i].seq}">
                           <span class="material-icons md-36 red myHeart" id=save>
-                            favorite</span>
+                            close</span>
                         </div>
                       </div>
                       <div class="row">
@@ -260,13 +267,13 @@
                         <div class="col">\${result[i].phone}</div>
                       </div>
                       <div class="row align-items-end mb-0  h-50">
-                          <div class="col-10 detailEllipsis">\${result[i].detail}</div>
+                        <div class="col-10 detailEllipsis">\${result[i].detail}</div>
                         <div class="col-2">
                           <ul class="list-group-horizontal star p-0">
-                            <li>평점</li>
+                            <li>평점 :&nbsp;</li>
                             <li>
-                                \${result[i].savedListRate}
-                              </li>
+                              \${result[i].savedListRate}
+                            </li>
                           </ul>
                         </div>
                       </div>
@@ -276,16 +283,16 @@
               )
             }
             if (result.length < 7) {
-              $("#seeMoreTag").empty();
+              $("#seeMoreDel").empty();
             }
           })
         });
 
-        $(document).on("click", ".myHeart", function() {
+        $(document).on("click", ".myHeart", function () {
           const $HEART = $(this);
           $.ajax({
-            url: "/area/save?area_seq="+$HEART.prev().val()
-          }).done(function(res){
+            url: "/area/save?area_seq=" + $HEART.prev().val()
+          }).done(function (res) {
             $HEART.parents(".delParent").remove();
           })
         })
