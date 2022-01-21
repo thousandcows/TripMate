@@ -66,6 +66,7 @@ ul>li{
 	max-height:500px;
 }
 </style>
+	<%@ include file="../base/header.jsp"%>
 
 </head>
 <body>
