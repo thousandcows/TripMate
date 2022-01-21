@@ -23,7 +23,6 @@ public class TourReplyDAO {
 		Map<String, String> map = new HashMap<>();
 		map.put("rseq", String.valueOf(rseq));
 		map.put("reply", reply);
-
 		return mybatis.insert("TourReply.insert", map);
 	}
 
@@ -53,6 +52,7 @@ public class TourReplyDAO {
 	
 	public int delete(int seq) {
 		
+		mybatis.delete("TourReply.deleteReply", seq);		
 		return mybatis.delete("TourReply.delete", seq);
 	}
 	
@@ -74,4 +74,22 @@ public class TourReplyDAO {
 		
 		return mybatis.selectList("TourReply.selectReAll");
 	}
+	
+	public int remodify(int idseq, String recontent) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("idseq", String.valueOf(idseq));
+		map.put("recontent", recontent);
+
+		return mybatis.update("TourReply.remodify", map);
+	}
+	
+	public int redelete(int idseq) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("idseq", String.valueOf(idseq));
+		System.out.println(idseq);
+		return mybatis.delete("TourReply.redelete", map);
+	}
+	
 }

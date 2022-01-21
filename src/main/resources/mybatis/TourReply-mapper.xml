@@ -36,4 +36,19 @@
 	<select id="selectReAll" resultType="kh.spring.dto.TourReplyReplyDTO">
 		select p.seq, p.par_seq, p.mem_seq, p.contents, p.writen_time from tour_board b join tour_reply r on(b.seq=r.par_seq) join tour_reply_reply p on(r.seq=p.par_seq) order by p.writen_time desc
 	</select>
+	
+	<update id="remodify">
+		update tour_reply_reply set contents=#{recontent} where seq=#{idseq}
+		
+	</update>
+	
+	<delete id="redelete">
+			
+		delete from tour_reply_reply where seq = #{idseq}
+	</delete>
+	
+	<delete id="deleteReply">
+	
+		delete from tour_reply_reply where par_seq=#{seq}
+	</delete>
 </mapper>
