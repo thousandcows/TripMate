@@ -122,13 +122,18 @@
           height: 70px;
           border: 1px solid rgb(243, 243, 243);
           border-radius: 5px;
-          overflow:hidden;
-          text-overflow:ellipsis;
+          overflow: hidden;
+          text-overflow: ellipsis;
           display: -webkit-box;
-          -webkit-line-clamp: 3; /* 라인수 */
+          -webkit-line-clamp: 3;
+          /* 라인수 */
           -webkit-box-orient: vertical;
-          word-wrap:break-word;
+          word-wrap: break-word;
           padding-left: 10px;
+        }
+
+        .delSeq{
+          display:none;
         }
 
         footer {
@@ -160,16 +165,21 @@
           <div class="container">
             <div class="row justify-content-center mt-4">
               <c:forEach var='cnt' items="${saveList}" varStatus="status">
-                <div class="col-9 align-self-center mt-4">
+                <div class="col-9 align-self-center mt-4 delParent">
                   <div class="row">
                     <div class="col-4">
-                      <img style="height:160px;" class="w-100" src="${cnt.photo}">
+                      <a href="/area/detail?num=${mySaveListSeq[status.index]}">
+                        <img style="height:160px;" class="w-100" src="${cnt.photo}">
+                      </a>
                     </div>
                     <div class="col-8">
                       <div class="row">
-                        <div class="col-10">${cnt.name}</div>
+                        <a href="/area/detail?num=${mySaveListSeq[status.index]}">
+                          <div class="col-10">${cnt.name}</div>
+                        </a>
                         <div class="col-2 text-end">
-                          <span class="material-icons md-36 red" id=save>
+                          <input type="text" class="delSeq" value="${mySaveListSeq[status.index]}">
+                          <span class="material-icons md-36 red myHeart" id=save>
                             favorite</span>
                         </div>
                       </div>
@@ -179,34 +189,23 @@
                       <div class="row">
                         <div class="col">${cnt.phone}</div>
                       </div>
-
                       <div class="row align-items-end mb-0  h-50">
-                          <div class="col-10 detailEllipsis">${cnt.detail}</div>
+                        <div class="col-10 detailEllipsis">${cnt.detail}</div>
                         <div class="col-2">
                           <ul class="list-group-horizontal star p-0">
                             <li>평점</li>
-                            <c:forEach var='asd' begin='1' end='5'>
-                              <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px;"
-                                  class="float-start p-0" viewBox="0 0 20 20" fill="currentColor">
-                                  <defs>
-                                    <linearGradient id="half_grad1">
-                                      <stop offset="100%" stop-color="orange" />
-                                    </linearGradient>
-                                  </defs>
-                                  <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                    fill="url(#half_grad1)" stroke-width="1" stroke="orange" />
-                                </svg>
-                              </li>
-                            </c:forEach>
+                            <li>
+                              <c:if test="${empty savedListRate[status.index]}">
+                                등록된 평점이 없습니다.
+                              </c:if>
+                              ${savedListRate[status.index]}
+                            </li>
                           </ul>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                
               </c:forEach>
             </div>
 
@@ -226,76 +225,68 @@
 
       <script>
         'use strict'
-        //let printNum = ${printNum};
-        //let replyCount = ${replyCount};
-        //let staticNo = ${staticNo};
-        let printNum = 10;
-        let replyCount = 50;
-        let staticNo = 10;
-        let btn = 0;
+        let btn = 1;
         $("#seeMore").on("click", function () {
-          btn += 10;
+          btn += 7;
           $.ajax({
-            url: "/member/moreSaving?printNum=" + printNum + "&replyCount=" + replyCount,
-            data: "params",
-            dataType: "json",
-            success: function (result) {
-              printNum = printNum + staticNo;
-              if (replyCount <= printNum) {
-                $("#seeMoreTag").empty();
-              }
-              console.log(result);
-              for (var i in result) {
-                $("#seeMoreTag").before(
-                  `<div class="col-9 align-self-center mt-4">
+            url: "/member/moreSaving",
+            data: { btn: btn }
+          }).done(function (res) {
+            let result = JSON.parse(res);
+            for (let i = 0; i < result.length; i++) {
+              $("#seeMoreTag").before(
+                `<div class="col-9 align-self-center mt-4 delParent">
                   <div class="row">
                     <div class="col-4">
-                      <img style="heigth:100px;" class="w-100"
-                        src="https://w.namu.la/s/45507892b4f48b2b3d4a6386f6dae20c28376a8ef5dfb68c7cc95249ec358e3e68df77594766021173b2e6acf374b79ce02e9eeef61fcdf316659e30289e123fbddf6e5ec3492eddbc582ee5a59a2ff5d6ee84f57ad19277d179b613614364ad">
+                    <a href="/area/detail?num=\${result[i].seq}">
+                      <img style="height:160px;" class="w-100" src="\${result[i].photo}">
+                    </a>
                     </div>
                     <div class="col-8">
                       <div class="row">
-                        <div class="col-10">여행지 제목</div>
+                        <a href="/area/detail?num=\${result[i].seq}">
+                        <div class="col-10">\${result[i].name}</div>
+                        </a>
                         <div class="col-2 text-end">
-                          <span class="material-icons md-36 red" id=save>
-                            favorite_border</span>
+                          <input type="text" class="delSeq" value="\${result[i].seq}">
+                          <span class="material-icons md-36 red myHeart" id=save>
+                            favorite</span>
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col">주소</div>
+                        <div class="col">\${result[i].lo_detail}</div>
                       </div>
                       <div class="row">
-                        <div class="col">연락처</div>
+                        <div class="col">\${result[i].phone}</div>
                       </div>
-
                       <div class="row align-items-end mb-0  h-50">
-                        <div class="col">
+                          <div class="col-10 detailEllipsis">\${result[i].detail}</div>
+                        <div class="col-2">
                           <ul class="list-group-horizontal star p-0">
                             <li>평점</li>
-                            <c:forEach var='asd' begin='1' end='5'>
-                              <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px;"
-                                  class="float-start p-0" viewBox="0 0 20 20" fill="currentColor">
-                                  <defs>
-                                    <linearGradient id="half_grad1">
-                                      <stop offset="100%" stop-color="orange" />
-                                    </linearGradient>
-                                  </defs>
-                                  <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                                    fill="url(#half_grad1)" stroke-width="1" stroke="orange" />
-                                </svg>
+                            <li>
+                                \${result[i].savedListRate}
                               </li>
-                            </c:forEach>
                           </ul>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>`
-                )
-              }
+              )
             }
+            if (result.length < 7) {
+              $("#seeMoreTag").empty();
+            }
+          })
+        });
+
+        $(document).on("click", ".myHeart", function() {
+          const $HEART = $(this);
+          $.ajax({
+            url: "/area/save?area_seq="+$HEART.prev().val()
+          }).done(function(res){
+            $HEART.parents(".delParent").remove();
           })
         })
 

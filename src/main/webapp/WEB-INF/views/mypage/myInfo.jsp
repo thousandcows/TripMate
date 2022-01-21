@@ -554,6 +554,7 @@
             if (nickNameRegex.test(myInfoNickInput)) {
               $.ajax({
                 url: "/member/nickNameCheck",
+                async: false,
                 data: { nickName: myInfoNickInput }
               }).done(function (res) {
                 if (res == "1") {
@@ -581,6 +582,7 @@
             if (phoneRegex.test(myInfoPhoneInput)) {
               $.ajax({
                 url: "/member/phoneCheck",
+                async: false,
                 data: { phone: myInfoPhoneInput }
               }).done(function (res) {
                 if (res == "1") {

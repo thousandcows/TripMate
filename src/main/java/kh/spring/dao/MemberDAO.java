@@ -116,8 +116,17 @@ public class MemberDAO {
 	}
 	
 	///// 찜목록 가져오기 시작 /////
-	public List<Integer> mySaveListSeq(int loginSeq) {
-		return mybatis.selectList("Member.mySaveListSeq", loginSeq);
+	public List<Integer> mySaveListSeq(int loginSeq, int start, int end) {
+		Map<String, String> map = new HashMap<>();
+		map.put("loginSeq", String.valueOf(loginSeq));
+		map.put("start", String.valueOf(start));
+		map.put("end", String.valueOf(end));
+		return mybatis.selectList("Member.mySaveListSeq", map);
+	}
+	
+	// 찜목록 평점
+	public String savedAreaGrade(int seq){
+		return mybatis.selectOne("Member.savedAreaGrade", seq);
 	}
 	
 }
