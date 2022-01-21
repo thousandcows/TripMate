@@ -84,7 +84,7 @@
         }
 
         .sideBarMenuBox li:first-child a {
-          background-color: rgb(255, 220, 174);
+          background-color: rgb(255, 223, 181);
         }
 
         /* 사이드바 끝 */
@@ -174,6 +174,7 @@
           border: none;
           background-color: white;
           font-size: 14px;
+          margin-right: 15px;
         }
 
         .deleteAccountBtn:hover {
@@ -208,6 +209,7 @@
         .portraitPhoto {
           width: 150px;
           height: 150px;
+          border-radius: 10px;
           position: absolute;
         }
 
@@ -219,6 +221,7 @@
         }
 
         .submitBtns {
+          margin-top: 20px;
           text-align: right;
         }
 
@@ -260,6 +263,8 @@
 
         /* 비밀번호 수정 폼 */
         .changePwBtn {
+          width: 150px;
+          height: 40px;
           background-color: white;
           color: rgb(65, 65, 65);
           border: 1px solid rgb(160, 160, 160);
@@ -416,11 +421,12 @@
                 </table>
                 <div class="submitBtnss">
                   <button type="button" class="changeSubmitBtn" id="myInfoChangeGo">정보 수정</button>
+                  <br>
                   <div class="submitBtns">
-                    <button type="button" class="deleteAccountBtn" id="deleteAccountBtn">탈퇴하기</button>
                     <c:if test="${loginInfo.sns_division != 0}">
                       <button type="button" id="kakaoLogOutBtn" class="deleteAccountBtn">카카오 로그아웃</a>
                     </c:if>
+                    <button type="button" class="deleteAccountBtn" id="deleteAccountBtn">탈퇴하기</button>
                   </div>
                 </div>
               </form>

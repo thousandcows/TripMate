@@ -159,7 +159,7 @@ public class MemberService {
 			AreaDTO tdto = new AreaDTO();
 			String rate = savedAreaGrade(saveSeq);
 			if(rate == null) {
-				adto.setSavedListRate("등록된 평점이 없습니다.");
+				adto.setSavedListRate("-");
 			} else {
 				adto.setSavedListRate(rate.substring(0, 3));
 			}
@@ -167,7 +167,11 @@ public class MemberService {
 			adto.setSeq(saveSeq);
 			adto.setName(tdto.getName());
 			adto.setPhoto(tdto.getPhoto());
-			adto.setPhone(tdto.getPhone());
+			if(tdto.getPhone().equals("null")) {
+				adto.setPhone("등록된 번호가 없습니다.");
+			} else {
+				adto.setPhone(tdto.getPhone());
+			}
 			adto.setLo_detail(tdto.getLo_detail());
 			adto.setDetail(tdto.getDetail());
 			dto.add(adto);
