@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.ComReplyDAO;
 import kh.spring.dto.ComReplyDTO;
+import kh.spring.dto.ComReplyReplyDTO;
 
 @Service
 public class ComReplyService {
@@ -31,6 +32,26 @@ public class ComReplyService {
 	public int delete(int seq) {
 		
 		return rdao.delete(seq);
+	}
+	
+	public int reinsert(int rpseq, String recontent) {
+		
+		return rdao.reinsert(rpseq, recontent);
+	}
+	
+	public List<ComReplyReplyDTO> selectReAll(){
+	
+		return rdao.selectReAll();
+	}
+	
+	public int remodify(int idseq, String content) {
+		
+		return rdao.remodify(idseq, content);
+	}
+	
+	public int redelete(int idseq) {
+		
+		return rdao.redelete(idseq);
 	}
 	
 }

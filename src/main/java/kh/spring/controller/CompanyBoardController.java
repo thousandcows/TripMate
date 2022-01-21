@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.ComReplyDTO;
+import kh.spring.dto.ComReplyReplyDTO;
 import kh.spring.dto.CompanyBoardDTO;
 import kh.spring.service.ComReplyService;
 import kh.spring.service.CompanyBoardService;
@@ -92,11 +93,18 @@ public class CompanyBoardController {
 		
 		model.addAttribute("heart", boardlike);
 		
-		//댓글 갯수
+		//댓글+대댓글 갯수
+		System.out.println("seq : " + seq);
 		int replyCount = cbs.replyCount(seq);
-		dto.setRep_count(replyCount);
+		System.out.println("replyCount : " + replyCount);
+		int replyReplyCount = cbs.replyReplyCount(seq);
+		System.out.println("replyReplyCount : " + replyReplyCount);
+		dto.setRep_count(replyCount+replyReplyCount);
         List<ComReplyDTO> rep_list = crs.selectAll(seq);
+        List<ComReplyReplyDTO> re_rep_list = crs.selectReAll();
         model.addAttribute("rep_list", rep_list);
+        model.addAttribute("re_rep_list", re_rep_list);
+        
 		
 		return "companyboard/detail";
 	}

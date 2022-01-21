@@ -5,11 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>동향 게시판</title>
+<title>동행 게시판</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+<jsp:include page="../base/header.jsp"></jsp:include>
  
 <!-- fontawesome cdn -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
@@ -212,6 +213,10 @@
         /* input style */
         input:focus {outline:none;}
         
+        input{
+        	autocomplete="off" ;
+        }
+        
         /* 댓글 쓰기창 */
         .rep_con{
             width: 100%;
@@ -236,9 +241,9 @@
         /* 댓글 리스트 */
         .rep_list{ /* border: 1px solid red; */ padding:10px; margin-top:10px; }
         
-        .each_rep{/*  border: 1px solid red; */ width: 100%; border-bottom: solid 1px rgb(190, 190, 190); padding-bottom:10px; }
+        .each_rep{/*  border: 1px solid red; */ width: 100%; border-bottom: solid 1px rgb(190, 190, 190); padding-bottom:10px; float:left;}
         
-        .rep_top{ /* border: 1px solid red; */ width: 100%; }
+        .rep_top{ /* border: 1px solid red; */ width: 100%; padding-top:10px; }
         
         .rep_txt{ /* border: 1px solid red; */ width: 100%; }
         
@@ -375,54 +380,162 @@
                     	<button type="submit"  id="rep_write" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 작성</span></button>
                 	</div>
                 </form> 
-                <c:forEach var="repl" items="${rep_list }">
-                	<div class="rep_list">
-                    	<div class="each_rep">
-                        	<div class="rep_top">
-                        		<input type=hidden value="${repl.seq}" name=seq>
-            					<input type=hidden value="${repl.par_seq}" name=par_seq>
-                            	<span class="rep_writer">
-                                	${repl.mem_seq }
-                            	</span>
-                            	<span class="rep_date" > 
-                            		${repl.writen_date }
-                            	</span>
-                        	</div>
-                        	<div class="rep_txt">
-                            	<input type="text" id="e_rep_con${repl.seq }" class="e_rep_con"  name="contents" value=${repl.contents }  readonly>
-                        	</div>
-                        	<div class="rep_btn">
-                            	<button type=button id="rep_del${repl.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 삭제</span></button>
-                            	<button type=button id="rep_mod${repl.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 수정</span></button>
-                        		<button type=button id="rep_modok${repl.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 완료</span></button>
-                            	<button type=button id="rep_modcancel${repl.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 취소</span></button>
-                        	</div>
-                    	</div>
-                	</div>
-                </c:forEach>
                 
-                <%-- <form action="/comreply/modify" method="post" id="frmRpMod" enctype="multipart/form-data">
-        			<div class="reply_list">
-            			<hr>
-            			<div class="reply_title">
-           					<input type=hidden value="${rp.seq}" name=seq>
-            				<input type=hidden value="${rp.par_seq}" name=par_seq>
-                			<div class="rp_id">${rp.mem_seq }</div>
-                			<div class="rp_time" name="writen_date">${rp.writen_time }</div>
-            			</div>
-            			<br>            
-            			<div class="reply_contents " style="text-align: right;">
-                			<div class="rp_content"><input type=text value="${rp.contents }" class="rp_contents" id="rp_contents${rp.seq }" name="contents" readonly></div>
-                			<div class="rp_btns">
-                    			<button type=button class="rp_mod_btn" id="rp_mod_btn${rp.seq }">fix</button>
-                    			<button type=button class="rp_del_btn" id="rp_del_btn${rp.seq }" style="color: red;"><b>del</b></button>
-                    			<button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none;">mod</button>  
-                    			<button type=button class="rp_cancle_btn" id="rp_cancle_btn${rp.seq }" style="color: red; display: none;"><b>can</b></button>                                       
-                			</div>                
-           		 		</div><br>
-        			</div>
-        		</form> --%>
-    </div>
+                <c:forEach var="repl" items="${rep_list }">
+                	<form method="post" id="frmRpMod" enctype="multipart/form-data">
+                		<div class="rep_list">
+                    		<div class="each_rep">
+                        		<div class="rep_top">
+                        			<input type=hidden value="${repl.seq}" name=seq>
+            						<input type=hidden value="${repl.par_seq}" name=par_seq>
+                            		<span class="rep_writer">
+                                		${repl.mem_seq }
+                            		</span>
+                            		<span class="rep_date" > 
+                            			${repl.writen_date }
+                            		</span>
+                        		</div>
+                        		<div class="rep_txt">
+                          	  		<input type="text" id="e_rep_con${repl.seq }" class="e_rep_con"  name="contents" value=${repl.contents }  readonly>
+                        		</div>
+                        		<div class="rep_btn">
+                        			<button type=button id="re_rep_btn${repl.seq }" class="btn btn-primary btn-sm re_rep_btn" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">답글 달기</span></button>
+                           		 	<button type=button id="rep_del${repl.seq }" class="btn btn-primary btn-sm rep_del" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 삭제</span></button>
+                           	 		<button type=button id="rep_mod${repl.seq }" class="btn btn-primary btn-sm rep_mod" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 수정</span></button>
+                        			<button type=submit id="rep_modok${repl.seq }" class="btn btn-primary btn-sm rep_modok" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 완료</span></button>
+                            		<button type=button id="rep_modcancel${repl.seq }" class="btn btn-primary btn-sm rep_modcancel" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 취소</span></button>
+                        		</div>
+                        		
+                        		<!-- 답글 달기 창  -->
+                        		<div class="re_rep_input" id="re_rep_input${repl.seq }" style="width: 100%; float: left; margin-top:5px; display:none;">
+                        			<div style="width: 5%; float: left; text-align: right; padding-right: 10px; color: orange;"><i class="fas fa-reply fa-rotate-180"></i></div>
+                        			<div class="re_rp_contents2" style="width: 95%; float: left;">
+                        				<div class="re_reply_content">
+                            				<input type=hidden value="${dto.seq}" name=writeseq>
+                            				<input type=hidden value="${repl.seq}" name=rpseq>
+                            				<input type=text placeholder="댓글을 입력하세요" name=recontents style="width: 100%; padding: 10px; outline:none;" autocomplete="off">
+                            			</div>
+                            			<div class="re_rep_input_btn" style="text-align: right; margin-top:10px; padding-right:20px;">
+                            				<button type=submit formaction="/comreply/rereply" class="btn btn-primary btn-sm"style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 완료</span></button>
+                           	 				<button type=button class="btn btn-primary btn-sm re_rep_cancle_btn" id="re_rep_cancle_btn${repl.seq }" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 취소</span></button>
+                            			</div>
+                        			</div>               		
+                        		</div>
+                        		
+                        		<!-- 답글 -->
+                        		<c:forEach var="rerepl" items="${re_rep_list }">
+                        			<c:choose>
+                        				<c:when test="${rerepl.par_seq == repl.seq}">
+                        					<div class="re_reply" id="re_reply${repl.seq }" style="width: 100%; float: left; margin-top:5px;">
+                            					<div style="width: 5%; float: left; text-align: right; padding-right: 10px; color: orange;"><i class="fas fa-reply fa-rotate-180"></i></div>
+                            					<div style="width: 95%; float: left;">
+                                					<div class="re_rp_title" style="width: 100%;">
+                                    					<span class="re_rp_id" style="font-weight: bolder;width: 50%; display:inline-block; padding-left: 20px ;">${rerepl.mem_seq }</span>
+                                    					<span class="re_rp_time" style="color: gray; width:  49%; display:inline-block; text-align: right; padding-right: 20px;"> ${rerepl.writen_date }</span>
+                                					</div>
+                                					<div class="re_rp_contents" style="width: 100%;">
+                                						<div class="re_rp_content">
+                                    						<input type="text" class="rr_con" id="recontent${rerepl.seq }"  name="contents" value="${rerepl.contents}" style="width: 100%; padding:5px 20px 5px 20px; border: none;" readonly>
+                                						</div>
+                                						<div class="re_rp_btns" style="text-align: right; margin-top:10px; padding-right:20px;"">
+                           		 							<button type=button class="btn btn-primary btn-sm re_rep_del" id="re_rep_del${rerepl.seq }" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 삭제</span></button>
+                           	 								<button type=button class="btn btn-primary btn-sm re_rep_mod" id="re_rep_mod${rerepl.seq }" rpseq=${repl.seq } style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 수정</span></button>
+                        									<button type=button class="btn btn-primary btn-sm re_rep_modok" id="re_rep_modok${rerepl.seq }" rpseq=${repl.seq } style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 완료</span></button>
+                            								<button type=button class="btn btn-primary btn-sm re_rep_cancle" id="re_rep_cancle${rerepl.seq }" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 취소</span></button>
+                        								</div>
+                                					</div>
+                            					</div>
+                        					</div>
+                        				</c:when>
+                        			</c:choose>
+                        		</c:forEach>
+                    		</div>
+                		</div>
+                	</form>
+               	</c:forEach>
+    	</div>
+    	
+    <!-- 대댓글 -->
+   <script>
+	
+   		/* 답글 달기 창 관련 */
+		$(".re_rep_btn").on("click", function(){
+			let id = this.id.substr(10);
+			$("#re_rep_input"+id).css("display", "inline");
+		})
+		
+		$(".re_rep_cancle_btn").on("click", function(){
+			let id = this.id.substr(17)
+			$("#re_rep_input"+id).css("display", "none");
+		})
+	
+		/* 대댓글 관련 */
+   		$(".re_rep_del").on("click", function(){
+			let id = this.id.substr(10);
+			location.href = "/comreply/redelete?idseq="+id+"&writeseq=${dto.seq}";
+			})
+	
+		$(".re_rep_modok").on("click", function(){
+			let id = this.id.substr(12);
+			let rp = $(this).attr(rpseq);
+			/* console.log("id : rp = " + id + " : " + rp); */
+			let recontent = $("#recontent${rerepl.seq }"+id).val();
+			
+			location.href = "/comreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;
+		})
+		
+		$(".re_rep_cancle").on("click", function(){		
+			location.reload();
+		})
+		
+		$(".re_rep_mod").on("click", function(){
+			let id = this.id.substr(10);
+			/* let mod_id = $(this).attr("rpseq"); */
+			
+			/* console.log("mod_btn 눌렀을 때 id : mod_id = " + id + " : " + mod_id); */
+			$("#re_rep_mod"+id).css("display","none");
+			$("#re_rep_del"+id).css("display","none");
+			$("#re_rep_modok"+id).css("display","inline");
+			$("#re_rep_cancle"+id).css("display","inline");	
+			$("#recontent"+id).removeAttr("readonly");
+		})
+		
+		
+   </script>
+    
+    <!-- 댓글 -->
+	<script>
+	 	$("#rep_write").on("click", function() {
+			if (confirm("이대로 작성하시겠습니까?")) {
+				$("#frmReply").submit();
+			}
+		});
+	 	
+	 	$(".rep_del").on("click", function() {
+			if (confirm("댓글을 삭제하시겠습니까?")) {
+				let id = this.id.substr(7);
+				location.href = "/comreply/delete?rpseq=" + id	+ "&bseq=${dto.seq}";
+			}
+		})
+		
+		$(".rep_mod").on("click", function() {
+			//${rp.seq }
+			let id = this.id.substr(7);
+
+			/* rpContents = $("#contents" + id).val(); */
+			$("#rep_mod" + id).css("display", "none");
+			$("#rep_del" + id).css("display", "none");
+			$("#rep_modcancel" + id).css("display", "inline");
+			$("#rep_modok" + id).css("display", "inline");
+			/* $("#rep_reply" + id).css("display", "none"); */
+			$("#e_rep_con" + id).removeAttr("readonly");
+			$("#e_rep_con" + id).css("border", "1px solid gray");
+		})
+	 	
+		$(".rep_modcancle").on("click", function() {
+			location.reload();
+		})
+	</script>    
     
     <!-- 목록으로 / 삭제하기 -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -628,13 +741,6 @@
     });
     </script>
     
-    <!-- 댓글 -->
-	<script>
-	 	$("#rep_write").on("click", function() {
-			if (confirm("이대로 작성하시겠습니까?")) {
-				$("#frmReply").submit();
-			}
-		});
-	</script>    
+    
 </body>
 </html>

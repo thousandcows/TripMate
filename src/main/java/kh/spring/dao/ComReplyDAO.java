@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.ComReplyDTO;
+import kh.spring.dto.ComReplyReplyDTO;
 
 @Repository
 public class ComReplyDAO {
@@ -58,5 +59,36 @@ public class ComReplyDAO {
 	public int deleteAll(int seq) {
 		
 		return mybatis.delete("ComReply.deleteAll", seq);
+	}
+	
+	public int reinsert(int rpseq, String recontent) {
+
+		Map<String, String> map = new HashMap<>();
+		map.put("rpseq", String.valueOf(rpseq));
+		map.put("recontent", recontent);
+
+		return mybatis.insert("ComReply.reinsert", map);
+	}
+	
+	public List<ComReplyReplyDTO> selectReAll(){
+		
+		return mybatis.selectList("ComReply.selectReAll");
+	}
+	
+	public int remodify(int idseq, String recontent) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("idseq", String.valueOf(idseq));
+		map.put("recontent", recontent);
+
+		return mybatis.update("ComReply.remodify", map);
+	}
+	
+	public int redelete(int idseq) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("idseq", String.valueOf(idseq));
+		System.out.println(idseq);
+		return mybatis.delete("ComReply.redelete", map);
 	}
 }

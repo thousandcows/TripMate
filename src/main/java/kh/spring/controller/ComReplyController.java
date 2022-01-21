@@ -31,13 +31,36 @@ public class ComReplyController {
 		int result = crs.modify(rdto);
 		
 		int bseq = rdto.getPar_seq();
-		return "redirect:/tourboard/detail?seq="+bseq;
+		return "redirect:/companyboard/detail?seq="+bseq;
 	}
 	
 	@RequestMapping("delete")
 	public String delete(int rpseq, int bseq) {
 		
 		crs.delete(rpseq);				
-		return "redirect:/tourboard/detail?seq="+bseq;
+		return "redirect:/companyboard/detail?seq="+bseq;
+	}
+	
+	@RequestMapping("rereply")
+	public String rereply(int writeseq, int rpseq, String recontents) {
+		
+		crs.reinsert(rpseq, recontents);
+		return "redirect:/companyboard/detail?seq="+writeseq;
+	}
+	
+	@RequestMapping("remodify")
+	public String remodify(int writeseq, int idseq, String recontent) {
+		
+		System.out.println(idseq + " : " + recontent);
+		crs.remodify(idseq, recontent);
+		return "redirect:/companyboard/detail?seq="+writeseq;
+	}
+	
+	@RequestMapping("redelete")
+	public String redelete(int idseq, int writeseq) {
+		
+		System.out.println(idseq + " : " + writeseq);
+		crs.redelete(idseq);
+		return "redirect:/companyboard/detail?seq="+writeseq;
 	}
 }

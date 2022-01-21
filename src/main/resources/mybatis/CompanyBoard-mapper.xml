@@ -70,4 +70,9 @@
 		<select id="replyCount" resultType="int">
      		select count(*) from com_reply where par_seq = #{seq}
      	</select>
+     	
+     	<!-- 대댓글 개수 -->
+     	<select id="replyReplyCount" resultType="int">
+     		select count(*) from company_board b join com_reply r on(b.seq=r.par_seq) join com_reply_reply p on(r.seq=p.par_seq) where r.par_seq = #{seq} 
+    	</select>
   </mapper>
