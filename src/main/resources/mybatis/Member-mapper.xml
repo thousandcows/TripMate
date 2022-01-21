@@ -71,4 +71,13 @@
 		select photo from member where seq = #{value}
 	</select>
 	
+	<!-- 찜목록 시작 -->
+	<select id="mySaveListSeq" resultType="Integer">
+		select area_seq from (select saved.*, row_number() over(order by seq desc)rn from saved) where (rn between #{start} and #{end}) and mem_seq = #{loginSeq}
+	</select>
+	
+	<select id="savedAreaGrade" resultType="String">
+		select avg(score) from area_reply where area_seq = #{value}
+	</select>
+	
 </mapper>

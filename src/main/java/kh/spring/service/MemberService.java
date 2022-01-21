@@ -2,13 +2,19 @@ package kh.spring.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+
 import kh.spring.dao.MemberDAO;
+import kh.spring.dto.AreaDTO;
+import kh.spring.dto.AreaSavedDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.utils.EncryptUtils;
 
@@ -17,6 +23,9 @@ public class MemberService {
 
 	@Autowired
 	MemberDAO memberDao;
+	
+	@Autowired
+	AreaService aService;
 	
 	// 이메일 체크
 	public int emailCheck(String email){
@@ -119,6 +128,51 @@ public class MemberService {
 	// 회원탈퇴
 	public int deleteAccount(int seq) {
 		return memberDao.deleteAccount(seq);
+	}
+	
+	// 상대 회원 조회
+	public String showMember(int mem_seq) {
+		MemberDTO dto = memberDao.myInfoSelectAll(mem_seq);
+		Gson gson = new Gson();
+		dto.setPw("");
+		String result = gson.toJson(dto);
+		return result;
+	}
+	
+	///////// 찜목록 시작 ///////////
+	public List<Integer> mySaveListSeq(int loginSeq, int start, int end){
+		return memberDao.mySaveListSeq(loginSeq, start, end);
+	}
+	
+	public String savedAreaGrade(int seq) {
+		return memberDao.savedAreaGrade(seq);
+	}
+	
+	public String moreSaving(int loginSeq, int btn) throws Exception{
+		Gson gson = new Gson();
+		int start = btn;
+		int end = start + 7;
+		List<Integer>mySaveListSeq = mySaveListSeq(loginSeq, start, end);
+		List<AreaSavedDTO> dto = new ArrayList<>();
+		for(int saveSeq : mySaveListSeq) {
+			AreaSavedDTO adto = new AreaSavedDTO(); // 상속받았는데 왜 ArrayList가 안받아지는가
+			AreaDTO tdto = new AreaDTO();
+			String rate = savedAreaGrade(saveSeq);
+			if(rate == null) {
+				adto.setSavedListRate("등록된 평점이 없습니다.");
+			} else {
+				adto.setSavedListRate(rate.substring(0, 3));
+			}
+			tdto = aService.detailBuild(saveSeq);
+			adto.setSeq(saveSeq);
+			adto.setName(tdto.getName());
+			adto.setPhoto(tdto.getPhoto());
+			adto.setPhone(tdto.getPhone());
+			adto.setLo_detail(tdto.getLo_detail());
+			adto.setDetail(tdto.getDetail());
+			dto.add(adto);
+		}
+		return gson.toJson(dto);
 	}
 	
 	
