@@ -6,6 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>title here</title>
+
+<!-- datepicker -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -123,17 +130,7 @@ body {
 	padding: 0px 80px 0px 80px;
 }
 
-.icons {
-	border: 1px solid red;
-	padding: 0px 80px 0px 80px;
-	overflow: auto;
-}
 
-.icons>div {
-	float: left;
-	border: 1px solid red;
-	padding-right: 20px;
-}
 
 .reply {
 	border: 1px solid red;
@@ -270,13 +267,27 @@ a:active {
 	color: rgb(56, 181, 174);
 }
 
-.fa-thumbs-up, .fa-comment-dots {
-	color: rgb(151, 151, 151);
-}
 
-.icon_recommand :hover {
-	cursor: pointer;
-}
+/* 좋아요, 댓글란  */
+        .like_n_rep{
+        	border: 1px solid red;
+        	width: 100%;
+        	height: 30px;
+        	text-align: right;
+        }
+        
+        .like_n_rep>div{
+        	border: 1px solid red;
+        	height:30px;
+        	width: 55px;
+        	text-align:center;
+        	float: left;
+        	line-height:30px;
+        }
+        
+        #heart{
+        	cursor: pointer;
+        }
 </style>
 </head>
 
@@ -334,20 +345,24 @@ a:active {
 			</div>
 		</form>
 		<br>
-		<div class="icons">
-			<div class="icon_recommand">
-				<i class="fas fa-thumbs-up fa-lg"> 3</i>
-			</div>
-			<div class="icon_reply">
-				<i class="far fa-comment-dots fa-lg"> ${dto.rep_count }</i>
-			</div>
-		</div>
+		
+		<div class="like_n_rep">
+        	<div id=like_icon>
+          		<a class="heart">
+           			<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count">${dto.rec_count}</span>
+       			</a>
+            </div>
+            <div id=rep_icon>
+                <i class="far fa-comment-dots" style="color: black"></i><span id="rep_count" name="rep_count"> ${dto.rep_count}</span>
+            </div>
+       </div>
+               
 		<br>
 		<form action="/tourreply/reply" method="post" id="frmReply"	enctype="multipart/form-data">
 			<div class="reply">
 				<input type=hidden value="${dto.seq}" name=rseq>
 				<div class="rp_input">
-					<input type=text placeholder="댓글을 입력하세요" style="width: 100%; height: 30px;" name="reply">
+					<input type=text placeholder="댓글을 입력하세요" style="width: 100%; height: 30px;" id="rep_con" name="reply">
 				</div>
 				<div class="rp_write" style="text-align: right;">
 					<button type=submit id="write_btn">작성하기</button>
@@ -420,7 +435,10 @@ a:active {
 			</c:forEach>			
 		</div>        
 
-	</div>
+	</div>	
+	
+	<!-- 좋아요 -->
+    
 	
 	<script>
 		$(".re_del_btn").on("click", function(){
@@ -469,6 +487,7 @@ a:active {
 			$("#re_reply_input"+id).css("display", "none");
 		})
 	</script>
+	
 	<script>
 		$(".rp_reply_btn").on("click", function(){
 			let id = this.id.substr(12);
@@ -508,9 +527,18 @@ a:active {
 
 	<script>
 		$("#write_btn").on("click", function() {
-			if (confirm("이대로 작성하시겠습니까?")) {
-				$("#frmReply").submit();
-			}
+			
+			if($("#rep_con").val() == ""){
+	             alert("댓글을 작성해주세요");
+	             return false;
+	          }else{ 
+	             if(confirm("이대로 작성하시겠습니까?")){
+	                $("#frmReply").submit();
+	             }else{
+	                $("#rep_con").val() = "";
+	                return false;
+	             }
+	          }
 		});
 	</script>
 
@@ -629,6 +657,59 @@ a:active {
 			$('#summernote').summernote('disable');
 		});
 	</script>
+
+
+   <!-- 좋아요 -->
+    <script>
+    $(document).ready(function () {
+
+        var heartval = ${heart};
+
+        if(heartval>0) {
+        	 //console.log("heartval>0 "+heartval + " : " + ${heart});
+            $("#heart").prop("src", "/images/like.png");
+            $(".heart").prop('name',heartval)
+        }
+        else {
+        	 //console.log("else "+heartval + " : " + ${heart});
+            $("#heart").prop("src", "/images/dislike.png");
+            $(".heart").prop('name',heartval)
+        }
+
+    });
+    
+    $(".heart").on("click", function () {
+
+        var that = $(".heart");
+
+        var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name'), 'rec_count_no' : '${dto.rec_count}'};
+        
+        //console.log(that.prop('name'));
+        
+        $.ajax({
+            url :'/tourboard/heart',
+            type :'POST',
+            data : sendData,
+            success : function(data){
+                that.prop('name',data.heart);   
+    		    
+                var heart = data.heart;
+                var rec_count_no = data.rec_count_no;
+                
+                if(heart==1) {
+                    $('#heart').prop("src","/images/like.png");
+                    console.log("heart값이 1일때 dto의 추천수 : " + rec_count_no);
+                    $('#rec_count').html(data.rec_count_no);
+                }
+                else{
+                    $('#heart').prop("src","/images/dislike.png");
+                    console.log("heart값이 0일때 dto의 추천수 : " + rec_count_no);
+                    $('#rec_count').html(data.rec_count_no);
+                }
+            }
+        });
+    });
+    </script>
 
 </body>
 </html>
