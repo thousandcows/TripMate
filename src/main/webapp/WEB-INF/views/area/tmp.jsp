@@ -96,11 +96,12 @@
 				}else{
 					val = this.id;
 				}
-			let target =${target};
-			if(target ==null){
+				let target = '${target}';
+			
+			if(target == ""){
 				location.href="/area/main?area="+${areaCode}+"&contentType="+${contentType}+"&page="+val;				
 			}else{
-				location.href="/area/main?area="+${areaCode}+"&contentType="+${contentType}+"&target="+target+"&page="+val;
+				location.href="/area/main?area="+${areaCode}+"&contentType="+${contentType}+"&target=${target}&page="+val;
 			}
 		})
 	</script>

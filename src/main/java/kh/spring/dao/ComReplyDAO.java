@@ -55,12 +55,18 @@ public class ComReplyDAO {
 	
 	public int delete(int seq) {
 		
+		mybatis.delete("ComReply.deleteReply", seq);
 		return mybatis.delete("ComReply.delete", seq);
 	}
 	
 	public int deleteAll(int seq) {
 		
 		return mybatis.delete("ComReply.deleteAll", seq);
+	}
+	
+	public int deleteAllRe(int seq) {
+		
+		return mybatis.delete("ComReply.deleteAllRe", seq);
 	}
 	
 	public int reinsert(int rpseq, String recontent) {

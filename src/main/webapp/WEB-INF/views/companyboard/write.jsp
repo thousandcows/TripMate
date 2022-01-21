@@ -296,7 +296,7 @@
     	
     	$j112(document).ready(function () {
     		$j112("#startDate").datepicker({
-                dateFormat: "yy년 mm월 dd일", // 날짜의 형식
+                dateFormat: "yy-mm-dd", // 날짜의 형식
                 minDate: 0,
                 nextText: ">",
                 prevText: "<",
@@ -312,7 +312,7 @@
                 }
             });
     		$j112('#endDate').datepicker({
-                dateFormat: "yy년 mm월 dd일", // 날짜의 형식
+                dateFormat: "yy-mm-dd", // 날짜의 형식
                 nextText: ">",
                 prevText: "<"
             });
