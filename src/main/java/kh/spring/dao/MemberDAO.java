@@ -1,6 +1,7 @@
 package kh.spring.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -112,6 +113,20 @@ public class MemberDAO {
 	// 회원탈퇴
 	public int deleteAccount(int seq) {
 		return mybatis.delete("Member.deleteAccount", seq);
+	}
+	
+	///// 찜목록 가져오기 시작 /////
+	public List<Integer> mySaveListSeq(int loginSeq, int start, int end) {
+		Map<String, String> map = new HashMap<>();
+		map.put("loginSeq", String.valueOf(loginSeq));
+		map.put("start", String.valueOf(start));
+		map.put("end", String.valueOf(end));
+		return mybatis.selectList("Member.mySaveListSeq", map);
+	}
+	
+	// 찜목록 평점
+	public String savedAreaGrade(int seq){
+		return mybatis.selectOne("Member.savedAreaGrade", seq);
 	}
 	
 }
