@@ -37,7 +37,7 @@ public class ComReplyController {
 	@RequestMapping("delete")
 	public String delete(int rpseq, int bseq) {
 		
-		crs.delete(rpseq);				
+		crs.delete(rpseq);
 		return "redirect:/companyboard/detail?seq="+bseq;
 	}
 	
