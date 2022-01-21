@@ -25,6 +25,10 @@
 		delete from com_reply where par_seq=#{seq}		
 	</delete>
 	
+	<delete id="deleteAllRe">
+		delete from com_reply_reply where par_seq=#{seq}		
+	</delete>
+	
 	<insert id="reinsert">
 		insert into com_reply_reply values(comrr_seq.nextval, #{rpseq}, 1, #{recontent}, default)
 	</insert>

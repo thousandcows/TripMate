@@ -102,10 +102,7 @@ public class CompanyBoardController {
 		dto.setRep_count(replyCount+replyReplyCount);
         List<ComReplyDTO> rep_list = crs.selectAll(seq);
         List<ComReplyReplyDTO> re_rep_list = crs.selectReAll();
-        
-        System.out.println("rep_list.get(0) : "  + rep_list.get(0).getContents());
-        System.out.println("rep_list.get(1) : "  + rep_list.get(1).getContents());
-        
+
         model.addAttribute("rep_list", rep_list);
         model.addAttribute("re_rep_list", re_rep_list);
         
