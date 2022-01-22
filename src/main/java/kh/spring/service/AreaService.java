@@ -355,7 +355,10 @@ public class AreaService {
 					addr1 = addr1.substring(1,addr1.length()-1);
 					String cat1 = tmp.get("cat1").toString();
 					cat1 = categorySort(cat1.substring(1,cat1.length()-1));
-					int areacode = tmp.get("areacode").getAsInt();
+					int areacode = 0;
+					if(tmp.has("areacode")) {
+						areacode = tmp.get("areacode").getAsInt();						
+					}
 					String cat3 = tmp.get("cat3").toString();
 					cat3 = cat3.substring(1,cat3.length()-1);
 					String firstimage = "";
@@ -592,5 +595,20 @@ public class AreaService {
 			}
 		}
 		return result;
+	}
+	
+	public void checkDB(String[] check) {
+		
+		for(int i = 0; i<check.length;i++) {
+			String[] arr = check[i].split("&");
+			int seq = Integer.parseInt(arr[0]);
+			AreaDTO dto = new AreaDTO();
+			dto.setName(arr[1]);
+			dto.setLocation(arr[2]);
+			dto.setPhoto(arr[3]);
+			if(dao.checkDB(seq) == 0) {
+				dao.insertArea(seq,dto);
+			}							
+		}
 	}
 }
