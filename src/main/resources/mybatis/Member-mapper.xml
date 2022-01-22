@@ -80,4 +80,26 @@
 		select round(avg(score),2) from area_reply where area_seq = ${value}
 	</select>
 	
+	<!-- 게시글 관리 -->
+	<select id="getMyPostCountC" resultType="int">
+		select count(*) from company_board where mem_seq = ${value}
+	</select>
+	<select id="getMyPostCountT" resultType="int">
+		select count(*) from tour_board where mem_seq = ${value}
+	</select>
+	
+	<select id="getMyPostList" resultType="kh.spring.dto.MyPostDTO">
+		SELECT *
+		FROM(
+		SELECT seq, title, view_count, rec_count, rep_count, writen_date, board_num, ROW_NUMBER() OVER(ORDER BY seq desc) rn
+		FROM(
+		SELECT seq, title, view_count, rec_count, rep_count, writen_date, board_num
+		FROM tour_board
+		WHERE mem_seq = #{loginSeq}
+		UNION ALL
+		SELECT seq, title, view_count, rec_count, rep_count, writen_date, board_num
+		FROM company_board
+		WHERE mem_seq = #{loginSeq}))
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
 </mapper>

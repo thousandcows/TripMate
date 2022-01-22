@@ -1,6 +1,7 @@
 package kh.spring.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -32,5 +33,17 @@ public class PlanDAO {
 		map.put("area_seq", check);
 		map.put("par_seq", par_seq);
 		mybatis.insert("Plan.saveList",map);
+	}
+	
+	public List<PlanDTO> listing(int seq,int startNum,int endNum){
+		Map<String,Integer> map = new HashMap<>();
+		map.put("seq", seq);
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		return mybatis.selectList("Plan.getList",map);
+	}
+	
+	public int listCount(int seq) {
+		return mybatis.selectOne("Plan.listCount",seq);
 	}
 }

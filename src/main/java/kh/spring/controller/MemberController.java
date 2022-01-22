@@ -3,7 +3,6 @@ package kh.spring.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -33,10 +32,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 
 import kh.spring.dto.AreaDTO;
-import kh.spring.dto.AreaSavedDTO;
 import kh.spring.dto.KakaoProfile;
 import kh.spring.dto.KakaoToken;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.MyPostDTO;
 import kh.spring.service.AreaService;
 import kh.spring.service.MemberService;
 import kh.spring.statics.Statics;
@@ -186,10 +185,8 @@ public class MemberController {
 
 		// json객체를 자바객체로 변환
 		KakaoToken data = gson.fromJson(response.getBody(), KakaoToken.class);
-		// 얻은 액세스 토큰
-		System.out.println("얻어낸 액세스 토큰" + data.getAccess_token());
 
-		/////// 액세스토큰을 이용해 유저정보 받기 //////
+		// 액세스토큰을 이용해 유저정보 받기
 		RestTemplate rt2 = new RestTemplate();
 
 		// HttpHeader2 오브젝트 생성
@@ -204,8 +201,6 @@ public class MemberController {
 		ResponseEntity<String> response2 = rt2.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.POST,
 				kakaoTokenRequest2, String.class);
 		// 유저 정보 빼오기
-		System.out.println("얻어낸 카카오 유저정보 : " + response2.getBody());
-
 		// jsonpojo로 바꾸면 카멜케이스때문에 에러나는데 일일히 바꿔줬음. 근데 한번에 바꾸는거 있을듯.
 		// 카카오 프로필정보 빼오는 코드(사용자가 동의 안해도 다빼옴;)
 		KakaoProfile kProfile = gson.fromJson(response2.getBody(), KakaoProfile.class);
@@ -329,6 +324,27 @@ public class MemberController {
 	public String moreSaving(int btn) throws Exception {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		return memberService.moreSaving(loginSeq, btn);
+	}
+
+	// 게시글 관리
+	@RequestMapping("writenList")
+	public String writenList(Model model, Integer currentPage) {
+		int loginSeq = (int) session.getAttribute("loginSeq");
+		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
+		String filePath = "\\images" + "\\" + dto.getPhoto();
+		dto.setPhoto(filePath); // 프로필 사진 설정
+		int cpage = memberService.myPostPageDefender(loginSeq, currentPage);
+
+		int start = cpage * Statics.RECORD_COUNT_PER_PAGE - (Statics.RECORD_COUNT_PER_PAGE - 1);
+		int end = cpage * Statics.RECORD_COUNT_PER_PAGE;
+
+		List<MyPostDTO> list = memberService.getMyPostList(loginSeq, start, end);
+		String navi = memberService.getMyPostNavi(loginSeq, cpage);
+		
+		model.addAttribute("navi", navi);
+		model.addAttribute("list", list);
+		model.addAttribute("loginInfo", dto);
+		return "mypage/writenList";
 	}
 
 	// 에러는 여기로
