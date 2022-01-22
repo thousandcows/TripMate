@@ -25,5 +25,13 @@
 		insert into detail_plan values(#{par_seq},#{area_seq},(select startDate from plan where seq=#{par_seq}))
 	</insert>
 
+	<select id="listCount" resultType="int">
+		select count(*) from plan where mem_seq = #{value}
+	</select>
+	
+	<select id="getList" resultType="kh.spring.dto.PlanDTO">
+		select * from (select plan.* , row_number() over(order by seq desc) rn from plan where mem_seq = #{seq})where rn between #{startNum} and #{endNum}
+		
+	</select>
 
-</mapper>
+</mapper> 

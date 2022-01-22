@@ -45,4 +45,11 @@
 		select avg(score) from area_reply where area_seq = #{value}
 	</select>
 	
+	<select id="checkDB" resultType="int">
+		select count(*) from area where seq = #{value}
+	</select>
+	
+	<insert id="insertArea">
+		insert into area values(#{seq},#{name},#{location},#{photo})
+	</insert>
 </mapper>

@@ -596,4 +596,19 @@ public class AreaService {
 		}
 		return result;
 	}
+	
+	public void checkDB(String[] check) {
+		
+		for(int i = 0; i<check.length;i++) {
+			String[] arr = check[i].split("&");
+			int seq = Integer.parseInt(arr[0]);
+			AreaDTO dto = new AreaDTO();
+			dto.setName(arr[1]);
+			dto.setLocation(arr[2]);
+			dto.setPhoto(arr[3]);
+			if(dao.checkDB(seq) == 0) {
+				dao.insertArea(seq,dto);
+			}							
+		}
+	}
 }

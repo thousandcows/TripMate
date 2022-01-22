@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -128,7 +129,6 @@
 					<div class="col">
 						<button type="button" id="searchCallBtn">검색</button>
 						<button type="button" id="savedCallBtn">찜 목록</button>
-						</select>
 					</div>
 				</div>
 				
@@ -137,8 +137,8 @@
 						<div class="row">
 							<div class="col">
 								<form id="searchForm" name="searchForm" method="post">
-									<input type="text" name="target" placeholder="검색어를 입력하세요."> 
-									<input type="hidden" value=1 name="page"> 
+									<input type="text" name="target" placeholder="검색어를 입력하세요." id="searchTarget"> 
+									<input type="hidden" value=1 name="page" id="searchPageNo"> 
 									<input type="submit" onclick="searching(); return false">
 								</form>												
 							</div>
@@ -146,6 +146,7 @@
 						
 						<form action="/plan/saveList" method="post">
 						<div class="row">
+								<input type="submit" class="btn" value="저장하기">
 							<div class="col" id="searchResult">
 								검색 결과가 없습니다.
 							</div>
@@ -153,19 +154,69 @@
 						<div class="row">
 							<div class="col">
 								<input type="hidden" name="seq" value="${seq }">
-								<input type="submit" class="btn" value="저장하기">
 							</div>
 						</div>
 						</form>
 					</div>
 				</div>
 				
-				
+				<form action="/plan/saveList" method="post">
 				<div class="row" id="saved" style="display:none;">
 					<div class="col">
-						찜목록
+						<div class="row justify-content-center mt-4">
+							<input type="submit" class="btn" value="저장하기">
+							<input type="hidden" name="seq" value="${seq }">
+							
+				              <c:forEach var='cnt' items="${saveList}" varStatus="status">
+				              <input type="checkbox" name="check" class="check" value="${mySaveListSeq[status.index]}&${cnt.name }&${cnt.lo_detail}&${cnt.photo }">
+				                <div class="col-9 align-self-center mt-4 delParent">
+				                  <div class="row">
+				                    <div class="col-4">
+				                      <a href="/area/detail?num=${mySaveListSeq[status.index]}">
+				                        <img style="height:170px;" class="w-100" src="${cnt.photo}">
+				                      </a>
+				                    </div>
+				                    <div class="col-8">
+				                      <div class="row">
+				                        <div class="col-10"><a href="/area/detail?num=${mySaveListSeq[status.index]}">${cnt.name}</a>
+				                        </div>
+				                      </div>
+				                      <div class="row">
+				                        <div class="col">${cnt.lo_detail}</div>
+				                      </div>
+				
+				                      <div class="row align-items-end mb-0  h-50">
+				                        <div class="col-2">
+				                          <ul class="list-group-horizontal star p-0">
+				                            <li>평점 :&nbsp;</li>
+				                            <li>
+				                              <c:if test="${empty savedListRate[status.index]}">
+				                                -
+				                              </c:if>
+				                              ${savedListRate[status.index]}
+				                            </li>
+				                          </ul>
+				                        </div>
+				                      </div>
+				                    </div>
+				                  </div>
+				                </div>
+				              </c:forEach>
+				              <div id="seeMoreTag"></div>
+            </div>
+
+            <c:if test="${fn:length(isMySaveListMore) == 1}">
+            <div class="row mt-4 mb-4" id="seeMoreDel">
+              <div class="col text-center">
+                <button type="button" class="btn btn-success" id="seeMore">더보기</button>
+              </div>
+            </div>
+            </c:if>
 					</div>
 				</div>
+			</form>
+			
+			
 			</div>			
 		</div>
 		
@@ -288,24 +339,89 @@
             cache: false,
             data: formData, // data에 바로 serialze한 데이터를 넣는다.
             success: function(data){
+            	//리스트 출력
             	let value = "";
                 for(let i = 0; i<data.response.body.items.item.length;i++){
 			    	let sData = data.response.body.items.item[i];
-			    	value += '<div class="row border"> <div class="col"> <input type="checkbox" name="check" class="check" value="'+sData.contentid+'"> <span>'+sData.title+'</span><br> <span>'+sData.addr1+'</span><br> <img src="'+sData.firstimage+'" style="width:150px;height:100px;"> </div></div>';
+			    	value += '<div class="row border"> <div class="col"> <input type="checkbox" name="check" class="check" value="'+sData.contentid+'&'+sData.title+'&'+sData.addr1+'&'+sData.firstimage+'"> <div>'+sData.title+'</div><br> <div>'+sData.addr1+'</div><br><div> <img src="'+sData.firstimage+'" style="width:150px;height:100px;"></div> </div></div>';
 	            }
                 value +='   <div class="btn-toolbar" role="toolbar" aria-label="Pagination"> <div class="btn-group me-2 mb-2" role="group" aria-label="First group">';
-				let totalPage = data.response.body.totalCount/data.resonpse.body.numOfRows;
+				let totalPage = data.response.body.totalCount/data.response.body.numOfRows;
 				let pageNo = data.response.body.pageNo;
-				for(let i = 0; i<totalPage;i++){
-					
+				//페이징
+				value +='<div class="btn-toolbar" role="toolbar" aria-label="Pagination"> <div class="btn-group me-2 mb-2" role="group" aria-label="First group">';
+				if(pageNo>1){
+					value +='<button type="button" class="btn btn-outline-secondary page" id='+(pageNo-1)+'>이전 페이지</button>';
 				}
-            $("#searchResult").html(value);
+				if(pageNo<totalPage){
+					value +='<button type="button" class="btn btn-outline-secondary page" id='+(pageNo+1)+'>다음 페이지</button>';					
+				}
+	            $("#searchResult").html(value);
+            
+            
                 console.log(data.response.body.totalCount);
                 
             }
         }) 
-    } 
+    }
+	
+	$(document).on("click",".page",function(){
+		console.log(this.id);
+		$("#searchPageNo").val(this.id);
+		searching();
+		return false;
+	})
 		
+	
+	//찜목록 더보기
+        let btn = 1;
+        let isMore;
+        $("#seeMore").on("click", function () {
+          btn += 7;
+          $.ajax({
+            url: "/member/moreSaving",
+            data: { btn: btn }
+          }).done(function (res) {
+            let result = JSON.parse(res);
+            for (let i = 0; i < result.length; i++) {
+              $("#seeMoreTag").before(
+                `<input type="checkbox" name="check" class="check" value="\${result[i].seq}&\${result[i].name }&\${result[i].lo_datail}&\${result[i].photo }">
+                <div class="col-9 align-self-center mt-4 delParent">
+                  <div class="row">
+                    <div class="col-4">
+                      <a href="/area/detail?num=\${result[i].seq}">
+                        <img style="height:170px;" class="w-100" src="\${result[i].photo}">
+                      </a>
+                    </div>
+                    <div class="col-8">
+                      <div class="row">
+                        <div class="col-10"><a
+                            href="/area/detail?num=\${result[i].seq}">\${result[i].name}</a></div>
+                      </div>
+                      <div class="row">
+                        <div class="col">\${result[i].lo_detail}</div>
+                      </div>
+                      <div class="row align-items-end mb-0  h-50">
+                        <div class="col-2">
+                          <ul class="list-group-horizontal star p-0">
+                            <li>평점 :&nbsp;</li>
+                            <li>
+                              \${result[i].savedListRate}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>`
+              )
+              isMore = result[i].isMore;
+            }
+            if (isMore == 0) {
+              $("#seeMoreDel").empty();
+            }
+          })
+        });
 		</script>
 </body>
 </html>
