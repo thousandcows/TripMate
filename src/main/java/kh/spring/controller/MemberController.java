@@ -333,14 +333,13 @@ public class MemberController {
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
 		String filePath = "\\images" + "\\" + dto.getPhoto();
 		dto.setPhoto(filePath); // 프로필 사진 설정
+		
 		int cpage = memberService.myPostPageDefender(loginSeq, currentPage);
-
 		int start = cpage * Statics.RECORD_COUNT_PER_PAGE - (Statics.RECORD_COUNT_PER_PAGE - 1);
 		int end = cpage * Statics.RECORD_COUNT_PER_PAGE;
 
 		List<MyPostDTO> list = memberService.getMyPostList(loginSeq, start, end);
 		String navi = memberService.getMyPostNavi(loginSeq, cpage);
-		
 		model.addAttribute("navi", navi);
 		model.addAttribute("list", list);
 		model.addAttribute("loginInfo", dto);

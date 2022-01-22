@@ -221,7 +221,6 @@ public class MemberService {
 	// 네비
 	public String getMyPostNavi(int loginSeq, int cpage) {
 		int pageTotalCount = getMyPostPageTotalCount(loginSeq);
-		
 		int startNavi = (cpage-1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
 		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;
 		
@@ -258,12 +257,16 @@ public class MemberService {
 	
 	// cpage조정
 	public int myPostPageDefender(int loginSeq, Integer currentPage) {
-		if(currentPage == null) {currentPage = 1;}
+		System.out.println("빌더들어오는 currentPage값 : " + currentPage);
+		if(currentPage == null || currentPage == 0) {currentPage = 1;}
+		System.out.println("1로 바뀐 currentPage값 : " + currentPage);
 		int cpage = currentPage;
+		System.out.println("current에서 cpage로 바뀐 값 : " + cpage);
 		if(cpage < 1) {
 			cpage = 1;
 		}
 		int pageTotalCount = getMyPostPageTotalCount(loginSeq);
+		System.out.println("토탈카운트 얘가 0이군" + pageTotalCount);
 		if(cpage > pageTotalCount) {
 			cpage = pageTotalCount;
 		}
