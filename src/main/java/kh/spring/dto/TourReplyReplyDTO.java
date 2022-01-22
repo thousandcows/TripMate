@@ -7,16 +7,21 @@ public class TourReplyReplyDTO {
 	private int par_seq;
 	private int mem_seq;
 	private String contents;
-	private Date writen_time;
+	private Date writen_date;
+	private String nick;	
 	
-	public TourReplyReplyDTO() {}
-	public TourReplyReplyDTO(int seq, int par_seq, int mem_seq, String contents, Date writen_time) {
+	public TourReplyReplyDTO() {
+		
+	}
+	
+	public TourReplyReplyDTO(int seq, int par_seq, int mem_seq, String contents, Date writen_date, String nick) {
 		super();
 		this.seq = seq;
 		this.par_seq = par_seq;
 		this.mem_seq = mem_seq;
 		this.contents = contents;
-		this.writen_time = writen_time;
+		this.writen_date = writen_date;
+		this.nick = nick;
 	}
 	public int getSeq() {
 		return seq;
@@ -42,11 +47,19 @@ public class TourReplyReplyDTO {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public Date getWriten_time() {
-		return writen_time;
+	public Date getWriten_date() {
+		return writen_date;
 	}
-	public void setWriten_time(Date writen_time) {
-		this.writen_time = writen_time;
+	public void setWriten_date(Date writen_date) {
+		this.writen_date = writen_date;
 	}
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+	
+	
 	
 }
