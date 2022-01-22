@@ -281,7 +281,6 @@
 		
 	function searching() {
         var formData = $('#searchForm').serialize() // serialize 사용
-        console.log(formData);
         $.ajax({
             url: "/plan/search",
             type: "POST",
@@ -289,15 +288,18 @@
             cache: false,
             data: formData, // data에 바로 serialze한 데이터를 넣는다.
             success: function(data){
-                console.log(data);
-                console.log(data.response.body.numOfRows);
             	let value = "";
                 for(let i = 0; i<data.response.body.items.item.length;i++){
 			    	let sData = data.response.body.items.item[i];
 			    	value += '<div class="row border"> <div class="col"> <input type="checkbox" name="check" class="check" value="'+sData.contentid+'"> <span>'+sData.title+'</span><br> <span>'+sData.addr1+'</span><br> <img src="'+sData.firstimage+'" style="width:150px;height:100px;"> </div></div>';
 	            }
+                value +='   <div class="btn-toolbar" role="toolbar" aria-label="Pagination"> <div class="btn-group me-2 mb-2" role="group" aria-label="First group">';
+				let totalPage = data.response.body.totalCount/data.resonpse.body.numOfRows;
+				let pageNo = data.response.body.pageNo;
+				for(let i = 0; i<totalPage;i++){
+					
+				}
             $("#searchResult").html(value);
-
                 console.log(data.response.body.totalCount);
                 
             }
