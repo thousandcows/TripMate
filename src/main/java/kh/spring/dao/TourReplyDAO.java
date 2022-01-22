@@ -18,11 +18,12 @@ public class TourReplyDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
-	public int insert(int rseq, String reply) {
+	public int insert(int rseq, String reply, String loginNick) {
 
 		Map<String, String> map = new HashMap<>();
 		map.put("rseq", String.valueOf(rseq));
 		map.put("reply", reply);
+		map.put("nick", loginNick);
 		return mybatis.insert("TourReply.insert", map);
 	}
 
@@ -38,7 +39,8 @@ public class TourReplyDAO {
 				dto.setPar_seq(list.get(i).getPar_seq());
 				dto.setMem_seq(list.get(i).getMem_seq());
 				dto.setContents(list.get(i).getContents());
-				dto.setWriten_time(list.get(i).getWriten_time());
+				dto.setWriten_date(list.get(i).getWriten_date());
+				dto.setNick(list.get(i).getNick());
 				rp_list.add(dto);
 			}
 		}
@@ -61,12 +63,13 @@ public class TourReplyDAO {
 		return mybatis.delete("TourReply.deleteAll", seq);
 	}
 	
-	public int reinsert(int rpseq, String recontent) {
+	public int reinsert(int rpseq, String recontent, String loginNick) {
 
 		Map<String, String> map = new HashMap<>();
 		map.put("rpseq", String.valueOf(rpseq));
 		map.put("recontent", recontent);
-
+		map.put("nick", loginNick);
+		
 		return mybatis.insert("TourReply.reinsert", map);
 	}
 	
