@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,6 @@ import com.google.gson.JsonObject;
 
 import kh.spring.dao.TourBoardDAO;
 import kh.spring.dao.TourReplyDAO;
-import kh.spring.dto.ComBoardLikeDTO;
-import kh.spring.dto.CompanyBoardDTO;
 import kh.spring.dto.TourBoardDTO;
 import kh.spring.dto.TourBoardLikeDTO;
 import kh.spring.dto.TourReplyDTO;
@@ -48,6 +47,9 @@ public class TourBoardController {
 	
 	@Autowired
 	public TourReplyService rservice;
+	
+	@Autowired
+	private HttpSession session;
 	
 	@RequestMapping("list")
 	public String list(Model model, HttpServletRequest request) throws Exception{
@@ -79,6 +81,10 @@ public class TourBoardController {
 			
 			List<TourBoardDTO> list = bservice.selectAll(start, end, null, null);			
 			String navi = bservice.getPageNavi(currentPage, searchOption, searchText);
+			
+			String loginEmailId = (String)request.getSession().getAttribute("loginEmailId");
+			System.out.println("loginEmailId : " + loginEmailId);
+			
 			model.addAttribute("list", list);
 			model.addAttribute("navi", navi);
 			
