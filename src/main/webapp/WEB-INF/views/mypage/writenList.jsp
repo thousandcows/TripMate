@@ -26,6 +26,31 @@
             list-style: none;
           }
 
+          /* 링크 속성 지우기 */
+          a {
+            text-decoration: none
+          }
+
+          a:hover {
+            text-decoration: none;
+            color: black;
+          }
+
+          a:link {
+            text-decoration: none;
+            color: black;
+          }
+
+          a:visited {
+            text-decoration: none;
+            color: black;
+          }
+
+          a:active {
+            text-decoration: none;
+            color: black;
+          }
+
           a {
             text-decoration: none;
           }
@@ -144,7 +169,7 @@
 
           .postContents {
             width: 100%;
-            height: 60px;
+            height: 40px;
             border: 1px solid yellowgreen;
           }
 
@@ -208,21 +233,36 @@
             <c:if test="${fn:length(list) == 0}">
               작성한 게시글이 없습니다.
             </c:if>
-              <c:forEach var="list" items="${list}">
-                <ul class="postContents">
-                  <li>${list.writen_time}</li>
-                  <li>${list.board_num}
-                    <!-- if문으로 번호에 따라 게시판 이름 분기 -->
-                  </li>
-                  <li><a href="#">${list.title}</a><i class="far fa-comment-dots"
+            <c:forEach var="list" items="${list}">
+              <ul class="postContents">
+                <li>${list.writen_date}</li>
+                <li>
+                  <c:if test="${list.board_num == 1}">
+                    <a href="/tourboard/list?cpage=1">여행 게시판</a>
+                  </c:if>
+                  <c:if test="${list.board_num == 2}">
+                    <a href="/companyboard/list?cpage=1">동행 게시판</a>
+                  </c:if>
+                  <!-- if문으로 번호에 따라 게시판 이름 분기 -->
+                </li>
+                <li>
+                  <c:if test="${list.board_num == 1}">
+                    <a href="/tourboard/detail?seq=${list.seq}">${list.title}</a><i class="far fa-comment-dots"
                       style="color: rgb(161, 161, 161)"></i><span id="rep_count" name="rep_count"
-                      style="color: rgb(161, 161, 161)">${list.rep_count}</span></li>
-                  <li>${list.view_count}</li>
-                  <li>${list.rec_count}</li>
-                  <li><input type="checkbox"></li>
-                </ul>
-              </c:forEach>
-              <div>${navi}</div>
+                      style="color: rgb(161, 161, 161)">${list.rep_count}</span>
+                  </c:if>
+                  <c:if test="${list.board_num == 2}">
+                    <a href="/companyboard/detail?seq=${list.seq}">${list.title}</a><i class="far fa-comment-dots"
+                      style="color: rgb(161, 161, 161)"></i><span id="rep_count" name="rep_count"
+                      style="color: rgb(161, 161, 161)">${list.rep_count}</span>
+                  </c:if>
+                </li>
+                <li>${list.view_count}</li>
+                <li>${list.rec_count}</li>
+                <li><input type="checkbox"></li>
+              </ul>
+            </c:forEach>
+            <div>${navi}</div>
           </div>
         </div>
       </body>
