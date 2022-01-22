@@ -1,12 +1,14 @@
 package kh.spring.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kh.spring.dao.TourReplyDAO;
 import kh.spring.dto.TourReplyDTO;
-import kh.spring.dto.TourReplyReplyDTO;
 import kh.spring.service.TourReplyService;
 
 @Controller
@@ -19,11 +21,15 @@ public class TourReplyController {
 	@Autowired
 	public TourReplyService rservice;
 	
+	@Autowired
+	private HttpSession session;
+	
 	@RequestMapping("reply")
-	public String reply(int rseq, String reply) {
+	public String reply(int rseq, String reply, HttpServletRequest request) {
 		
 		int seq = rseq;
-		rservice.reply(seq, reply);
+		String loginNick = (String)request.getSession().getAttribute("loginNick");
+		rservice.reply(seq, reply, loginNick);
 		return "redirect:/tourboard/detail?seq="+seq;
 	}
 	
@@ -43,9 +49,10 @@ public class TourReplyController {
 	}
 	
 	@RequestMapping("rereply")
-	public String rereply(int writeseq, int rpseq, String recontents) {
+	public String rereply(int writeseq, int rpseq, String recontents, HttpServletRequest request) {
 		
-		rservice.reinsert(rpseq, recontents);
+		String loginNick = (String)request.getSession().getAttribute("loginNick");
+		rservice.reinsert(rpseq, recontents, loginNick);
 		return "redirect:/tourboard/detail?seq="+writeseq;
 	}
 	

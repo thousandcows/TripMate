@@ -1,11 +1,14 @@
 package kh.spring.dto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PlanDTO {
 	private int seq;
 	private int mem_seq;
 	private String title;
-	private String startDate;
-	private String endDate;
+	private Date startDate;
+	private Date endDate;
 	private String theme;
 	private int account;
 	private String memo;
@@ -28,15 +31,17 @@ public class PlanDTO {
 		this.title = title;
 	}
 	public String getStartDate() {
-		return startDate;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+		return sdf.format(startDate);
 	}
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	public String getEndDate() {
-		return endDate;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+		return sdf.format(endDate);
 	}
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 	public String getTheme() {
@@ -57,7 +62,7 @@ public class PlanDTO {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-	public PlanDTO(int seq, int mem_seq, String title, String startDate, String endDate, String theme, int account,
+	public PlanDTO(int seq, int mem_seq, String title, Date startDate, Date endDate, String theme, int account,
 			String memo) {
 		super();
 		this.seq = seq;
@@ -71,6 +76,5 @@ public class PlanDTO {
 	}
 	public PlanDTO() {
 	}
-	
 	
 }

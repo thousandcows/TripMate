@@ -285,7 +285,7 @@ a:active {
         	line-height:30px;
         }
         
-        #heart{
+        #heart, #cant_heart{
         	cursor: pointer;
         }
 </style>
@@ -338,18 +338,27 @@ a:active {
 			</div>
 			<div class="ft_btn">
 				<a href="/tourboard/list?cpage=1"><button type=button>목록으로</button></a>
+				<c:if test="${!empty loginNick }">
+					<c:if test="${dto.nick == loginNick}">
 				<button type=button id=mod>수정하기</button>
 				<button type=button id=del>삭제하기</button>
 				<button type=button id=modOk style="display: none;">수정완료</button>
 				<button type=button id=modCancel style="display: none;">취소</button>
+					</c:if>
+				</c:if>
 			</div>
 		</form>
 		<br>
 		
 		<div class="like_n_rep">
         	<div id=like_icon>
-          		<a class="heart">
-           			<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count">${dto.rec_count}</span>
+          		<a class="heart">          			
+          				<c:if test="${!empty loginNick }">
+    	     	  			<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count">${dto.rec_count}</span>
+	       	    		</c:if>	     
+	       	    		<c:if test="${empty loginNick }">  	    		
+           					<img id="cant_heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${dto.rec_count}</span>
+           				</c:if>           				           			
        			</a>
             </div>
             <div id=rep_icon>
@@ -359,13 +368,18 @@ a:active {
                
 		<br>
 		<form action="/tourreply/reply" method="post" id="frmReply"	enctype="multipart/form-data">
+		
 			<div class="reply">
 				<input type=hidden value="${dto.seq}" name=rseq>
 				<div class="rp_input">
-					<input type=text placeholder="댓글을 입력하세요" style="width: 100%; height: 30px;" id="rep_con" name="reply">
+					<c:if test="${!empty loginNick }">
+						<input type=text placeholder="댓글을 입력하세요" style="width: 100%; height: 30px;" id="rep_con" name="reply">
+					</c:if>
 				</div>
 				<div class="rp_write" style="text-align: right;">
-					<button type=submit id="write_btn">작성하기</button>
+					<c:if test="${!empty loginNick }">
+						<button type=submit id="write_btn">작성하기</button>
+					</c:if>
 				</div>
 			</div>
 		</form>
@@ -376,8 +390,8 @@ a:active {
 				<form method="post" id="frmRpMod" enctype="multipart/form-data">
 					<div class="reply_title">
 						<input type=hidden value="${rp.seq}" name=seq> <input type=hidden value="${rp.par_seq}" name=par_seq>
-						<div class="rp_id">${rp.mem_seq }</div>
-						<div class="rp_time" name="writen_date">${rp.writen_time }</div>
+						<div class="rp_id">${rp.nick }</div>
+						<div class="rp_time" name="writen_date">${rp.writen_date }</div>
 					</div>
 					<br>
 					<div class="reply_contents " style="text-align: right;">
@@ -385,11 +399,15 @@ a:active {
 							<input type=text value="${rp.contents }" class="rp_contents" id="rp_contents${rp.seq }" name="contents" readonly>
 						</div>
 						<div class="rp_btns">
+							<c:if test="${!empty loginNick }">
 							<button type=button class="rp_reply_btn" id="rp_reply_btn${rp.seq }">rep</button>
+								<c:if test="${rp.nick == loginNick}">
 							<button type=button class="rp_mod_btn" id="rp_mod_btn${rp.seq }">mod</button>
 							<button type=button class="rp_del_btn" id="rp_del_btn${rp.seq }" style="color: red;"><b>del</b></button>
 							<button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none;" formaction="/tourreply/modify">ok</button>
 							<button type=button class="rp_cancle_btn" id="rp_cancle_btn${rp.seq }" style="color: red; display: none;"><b>can</b></button>
+								</c:if>
+							</c:if>
 						</div>
 						
 						<c:forEach var="re" items="${re_list }">
@@ -397,20 +415,24 @@ a:active {
 							<c:when test="${re.par_seq == rp.seq}">
                        			<div class="re_reply" id="re_reply${rp.seq }">
                             		<div class="re_rp_title">
-                                		<div class="re_rp_id" style="text-align:left;"> ${re.mem_seq }</div>
-                                		<div class="re_rp_time" style="text-align:center;">${re.writen_time }</div>
+                                		<div class="re_rp_id" style="text-align:left;"> ${re.nick }</div>
+                                		<div class="re_rp_time" style="text-align:center;">${re.writen_date }</div>
                             		</div>
                             		<br>
                             		<div class="re_rp_contents">
 		                                <div class="re_rp_content">
-		                                	<input type=text style="width:4%; border:0px;" value="@${rp.mem_seq }" readonly>
-                                			<input type=text style="width:95%;" id="recontent${re.seq }" name="recontent" value="${re.contents}" readonly>
+		                                	<span><input type=text border:0px;" value="@${rp.nick }" readonly></span>
+                                			<input type=text id="recontent${re.seq }" name="recontent" value="${re.contents}" readonly>
                                 		</div>
                                 		<div class="re_rp_btns" style="text-align:center">
-                                			<button type=button class="re_mod_btn" id="re_mod_btn${re.seq }" rpseq=${rp.seq }>mod</button>
-                                			<button type=button class="re_del_btn" id="re_del_btn${re.seq }">del</button>
-                                			<button type=button class="re_modOk_btn" id="re_modOk_btn${re.seq }" rpseq=${rp.seq } style="display: none;">ok</button>
-                                			<button type=button class="re_cancle_btn" id="re_cancle_btn${re.seq }" style="display: none;">can</button>
+                                			<c:if test="${!empty loginNick }">
+                                				<c:if test="${re.nick == loginNick}">
+                             			   			<button type=button class="re_mod_btn" id="re_mod_btn${re.seq }" rpseq=${rp.seq }>mod</button>
+                                					<button type=button class="re_del_btn" id="re_del_btn${re.seq }" style="color: red;"><b>del</b></button>
+                                					<button type=button class="re_modOk_btn" id="re_modOk_btn${re.seq }" rpseq=${rp.seq } style="display: none;">ok</button>
+                                					<button type=button class="re_cancle_btn" id="re_cancle_btn${re.seq }" style="display: none;">can</button>
+                                				</c:if>
+                                			</c:if>
                                 		</div>
                             		</div>
                         		</div>
@@ -681,7 +703,6 @@ a:active {
     $(".heart").on("click", function () {
 
         var that = $(".heart");
-
         var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name'), 'rec_count_no' : '${dto.rec_count}'};
         
         //console.log(that.prop('name'));
@@ -709,6 +730,11 @@ a:active {
             }
         });
     });
+    
+    $("#cant_heart").on("click", function(){
+    	alert("로그인 후 이용 가능합니다. ");
+    	false;
+    })
     </script>
 
 </body>

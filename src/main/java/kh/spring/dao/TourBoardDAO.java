@@ -29,6 +29,7 @@ public class TourBoardDAO {
 			return mybatis.selectList("TourBoard.selectAll", map);
 			
 		}else if(searchOption.equals("search_title")){
+			System.out.println("DAO selectAll에서 제목으로 찾는 중 : " + searchText);
 			Map<String, String> map = new HashMap<>();
 			map.put("start", String.valueOf(start));
 			map.put("end", String.valueOf(end));
@@ -37,6 +38,7 @@ public class TourBoardDAO {
 			return mybatis.selectList("TourBoard.selectAllTitle", map);
 			
 		}else {
+			System.out.println("DAO selectAll에서 작성자로 찾는 중 : " + searchText);
 			Map<String, String> map = new HashMap<>();
 			map.put("start", String.valueOf(start));
 			map.put("end", String.valueOf(end));

@@ -227,7 +227,7 @@
         
         $("#tripPlan").on("click",function(){
         	if(${loginEmailID ne null}){
-            	location.href = "/plan/main";        		
+            	location.href = "/plan/main?page=1";        		
         	}else{
         		alert("회원 전용 기능입니다.");
         	}

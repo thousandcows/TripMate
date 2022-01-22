@@ -16,7 +16,54 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				일정 리스팅
+				<div class="row">
+					<div class="col-6">
+						제목
+					</div>
+					<div class="col-3">
+						여행 시작일
+					</div>
+					<div class="col-3">
+						여행 종료일
+					</div>
+				</div>
+				<c:forEach var="i" items="${list }">
+					<div class="row">
+						<div class="col-6">
+						<a href="/plan/modify?seq=${i.seq }">${i.title }</a>
+						</div>
+						<div class="col-3">
+							${i.startDate }
+						</div>
+						<div class="col-3">
+							${i.endDate }
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+			<div class="col">
+				<c:forEach var="i" items="${paging }">
+				<button type="button btn paging btn-primary">
+				<a href="/plan/main?page=${i }">
+				<c:choose>
+				<c:when test="${i eq firstNum and (i%10) eq 0 }">
+				<
+				</c:when>
+				<c:when test="${i eq lastNum and (i%10) eq 1 }">
+				>
+				</c:when>
+				<c:when test="${i eq page }">
+				${i }
+				</c:when>
+				<c:otherwise>
+				${i }
+				</c:otherwise>
+				</c:choose>
+				</button>
+				</a>
+				
+				</c:forEach>
+				
 			</div>
 		</div>
 		

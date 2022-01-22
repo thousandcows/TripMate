@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.AreaDTO;
 import kh.spring.dto.AreaReplyDTO;
 import kh.spring.dto.SavedDTO;
 
@@ -58,5 +59,18 @@ public class AreaDAO {
 	
 	public String findPhoto(int seq) {
 		return mybatis.selectOne("Area.findPhoto",seq);
+	}
+	
+	public int checkDB(int seq) {
+		return mybatis.selectOne("Area.checkDB",seq);
+	}
+	
+	public void insertArea(int seq,AreaDTO dto) {
+		Map<String,String> map = new HashMap<>();
+		map.put("seq", Integer.toString(seq));
+		map.put("name", dto.getName());
+		map.put("location", dto.getLocation());
+		map.put("photo", dto.getPhoto());
+		mybatis.insert("Area.insertArea",map);
 	}
 }

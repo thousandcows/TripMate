@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,6 @@ import com.google.gson.JsonObject;
 
 import kh.spring.dao.TourBoardDAO;
 import kh.spring.dao.TourReplyDAO;
-import kh.spring.dto.ComBoardLikeDTO;
-import kh.spring.dto.CompanyBoardDTO;
 import kh.spring.dto.TourBoardDTO;
 import kh.spring.dto.TourBoardLikeDTO;
 import kh.spring.dto.TourReplyDTO;
@@ -48,6 +47,9 @@ public class TourBoardController {
 	
 	@Autowired
 	public TourReplyService rservice;
+	
+	@Autowired
+	private HttpSession session;
 	
 	@RequestMapping("list")
 	public String list(Model model, HttpServletRequest request) throws Exception{
@@ -79,6 +81,11 @@ public class TourBoardController {
 			
 			List<TourBoardDTO> list = bservice.selectAll(start, end, null, null);			
 			String navi = bservice.getPageNavi(currentPage, searchOption, searchText);
+			
+			String loginEmailId = (String)request.getSession().getAttribute("loginEmailID");
+			System.out.println("loginEmailId : " + loginEmailId);
+			
+			model.addAttribute("writer", loginEmailId);
 			model.addAttribute("list", list);
 			model.addAttribute("navi", navi);
 			
@@ -104,7 +111,14 @@ public class TourBoardController {
 			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
 			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
 			List<TourBoardDTO> list = bservice.selectAll(start, end, searchOption, searchText);
+			System.out.println("컨트롤러에 가져온 작성자 이름 검색 값 : " + list.get(0).getNick());
+			
 			String navi = bservice.getPageNavi(currentPage, searchOption, searchText);
+			
+			String loginEmailId = (String)request.getSession().getAttribute("loginEmailID");
+			System.out.println("loginEmailId : " + loginEmailId);
+			
+			model.addAttribute("writer", loginEmailId);
 			model.addAttribute("list", list);
 			model.addAttribute("navi", navi);
 			
@@ -121,8 +135,11 @@ public class TourBoardController {
 	@RequestMapping("writeProc")
 	public String writeProc(TourBoardDTO bdto, MultipartFile[] file) {
 		
-//		String writer = (String) session.getAttribute("loginID");
-//		dto.setWriter(writer);	
+		String nick = (String) session.getAttribute("loginNick");
+		int mem_id = (int)session.getAttribute("loginSeq");
+		bdto.setNick(nick);
+		bdto.setMem_seq(mem_id);
+		
 
 //		String realPath = session.getServletContext().getRealPath("upload");	
 
@@ -169,41 +186,33 @@ public class TourBoardController {
 	}
 	
 	@RequestMapping("detail")
-	public String detail(int seq, Model model) throws Exception {
+	public String detail(int seq, Model model, HttpServletRequest request) throws Exception {
+		
+		String loginNick = (String)request.getSession().getAttribute("loginNick");	
 		
         TourBoardDTO dto = bservice.selectBySeq(seq);
-        
-//        System.out.println("번호 : " +seq);
+        dto.setNick(loginNick);
         
         bservice.addViewCount(seq);
         
         int replyCount = bservice.replyCount(seq);
-//        System.out.println("replyCount : " + replyCount);
         int replyReplyCount = bservice.replyReplyCount(seq);
-//        System.out.println("replyReplyCount : " + replyReplyCount);
         
         dto.setRep_count(replyCount+replyReplyCount);
         
         List<TourReplyDTO> rp_list = rservice.selectAll(seq);
         
         List<TourReplyReplyDTO> re_list = rservice.selectReAll();
-        
-//        for(int i=0; i<re_list.size(); i++) {
-//        	System.out.println(re_list.get(i).getSeq() + " : " + re_list.get(i).getPar_seq() + " : " + re_list.get(i).getContents());
-//        }
-        
-//		int parentSeq = bdto.getSeq();        
-//		List<FilesDTO> files = fservice.selectByParentSeq(parentSeq);
 
-     // 좋아요 반영
-     		TourBoardLikeDTO c_dto = new TourBoardLikeDTO();
-     		c_dto.setPar_seq(seq);
-     		c_dto.setMem_seq(1);
-     		int boardlike = bservice.getBoardLike(c_dto);
-     		
-     		model.addAttribute("heart", boardlike);
-     		
+        // 좋아요 반영
+        TourBoardLikeDTO c_dto = new TourBoardLikeDTO();
+     	c_dto.setPar_seq(seq);
+     	//c_dto.setMem_seq(1);
+     	int boardlike = bservice.getBoardLike(c_dto);
+     
+     	model.addAttribute("heart", boardlike);     		
         
+     	model.addAttribute("loginNick", loginNick);
         model.addAttribute("dto", dto);
         model.addAttribute("rp_list", rp_list); 
         model.addAttribute("re_list", re_list);
@@ -233,6 +242,7 @@ public class TourBoardController {
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		
         int heart = Integer.parseInt(httpRequest.getParameter("heart"));
+        int loginSeq = (int)session.getAttribute("loginSeq");
         int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));   
         int rec_count_no = Integer.parseInt(httpRequest.getParameter("rec_count_no"));
 
@@ -240,7 +250,7 @@ public class TourBoardController {
         TourBoardDTO dto2 = bservice.selectBySeq(boardId);
         
         dto.setPar_seq(boardId);
-        dto.setMem_seq(1);
+        dto.setMem_seq(loginSeq);
  
         if(heart >= 1) {
             bservice.deleteBoardLike(dto);
