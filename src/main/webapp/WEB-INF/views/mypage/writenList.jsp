@@ -202,6 +202,12 @@
           .postContents li:nth-child(6) {
             width: 10%;
           }
+
+          /* 삭제버튼 */
+          .delBtnBox {
+            width: 100%;
+            text-align: right;
+          }
         </style>
       </head>
 
@@ -226,7 +232,7 @@
               <li>제목</li>
               <li>조회수</li>
               <li>추천수</li>
-              <li>전체선택 <input type="checkbox"></li>
+              <li>전체선택 <input type="checkbox" name="selectAllBox" onclick="selectAll(this)"></li>
             </ul>
             <!-- if문으로 board_num에 따라 각자의 detail페이지로 이동하는 a태그 만들어줘야함. -->
             <!-- 체크박스도 if문 써야될듯 -->
@@ -259,12 +265,48 @@
                 </li>
                 <li>${list.view_count}</li>
                 <li>${list.rec_count}</li>
-                <li><input type="checkbox"></li>
+                <li><input type="checkbox" name="postCheckBox" onclick="checkSelectAll()" value="${list.seq}"></li>
               </ul>
             </c:forEach>
             <div>${navi}</div>
+            <div class="delBtnBox"><button type="button" id="delBtn">삭제</button></div>
           </div>
         </div>
+
+        <script>
+          'use strict'
+          // 각 체크박스 컨트롤
+          function checkSelectAll() {
+            let postCheckBox = document.querySelectorAll("input[name='postCheckBox']");
+            let checkedPostCheckBox = document.querySelectorAll("input[name='postCheckBox']:checked");
+            let selectAllBox = document.querySelector("input[name='selectAllBox']");
+            if (postCheckBox.length == checkedPostCheckBox.length) {
+              selectAllBox.checked = true;
+            } else {
+              selectAllBox.checked = false;
+            }
+          }
+
+          // 전체선택 컨트롤
+          function selectAll(selectAll) {
+            let checkBoxs = document.getElementsByName('postCheckBox');
+            checkBoxs.forEach((checkBox) => {
+              checkBox.checked = selectAll.checked
+            });
+          }
+
+          // 삭제버튼 누르면 체크된 라인의 value가져오기
+          document.querySelector("#delBtn").addEventListener("click", () => {
+            let checkBoxLength = document.querySelectorAll("input[name='postCheckBox']").length;
+            for (let i = 0; i < checkBoxLength; i++) {
+              if (document.querySelectorAll("input[name='postCheckBox']")[i].checked == true) {
+                console.log(
+                  document.querySelectorAll("input[name='postCheckBox']")[i].value
+                );
+              }
+            }
+          });
+        </script>
       </body>
 
       </html>
