@@ -219,8 +219,41 @@ public class MemberService {
 	}
 	
 	// 네비
-	public String getMyPostNavi(int cpage) {
+	public String getMyPostNavi(int loginSeq, int cpage) {
+		int pageTotalCount = getMyPostPageTotalCount(loginSeq);
 		
+		int startNavi = (cpage-1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
+		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;
+		
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+
+		boolean needPrev = true;
+		boolean needNext = true;
+		
+		if(startNavi == 1) {
+			needPrev = false;
+		}
+
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+		
+		String pageNavi = "";
+		
+		if(needPrev) {
+			pageNavi += "<a href='/member/writenList?currentPage="+(startNavi-1)+"'><</a> ";
+		}
+		
+		for(int i = startNavi ; i <= endNavi; i++) {
+			pageNavi += "<a href='/member/writenList?currentPage="+i+"'>" + i + "</a> ";
+		}
+		
+		if(needNext) {
+			pageNavi += "<a href='/member/writenList?currentPage="+(endNavi+1)+"'>></a>";
+		}
+		return pageNavi;
 	}
 	
 	// cpage조정

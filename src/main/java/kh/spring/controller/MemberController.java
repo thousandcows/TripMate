@@ -339,7 +339,9 @@ public class MemberController {
 		int end = cpage * Statics.RECORD_COUNT_PER_PAGE;
 
 		List<MyPostDTO> list = memberService.getMyPostList(loginSeq, start, end);
+		String navi = memberService.getMyPostNavi(loginSeq, cpage);
 		
+		model.addAttribute("navi", navi);
 		model.addAttribute("list", list);
 		model.addAttribute("loginInfo", dto);
 		return "mypage/writenList";
