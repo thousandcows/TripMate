@@ -9,6 +9,7 @@ import kh.spring.dao.ComReplyDAO;
 import kh.spring.dao.CompanyBoardDAO;
 import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.CompanyBoardDTO;
+import kh.spring.dto.TourBoardDTO;
 import kh.spring.statics.Statics;
 
 @Service
@@ -24,8 +25,9 @@ public class CompanyBoardService {
 		return cdao.insert(dto);
 	}
 	
-	public List<CompanyBoardDTO> selectAll(int start, int end){
-		return cdao.selectAll(start, end);
+	public List<CompanyBoardDTO> selectAll(int start, int end, String searchOption, String searchText) {
+		
+		return cdao.selectAll(start, end, searchOption, searchText);
 	}
 	
 	public CompanyBoardDTO selectBySeq(int seq) {
@@ -46,78 +48,10 @@ public class CompanyBoardService {
 		return cdao.addViewCount(seq);
 	}   
 	
-	public int getRecordCount() throws Exception {
-		return cdao.getRecordCount();
-	}
-	
-	
-	public String getPageNavi(int currentPage) throws Exception{
+//	public int getRecordCount() throws Exception {
+//		return cdao.getRecordCount();
+//	}
 
-		int recordTotalCount = cdao.getRecordCount(); 
-		int pageTotalCount = 0;
-			
-		if(recordTotalCount % Statics.RECORD_COUNT_PER_PAGE == 0) {
-			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE;
-		}else {
-			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE + 1;
-		}
-
-//		if(currentPage < 1) {
-//			currentPage = 1;
-//		}else if(currentPage > pageTotalCount) {
-//			currentPage = pageTotalCount;
-//		} 
-			
-		int startNavi = (currentPage-1) / Statics.NAVI_COUNT_PER_PAGE   * Statics.NAVI_COUNT_PER_PAGE + 1;	
-		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;
-			
-		
-		if(endNavi > pageTotalCount) {
-			endNavi = pageTotalCount;
-		}
-			
-		boolean needPrev = true ;
-		boolean needNext = true;
-			
-		if(startNavi == 1) {
-			needPrev = false;
-		}
-
-		if(endNavi == pageTotalCount) {
-			needNext = false;
-		}
-
-		String pageNavi = "";
-
-		if(needPrev) {
-			pageNavi += "<a href='/companyboard/list?cpage="+(startNavi-1)+"'><</a> "; 
-		}
-			
-		for(int i = startNavi ; i <= endNavi; i++) {
-			pageNavi += "<a href='/companyboard/list?cpage="+i+"'>" + i + "</a> ";
-		}
-		
-		if(needNext) {
-			pageNavi += "<a href='/companyboard/list?cpage="+(endNavi+1)+"'>></a>";
-		}
-
-		return pageNavi;	
-	}
-
-
-	public int getPageTotalCount() throws Exception{
-
-		int recordTotalCount = cdao.getRecordCount();
-
-		int pageTotalCount = 0;
-
-		if(recordTotalCount % Statics.RECORD_COUNT_PER_PAGE == 0) {
-			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE;
-		}else {
-			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE + 1;
-		}
-		return pageTotalCount;	
-	}
 	
 	// 좋아요
 	public void insertBoardLike(ComBoardLikeDTO dto) throws Exception {
@@ -147,4 +81,65 @@ public class CompanyBoardService {
 	public int replyReplyCount(int seq) {
 		return cdao.replyReplyCount(seq);
 	}
+	
+	//검색
+	public int getPageTotalCount(String searchOption, String searchText) throws Exception{
+
+		int recordTotalCount = cdao.getRecordCount(searchOption, searchText);
+
+		int pageTotalCount = 0;
+
+		if(recordTotalCount % Statics.RECORD_COUNT_PER_PAGE == 0) {
+			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE;
+		}else {
+			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE + 1;
+		}
+		return pageTotalCount;	
+	}
+	
+	public String getPageNavi(int currentPage, String searchOption, String searchText) throws Exception{
+		
+		int recordTotalCount = cdao.getRecordCount(searchOption, searchText); 
+
+		int pageTotalCount = 0;
+		if(recordTotalCount % Statics.RECORD_COUNT_PER_PAGE == 0) {
+			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE;
+		}else {
+			pageTotalCount = recordTotalCount / Statics.RECORD_COUNT_PER_PAGE + 1;
+		}
+		
+		int startNavi = (currentPage-1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
+		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;
+		
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+
+		boolean needPrev = true;
+		boolean needNext = true;
+		
+		if(startNavi == 1) {
+			needPrev = false;
+		}
+
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+		
+		String pageNavi = "";
+		
+		if(needPrev) {
+			pageNavi += "<a href='/companyboard/list?cpage="+(startNavi-1)+"'><</a> ";
+		}
+		
+		for(int i = startNavi ; i <= endNavi; i++) {
+			pageNavi += "<a href='/companyboard/list?cpage="+i+"'>" + i + "</a> ";
+		}
+		
+		if(needNext) {
+			pageNavi += "<a href='/companyboard/list?cpage="+(endNavi+1)+"'>></a>";
+		}
+
+		return pageNavi;		
+	}	
 }

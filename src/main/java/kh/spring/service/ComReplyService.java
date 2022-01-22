@@ -15,9 +15,10 @@ public class ComReplyService {
 	@Autowired
 	public ComReplyDAO rdao;
 	
-	public int reply(int rseq, String reply) {
+	public int reply(int rseq, String reply, String nick, int mem_seq) {
 
-		return rdao.insert(rseq, reply);
+		System.out.println("서비스 nick : " + nick + "mem_seq : " + mem_seq);
+		return rdao.insert(rseq, reply, nick, mem_seq);
 	}
 	
 	public List<ComReplyDTO> selectAll(int seq) {
@@ -34,9 +35,9 @@ public class ComReplyService {
 		return rdao.delete(seq);
 	}
 	
-	public int reinsert(int rpseq, String recontent) {
+	public int reinsert(int rpseq, String recontent, String nick, int mem_seq) {
 		
-		return rdao.reinsert(rpseq, recontent);
+		return rdao.reinsert(rpseq, recontent, nick, mem_seq);
 	}
 	
 	public List<ComReplyReplyDTO> selectReAll(){
