@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kh.spring.dao.TourBoardDAO;
 import kh.spring.dao.TourReplyDAO;
 import kh.spring.dto.TourBoardDTO;
+import kh.spring.dto.TourBoardLikeDTO;
 import kh.spring.statics.Statics;
 
 @Service
@@ -22,9 +23,9 @@ public class TourBoardService {
 	@Autowired
 	public TourBoardService bservice;
 	
-	public List<TourBoardDTO> selectAll(int start, int end) {
+	public List<TourBoardDTO> selectAll(int start, int end, String searchOption, String searchText) {
 		
-		return bdao.selectAll(start, end);
+		return bdao.selectAll(start, end, searchOption, searchText);
 	}
 	
 	public int writeProc(TourBoardDTO bdto) {
@@ -63,9 +64,9 @@ public class TourBoardService {
 		return bdao.replyReplyCount(seq);
 	}
 	
-	public int getPageTotalCount() throws Exception{
+	public int getPageTotalCount(String searchOption, String searchText) throws Exception{
 
-		int recordTotalCount = bdao.getRecordCount();
+		int recordTotalCount = bdao.getRecordCount(searchOption, searchText);
 
 		int pageTotalCount = 0;
 
@@ -77,9 +78,9 @@ public class TourBoardService {
 		return pageTotalCount;	
 	}
 	
-	public String getPageNavi(int currentPage) throws Exception{
+	public String getPageNavi(int currentPage, String searchOption, String searchText) throws Exception{
 		
-		int recordTotalCount = bdao.getRecordCount(); 
+		int recordTotalCount = bdao.getRecordCount(searchOption, searchText); 
 
 		int pageTotalCount = 0;
 		if(recordTotalCount % Statics.RECORD_COUNT_PER_PAGE == 0) {
@@ -123,4 +124,25 @@ public class TourBoardService {
 		return pageNavi;		
 	}	
 	
+	public void insertBoardLike(TourBoardLikeDTO dto) throws Exception{
+		
+		bdao.insertBoardLike(dto);
+		bdao.updateBoardLike(dto.getPar_seq());
+	}
+	
+	public void deleteBoardLike(TourBoardLikeDTO dto) throws Exception{
+		
+		bdao.deleteBoardLike(dto);
+		bdao.updateBoardLike(dto.getPar_seq());
+	}
+	
+	public int getBoardLike(TourBoardLikeDTO dto) throws Exception{
+		
+		return bdao.getBoardLike(dto);
+	}
+	
+	public int delete2(int seq) {
+		
+		return bdao.delete2(seq);
+	}	
 }

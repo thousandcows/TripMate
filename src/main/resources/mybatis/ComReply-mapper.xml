@@ -26,7 +26,7 @@
 	</delete>
 	
 	<delete id="deleteAllRe">
-		delete from com_reply_reply where par_seq=#{seq}		
+		delete from com_reply_reply where par_seq in (select r.seq from company_board b join com_reply r on(b.seq=r.par_seq) where r.par_seq=#{seq})
 	</delete>
 	
 	<insert id="reinsert">

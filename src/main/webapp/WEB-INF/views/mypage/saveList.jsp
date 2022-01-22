@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <!DOCTYPE html>
     <html>
 
@@ -217,12 +218,13 @@
               <div id="seeMoreTag"></div>
             </div>
 
+            <c:if test="${fn:length(isMySaveListMore) == 1}">
             <div class="row mt-4 mb-4" id="seeMoreDel">
               <div class="col text-center">
                 <button type="button" class="btn btn-success" id="seeMore">더보기</button>
               </div>
             </div>
-
+            </c:if>
           </div>
         </div>
       </div>
@@ -234,6 +236,7 @@
       <script>
         'use strict'
         let btn = 1;
+        let isMore;
         $("#seeMore").on("click", function () {
           btn += 7;
           $.ajax({
@@ -281,8 +284,9 @@
                   </div>
                 </div>`
               )
+              isMore = result[i].isMore;
             }
-            if (result.length < 7) {
+            if (isMore == 0) {
               $("#seeMoreDel").empty();
             }
           })
@@ -290,11 +294,13 @@
 
         $(document).on("click", ".myHeart", function () {
           const $HEART = $(this);
-          $.ajax({
+          if(confirm("해당 여행지의 찜을 취소하시겠습니까?")){
+            $.ajax({
             url: "/area/save?area_seq=" + $HEART.prev().val()
-          }).done(function (res) {
-            $HEART.parents(".delParent").remove();
-          })
+            }).done(function (res) {
+              $HEART.parents(".delParent").remove();
+            });
+          }
         })
 
       </script>
