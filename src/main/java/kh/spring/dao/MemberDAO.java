@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.MyPostDTO;
 
 @Repository
 public class MemberDAO {
@@ -127,6 +128,22 @@ public class MemberDAO {
 	// 찜목록 평점
 	public String savedAreaGrade(int seq) {
 		return mybatis.selectOne("Member.savedAreaGrade", seq);
+	}
+	
+	// 내 게시글 갯수
+	public int getMyPostCount(int loginSeq) {
+		int cBoardCount = mybatis.selectOne("Member.getMyPostCountC", loginSeq);
+		int tBoardCount = mybatis.selectOne("Member.getMyPostCountT", loginSeq);
+		return cBoardCount + tBoardCount;
+	}
+	
+	// 내 게시글 리스트
+	public List<MyPostDTO> getMyPostList(int loginSeq, int start, int end){
+		Map<String, String> map = new HashMap<>();
+		map.put("loginSeq", String.valueOf(loginSeq));
+		map.put("start", String.valueOf(start));
+		map.put("end", String.valueOf(end));
+		return mybatis.selectList("Member.getMyPostList", map);
 	}
 
 }

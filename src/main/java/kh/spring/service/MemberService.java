@@ -7,12 +7,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +17,7 @@ import kh.spring.dao.MemberDAO;
 import kh.spring.dto.AreaDTO;
 import kh.spring.dto.AreaSavedDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.MyPostDTO;
 import kh.spring.statics.Statics;
 import kh.spring.utils.EncryptUtils;
 
@@ -199,6 +194,80 @@ public class MemberService {
 			dto.add(adto);
 		}
 		return gson.toJson(dto);
+	}
+	
+	// 내 게시글 갯수
+	public int getMyPostTotalCount(int loginSeq) {
+		return memberDao.getMyPostCount(loginSeq);
+	}
+	
+	// 총 페이지 갯수
+	public int getMyPostPageTotalCount(int loginSeq) {
+		int totalPost = getMyPostTotalCount(loginSeq);
+		int pageTotalCount = 0;
+		if (totalPost % Statics.RECORD_COUNT_PER_PAGE == 0) {
+			pageTotalCount = totalPost / Statics.RECORD_COUNT_PER_PAGE;
+		} else {
+			pageTotalCount = totalPost / Statics.RECORD_COUNT_PER_PAGE + 1;
+		}
+		return pageTotalCount;
+	}
+	
+	// 내 게시글 리스트
+	public List<MyPostDTO> getMyPostList(int loginSeq, int start, int end){
+		return memberDao.getMyPostList(loginSeq, start, end);
+	}
+	
+	// 네비
+	public String getMyPostNavi(int loginSeq, int cpage) {
+		int pageTotalCount = getMyPostPageTotalCount(loginSeq);
+		
+		int startNavi = (cpage-1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
+		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;
+		
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+
+		boolean needPrev = true;
+		boolean needNext = true;
+		
+		if(startNavi == 1) {
+			needPrev = false;
+		}
+
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+		
+		String pageNavi = "";
+		
+		if(needPrev) {
+			pageNavi += "<a href='/member/writenList?currentPage="+(startNavi-1)+"'><</a> ";
+		}
+		
+		for(int i = startNavi ; i <= endNavi; i++) {
+			pageNavi += "<a href='/member/writenList?currentPage="+i+"'>" + i + "</a> ";
+		}
+		
+		if(needNext) {
+			pageNavi += "<a href='/member/writenList?currentPage="+(endNavi+1)+"'>></a>";
+		}
+		return pageNavi;
+	}
+	
+	// cpage조정
+	public int myPostPageDefender(int loginSeq, Integer currentPage) {
+		if(currentPage == null) {currentPage = 1;}
+		int cpage = currentPage;
+		if(cpage < 1) {
+			cpage = 1;
+		}
+		int pageTotalCount = getMyPostPageTotalCount(loginSeq);
+		if(cpage > pageTotalCount) {
+			cpage = pageTotalCount;
+		}
+		return cpage;
 	}
 
 }

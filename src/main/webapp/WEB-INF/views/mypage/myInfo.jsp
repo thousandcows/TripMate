@@ -465,7 +465,6 @@
 
       <script>
         'use strict'
-        console.log("${loginInfo.nick}");
         // 사진 미리보기및 파일 용량 제한
         document.querySelector("#portraitInput").onchange = function () {
           let maxSize = "5242880";
@@ -663,13 +662,11 @@
           document.querySelector("#kakaoLogOutBtn").addEventListener("click", () => {
             let seq = "${loginInfo.seq}";
             alert("사이트에서 로그아웃 되었습니다.");
-            console.log(seq);
             $.ajax({
               type: "post",
               url: "/member/kakaoLogOut",
               data: { seq: seq }
             }).done(function (res) {
-              console.log(res);
               location.href = res;
             })
           });
