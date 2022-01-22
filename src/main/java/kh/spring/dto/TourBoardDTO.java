@@ -8,24 +8,28 @@ public class TourBoardDTO {
 	private String title;
 	private String contents;
 	private String category;
-	private Date writen_time;
+	private Date writen_date;
 	private int view_count;
 	private int rec_count;
 	private int rep_count;
+	private String nick;
+	private int board_num;
 	
 	public TourBoardDTO() {}
-	public TourBoardDTO(int seq, int mem_seq, String title, String contents, String category, Date writen_time,
-			int view_count, int rec_count, int rep_count) {
+	public TourBoardDTO(int seq, int mem_seq, String title, String contents, String category, Date writen_date,
+			int view_count, int rec_count, int rep_count, String nick, int board_num) {
 		super();
 		this.seq = seq;
 		this.mem_seq = mem_seq;
 		this.title = title;
 		this.contents = contents;
 		this.category = category;
-		this.writen_time = writen_time;
+		this.writen_date = writen_date;
 		this.view_count = view_count;
 		this.rec_count = rec_count;
 		this.rep_count = rep_count;
+		this.nick = nick;
+		this.board_num = board_num;
 	}
 	public int getSeq() {
 		return seq;
@@ -57,11 +61,11 @@ public class TourBoardDTO {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public Date getWriten_time() {
-		return writen_time;
+	public Date getWriten_date() {
+		return writen_date;
 	}
-	public void setWriten_time(Date writen_time) {
-		this.writen_time = writen_time;
+	public void setWriten_date(Date writen_date) {
+		this.writen_date = writen_date;
 	}
 	public int getView_count() {
 		return view_count;
@@ -81,6 +85,17 @@ public class TourBoardDTO {
 	public void setRep_count(int rep_count) {
 		this.rep_count = rep_count;
 	}
-	
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+	public int getBoard_num() {
+		return board_num;
+	}
+	public void setBoard_num(int board_num) {
+		this.board_num = board_num;
+	}
 	
 }

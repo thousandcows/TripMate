@@ -161,16 +161,18 @@
        		        <div class="seq" style="width: 10%;">${i.seq }</div>
        		        <div class="category" style="width: 10%;">[${i.category }]</div>
        		        <div class="title" style="width: 30%;"><a href="/tourboard/detail?seq=${i.seq}">${i.title }</a></div>
-       		        <div class="mem_seq" style="width: 10%;">${i.mem_seq }</div>
-       		        <div class="writen_time" style="width: 20%;">${i.writen_time }</div>
+       		        <div class="mem_seq" style="width: 10%;">${i.nick }</div>
+       		        <div class="writen_time" style="width: 20%;">${i.writen_date }</div>
        		        <div class="view_count" style="width: 10%;">${i.view_count }</div>
        		        <div class="rec_count" style="width: 10%;">${i.rec_count }</div>
        		    </div>
             </c:forEach>
         </div>
+        <c:if test="${!empty loginEmailID}">
         <div class="btn">
         	<input type=button value="글쓰기" id="toWrite_btn">
         </div>
+        </c:if>
         <div class="page">
             <div class="paging">
                 <div>${navi  }</div>
