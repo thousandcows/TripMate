@@ -22,11 +22,30 @@ public class CompanyBoardDAO {
 		return mybatis.insert("CompanyBoard.insert",dto);
 	}
 	
-	public List<CompanyBoardDTO> selectAll(int start, int end){
-		Map<String, String> map = new HashMap<>();
-		map.put("start", String.valueOf(start));
-		map.put("end", String.valueOf(end));
-		return mybatis.selectList("CompanyBoard.selectAll", map);
+	public List<CompanyBoardDTO> selectAll(int start, int end, String searchOption, String searchText){
+		if (searchOption==null) {
+			Map<String, String> map = new HashMap<>();
+			map.put("start", String.valueOf(start));
+			map.put("end", String.valueOf(end));
+
+			return mybatis.selectList("CompanyBoard.selectAll", map);
+			
+		}else if(searchOption.equals("search_title")){
+			Map<String, String> map = new HashMap<>();
+			map.put("start", String.valueOf(start));
+			map.put("end", String.valueOf(end));
+			map.put("searchText", searchText);
+
+			return mybatis.selectList("CompanyBoard.selectAllTitle", map);
+			
+		}else {
+			Map<String, String> map = new HashMap<>();
+			map.put("start", String.valueOf(start));
+			map.put("end", String.valueOf(end));
+			map.put("searchText", searchText);
+
+			return mybatis.selectList("CompanyBoard.selectAllWriter", map);
+		}
 	}
 	
 	public CompanyBoardDTO selectBySeq(int seq) {
@@ -52,8 +71,17 @@ public class CompanyBoardDAO {
 	}
 	
 	// 페이징
-	public int getRecordCount() throws Exception{
-		return mybatis.selectOne("CompanyBoard.recordCount");
+	public int getRecordCount(String searchOption, String searchText) throws Exception {
+
+		if (searchOption==null) {
+			return mybatis.selectOne("CompanyBoard.recordCount");
+			
+		} else if(searchOption.equals("search_title")){
+			return mybatis.selectOne("CompanyBoard.recordCountTitle", searchText);
+			
+		}else {
+			return mybatis.selectOne("CompanyBoard.recordCountWriter", searchText);
+		}
 	}
 	
 	//	좋아요
@@ -86,5 +114,4 @@ public class CompanyBoardDAO {
 		map.put("seq", String.valueOf(seq));
 		return mybatis.selectOne("CompanyBoard.replyReplyCount", map);
 	}
-
 }

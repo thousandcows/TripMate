@@ -18,12 +18,17 @@ public class ComReplyDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
-	public int insert(int rseq, String reply) {
+	public int insert(int rseq, String reply, String nick, int mem_seq) {
+		
+		System.out.println("dao nick : " + nick + "mem_seq : " + mem_seq);
 
 		Map<String, String> map = new HashMap<>();
 		map.put("rseq", String.valueOf(rseq));
 		map.put("reply", reply);
-
+		map.put("nick", nick);
+		map.put("mem_seq", String.valueOf(mem_seq));
+		
+		
 		return mybatis.insert("ComReply.insert", map);
 	}
 	
@@ -40,6 +45,7 @@ public class ComReplyDAO {
 				dto.setMem_seq(list.get(i).getMem_seq());
 				dto.setContents(list.get(i).getContents());
 				dto.setWriten_date(list.get(i).getWriten_date());
+				dto.setNick(list.get(i).getNick());
 				rp_list.add(dto);
 			}
 			
@@ -69,12 +75,14 @@ public class ComReplyDAO {
 		return mybatis.delete("ComReply.deleteAllRe", seq);
 	}
 	
-	public int reinsert(int rpseq, String recontent) {
+	public int reinsert(int rpseq, String recontent, String nick, int mem_seq) {
 
 		Map<String, String> map = new HashMap<>();
 		map.put("rpseq", String.valueOf(rpseq));
 		map.put("recontent", recontent);
-
+		map.put("nick", nick);
+		map.put("mem_seq", String.valueOf(mem_seq));
+		
 		return mybatis.insert("ComReply.reinsert", map);
 	}
 	
