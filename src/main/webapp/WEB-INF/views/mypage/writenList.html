@@ -265,7 +265,8 @@
                 </li>
                 <li>${list.view_count}</li>
                 <li>${list.rec_count}</li>
-                <li><input type="checkbox" name="postCheckBox" onclick="checkSelectAll()" value="${list.seq}"></li>
+                <li><input type="checkbox" name="postCheckBox" onclick="checkSelectAll()"
+                    value="${list.board_num},${list.seq}"></li>
               </ul>
             </c:forEach>
             <div>${navi}</div>
@@ -295,13 +296,38 @@
             });
           }
 
+          // 삭제버튼 누르면 체크된 라인의 value가져오기
           document.querySelector("#delBtn").addEventListener("click", () => {
             let checkBoxLength = document.querySelectorAll("input[name='postCheckBox']").length;
+            let delList = new Array();
             for (let i = 0; i < checkBoxLength; i++) {
               if (document.querySelectorAll("input[name='postCheckBox']")[i].checked == true) {
-                console.log(
-                  document.querySelectorAll("input[name='postCheckBox']")[i].value
-                );
+                let beforeSplit = document.querySelectorAll("input[name='postCheckBox']")[i].value;
+                let afterSplit = beforeSplit.split(",");
+                let list = new Object();
+                list.board_num = afterSplit[0];
+                list.seq = afterSplit[1];
+                delList.push(list);
+              }
+            }
+            if (delList.length == 0) {
+              alert("삭제할 게시글을 선택해주세요.");
+              return false;
+            } else {
+              if (confirm("정말 삭제하시겠습니까?")) {
+                $.ajax({
+                  url: "/member/myPostDelList",
+                  data: { list: JSON.stringify(delList) },
+                  contentType: "application/json; charset=UTF-8",
+                  async: false
+                }).done(function (res) {
+                  if (res == 0) {
+                    alert("삭제할 게시글을 선택해주세요.");
+                  } else {
+                    alert("삭제되었습니다.");
+                    location.reload();
+                  }
+                })
               }
             }
           });

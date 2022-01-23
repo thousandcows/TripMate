@@ -30,12 +30,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import kh.spring.dto.AreaDTO;
 import kh.spring.dto.KakaoProfile;
 import kh.spring.dto.KakaoToken;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MyPostDTO;
+import kh.spring.dto.MyPostDelListDTO;
 import kh.spring.service.AreaService;
 import kh.spring.service.MemberService;
 import kh.spring.statics.Statics;
@@ -344,6 +346,13 @@ public class MemberController {
 		model.addAttribute("list", list);
 		model.addAttribute("loginInfo", dto);
 		return "mypage/writenList";
+	}
+	
+	// 선택한 게시글 삭제
+	@ResponseBody
+	@RequestMapping(value = "myPostDelList", produces = "application/text;charset=utf-8")
+	public String myPostDelList(String list) {
+		return memberService.isMyPostDel(list);
 	}
 
 	// 에러는 여기로

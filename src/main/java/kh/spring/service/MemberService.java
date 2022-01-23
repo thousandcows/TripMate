@@ -12,12 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import kh.spring.dao.CompanyBoardDAO;
 import kh.spring.dao.MemberDAO;
+import kh.spring.dao.TourBoardDAO;
 import kh.spring.dto.AreaDTO;
 import kh.spring.dto.AreaSavedDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MyPostDTO;
+import kh.spring.dto.MyPostDelListDTO;
 import kh.spring.statics.Statics;
 import kh.spring.utils.EncryptUtils;
 
@@ -27,6 +31,12 @@ public class MemberService {
 	@Autowired
 	MemberDAO memberDao;
 
+	@Autowired
+	CompanyBoardService companyBoardService;
+	
+	@Autowired
+	TourBoardService tourBoardService;
+	
 	@Autowired
 	AreaService aService;
 
@@ -257,20 +267,37 @@ public class MemberService {
 	
 	// cpage조정
 	public int myPostPageDefender(int loginSeq, Integer currentPage) {
-		System.out.println("빌더들어오는 currentPage값 : " + currentPage);
 		if(currentPage == null || currentPage == 0) {currentPage = 1;}
-		System.out.println("1로 바뀐 currentPage값 : " + currentPage);
 		int cpage = currentPage;
-		System.out.println("current에서 cpage로 바뀐 값 : " + cpage);
 		if(cpage < 1) {
 			cpage = 1;
 		}
 		int pageTotalCount = getMyPostPageTotalCount(loginSeq);
-		System.out.println("토탈카운트 얘가 0이군" + pageTotalCount);
 		if(cpage > pageTotalCount) {
 			cpage = pageTotalCount;
 		}
 		return cpage;
+	}
+	
+	// 게시글 삭제
+	public String isMyPostDel(String list) {
+		boolean isDel = list.contains("[]");
+		if(isDel) {
+			return "0";
+		}
+		List<MyPostDelListDTO> delList = gson.fromJson(list, new TypeToken<List<MyPostDelListDTO>>(){}.getType());
+		for (MyPostDelListDTO dto : delList) {
+			if(dto.getBoard_num() == 1) {
+				System.out.println("여행게시판 삭제 seq : " + dto.getSeq());
+				tourBoardService.delete(dto.getSeq());
+				tourBoardService.delete2(dto.getSeq());
+			} else {
+				System.out.println("동행게시판 삭제 seq : " + dto.getSeq());
+				companyBoardService.delete(dto.getSeq());
+				companyBoardService.delete2(dto.getSeq());
+			}
+		}
+		return "1";
 	}
 
 }
