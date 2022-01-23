@@ -112,6 +112,14 @@ public class TourBoardDAO {
 		return mybatis.selectOne("TourBoard.relyReplyCount", map);
 	}
 	
+	public int addReplyCount(int seq, int totalReplyCount) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("seq", String.valueOf(seq));
+		map.put("rep_count", String.valueOf(totalReplyCount));
+		return mybatis.update("TourBoard.totalReplyCount", map);
+	}
+	
 	public int delete2(int seq) {
 		
 		return mybatis.delete("TourBoard.delete2", seq);
