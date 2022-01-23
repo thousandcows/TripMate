@@ -12,12 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import kh.spring.dao.CompanyBoardDAO;
 import kh.spring.dao.MemberDAO;
+import kh.spring.dao.TourBoardDAO;
 import kh.spring.dto.AreaDTO;
 import kh.spring.dto.AreaSavedDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MyPostDTO;
+import kh.spring.dto.MyPostDelListDTO;
 import kh.spring.statics.Statics;
 import kh.spring.utils.EncryptUtils;
 
@@ -27,6 +31,12 @@ public class MemberService {
 	@Autowired
 	MemberDAO memberDao;
 
+	@Autowired
+	CompanyBoardService companyBoardService;
+	
+	@Autowired
+	TourBoardService tourBoardService;
+	
 	@Autowired
 	AreaService aService;
 
@@ -221,7 +231,6 @@ public class MemberService {
 	// 네비
 	public String getMyPostNavi(int loginSeq, int cpage) {
 		int pageTotalCount = getMyPostPageTotalCount(loginSeq);
-		
 		int startNavi = (cpage-1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
 		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;
 		
@@ -258,7 +267,7 @@ public class MemberService {
 	
 	// cpage조정
 	public int myPostPageDefender(int loginSeq, Integer currentPage) {
-		if(currentPage == null) {currentPage = 1;}
+		if(currentPage == null || currentPage == 0) {currentPage = 1;}
 		int cpage = currentPage;
 		if(cpage < 1) {
 			cpage = 1;
@@ -268,6 +277,27 @@ public class MemberService {
 			cpage = pageTotalCount;
 		}
 		return cpage;
+	}
+	
+	// 게시글 삭제
+	public String isMyPostDel(String list) {
+		boolean isDel = list.contains("[]");
+		if(isDel) {
+			return "0";
+		}
+		List<MyPostDelListDTO> delList = gson.fromJson(list, new TypeToken<List<MyPostDelListDTO>>(){}.getType());
+		for (MyPostDelListDTO dto : delList) {
+			if(dto.getBoard_num() == 1) {
+				System.out.println("여행게시판 삭제 seq : " + dto.getSeq());
+				tourBoardService.delete(dto.getSeq());
+				tourBoardService.delete2(dto.getSeq());
+			} else {
+				System.out.println("동행게시판 삭제 seq : " + dto.getSeq());
+				companyBoardService.delete(dto.getSeq());
+				companyBoardService.delete2(dto.getSeq());
+			}
+		}
+		return "1";
 	}
 
 }

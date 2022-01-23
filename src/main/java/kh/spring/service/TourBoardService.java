@@ -23,12 +23,12 @@ public class TourBoardService {
 	@Autowired
 	public TourBoardService bservice;
 	
-	public List<TourBoardDTO> selectAll(int start, int end, String searchOption, String searchText) {
+	public List<TourBoardDTO> selectAll(int start, int end, String searchOption, String searchText) throws Exception{
 		
 		return bdao.selectAll(start, end, searchOption, searchText);
 	}
 	
-	public int writeProc(TourBoardDTO bdto) {
+	public int writeProc(TourBoardDTO bdto) throws Exception{
 		
 		return bdao.insert(bdto);
 	}
@@ -50,7 +50,9 @@ public class TourBoardService {
 	
 	public int delete(int seq) {
 		
+		rdao.deleteAllRe(seq);
 		rdao.deleteAll(seq);
+		
 		return bdao.delete(seq);
 	}	
 	
@@ -62,6 +64,11 @@ public class TourBoardService {
 	public int replyReplyCount(int seq) {
 		
 		return bdao.replyReplyCount(seq);
+	}
+	
+	public int addReplyCount(int seq, int totalReplyCount) {
+
+		return bdao.addReplyCount(seq, totalReplyCount);
 	}
 	
 	public int getPageTotalCount(String searchOption, String searchText) throws Exception{

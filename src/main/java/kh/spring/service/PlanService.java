@@ -1,12 +1,19 @@
 package kh.spring.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
 import kh.spring.dao.PlanDAO;
+import kh.spring.dto.AreaDTO;
 import kh.spring.dto.PlanDTO;
 import kh.spring.statics.Statics;
 
@@ -80,4 +87,37 @@ public class PlanService {
 			dao.saveList(target,seq);
 		}
 	}
+	
+	public String detailPlanList(int seq,String date){
+		System.out.println(date);
+		List<Integer> areaCode = dao.detailPlanSort(seq,date);
+		List<AreaDTO> list = new ArrayList<>(); 
+		for(int i = 0; i<areaCode.size();i++) {
+			list.add(dao.planListPrint(areaCode.get(i)));
+		}
+		Gson gson = new Gson();
+		String result = gson.toJson(list);
+		return result;
+	}
+	
+	public List<String> calDate(String start,String end) throws Exception{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+		Date startDate = sdf.parse(start);
+		Date endDate = sdf.parse(end);
+		List<String> list = new ArrayList<>();
+		Date currentDate = startDate;
+		//시작날짜와 끝 날짜를 비교해, 시작날짜가 작거나 같은 경우 출력
+		Calendar c = Calendar.getInstance();
+		while (currentDate.compareTo(endDate) <= 0) {
+			list.add(sdf.format(currentDate));
+			c.setTime(currentDate);
+			c.add(Calendar.DAY_OF_MONTH, 1);
+			currentDate = c.getTime();
+		}
+		for (String date : list) {
+			System.out.println(date);
+		}
+		return list;
+	}
+
 }

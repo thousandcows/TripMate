@@ -22,7 +22,7 @@
 	</update>
 	
 	<insert id="saveList">
-		insert into detail_plan values(#{par_seq},#{area_seq},(select startDate from plan where seq=#{par_seq}))
+		insert into detail_plan values(#{par_seq},#{area_seq},(select startDate from plan where seq=#{par_seq}), detail_plan_seq.nextval)
 	</insert>
 
 	<select id="listCount" resultType="int">
@@ -33,5 +33,12 @@
 		select * from (select plan.* , row_number() over(order by seq desc) rn from plan where mem_seq = #{seq})where rn between #{startNum} and #{endNum}
 		
 	</select>
-
+	
+	<select id="detailPlanSort" resultType="int">
+		select area_seq from detail_plan where par_seq = #{seq} and plan_date = #{date} order by seq
+	</select>
+	
+	<select id="planListPrint" resultType="kh.spring.dto.AreaDTO">
+		select * from area where seq=#{value}
+	</select>
 </mapper> 

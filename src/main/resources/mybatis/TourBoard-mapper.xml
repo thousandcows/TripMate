@@ -57,6 +57,10 @@
      	select count(*) from tour_board b join tour_reply r on(b.seq=r.par_seq) join tour_reply_reply p on(r.seq=p.par_seq) where r.par_seq = #{seq} 
      </select>
 
+	 <update id="totalReplyCount">
+	 	update tour_board set rep_count=#{rep_count} where seq = #{seq}
+	 </update>
+	 
 	 <delete id="delete2">
     	delete from tb_heart where par_seq=#{value}
      </delete>

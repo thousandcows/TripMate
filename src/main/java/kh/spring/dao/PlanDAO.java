@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.AreaDTO;
 import kh.spring.dto.PlanDTO;
 
 @Repository
@@ -45,5 +46,16 @@ public class PlanDAO {
 	
 	public int listCount(int seq) {
 		return mybatis.selectOne("Plan.listCount",seq);
+	}
+	
+	public List<Integer> detailPlanSort(int seq, String date){
+		Map<String,String> map = new HashMap<>();
+		map.put("seq", Integer.toString(seq));
+		map.put("date", date);
+		return mybatis.selectList("Plan.detailPlanSort",map);
+	}
+	
+	public AreaDTO planListPrint(int seq) {
+		return mybatis.selectOne("Plan.planListPrint",seq);
 	}
 }
