@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 import kh.spring.dao.ComReplyDAO;
 import kh.spring.dao.CompanyBoardDAO;
 import kh.spring.dto.ComBoardLikeDTO;
+import kh.spring.dto.ComMemDTO;
 import kh.spring.dto.CompanyBoardDTO;
-import kh.spring.dto.TourBoardDTO;
+import kh.spring.dto.MemberDTO;
 import kh.spring.statics.Statics;
 
 @Service
@@ -48,10 +49,6 @@ public class CompanyBoardService {
 		return cdao.addViewCount(seq);
 	}   
 	
-//	public int getRecordCount() throws Exception {
-//		return cdao.getRecordCount();
-//	}
-
 	
 	// 좋아요
 	public void insertBoardLike(ComBoardLikeDTO dto) throws Exception {
@@ -64,8 +61,13 @@ public class CompanyBoardService {
         cdao.updateBoardLike(dto.getPar_seq());
     }
 	
-	public  int getBoardLike(ComBoardLikeDTO dto) throws Exception {
-        return cdao.getBoardLike(dto);
+	/*
+	 * public int getBoardLike(ComBoardLikeDTO dto) throws Exception { return
+	 * cdao.getBoardLike(dto); }
+	 */
+	
+	public  int totalBoardLike(int seq) throws Exception {
+        return cdao.totalBoardLike(seq);
 	}
 	
 	public int delete2(int seq) {
@@ -138,18 +140,76 @@ public class CompanyBoardService {
 		
 		String pageNavi = "";
 		
-		if(needPrev) {
-			pageNavi += "<a href='/companyboard/list?cpage="+(startNavi-1)+"'><</a> ";
+		if(searchText == null || searchText.equals("")) {
+			if(needPrev) {
+				pageNavi += "<a href='/companyboard/list?cpage="+(startNavi-1)+"'><</a> ";
+			}
+			
+			for(int i = startNavi ; i <= endNavi; i++) {
+				pageNavi += "<a href='/companyboard/list?cpage="+i+"'>" + i + "</a> ";
+			}
+			
+			if(needNext) {
+				pageNavi += "<a href='/companyboard/list?cpage="+(endNavi+1)+"'>></a>";
+			}
+		}else {
+			if(searchOption.equals("search_writer")||searchOption.equals("search_title")) {
+				if(needPrev) {
+					pageNavi += "<a href='/companyboard/list?cpage="+(startNavi-1)+"&searchOption="+searchOption+"&searchText="+searchText+ "'>< </a>";
+				}
+			
+				for(int i = startNavi ; i <= endNavi; i++) {
+					pageNavi += "<a href='/companyboard/list?cpage=" + i + "&searchOption="+searchOption+"&searchText="+searchText+"'>" + i + "</a> ";
+				}
+			
+				if(needNext) {
+					pageNavi += "<a href='/companyboard/list?cpage="+(endNavi+1)+ "&searchOption="+searchOption+"&searchText="+searchText+"'> ></a>";
+				}
+			}
 		}
 		
-		for(int i = startNavi ; i <= endNavi; i++) {
-			pageNavi += "<a href='/companyboard/list?cpage="+i+"'>" + i + "</a> ";
-		}
 		
-		if(needNext) {
-			pageNavi += "<a href='/companyboard/list?cpage="+(endNavi+1)+"'>></a>";
-		}
 
 		return pageNavi;		
 	}	
+	
+	
+	//참여멤버 insert
+	public int insertMem(ComMemDTO dto) {
+		return cdao.insertMem(dto);
+	}
+	
+	//  마감
+	public int updateExpired(int seq) {
+		return cdao.updateExpired(seq);
+	}
+	
+	// 마감취소
+	public int updateExpiredCancel(int seq) {
+		return cdao.updateExpiredCancel(seq);
+	}
+	
+	// 신청자 리스트
+	public List<MemberDTO> selectAllMem(int seq){
+		return cdao.selectAllMem(seq);
+	}
+	
+	// 신청자 뺴기
+	public int deleteMem(int seq) {
+		return cdao.deleteMem(seq);
+	}
+	
+	// 신청자 카운트
+	public int memCount(int seq) {
+		return cdao.memCount(seq);
+	}
+	
+	// 중복 체크
+	public int memDuplCheck(ComMemDTO dto) {
+		return cdao.memDuplCheck(dto);
+	}
+	
+	public int likeDuplCheck(ComBoardLikeDTO dto) {
+		return cdao.likeDuplCheck(dto);
+	}
 }

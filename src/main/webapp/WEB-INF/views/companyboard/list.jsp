@@ -60,6 +60,7 @@
         /* 컨테이너 ----------------------------------------------------- */
         .container{
             /* border:1px solid red; */
+            padding-bottom :30px;
         }
 
         /* 미니 사이트맵 루트 */
@@ -111,9 +112,9 @@
         .board_header>div{
             float: left;
             padding: 8px 0px 8px 0px;
-            border-top: solid 1px black;
-            border-bottom: solid 1px #404040; 
-            background-color :rgb(240, 240, 240);
+            border-top: solid 1.5px #404040;
+            border-bottom: solid 1.5px #404040; 
+            background-color :white;
             font-weight: 700;
         }
 
