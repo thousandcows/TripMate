@@ -23,12 +23,12 @@ public class TourBoardService {
 	@Autowired
 	public TourBoardService bservice;
 	
-	public List<TourBoardDTO> selectAll(int start, int end, String searchOption, String searchText) {
+	public List<TourBoardDTO> selectAll(int start, int end, String searchOption, String searchText) throws Exception{
 		
 		return bdao.selectAll(start, end, searchOption, searchText);
 	}
 	
-	public int writeProc(TourBoardDTO bdto) {
+	public int writeProc(TourBoardDTO bdto) throws Exception{
 		
 		return bdao.insert(bdto);
 	}

@@ -50,8 +50,8 @@ public class TourBoardDAO {
 	}
 
 	public int insert(TourBoardDTO bdto) {
-
-		return mybatis.insert("TourBoard.insert", bdto);
+		
+		return mybatis.insert("TourBoard.insert", bdto);		
 	}
 
 	public TourBoardDTO selectBySeq(int seq) {

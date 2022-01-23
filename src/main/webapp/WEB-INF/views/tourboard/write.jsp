@@ -185,24 +185,36 @@
 			  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 			  fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
     		  placeholder: '최대 2048자까지 쓸 수 있습니다', 	//placeholder 설정
+    		  
+    		  callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+					onImageUpload : function(files) {
+						sendFile(files[0],this);
+					}
+				}
     	});    	
     });
-    
-    function uploadSummernoteImageFile(file, el) {
-		data = new FormData();
-		data.append("file", file);
-		$.ajax({
-			data : data,
-			type : "POST",
-			url : "uploadSummernoteImageFile",
-			contentType : false,
-			enctype : 'multipart/form-data',
-			processData : false,
-			success : function(data) {
-				$(el).summernote('editor.insertImage', data.url);
-			}
-		});
-	}
+ 	
+    /**
+	* 이미지 파일 업로드
+	*/
+	function sendFile(file, editor) {
+        var form_data = new FormData();
+        form_data.append('file', file);
+        $.ajax({
+            data : form_data,
+            type : "POST",
+            url : "/tourboard/imageUpload",
+            cache : false,
+            contentType : false,
+            enctype : "multipart/form-data",
+            processData : false,
+            success : function(sysName) {
+                console.log(sysName + "b")
+				console.log("write에 왔습니다.")
+                $(editor).summernote('insertImage', sysName);
+            }
+        });
+    }
     </script>
 	
     <script>
@@ -210,9 +222,7 @@
 	    	history.back();
 	    })
     </script>
-    
 
-    
     <script>
     $("#write_btn").on("click", function() {
     	if($("#category").val()==""){
