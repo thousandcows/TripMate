@@ -132,7 +132,7 @@
         <form action="/tourboard/list?cpage=1" method="post" id="frmSearch">
         <input type=hidden name="cpage" value=1>
         <div class="searchbar">
-            <select name="searchOption">            	
+            <select name="searchOption">
                 <option name="searchTitle" value="search_title">제목</option>
                 <option name="searchId" value="search_writer">작성자</option>
             </select>
@@ -160,7 +160,11 @@
     	  		<div class="board_enroll">
        		        <div class="seq" style="width: 10%;">${i.seq }</div>
        		        <div class="category" style="width: 10%;">[${i.category }]</div>
-       		        <div class="title" style="width: 30%;"><a href="/tourboard/detail?seq=${i.seq}">${i.title }</a></div>
+       		        <div class="title" style="width: 30%;"><a href="/tourboard/detail?seq=${i.seq}">${i.title }</a>
+       		        	<c:if test="${i.rep_count!=0 }">
+       		        		[${i.rep_count }]
+       		        	</c:if>
+       		        </div>
        		        <div class="mem_seq" style="width: 10%;">${i.nick }</div>
        		        <div class="writen_time" style="width: 20%;">${i.writen_date }</div>
        		        <div class="view_count" style="width: 10%;">${i.view_count }</div>

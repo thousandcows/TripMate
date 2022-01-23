@@ -50,8 +50,8 @@ public class TourBoardDAO {
 	}
 
 	public int insert(TourBoardDTO bdto) {
-
-		return mybatis.insert("TourBoard.insert", bdto);
+		
+		return mybatis.insert("TourBoard.insert", bdto);		
 	}
 
 	public TourBoardDTO selectBySeq(int seq) {
@@ -110,6 +110,14 @@ public class TourBoardDAO {
 		Map<String, String> map = new HashMap<>();
 		map.put("seq", String.valueOf(seq));
 		return mybatis.selectOne("TourBoard.relyReplyCount", map);
+	}
+	
+	public int addReplyCount(int seq, int totalReplyCount) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("seq", String.valueOf(seq));
+		map.put("rep_count", String.valueOf(totalReplyCount));
+		return mybatis.update("TourBoard.totalReplyCount", map);
 	}
 	
 	public int delete2(int seq) {

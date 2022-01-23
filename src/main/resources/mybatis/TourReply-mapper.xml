@@ -28,6 +28,10 @@
 		delete from tour_reply where par_seq=#{seq}		
 	</delete>
 	
+	<delete id="deleteAllRe">
+      	delete from tour_reply_reply where par_seq in (select r.seq from tour_board b join tour_reply r on(b.seq=r.par_seq) where r.par_seq=#{seq})
+   	</delete>
+	
 	<insert id="reinsert">
 		insert into tour_reply_reply values(tourrr_seq.nextval, #{rpseq}, 1, #{recontent}, default, #{nick})
 		

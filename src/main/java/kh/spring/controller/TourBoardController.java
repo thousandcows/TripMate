@@ -57,7 +57,6 @@ public class TourBoardController {
 		String searchOption = request.getParameter("searchOption");
 		String searchText = request.getParameter("searchText");
 		System.out.println("컨트롤러에 들어오는 searchOption : searchText = " + searchOption + " : " + searchText);
-
 		
 		if(searchText==null&&searchOption==null) {
 			
@@ -111,12 +110,10 @@ public class TourBoardController {
 			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
 			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
 			List<TourBoardDTO> list = bservice.selectAll(start, end, searchOption, searchText);
-			System.out.println("컨트롤러에 가져온 작성자 이름 검색 값 : " + list.get(0).getNick());
 			
 			String navi = bservice.getPageNavi(currentPage, searchOption, searchText);
 			
 			String loginEmailId = (String)request.getSession().getAttribute("loginEmailID");
-			System.out.println("loginEmailId : " + loginEmailId);
 			
 			model.addAttribute("writer", loginEmailId);
 			model.addAttribute("list", list);
@@ -133,56 +130,53 @@ public class TourBoardController {
 	}
 	
 	@RequestMapping("writeProc")
-	public String writeProc(TourBoardDTO bdto, MultipartFile[] file) {
+	public String writeProc(TourBoardDTO bdto) throws Exception{
 		
 		String nick = (String) session.getAttribute("loginNick");
-		int mem_id = (int)session.getAttribute("loginSeq");
 		bdto.setNick(nick);
+		
+		int mem_id = (int)session.getAttribute("loginSeq");
 		bdto.setMem_seq(mem_id);
-		
-
-//		String realPath = session.getServletContext().getRealPath("upload");	
-
-//		tourb_seq.nextval, 1,	#{title}, #{contents}, 'trip', default, default, default, default
-//		System.out.println("explanation : " + explanation);
-//		String contents = explanation;
-		
-		bservice.writeProc(bdto);
+	
+		bservice.writeProc(bdto);		
 		
 		return "redirect:/tourboard/list?cpage=1";
 	}
-	
-	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
+
+	@RequestMapping(value="imageUpload" , produces = "application/text;charset=utf-8")
 	@ResponseBody
-	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
-		JsonObject jsonObject = new JsonObject();
-		
-        
-		String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
-		 
-		
-		// 내부경로로 저장
-//		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-//		String fileRoot = contextRoot+"resources/fileupload/";
-		
-		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
-		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-		
-		File targetFile = new File(fileRoot + savedFileName);	
-		try {
-			InputStream fileStream = multipartFile.getInputStream();
-			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-			jsonObject.addProperty("url", "/summernote/resources/fileupload/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
-			jsonObject.addProperty("responseCode", "success");
-				
-		} catch (IOException e) {
-			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
-			jsonObject.addProperty("responseCode", "error");
-			e.printStackTrace();
+	public String imageUpload(MultipartFile[] file) throws Exception{		
+	
+		String sysName = null;
+		String realPath = null;
+		for (MultipartFile mf : file) {
+			// 파일이 비어있지 않다면 for문을 돌리라는 의미이다. 빈 파일을 업로드하지 못하게 막는 코드이다.
+			if (!mf.isEmpty()) {
+				// cos.jar를 통해 request를 multipart request로 업그레이드 시켜 데이터를 뽑아내어 사용했다.
+				// spring은 apachi fileupload를 사용하기 때문에 maven repository에서 다운로드 받아온다.
+
+				realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
+				// Servers -> Tomcat 우클릭 -> Browse Deployment Location... : realPath의 위치
+
+				// realPath 객체를 만들고 만약에 realPathFile 폴더가 없으면 폴더를 만들라는 이야기
+				File realPathFile = new File(realPath);
+				if (!realPathFile.exists()) {
+					realPathFile.mkdir();
+				}
+
+				// oriName : 사용자가 업로드한 파일의 원본 이름
+				String oriName = mf.getOriginalFilename();
+
+				// sysName : 서버에 저장할 파일 이름
+				// UUID.randomUUID() : 절대 겹치지 않는 문자배열을 만들어준다.
+				sysName = UUID.randomUUID() + "_" + oriName;
+
+				// 서버에 업로드되어 메모리에 적재된 파일의 내용을 어디에 저장할지 결정하는 부분
+				mf.transferTo(new File(realPath + "/" + sysName));
+			}
 		}
-		String a = jsonObject.toString();
-		return a;
+		System.out.println(realPath + "/" + sysName);
+		return "\\images\\" + sysName;
 	}
 	
 	@RequestMapping("detail")
@@ -191,14 +185,15 @@ public class TourBoardController {
 		String loginNick = (String)request.getSession().getAttribute("loginNick");	
 		
         TourBoardDTO dto = bservice.selectBySeq(seq);
-        dto.setNick(loginNick);
         
         bservice.addViewCount(seq);
         
         int replyCount = bservice.replyCount(seq);
         int replyReplyCount = bservice.replyReplyCount(seq);
         
-        dto.setRep_count(replyCount+replyReplyCount);
+        int totalReplyCount = replyCount + replyReplyCount;
+        dto.setRep_count(totalReplyCount);
+        bservice.addReplyCount(seq, totalReplyCount);
         
         List<TourReplyDTO> rp_list = rservice.selectAll(seq);
         
@@ -207,7 +202,6 @@ public class TourBoardController {
         // 좋아요 반영
         TourBoardLikeDTO c_dto = new TourBoardLikeDTO();
      	c_dto.setPar_seq(seq);
-     	//c_dto.setMem_seq(1);
      	int boardlike = bservice.getBoardLike(c_dto);
      
      	model.addAttribute("heart", boardlike);     		

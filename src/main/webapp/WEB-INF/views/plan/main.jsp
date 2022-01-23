@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,27 +21,50 @@
 					<div class="col-6">
 						제목
 					</div>
-					<div class="col-3">
+					<div class="col-2">
 						여행 시작일
 					</div>
-					<div class="col-3">
+					<div class="col-2">
 						여행 종료일
 					</div>
+					<div class="col-2">
+						진행 상황
+					</div>
 				</div>
+							<c:set var="now" value="<%=new java.util.Date()%>" />
 				<c:forEach var="i" items="${list }">
 					<div class="row">
 						<div class="col-6">
 						<a href="/plan/modify?seq=${i.seq }">${i.title }</a>
 						</div>
-						<div class="col-3">
+						<div class="col-2">
 							${i.startDate }
 						</div>
-						<div class="col-3">
+						<div class="col-2">
 							${i.endDate }
+						</div>
+						<div class="col-2">
+							<fmt:parseDate value="${i.startDate }" var="startDate" pattern="yyyy.MM.dd"/>
+							<fmt:parseDate value="${i.endDate }" var="endDate" pattern="yyyy.MM.dd"/>
+							<fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="start"/>
+							<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="end"/>
+							<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowD"/>
+							<c:if test="${start-nowD > 0 }">
+								<div>예정</div>
+							</c:if>
+							<c:if test="${start-nowD < 0 and end-nowD >= 0}">
+								<div>진행중</div>
+							</c:if>
+							<c:if test="${end-nowD < 0}">
+								<div>완료</div>
+							</c:if>
+							
 						</div>
 					</div>
 				</c:forEach>
 			</div>
+		</div>
+		<div class="row">
 			<div class="col">
 				<c:forEach var="i" items="${paging }">
 				<button type="button btn paging btn-primary">

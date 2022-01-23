@@ -23,12 +23,12 @@ public class TourBoardService {
 	@Autowired
 	public TourBoardService bservice;
 	
-	public List<TourBoardDTO> selectAll(int start, int end, String searchOption, String searchText) {
+	public List<TourBoardDTO> selectAll(int start, int end, String searchOption, String searchText) throws Exception{
 		
 		return bdao.selectAll(start, end, searchOption, searchText);
 	}
 	
-	public int writeProc(TourBoardDTO bdto) {
+	public int writeProc(TourBoardDTO bdto) throws Exception{
 		
 		return bdao.insert(bdto);
 	}
@@ -50,7 +50,9 @@ public class TourBoardService {
 	
 	public int delete(int seq) {
 		
+		rdao.deleteAllRe(seq);
 		rdao.deleteAll(seq);
+		
 		return bdao.delete(seq);
 	}	
 	
@@ -62,6 +64,11 @@ public class TourBoardService {
 	public int replyReplyCount(int seq) {
 		
 		return bdao.replyReplyCount(seq);
+	}
+	
+	public int addReplyCount(int seq, int totalReplyCount) {
+
+		return bdao.addReplyCount(seq, totalReplyCount);
 	}
 	
 	public int getPageTotalCount(String searchOption, String searchText) throws Exception{
@@ -109,17 +116,38 @@ public class TourBoardService {
 		
 		String pageNavi = "";
 		
-		if(needPrev) {
-			pageNavi += "<a href='/tourboard/list?cpage="+(startNavi-1)+"'><</a> ";
+		if(searchText == null || searchText.equals("")) {			
+			System.out.println("서비스에서 검색 안했을 때 출력되는 중");
+			if(needPrev) {
+				pageNavi += "<a href='/tourboard/list?cpage="+(startNavi-1)+"'><</a> ";
+			}
+			
+			for(int i = startNavi ; i <= endNavi; i++) {
+				pageNavi += "<a href='/tourboard/list?cpage="+i+"'>" + i + "</a> ";
+			}
+			
+			if(needNext) {
+				pageNavi += "<a href='/tourboard/list?cpage="+(endNavi+1)+"'>></a>";
+			}
+			
+		}else {
+			if(searchOption.equals("search_writer")||searchOption.equals("search_title")) {
+				System.out.println("서비스에서 검색 됐을 때 출력되는 중");
+				if(needPrev) {
+					pageNavi += "<a href='/tourboard/list?cpage="+(startNavi-1)+"&searchOption="+searchOption+"&searchText="+searchText+ "'>< </a>";
+				}
+			
+				for(int i = startNavi ; i <= endNavi; i++) {
+					pageNavi += "<a href='/tourboard/list?cpage=" + i + "&searchOption="+searchOption+"&searchText="+searchText+"'>" + i + "</a> ";
+				}
+			
+				if(needNext) {
+					pageNavi += "<a href='/tourboard/list?cpage="+(endNavi+1)+ "&searchOption="+searchOption+"&searchText="+searchText+"'> ></a>";
+				}
+			}
 		}
 		
-		for(int i = startNavi ; i <= endNavi; i++) {
-			pageNavi += "<a href='/tourboard/list?cpage="+i+"'>" + i + "</a> ";
-		}
 		
-		if(needNext) {
-			pageNavi += "<a href='/tourboard/list?cpage="+(endNavi+1)+"'>></a>";
-		}
 
 		return pageNavi;		
 	}	
