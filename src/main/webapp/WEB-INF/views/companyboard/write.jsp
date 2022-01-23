@@ -197,7 +197,7 @@
         <form action="/companyboard/writeProc" method="post" >
             <div class="board">
                 <div class="select_tour"><span style="font-weight: bold;">여행지 : </span>
-                    <select name="tour">
+                    <select name="tour" id="tour">
                     	<option value="" selected disabeled hidden>여행지</option>
                         <option value="서울">서울</option>
                         <option value="인천">인천</option>
@@ -220,7 +220,7 @@
                 </div>
 
                 <div class="select_recruit"><span style="font-weight: bold;">모집 인원 : </span>
-                    <select name="recruit">
+                    <select name="recruit" id="recruit">
                     	<option value="" selected disabeled hidden>인원</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -244,7 +244,7 @@
                 </div>
 
                 <div class="title">
-                    <input type="text" placeholder="제목을 입력해 주세요" name=title autocomplete='off'>
+                    <input type="text" placeholder="제목을 입력해 주세요" name=title id="title" autocomplete='off'>
                 </div>
 
                 <div class="write_con">
@@ -253,7 +253,7 @@
 
                 <div class="button">
                 	<button type=button id=back class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
-                    <button class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성완료</span></button>
+                    <button id="write_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성완료</span></button>
                 </div>
             </div>
         </form>
@@ -318,6 +318,63 @@
             });
         });
 	</script>
+	
+	<!-- 공란시 alert창 띄우기 -->
+    <script>
+    $("#write_btn").on("click", function() {
+    	
+    	 	if($("#tour").val()==""){
+    			
+    			alert("여행지를 선택해주세요");
+    			return false;
+    		}
+    		
+    		if($("#recruit").val()==""){
+    			
+    			alert("인원수를 선택해주세요");
+    			return false;
+    		} 
+    		
+			if($("#startDate").val()=="" && $("#endDate").val()==""){
+    			
+    			alert("여행 날짜를 선택해주세요");
+    			return false;
+    		}
+    		
+    		if($("#startDate").val()=="" ){
+    			
+    			alert("여행 시작 날짜를 선택해주세요");
+    			return false;
+    		}
+    		
+			if( $("#endDate").val()==""){
+    			
+    			alert("여행 종료 날짜를 선택해주세요");
+    			return false;
+    		}
+    		
+    		if(!$('input:radio[name=gender]').is(':checked') ){
+    			
+    			alert("성별을 선택해주세요");
+    			return false;
+    		} 
+    	    
+    	    if($("#title").val()==""){
+    			
+    			alert("제목을 입력해주세요");
+    			return false;
+    		}
+    		
+    		if($("#summernote").val()==""){
+    			
+    			alert("내용을 입력해주세요");
+    			return false;
+    		} 
+    	
+    }); 
+    
+   
+    </script>
 	
 </body>
 </html>

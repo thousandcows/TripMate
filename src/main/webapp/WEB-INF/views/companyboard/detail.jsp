@@ -649,6 +649,10 @@
 			$("#modCancel").css("display", "inline");	
 			
 			// 썸머노트 쓰기 활성화
+			/* $('#summernote').summernote({
+    		  airmode: false;
+    		}); */
+			
 			$('#summernote').summernote('enable');
 		})
 		
@@ -712,6 +716,7 @@
     		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
     		  lang: "ko-KR",					// 한글 설정 
     		  placeholder: '최대 2048자까지 쓸 수 있습니다' 	//placeholder 설정
+    		 /*  airmode: true;  */
     	});
     	
     	$('#summernote').summernote('disable');
@@ -774,6 +779,8 @@
     	alert("로그인 후 이용 가능합니다. ");
     });
     </script>
+    
+    
     
     
 </body>

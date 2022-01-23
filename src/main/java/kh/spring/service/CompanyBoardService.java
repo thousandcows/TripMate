@@ -77,15 +77,25 @@ public class CompanyBoardService {
 		return cdao.replyCount(seq);
 	}
 	
+	
+	
 	// 대댓글 개수
 	public int replyReplyCount(int seq) {
 		return cdao.replyReplyCount(seq);
+	}
+	
+	//댓글 개수 테이블 반영
+	public int addReplyCount(int seq, int totalReplyCount) {
+	      
+	    return cdao.addReplyCount(seq, totalReplyCount);
 	}
 	
 	//검색
 	public int getPageTotalCount(String searchOption, String searchText) throws Exception{
 
 		int recordTotalCount = cdao.getRecordCount(searchOption, searchText);
+		System.out.println("service 에서 recordTotalCount: " + recordTotalCount);
+		System.out.println("service 에서 searchOption, searchText: " + searchOption + " : " +  searchText);
 
 		int pageTotalCount = 0;
 

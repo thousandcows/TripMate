@@ -173,8 +173,8 @@
                 <option name="searchTitle" value="search_title" selected>제목</option>
                 <option name="searchId" value="search_writer">작성자</option>
             </select>
-            <input id="searchInput" type="text" placeholder="Search">
-            <button type=bsubmit id=search class="btn btn-primary btn-sm" style="background-color: rgb(56, 181, 174);"><span style="font-size: small;">검색</span></button>
+            <input id="searchText" name="searchText" type="text" placeholder="Search">
+            <button type=submit id=search class="btn btn-primary btn-sm" style="background-color: rgb(56, 181, 174);"><span style="font-size: small;">검색</span></button>
         </div>
         </form>
 
@@ -228,7 +228,7 @@
     <script>
     $("#search").on("click", function(){
 		
-    	if($("#searchInput").val()==""){
+    	if($("#searchText").val()==""){
     		alert("검색어를 입력해주세요");
     		return false;
     	}
