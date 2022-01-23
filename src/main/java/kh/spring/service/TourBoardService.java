@@ -109,17 +109,38 @@ public class TourBoardService {
 		
 		String pageNavi = "";
 		
-		if(needPrev) {
-			pageNavi += "<a href='/tourboard/list?cpage="+(startNavi-1)+"'><</a> ";
+		if(searchText == null || searchText.equals("")) {			
+			System.out.println("서비스에서 검색 안했을 때 출력되는 중");
+			if(needPrev) {
+				pageNavi += "<a href='/tourboard/list?cpage="+(startNavi-1)+"'><</a> ";
+			}
+			
+			for(int i = startNavi ; i <= endNavi; i++) {
+				pageNavi += "<a href='/tourboard/list?cpage="+i+"'>" + i + "</a> ";
+			}
+			
+			if(needNext) {
+				pageNavi += "<a href='/tourboard/list?cpage="+(endNavi+1)+"'>></a>";
+			}
+			
+		}else {
+			if(searchOption.equals("search_writer")||searchOption.equals("search_title")) {
+				System.out.println("서비스에서 검색 됐을 때 출력되는 중");
+				if(needPrev) {
+					pageNavi += "<a href='/tourboard/list?cpage="+(startNavi-1)+"&searchOption="+searchOption+"&searchText="+searchText+ "'>< </a>";
+				}
+			
+				for(int i = startNavi ; i <= endNavi; i++) {
+					pageNavi += "<a href='/tourboard/list?cpage=" + i + "&searchOption="+searchOption+"&searchText="+searchText+"'>" + i + "</a> ";
+				}
+			
+				if(needNext) {
+					pageNavi += "<a href='/tourboard/list?cpage="+(endNavi+1)+ "&searchOption="+searchOption+"&searchText="+searchText+"'> ></a>";
+				}
+			}
 		}
 		
-		for(int i = startNavi ; i <= endNavi; i++) {
-			pageNavi += "<a href='/tourboard/list?cpage="+i+"'>" + i + "</a> ";
-		}
 		
-		if(needNext) {
-			pageNavi += "<a href='/tourboard/list?cpage="+(endNavi+1)+"'>></a>";
-		}
 
 		return pageNavi;		
 	}	
