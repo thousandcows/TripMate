@@ -132,7 +132,7 @@
         <form action="/tourboard/list?cpage=1" method="post" id="frmSearch">
         <input type=hidden name="cpage" value=1>
         <div class="searchbar">
-            <select name="searchOption">            	
+            <select name="searchOption">
                 <option name="searchTitle" value="search_title">제목</option>
                 <option name="searchId" value="search_writer">작성자</option>
             </select>

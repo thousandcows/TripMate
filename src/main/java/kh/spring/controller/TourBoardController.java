@@ -111,12 +111,10 @@ public class TourBoardController {
 			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
 			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
 			List<TourBoardDTO> list = bservice.selectAll(start, end, searchOption, searchText);
-			System.out.println("컨트롤러에 가져온 작성자 이름 검색 값 : " + list.get(0).getNick());
 			
 			String navi = bservice.getPageNavi(currentPage, searchOption, searchText);
 			
 			String loginEmailId = (String)request.getSession().getAttribute("loginEmailID");
-			System.out.println("loginEmailId : " + loginEmailId);
 			
 			model.addAttribute("writer", loginEmailId);
 			model.addAttribute("list", list);
