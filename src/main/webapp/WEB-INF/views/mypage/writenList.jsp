@@ -28,30 +28,6 @@
 
           /* 링크 속성 지우기 */
           a {
-            text-decoration: none
-          }
-
-          a:hover {
-            text-decoration: none;
-            color: black;
-          }
-
-          a:link {
-            text-decoration: none;
-            color: black;
-          }
-
-          a:visited {
-            text-decoration: none;
-            color: black;
-          }
-
-          a:active {
-            text-decoration: none;
-            color: black;
-          }
-
-          a {
             text-decoration: none;
           }
 
@@ -203,6 +179,16 @@
             width: 10%;
           }
 
+          /* 임시 색상 지정 */
+          .tBoardHeader{
+            color:rgb(12, 102, 64);
+            font-weight: bold;
+          }
+          .cBoardHeader{
+            color:rgb(133, 121, 19);
+            font-weight: bold;
+          }
+
           /* 삭제버튼 */
           .delBtnBox {
             width: 100%;
@@ -244,10 +230,10 @@
                 <li>${list.writen_date}</li>
                 <li>
                   <c:if test="${list.board_num == 1}">
-                    <a href="/tourboard/list?cpage=1">여행 게시판</a>
+                    <a href="/tourboard/list?cpage=1" class="tBoardHeader">여행 게시판</a>
                   </c:if>
                   <c:if test="${list.board_num == 2}">
-                    <a href="/companyboard/list?cpage=1">동행 게시판</a>
+                    <a href="/companyboard/list?cpage=1" class="cBoardHeader">동행 게시판</a>
                   </c:if>
                   <!-- if문으로 번호에 따라 게시판 이름 분기 -->
                 </li>
@@ -296,7 +282,7 @@
             });
           }
 
-          // 삭제버튼 누르면 체크된 라인의 value가져오기
+          // 게시글 선택삭제
           document.querySelector("#delBtn").addEventListener("click", () => {
             let checkBoxLength = document.querySelectorAll("input[name='postCheckBox']").length;
             let delList = new Array();
