@@ -130,7 +130,6 @@
             <div class="tourboard"><a href="/tourboard/list?cpage=1">여행지 게시판</a></div>
         </div>
         <form action="/tourboard/list?cpage=1" method="post" id="frmSearch">
-
         <input type=hidden name="cpage" value=1>
         <div class="searchbar">
             <select name="searchOption">
