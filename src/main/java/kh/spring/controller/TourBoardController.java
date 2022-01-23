@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -155,13 +156,13 @@ public class TourBoardController {
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
 		JsonObject jsonObject = new JsonObject();
 		
-        
-		String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
-		 
+        /*
+		 * String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
+		 */
 		
 		// 내부경로로 저장
-//		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-//		String fileRoot = contextRoot+"resources/fileupload/";
+		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+		String fileRoot = contextRoot+"resources/fileupload/";
 		
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
@@ -189,14 +190,15 @@ public class TourBoardController {
 		String loginNick = (String)request.getSession().getAttribute("loginNick");	
 		
         TourBoardDTO dto = bservice.selectBySeq(seq);
-        dto.setNick(loginNick);
         
         bservice.addViewCount(seq);
         
         int replyCount = bservice.replyCount(seq);
         int replyReplyCount = bservice.replyReplyCount(seq);
         
-        dto.setRep_count(replyCount+replyReplyCount);
+        int totalReplyCount = replyCount + replyReplyCount;
+        dto.setRep_count(totalReplyCount);
+        bservice.addReplyCount(seq, totalReplyCount);
         
         List<TourReplyDTO> rp_list = rservice.selectAll(seq);
         

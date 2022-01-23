@@ -50,7 +50,9 @@ public class TourBoardService {
 	
 	public int delete(int seq) {
 		
+		rdao.deleteAllRe(seq);
 		rdao.deleteAll(seq);
+		
 		return bdao.delete(seq);
 	}	
 	
@@ -62,6 +64,11 @@ public class TourBoardService {
 	public int replyReplyCount(int seq) {
 		
 		return bdao.replyReplyCount(seq);
+	}
+	
+	public int addReplyCount(int seq, int totalReplyCount) {
+
+		return bdao.addReplyCount(seq, totalReplyCount);
 	}
 	
 	public int getPageTotalCount(String searchOption, String searchText) throws Exception{
