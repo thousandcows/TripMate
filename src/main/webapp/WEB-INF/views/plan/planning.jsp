@@ -1,7 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.Date" %> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +29,8 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 <link rel="stylesheet"
 	href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a5fa8abac646238f15601b89cae524ec&libraries=services"></script>
+	
 <jsp:include page="../base/header.jsp"></jsp:include>
 
 <script>
@@ -224,7 +228,28 @@
 		<!-- 일정 순서 -->
 		<div class="row" id="thirdForm" style="display:none;">
 			<div class="col">
-				일정순서 지정
+				<div class="row">
+					<div class="col-1" id="planDate">
+						<c:if test="${!empty seq }">
+						<c:forEach var="i" items="${date }">
+							<c:set var="j" value="${j+1 }"/>
+							<fmt:parseDate value="${i }" var="dateFor" pattern="yyyy.MM.dd"/>
+							<fmt:formatDate value="${dateFor}" var="date" pattern="yyyy.MM.dd" />
+							<div class="row border">
+								<div class="col datePick" id="${i }">
+									${j }일차<br>
+									${i }
+								</div>
+							</div>
+						</c:forEach>
+						</c:if>
+					</div>
+					<div class="col-3" id="planList">
+						리스트
+					</div>
+					<div class="col-6 w-100" id=map style="height:800px;"> <!-- 지도, 수정해야 -->
+					</div>
+				</div>
 			</div>
 		</div>
 		
@@ -366,12 +391,38 @@
     }
 	
 	$(document).on("click",".page",function(){
-		console.log(this.id);
 		$("#searchPageNo").val(this.id);
 		searching();
 		return false;
 	})
 		
+	$("#thirdBtn").on("click",function(){
+		$.ajax({
+			url:"/plan/detailPlanList?seq=${seq}&date=${dto.startDate}",
+			dataType:"json",
+			success:function(data){
+				let result = "";
+					for(let i = 0; i<data.length;i++){
+						result += '<div class="row"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</div>'						
+					}
+					$("#planList").html(result)
+			}
+		})
+	})
+	
+	$(".datePick").on("click",function(){
+		$.ajax({
+			url:"/plan/detailPlanList?seq=${seq}&date="+this.id,
+			dataType:"json",
+			success:function(data){
+				let result = "";
+				for(let i = 0; i<data.length;i++){
+					result += '<div class="row"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</div>'						
+				}
+				$("#planList").html(result)
+			}
+		})
+	})
 	
 	//찜목록 더보기
         let btn = 1;
@@ -422,6 +473,30 @@
             }
           })
         });
+        
+        
+        //지도
+        	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			level : 5
+		// 지도의 확대 레벨
+		};
+
+		// 지도를 생성합니다    
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+		
+		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+		var mapTypeControl = new kakao.maps.MapTypeControl();
+
+		// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+		// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+		map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+		var zoomControl = new kakao.maps.ZoomControl();
+		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+		
 		</script>
 </body>
 </html>
