@@ -1,5 +1,7 @@
 package kh.spring.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +21,15 @@ public class ComReplyController {
 	public ComReplyService crs;
 	
 	@RequestMapping("reply")
-	public String reply(int rseq, String reply) {
+	public String reply(int rseq, String reply, HttpServletRequest request) {
 		int seq = rseq;
-		crs.reply(seq, reply);
+		
+		String nick = (String)request.getSession().getAttribute("loginNick");
+		int mem_seq = (int)request.getSession().getAttribute("loginSeq");   
+		
+		System.out.println("nick : " + nick + "mem_seq : " + mem_seq);
+		
+		crs.reply(seq, reply, nick, mem_seq);
 		return "redirect:/companyboard/detail?seq="+seq;
 	}
 	
@@ -42,9 +50,12 @@ public class ComReplyController {
 	}
 	
 	@RequestMapping("rereply")
-	public String rereply(int writeseq, int rpseq, String recontents) {
+	public String rereply(int writeseq, int rpseq, String recontents, HttpServletRequest request) {
 		
-		crs.reinsert(rpseq, recontents);
+		String nick = (String)request.getSession().getAttribute("loginNick");
+		int mem_seq = (int)request.getSession().getAttribute("loginSeq");
+		
+		crs.reinsert(rpseq, recontents, nick, mem_seq);
 		return "redirect:/companyboard/detail?seq="+writeseq;
 	}
 	

@@ -166,15 +166,17 @@
             <div class="partyboard"><a href="/companyboard/list?cpage=1">동행게시판</a></div>
         </div>
 
+		<form action="/companyboard/list?cpage=1" method="post" id="frmSearch">
+		<input type=hidden name="cpage" value=1>
         <div class="searchbar">
-            <select>
-                <option value="search_title" selected>제목</option>
-                <option value="search_writer">작성자</option>
-                <option value="search_tour">여행지</option>
+            <select name="searchOption">
+                <option name="searchTitle" value="search_title" selected>제목</option>
+                <option name="searchId" value="search_writer">작성자</option>
             </select>
             <input id="searchInput" type="text" placeholder="Search">
-            <button type=button id=search class="btn btn-primary btn-sm" style="background-color: rgb(56, 181, 174);"><span style="font-size: small;">검색</span></button>
+            <button type=bsubmit id=search class="btn btn-primary btn-sm" style="background-color: rgb(56, 181, 174);"><span style="font-size: small;">검색</span></button>
         </div>
+        </form>
 
         <div class="board">
             <div class="board_header">
@@ -195,7 +197,7 @@
                 	<div class="title" style="width: 44%; text-align:left; padding-left:10px"><a href="/companyboard/detail?seq=${l.seq}">${l.title }&nbsp</a>
                 		<i class="far fa-comment-dots" style="color: rgb(161, 161, 161)"></i><span id="rep_count" name="rep_count" style="color: rgb(161, 161, 161)"> ${l.rep_count}</span></div>
                 	<div class="recruit" style="width: 9%;">${l.recruit }</div>
-                	<div class="mem_seq" style="width: 10%;">${l.mem_seq}</div>
+                	<div class="mem_seq" style="width: 10%;">${l.nick}</div>
                 	<div class="writen_date" style="width: 10%;">${l.writen_date }</div>
                 	<div class="view_count" style="width: 7%;">${l.view_count}</div>
                 	<div class="expired" style="width: 8%;">${l.expired }</div>
@@ -203,10 +205,11 @@
             </div>
         </div>
 
-		
+		<c:if test="${!empty loginNick}">
         <div class="button">
         	<button type=button id=write class="btn btn-primary btn-sm" style="background-color: rgb(56, 181, 174); border: none;"><span style="font-size: small;">작성하기</span></button>
         </div>
+        </c:if>
 
         <div class="page">
 			<div class="paging">
@@ -219,6 +222,21 @@
     	$("#write").on("click", function(){
  	   		location.href="/companyboard/write";
     	})
+    </script>
+    
+    <!-- 검색기능 -->
+    <script>
+    $("#search").on("click", function(){
+		
+    	if($("#searchInput").val()==""){
+    		alert("검색어를 입력해주세요");
+    		return false;
+    	}
+    	if($("#searchOption").val()==""){
+    		alert("검색어를 선택해주세요");
+    		return false;
+    	}
+    })
     </script>
 </body>
 </html>
