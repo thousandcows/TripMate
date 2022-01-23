@@ -2,7 +2,7 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
-public class TourReplyDTO {
+public class TourReplyReplyDTO {
 	private int seq;
 	private int par_seq;
 	private int mem_seq;
@@ -10,10 +10,11 @@ public class TourReplyDTO {
 	private Date writen_date;
 	private String nick;	
 	
-	public TourReplyDTO() {
+	public TourReplyReplyDTO() {
 		
 	}
-	public TourReplyDTO(int seq, int par_seq, int mem_seq, String contents, Date writen_date, String nick) {
+	
+	public TourReplyReplyDTO(int seq, int par_seq, int mem_seq, String contents, Date writen_date, String nick) {
 		super();
 		this.seq = seq;
 		this.par_seq = par_seq;
@@ -58,7 +59,7 @@ public class TourReplyDTO {
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
-		
+	
 	
 	
 }

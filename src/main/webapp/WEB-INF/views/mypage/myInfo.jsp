@@ -13,6 +13,7 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
       <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+      <jsp:include page="../base/header.jsp"></jsp:include>
       <style>
         /* 간단세팅 나중에 css파일 따로 뺄거*/
         * {
@@ -36,7 +37,7 @@
         /* 사이드바 시작 */
         .sideBar {
           width: 200px;
-          height: 1200px;
+          height: 1000px;
           background-color: rgb(240, 240, 240);
         }
 
@@ -46,7 +47,6 @@
           height: 150px;
           margin-left: 25px;
           margin-top: 50px;
-          background-color: hotpink;
           position: relative;
         }
 
@@ -84,7 +84,7 @@
         }
 
         .sideBarMenuBox li:first-child a {
-          background-color: rgb(255, 228, 193);
+          background-color: rgb(255, 223, 181);
         }
 
         /* 사이드바 끝 */
@@ -112,8 +112,7 @@
         .contentsMiddleIn {
           width: 600px;
           margin: auto;
-          height: 1050px;
-          background-color: cornsilk;
+          height: 800px;
         }
 
         .myInfoForm {
@@ -128,7 +127,7 @@
 
         /* input들 */
         .longInput {
-          width: 250px;
+          width: 230px;
           height: 40px;
           border-radius: 5px;
           border: 1px solid rgb(173, 173, 173);
@@ -136,7 +135,7 @@
         }
 
         .ageInput {
-          width: 50px;
+          width: 70px;
           height: 40px;
           padding-left: 10px;
         }
@@ -153,10 +152,7 @@
 
         .txtInput {
           margin-top: 30px;
-        }
-
-        .txtHead {
-          vertical-align: top;
+          padding: 5px;
         }
 
         .phOpenTxt {
@@ -175,7 +171,10 @@
         /* 탈퇴&수정버튼들 */
         .deleteAccountBtn {
           color: gray;
+          border: none;
+          background-color: white;
           font-size: 14px;
+          margin-right: 15px;
         }
 
         .deleteAccountBtn:hover {
@@ -185,19 +184,24 @@
         }
 
         .changeSubmitBtn {
-          width: 250px;
+          width: 200px;
           height: 40px;
+          margin: auto;
           border: none;
           border-radius: 5px;
-          box-shadow: 1px 1px 2px 1px rgb(177, 177, 177);
-          background-color: greenyellow;
+          border: 1px solid rgb(184, 184, 184);
+          color: #108b85;
+          background-color: white;
+        }
+
+        .changeSubmitBtn:hover {
+          box-shadow: 1px 1px 2px 1px rgb(233, 233, 233);
         }
 
         /* 사진 수정 */
         .portraitInput {
           width: 150px;
           height: 150px;
-          background-color: aliceblue;
           position: absolute;
           opacity: 0;
         }
@@ -205,6 +209,7 @@
         .portraitPhoto {
           width: 150px;
           height: 150px;
+          border-radius: 10px;
           position: absolute;
         }
 
@@ -212,10 +217,11 @@
           margin-top: 50px;
           width: 100%;
           height: 70px;
-          background-color: hotpink;
+          text-align: center;
         }
 
         .submitBtns {
+          margin-top: 20px;
           text-align: right;
         }
 
@@ -242,14 +248,34 @@
         .myInfoNickCheck,
         .myInfoPhoneCheck {
           display: inline;
-          width: 80px;
+          width: 70px;
           height: 30px;
           border-radius: 5px;
-          border: 1px solid gray;
-          background-color: hotpink;
+          border: 1px solid rgb(194, 194, 194);
+          background-color: rgb(255, 255, 255);
+          font-size: 14px;
+        }
+
+        .myInfoNickCheck:hover,
+        .myInfoPhoneCheck:hover {
+          background-color: rgb(247, 247, 247);
         }
 
         /* 비밀번호 수정 폼 */
+        .changePwBtn {
+          width: 150px;
+          height: 40px;
+          background-color: white;
+          color: rgb(65, 65, 65);
+          border: 1px solid rgb(160, 160, 160);
+          font-size: 14px;
+        }
+
+        .changePwBtn:hover {
+          background-color: white;
+          color: rgb(65, 65, 65);
+        }
+
         .myInfoPwChangeForm {
           margin: auto;
           width: 250px;
@@ -274,11 +300,12 @@
         }
 
         /* 회원탈퇴용 폼 */
-        #deleteAccountForm{
-          display:none;
+        #deleteAccountForm {
+          display: none;
         }
-        .deleteAccountInput{
-          display:none;
+
+        .deleteAccountInput {
+          display: none;
         }
 
         /* 정보수정 끝 */
@@ -322,24 +349,26 @@
                     <input type="text" value=${loginInfo.nick} class="longInput myInfoNickInput" name="nick"
                       id="myInfoNickInput">
                     <button type="button" class="myInfoNickCheck" id="myInfoNickCheck">중복확인</button>
-                    <div class="myInfoCheckTxt myInfoNickConfirm">테스트텍스트</div>
+                    <div class="myInfoCheckTxt myInfoNickConfirm">&nbsp;</div>
                     <c:if test="${loginInfo.sns_division == 0}">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      비밀번호 변경
-                    </button>
+                      <button type="button" class="btn btn-primary changePwBtn" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        비밀번호 변경
+                      </button>
                     </c:if>
                   </div>
                 </div>
                 <table class="myInfoForm">
-                <c:if test="${loginInfo.sns_division == 0}">
-                  <tr>
-                    <th class="text-center">Email</th>
-                    <td><input type="text" value=${loginInfo.emailID} readonly class="longInput" name="emailID"></td>
-                  </tr>
-                </c:if>
+                  <c:if test="${loginInfo.sns_division == 0}">
+                    <tr>
+                      <th class="text-center">Email</th>
+                      <td><input type="text" value=${loginInfo.emailID} readonly class="longInput" name="emailID"></td>
+                    </tr>
+                  </c:if>
                   <tr>
                     <th class="text-center">나이</th>
-                    <td><input type="number" min="14" max="100" class="ageInput" name="age" value=${loginInfo.age}></td>
+                    <td><input type="number" min="0" max="100" class="ageInput" id="ageInput" name="age"
+                        value=${loginInfo.age}> 세</td>
                   </tr>
                   <tr>
                     <th class="text-center">성별</th>
@@ -368,8 +397,9 @@
                     <td><input type="text" value="${loginInfo.phone}" maxlength="11" class="longInput"
                         id="myInfoPhoneInput" name="phone">
                       <button type="button" class="myInfoPhoneCheck" id="myInfoPhoneCheck">중복확인</button><input
-                        type="checkbox" class="phOpen" name="ph_Open"><span class="phOpenTxt">공개</span>
-                      <div class="myInfoCheckTxt myInfoPhoneConfirm">테스트텍스트</div>
+                        type="checkbox" class="phOpen" name="ph_Open" <c:if test="${loginInfo.ph_Open == 'on'}">checked
+                      </c:if>><span class="phOpenTxt">공개</span>
+                      <div class="myInfoCheckTxt myInfoPhoneConfirm">&nbsp;</div>
                     </td>
                   </tr>
                   <tr>
@@ -385,18 +415,18 @@
                   </tr>
                   <tr>
                     <th class="txtHead text-center">자기 소개</th>
-                    <td><textarea cols="50" rows="5" maxlength="120" style="resize: none;" placeholder="자기소개를 입력해주세요."
-                        class="txtInput" name="text" value=${loginInfo.text}></textarea></td>
+                    <td><textarea cols="50" rows="5" maxlength="110" style="resize: none;" placeholder="자기소개를 입력해주세요."
+                        class="txtInput" name="text">${loginInfo.text}</textarea></td>
                   </tr>
                 </table>
                 <div class="submitBtnss">
+                  <button type="button" class="changeSubmitBtn" id="myInfoChangeGo">정보 수정</button>
+                  <br>
                   <div class="submitBtns">
-                    <button type="button" class="changeSubmitBtn" id="myInfoChangeGo">수정버튼</button>
-                    <button type="button" class="deleteAccountBtn" id="deleteAccountBtn">탈퇴하기</button>
                     <c:if test="${loginInfo.sns_division != 0}">
-                      <!-- 세션비우는작업 추가로 해줘야함 ajax로 받아서 -->
                       <button type="button" id="kakaoLogOutBtn" class="deleteAccountBtn">카카오 로그아웃</a>
                     </c:if>
+                    <button type="button" class="deleteAccountBtn" id="deleteAccountBtn">탈퇴하기</button>
                   </div>
                 </div>
               </form>
@@ -435,8 +465,6 @@
 
       <script>
         'use strict'
-        console.log("${loginInfo.preference}");
-        console.log("${loginInfo.sns_division}");
         // 사진 미리보기및 파일 용량 제한
         document.querySelector("#portraitInput").onchange = function () {
           let maxSize = "5242880";
@@ -531,6 +559,7 @@
             if (nickNameRegex.test(myInfoNickInput)) {
               $.ajax({
                 url: "/member/nickNameCheck",
+                async: false,
                 data: { nickName: myInfoNickInput }
               }).done(function (res) {
                 if (res == "1") {
@@ -558,6 +587,7 @@
             if (phoneRegex.test(myInfoPhoneInput)) {
               $.ajax({
                 url: "/member/phoneCheck",
+                async: false,
                 data: { phone: myInfoPhoneInput }
               }).done(function (res) {
                 if (res == "1") {
@@ -583,6 +613,16 @@
           }
           if (!myInfoPhoneSubmitCheck) {
             alert("연락처를 확인 해주세요.");
+            return false;
+          }
+
+          let ageInput = document.querySelector("#ageInput").value
+          if (!(0 <= ageInput && ageInput <= 100)) {
+            alert("나이를 정수로 입력해주세요.");
+            return false;
+          }
+          if (ageInput == "") {
+            alert("나이를 정수로 입력해주세요.");
             return false;
           }
           if (confirm("수정하시겠습니까?")) {
@@ -617,20 +657,20 @@
             document.getElementById("deleteAccountForm").submit();
           }
         });
-    
-        document.querySelector("#kakaoLogOutBtn").addEventListener("click", () => {
-          let seq = "${loginInfo.seq}";
-          alert("사이트에서 로그아웃 되었습니다.");
-          console.log(seq);
-          $.ajax({
-            type: "post",
-            url: "/member/kakaoLogOut",
-            data: {seq : seq}
-          }).done(function(res){
-            console.log(res);
-            location.href=res;
-          })
-        });
+
+        if (document.querySelector("#kakaoLogOutBtn") != null) {
+          document.querySelector("#kakaoLogOutBtn").addEventListener("click", () => {
+            let seq = "${loginInfo.seq}";
+            alert("사이트에서 로그아웃 되었습니다.");
+            $.ajax({
+              type: "post",
+              url: "/member/kakaoLogOut",
+              data: { seq: seq }
+            }).done(function (res) {
+              location.href = res;
+            })
+          });
+        }
       </script>
     </body>
 

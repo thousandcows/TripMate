@@ -1,5 +1,8 @@
 package kh.spring.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,18 +21,22 @@ public class TourReplyController {
 	@Autowired
 	public TourReplyService rservice;
 	
+	@Autowired
+	private HttpSession session;
+	
 	@RequestMapping("reply")
-	public String reply(int rseq, String reply) {
+	public String reply(int rseq, String reply, HttpServletRequest request) {
+		
 		int seq = rseq;
-		rservice.reply(seq, reply);
+		String loginNick = (String)request.getSession().getAttribute("loginNick");
+		rservice.reply(seq, reply, loginNick);
 		return "redirect:/tourboard/detail?seq="+seq;
 	}
 	
 	@RequestMapping("modify")
 	public String modify(TourReplyDTO rdto) {
 		
-		int result = rservice.modify(rdto);
-		
+		int result = rservice.modify(rdto);		
 		int bseq = rdto.getPar_seq();
 		return "redirect:/tourboard/detail?seq="+bseq;
 	}
@@ -41,5 +48,27 @@ public class TourReplyController {
 		return "redirect:/tourboard/detail?seq="+bseq;
 	}
 	
+	@RequestMapping("rereply")
+	public String rereply(int writeseq, int rpseq, String recontents, HttpServletRequest request) {
+		
+		String loginNick = (String)request.getSession().getAttribute("loginNick");
+		rservice.reinsert(rpseq, recontents, loginNick);
+		return "redirect:/tourboard/detail?seq="+writeseq;
+	}
 	
+	@RequestMapping("remodify")
+	public String remodify(int writeseq, int idseq, String recontent) {
+		
+		System.out.println(idseq + " : " + recontent);
+		rservice.remodify(idseq, recontent);
+		return "redirect:/tourboard/detail?seq="+writeseq;
+	}
+	
+	@RequestMapping("redelete")
+	public String redelete(int idseq, int writeseq) {
+		
+		System.out.println(idseq + " : " + writeseq);
+		rservice.redelete(idseq);
+		return "redirect:/tourboard/detail?seq="+writeseq;
+	}
 }

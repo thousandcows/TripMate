@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <!DOCTYPE html>
     <html>
 
@@ -14,7 +15,7 @@
         crossorigin="anonymous"></script>
       <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      
+      <jsp:include page="../base/header.jsp"></jsp:include>
       <style>
         /* 간단세팅 나중에 css파일 따로 뺄거*/
         * {
@@ -49,7 +50,7 @@
           margin-left: 25px;
           position: relative;
         }
- 
+
         .sideMyNick {
           width: 100%;
           height: 40px;
@@ -83,8 +84,13 @@
           box-shadow: 1px 1px 2px 1px rgb(211, 211, 211);
         }
 
-        .sideBarMenuBox li:first-child a {
-          background-color: rgb(255, 228, 193);
+        .sideBarMenuBox li:nth-child(3) a {
+          background-color: rgb(255, 223, 181);
+        }
+
+        .portraitPhoto {
+          width: 150px;
+          height: 150px;
         }
 
         /* 사이드바 끝 */
@@ -104,15 +110,38 @@
           font-size: 26px;
         }
 
-    	.star{
-    		float:right;
-    	}
-    	
-    	.star>li{
-    		float:left;
-    	}
+        .star {
+          float: right;
+        }
+
+        .star>li {
+          float: left;
+        }
 
         /* 정보수정 끝 */
+        /* 좋아요관련 */
+        .detailEllipsis {
+          height: 70px;
+          border: 1px solid rgb(243, 243, 243);
+          border-radius: 5px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          /* 라인수 */
+          -webkit-box-orient: vertical;
+          word-wrap: break-word;
+          padding-left: 10px;
+        }
+
+        .delSeq {
+          display: none;
+        }
+
+        .myHeart {
+          cursor: pointer;
+        }
+
         footer {
           width: 100%;
           height: 300px;
@@ -125,9 +154,9 @@
       <div class="myPageContainer">
         <div class="sideBar">
           <div class="sideMyPortrait">
-            <img src="/resources/images/default_profile.png" class="portraitPhoto">
+            <img src="${loginInfo.photo}" class="portraitPhoto">
           </div>
-<!--           <div class="sideMyNick">${loginInfo.nick}</div> -->
+          <!--           <div class="sideMyNick">${loginInfo.nick}</div> -->
           <ul class="sideBarMenuBox">
             <li><a href="/member/mypageGo">개인정보 수정</a></li>
             <li><a href="/member/tourList">여행 기록</a></li>
@@ -141,62 +170,61 @@
           </div>
           <div class="container">
             <div class="row justify-content-center mt-4">
-		<c:forEach var='cnt' begin='1' end='10'>
-         	<div class="col-9 align-self-center mt-4">
-						<div class="row">
-							<div class="col-4">
-								<img  style="heigth:100px;"  class="w-100"
-									src="https://w.namu.la/s/45507892b4f48b2b3d4a6386f6dae20c28376a8ef5dfb68c7cc95249ec358e3e68df77594766021173b2e6acf374b79ce02e9eeef61fcdf316659e30289e123fbddf6e5ec3492eddbc582ee5a59a2ff5d6ee84f57ad19277d179b613614364ad">
-							</div>
-							<div class="col-8">
-								<div class="row">
-									<div class="col-10">여행지 제목</div>
-									<div class="col-2 text-end">
-									<span class="material-icons md-36 red" id=save>
-									favorite_border</span>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col">주소</div>
-								</div>
-								<div class="row">
-									<div class="col">연락처</div>
-								</div>
-
-								<div class="row align-items-end mb-0  h-50">
-									<div class="col">
-										<ul class="list-group-horizontal star p-0">
-											<li>평점</li>
-										<c:forEach var='asd' begin='1' end='5'>
-											<li>
-											<svg xmlns="http://www.w3.org/2000/svg"
-													style="width: 20px; height: 20px;" class="float-start p-0"
-													viewBox="0 0 20 20" fill="currentColor">
-							    <defs>
-							        <linearGradient id="half_grad1">
-							        		<stop offset="100%" stop-color="orange" />
-							        </linearGradient>
-							    </defs>
-						  <path	d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-														fill="url(#half_grad1)" stroke-width="1" stroke="orange" />
-								</svg>
-								</li>
-										</c:forEach>
-										</ul>			
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
+              <c:forEach var='cnt' items="${saveList}" varStatus="status">
+                <div class="col-9 align-self-center mt-4 delParent">
+                  <div class="row">
+                    <div class="col-4">
+                      <a href="/area/detail?num=${mySaveListSeq[status.index]}">
+                        <img style="height:170px;" class="w-100" src="${cnt.photo}">
+                      </a>
+                    </div>
+                    <div class="col-8">
+                      <div class="row">
+                        <div class="col-10"><a href="/area/detail?num=${mySaveListSeq[status.index]}">${cnt.name}</a>
+                        </div>
+                        <div class="col-2 text-end">
+                          <input type="text" class="delSeq" value="${mySaveListSeq[status.index]}">
+                          <span class="material-icons md-36 red myHeart" id=save>
+                            close</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">${cnt.lo_detail}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <c:if test="${cnt.phone == 'null'}">등록된 번호가 없습니다.</c:if>
+                          <c:if test="${cnt.phone != 'null'}">${cnt.phone}</c:if>
+                        </div>
+                      </div>
+                      <div class="row align-items-end mb-0  h-50">
+                        <div class="col-10 detailEllipsis">${cnt.detail}</div>
+                        <div class="col-2">
+                          <ul class="list-group-horizontal star p-0">
+                            <li>평점 :&nbsp;</li>
+                            <li>
+                              <c:if test="${empty savedListRate[status.index]}">
+                                -
+                              </c:if>
+                              ${savedListRate[status.index]}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </c:forEach>
+              <div id="seeMoreTag"></div>
             </div>
-            
-         <div class="row mt-4 mb-4" id="seeMoreTag">
-			<div class="col text-center">
-				<button type="button" class="btn btn-success" id="seeMore">더보기</button>
-			</div>
-		</div>
-            
+
+            <c:if test="${fn:length(isMySaveListMore) == 1}">
+            <div class="row mt-4 mb-4" id="seeMoreDel">
+              <div class="col text-center">
+                <button type="button" class="btn btn-success" id="seeMore">더보기</button>
+              </div>
+            </div>
+            </c:if>
           </div>
         </div>
       </div>
@@ -205,77 +233,78 @@
       </footer>
 
 
-<script>
-//let printNum = ${printNum};
-//let replyCount = ${replyCount};
-//let staticNo = ${staticNo};
-let printNum = 10;
-let replyCount = 50;
-let staticNo = 10;
-  $("#seeMore").on("click",function(){
-        $.ajax({
-    		url:"/member/moreSaving?printNum="+printNum+"&replyCount="+replyCount,
-    		data:"params",
-    		dataType:"json",
-    		success:function(result){
-	    		printNum = printNum+staticNo;
-	    		if(replyCount <= printNum){
-	    			$("#seeMoreTag").empty();		
-	    		}
-    			console.log(result);	
-    			for(var i in result)
-				$("#seeMoreTag").before(
-						
-						'<div class="col-9 align-self-center mt-4">'+
-						'<div class="row">'+
-							'<div class="col-4">'+
-								'<img  style="heigth:100px;"  class="w-100"'+
-									'src="https://w.namu.la/s/45507892b4f48b2b3d4a6386f6dae20c28376a8ef5dfb68c7cc95249ec358e3e68df77594766021173b2e6acf374b79ce02e9eeef61fcdf316659e30289e123fbddf6e5ec3492eddbc582ee5a59a2ff5d6ee84f57ad19277d179b613614364ad">'+
-							'</div>'+
-							'<div class="col-8">'+
-								'<div class="row">'+
-									'<div class="col-10">여행지 제목</div>'+
-									'<div class="col-2 text-end">'+
-									'<span class="material-icons md-36 red" id=save>'+
-									'favorite_border</span>'+
-									'</div>'+
-								'</div>'+
-								'<div class="row">'+
-									'<div class="col">주소</div>'+
-								'</div>'+
-								'<div class="row">'+
-									'<div class="col">연락처</div>'+
-								'</div>'+
-								
-								'<div class="row align-items-end mb-0  h-50">'+
-									'<div class="col">'+
-										'<ul class="list-group-horizontal star p-0">'+
-											'<li>평점</li>'+
-											'<li>'+
-											'<svg xmlns="http://www.w3.org/2000/svg"'+
-													'style="width: 20px; height: 20px;" class="float-start p-0"
-													'viewBox="0 0 20 20" fill="currentColor">'+
-							    '<defs>'+
-							        '<linearGradient id="half_grad1">'+
-							        		'<stop offset="100%" stop-color="orange" />'+
-							        '</linearGradient>'+
-							    '</defs>'+
-						  '<path	d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-														'fill="url(#half_grad1)" stroke-width="1" stroke="orange" />'+
-								'</svg>'+
-								'</li>'+
-										'</ul>'+			
-									'</div>'+
-								'</div>'+
-							'</div>'+
-						'</div>'+
-				)
-    		}
-    	  })
-   })
+      <script>
+        'use strict'
+        let btn = 1;
+        let isMore;
+        $("#seeMore").on("click", function () {
+          btn += 7;
+          $.ajax({
+            url: "/member/moreSaving",
+            data: { btn: btn }
+          }).done(function (res) {
+            let result = JSON.parse(res);
+            for (let i = 0; i < result.length; i++) {
+              $("#seeMoreTag").before(
+                `<div class="col-9 align-self-center mt-4 delParent">
+                  <div class="row">
+                    <div class="col-4">
+                      <a href="/area/detail?num=\${result[i].seq}">
+                        <img style="height:170px;" class="w-100" src="\${result[i].photo}">
+                      </a>
+                    </div>
+                    <div class="col-8">
+                      <div class="row">
+                        <div class="col-10"><a
+                            href="/area/detail?num=\${result[i].seq}">\${result[i].name}</a></div>
+                        <div class="col-2 text-end">
+                          <input type="text" class="delSeq" value="\${result[i].seq}">
+                          <span class="material-icons md-36 red myHeart" id=save>
+                            close</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">\${result[i].lo_detail}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col">\${result[i].phone}</div>
+                      </div>
+                      <div class="row align-items-end mb-0  h-50">
+                        <div class="col-10 detailEllipsis">\${result[i].detail}</div>
+                        <div class="col-2">
+                          <ul class="list-group-horizontal star p-0">
+                            <li>평점 :&nbsp;</li>
+                            <li>
+                              \${result[i].savedListRate}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>`
+              )
+              isMore = result[i].isMore;
+            }
+            if (isMore == 0) {
+              $("#seeMoreDel").empty();
+            }
+          })
+        });
 
-</script>
-  
+        $(document).on("click", ".myHeart", function () {
+          const $HEART = $(this);
+          if(confirm("해당 여행지의 찜을 취소하시겠습니까?")){
+            $.ajax({
+            url: "/area/save?area_seq=" + $HEART.prev().val()
+            }).done(function (res) {
+              $HEART.parents(".delParent").remove();
+            });
+          }
+        })
+
+      </script>
+
     </body>
 
     </html>

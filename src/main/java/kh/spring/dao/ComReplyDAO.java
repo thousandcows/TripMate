@@ -9,31 +9,36 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kh.spring.dto.TourReplyDTO;
-import kh.spring.dto.TourReplyReplyDTO;
+import kh.spring.dto.ComReplyDTO;
+import kh.spring.dto.ComReplyReplyDTO;
 
 @Repository
-public class TourReplyDAO {
+public class ComReplyDAO {
 
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
-	public int insert(int rseq, String reply, String loginNick) {
+	public int insert(int rseq, String reply, String nick, int mem_seq) {
+		
+		System.out.println("dao nick : " + nick + "mem_seq : " + mem_seq);
 
 		Map<String, String> map = new HashMap<>();
 		map.put("rseq", String.valueOf(rseq));
 		map.put("reply", reply);
-		map.put("nick", loginNick);
-		return mybatis.insert("TourReply.insert", map);
+		map.put("nick", nick);
+		map.put("mem_seq", String.valueOf(mem_seq));
+		
+		
+		return mybatis.insert("ComReply.insert", map);
 	}
+	
+	public List<ComReplyDTO> selectAll(int seq) {
 
-	public List<TourReplyDTO> selectAll(int seq) {
-
-		List<TourReplyDTO> list = mybatis.selectList("TourReply.selectAll");
-		List<TourReplyDTO> rp_list = new ArrayList<>();
+		List<ComReplyDTO> list = mybatis.selectList("ComReply.selectAll");
+		List<ComReplyDTO> rp_list = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 
-			TourReplyDTO dto = new TourReplyDTO();
+			ComReplyDTO dto = new ComReplyDTO();
 			if (seq == list.get(i).getPar_seq()) {
 				dto.setSeq(list.get(i).getSeq());
 				dto.setPar_seq(list.get(i).getPar_seq());
@@ -43,43 +48,47 @@ public class TourReplyDAO {
 				dto.setNick(list.get(i).getNick());
 				rp_list.add(dto);
 			}
+			
+//			System.out.println("띄어쓰기 테스트 : " +  list.get(i).getContents());
 		}
 		return rp_list;
 	}
 
-	public int modify(TourReplyDTO rdto) {
+	public int modify(ComReplyDTO rdto) {
 		
-		return mybatis.update("TourReply.modify", rdto);
+		return mybatis.update("ComReply.modify", rdto);
 	}
 	
 	public int delete(int seq) {
 		
-		mybatis.delete("TourReply.deleteReply", seq);		
-		return mybatis.delete("TourReply.delete", seq);
+		mybatis.delete("ComReply.deleteReply", seq);
+		return mybatis.delete("ComReply.delete", seq);
 	}
 	
 	public int deleteAll(int seq) {
 		
-		return mybatis.delete("TourReply.deleteAll", seq);
+		return mybatis.delete("ComReply.deleteAll", seq);
 	}
 	
 	public int deleteAllRe(int seq) {
-	    return mybatis.delete("TourReply.deleteAllRe", seq);
+		
+		return mybatis.delete("ComReply.deleteAllRe", seq);
 	}
 	
-	public int reinsert(int rpseq, String recontent, String loginNick) {
+	public int reinsert(int rpseq, String recontent, String nick, int mem_seq) {
 
 		Map<String, String> map = new HashMap<>();
 		map.put("rpseq", String.valueOf(rpseq));
 		map.put("recontent", recontent);
-		map.put("nick", loginNick);
+		map.put("nick", nick);
+		map.put("mem_seq", String.valueOf(mem_seq));
 		
-		return mybatis.insert("TourReply.reinsert", map);
+		return mybatis.insert("ComReply.reinsert", map);
 	}
 	
-	public List<TourReplyReplyDTO> selectReAll(){
+	public List<ComReplyReplyDTO> selectReAll(){
 		
-		return mybatis.selectList("TourReply.selectReAll");
+		return mybatis.selectList("ComReply.selectReAll");
 	}
 	
 	public int remodify(int idseq, String recontent) {
@@ -88,7 +97,7 @@ public class TourReplyDAO {
 		map.put("idseq", String.valueOf(idseq));
 		map.put("recontent", recontent);
 
-		return mybatis.update("TourReply.remodify", map);
+		return mybatis.update("ComReply.remodify", map);
 	}
 	
 	public int redelete(int idseq) {
@@ -96,7 +105,6 @@ public class TourReplyDAO {
 		Map<String, String> map = new HashMap<>();
 		map.put("idseq", String.valueOf(idseq));
 		System.out.println(idseq);
-		return mybatis.delete("TourReply.redelete", map);
+		return mybatis.delete("ComReply.redelete", map);
 	}
-	
 }

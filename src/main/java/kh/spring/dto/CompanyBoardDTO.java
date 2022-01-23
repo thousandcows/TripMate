@@ -20,12 +20,16 @@ public class CompanyBoardDTO {
 	private int view_count;
 	private int rec_count;
 	private int rep_count;
+	private String nick;
+	private int board_num;
 	
-	public CompanyBoardDTO() {}
+	public CompanyBoardDTO() {
+		super();
+	}
 
 	public CompanyBoardDTO(int seq, int mem_seq, String title, String contents, int recruit, int present, String tour,
 			String gender, Date start_date, Date end_date, String expired, Date writen_date, int view_count,
-			int rec_count, int rep_count) {
+			int rec_count, int rep_count, String nick, int board_num) {
 		super();
 		this.seq = seq;
 		this.mem_seq = mem_seq;
@@ -42,6 +46,8 @@ public class CompanyBoardDTO {
 		this.view_count = view_count;
 		this.rec_count = rec_count;
 		this.rep_count = rep_count;
+		this.nick = nick;
+		this.board_num = board_num;
 	}
 
 	public int getSeq() {
@@ -163,32 +169,24 @@ public class CompanyBoardDTO {
 	public void setRep_count(int rep_count) {
 		this.rep_count = rep_count;
 	}
-	
-	// 시간을 꾸며주는 메소드
-	public String getFormedDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
-		return sdf.format(this.writen_date.getTime());
+
+	public String getNick() {
+		return nick;
 	}
 
-	public String getDetailDate() {
-		long current_time = System.currentTimeMillis(); // 현재의 Timestamp
-		long write_time = this.writen_date.getTime(); // 글이 작성된 시점의 Timestamp
-			
-		long time_gap = current_time - write_time;
-			
-		if(time_gap < 60000) {
-			return "1분 이내";
-		}else if(time_gap < 300000) {
-			return "5분 이내";
-		}else if(time_gap < 3600000) {
-			return "1시간 이내";
-		}else if(time_gap < 86400000) {
-			return "오늘";
-		}else {
-			return getFormedDate();
-		}
-			
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
+
+	public int getBoard_num() {
+		return board_num;
+	}
+
+	public void setBoard_num(int board_num) {
+		this.board_num = board_num;
+	}
+	
+	
 	
 	
 }

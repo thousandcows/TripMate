@@ -16,6 +16,7 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<jsp:include page="../base/header.jsp"></jsp:include>
  <style>
         * {box-sizing: border-box;}
 
@@ -130,7 +131,7 @@
             <div> > </div>
             <div class="community" href="">커뮤니티</div>
             <div> > </div>
-            <div class="tourboard"><a href="tourboard/list">여행지 게시판</a></div>
+            <div class="tourboard"><a href="/tourboard/list?cpage=1">여행지 게시판</a></div>
         </div>
         <div class="writeForm">
         	<div class="catetitle">
@@ -160,11 +161,6 @@
         </div>
     </div>    
     </form>
-    <script>
-    $("#list_btn").on("click", function(){
-	    	history.back();
-	    })
-    </script>
     
     <script>
     $(document).ready(function() {
@@ -175,11 +171,58 @@
     		  maxHeight: null,             // 최대 높이
     		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
     		  lang: "ko-KR",					// 한글 설정
-    		  placeholder: '최대 2048자까지 쓸 수 있습니다' 	//placeholder 설정
-    	});
+    		  toolbar: [
+				    // [groupName, [list of button]]
+				    ['fontname', ['fontname']],
+				    ['fontsize', ['fontsize']],
+				    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				    ['color', ['forecolor','color']],
+				    ['table', ['table']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['height', ['height']],
+				    ['insert',['picture','link','video']],
+				    ['view', ['fullscreen', 'help']]],
+			  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			  fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+    		  placeholder: '최대 2048자까지 쓸 수 있습니다', 	//placeholder 설정
+    		  
+    		  callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+					onImageUpload : function(files) {
+						sendFile(files[0],this);
+					}
+				}
+    	});    	
     });
-    </script>    
-    
+ 	
+    /**
+	* 이미지 파일 업로드
+	*/
+	function sendFile(file, editor) {
+        var form_data = new FormData();
+        form_data.append('file', file);
+        $.ajax({
+            data : form_data,
+            type : "POST",
+            url : "/tourboard/imageUpload",
+            cache : false,
+            contentType : false,
+            enctype : "multipart/form-data",
+            processData : false,
+            success : function(sysName) {
+                console.log(sysName + "b")
+				console.log("write에 왔습니다.")
+                $(editor).summernote('insertImage', sysName);
+            }
+        });
+    }
+    </script>
+	
+    <script>
+    $("#list_btn").on("click", function(){
+	    	history.back();
+	    })
+    </script>
+
     <script>
     $("#write_btn").on("click", function() {
     	if($("#category").val()==""){
@@ -200,6 +243,7 @@
     		return false;
     	}   	
 
+    	
 		if (confirm("이대로 작성하시겠습니까?")) {
 				$("#frmDetail").submit();
 			}

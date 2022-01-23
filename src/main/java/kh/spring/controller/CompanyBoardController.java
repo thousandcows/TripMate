@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.spring.dto.ComBoardLikeDTO;
+import kh.spring.dto.ComReplyDTO;
+import kh.spring.dto.ComReplyReplyDTO;
 import kh.spring.dto.CompanyBoardDTO;
-import kh.spring.dto.MemberDTO;
+import kh.spring.dto.TourBoardDTO;
+import kh.spring.service.ComReplyService;
 import kh.spring.service.CompanyBoardService;
 import kh.spring.statics.Statics;
 
@@ -29,31 +32,75 @@ public class CompanyBoardController {
 	@Autowired
 	private HttpSession session;
 	
+	@Autowired
+	public ComReplyService crs;
+	
 	@RequestMapping("list")
 	public String list(Model model, HttpServletRequest request) throws Exception {
-		String cpage = request.getParameter("cpage");
-		if(cpage == null) {cpage = "1";}
 		
-		int currentPage = Integer.parseInt(request.getParameter("cpage"));
-		int pageTotalCount = cbs.getPageTotalCount();
+//		검색어 
+		String searchOption = request.getParameter("searchOption");
+		String searchText = request.getParameter("searchText");
 		
-		if(currentPage < 1) {
-			currentPage = 1;
+		if(searchText==null&&searchOption==null) {
+			String cpage = request.getParameter("cpage");
+			if(cpage == null) {cpage = "1";}
+			
+			
+			int currentPage = Integer.parseInt(request.getParameter("cpage"));
+			int pageTotalCount = cbs.getPageTotalCount(searchOption, searchText);
+			System.out.println("pageTotalCount : " + pageTotalCount);
+			
+			if(currentPage < 1) {
+				currentPage = 1;
+			}
+			if(currentPage > pageTotalCount) {
+				currentPage = pageTotalCount;
+			}
+			
+			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
+			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
+			
+			List<CompanyBoardDTO> list = cbs.selectAll(start, end, null, null);			
+			String navi = cbs.getPageNavi(currentPage, searchOption, searchText);
+			
+			String nick = (String) session.getAttribute("loginNick");
+			
+			model.addAttribute("nick",nick);
+			model.addAttribute("list", list);
+			model.addAttribute("navi", navi);
+			
+			return "companyboard/list";
+			
+		}else {
+			String cpage = request.getParameter("cpage");
+			if(cpage == null) {cpage = "1";}
+			
+			
+			int currentPage = Integer.parseInt(request.getParameter("cpage"));
+			int pageTotalCount = cbs.getPageTotalCount(searchOption, searchText);
+			
+			if(currentPage < 1) {
+				currentPage = 1;
+			}
+			if(currentPage > pageTotalCount) {
+				currentPage = pageTotalCount;
+			}
+			
+			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
+			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
+			List<CompanyBoardDTO> list = cbs.selectAll(start, end, searchOption, searchText);
+			String navi = cbs.getPageNavi(currentPage, searchOption, searchText);
+			
+			String loginNick = (String) session.getAttribute("loginNick");
+			
+			model.addAttribute("loginNick",loginNick);
+			model.addAttribute("list", list);
+			model.addAttribute("navi", navi);
+			
+			return "companyboard/list";
 		}
-		if(currentPage > pageTotalCount) {
-			currentPage = pageTotalCount;
-		}
-		
-		int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
-		int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
-		
-		String navi = cbs.getPageNavi(currentPage);	
-		
-		List<CompanyBoardDTO> list = cbs.selectAll(start, end);
-		model.addAttribute("list", list);
-		model.addAttribute("navi", navi);
-		
-		return "companyboard/list";
+
 	}
 	
 	// 작성 버튼 클릭시 작성 페이지로의 이동을 위한 메소드
@@ -65,6 +112,12 @@ public class CompanyBoardController {
 	// 작성완료 버튼 클릭 시 db 삽입 및 리스트로 넘어가는 메소드 구현
 	@RequestMapping("writeProc")
 	public String writeProc(CompanyBoardDTO dto) {
+		String loginNick = (String) session.getAttribute("loginNick");
+		int loginSeq = (int) session.getAttribute("loginSeq");   
+		
+		dto.setNick(loginNick);
+		dto.setMem_seq(loginSeq);
+		
 		int result = cbs.insert(dto);
 		return "redirect:/companyboard/list?cpage=1"; 
 	}
@@ -73,19 +126,38 @@ public class CompanyBoardController {
 	@RequestMapping("detail")
 	public String detail(int seq, Model model) throws Exception {
 		
-		//int userid = (int) session.getAttribute("loginSeq");
 		
+		String loginNick = (String) session.getAttribute("loginNick");
+		
+		// dto, 조회수
 		CompanyBoardDTO dto = cbs.selectBySeq(seq);
+		dto.setNick(loginNick);
 		int result = cbs.addViewCount(seq);
 		model.addAttribute("dto",dto);
 		
 		// 좋아요 반영
+		//int loginSeq = (int) session.getAttribute("loginSeq");   
+		
 		ComBoardLikeDTO c_dto = new ComBoardLikeDTO();
 		c_dto.setPar_seq(seq);
-		c_dto.setMem_seq(1);
+		//c_dto.setMem_seq(loginSeq);
 		int boardlike = cbs.getBoardLike(c_dto);
 		
 		model.addAttribute("heart", boardlike);
+		
+		//댓글+대댓글 갯수
+//		System.out.println("seq : " + seq);
+		int replyCount = cbs.replyCount(seq);
+//		System.out.println("replyCount : " + replyCount);
+		int replyReplyCount = cbs.replyReplyCount(seq);
+//		System.out.println("replyReplyCount : " + replyReplyCount);
+		dto.setRep_count(replyCount+replyReplyCount);
+        List<ComReplyDTO> rep_list = crs.selectAll(seq);
+        List<ComReplyReplyDTO> re_rep_list = crs.selectReAll();
+
+        model.addAttribute("rep_list", rep_list);
+        model.addAttribute("re_rep_list", re_rep_list);
+        
 		
 		return "companyboard/detail";
 	}
@@ -114,7 +186,7 @@ public class CompanyBoardController {
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		
         int heart = Integer.parseInt(httpRequest.getParameter("heart"));
-        //int userid = (int) session.getAttribute("loginSeq");     
+        int loginSeq = (int) session.getAttribute("loginSeq");     
         int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));   
         int rec_count_no = Integer.parseInt(httpRequest.getParameter("rec_count_no"));
 
@@ -122,7 +194,7 @@ public class CompanyBoardController {
         CompanyBoardDTO dto2 = cbs.selectBySeq(boardId);
         
         dto.setPar_seq(boardId);
-        dto.setMem_seq(1);
+        dto.setMem_seq(loginSeq);
  
         if(heart >= 1) {
             cbs.deleteBoardLike(dto);

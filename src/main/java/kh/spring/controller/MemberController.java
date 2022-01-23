@@ -1,9 +1,8 @@
 package kh.spring.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Properties;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -31,11 +30,17 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import kh.spring.dto.AreaDTO;
 import kh.spring.dto.KakaoProfile;
 import kh.spring.dto.KakaoToken;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.MyPostDTO;
+import kh.spring.dto.MyPostDelListDTO;
+import kh.spring.service.AreaService;
 import kh.spring.service.MemberService;
+import kh.spring.statics.Statics;
 
 @Controller
 @RequestMapping("/member/")
@@ -45,14 +50,15 @@ public class MemberController {
 	public MemberService memberService;
 
 	@Autowired
+	public AreaService areaService;
+
+	@Autowired
 	private HttpSession session;
 
 	// 이메일 체크
 	@ResponseBody
 	@RequestMapping(value = "emailCheck", produces = "application/text;charset=utf-8")
 	public String emailChek(String email) {
-		System.out.println("넘어온 일반회원가입 이메일값 : " + email);
-		System.out.println("보내는 일반회원가입 이메일 확인값 : " + memberService.emailCheck(email));
 		return String.valueOf(memberService.emailCheck(email));
 	}
 
@@ -60,8 +66,6 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "nickNameCheck", produces = "application/text;charset=utf-8")
 	public String nickNameCheck(String nickName) {
-		System.out.println("넘어온 일반회원가입 닉네임값 : " + nickName);
-		System.out.println("보내는 일반회원가입 닉네임 확인값 : " + memberService.nickNameCheck(nickName));
 		return String.valueOf(memberService.nickNameCheck(nickName));
 	}
 
@@ -69,8 +73,6 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "phoneCheck", produces = "application/text;charset=utf-8")
 	public String phoneCheck(String phone) {
-		System.out.println("넘어온 일반회원가입 휴대폰값 : " + phone);
-		System.out.println("보내는 일반회원가입 휴대폰 확인값 : " + memberService.phoneCheck(phone));
 		return String.valueOf(memberService.phoneCheck(phone));
 	}
 
@@ -78,7 +80,6 @@ public class MemberController {
 	@RequestMapping("normalSignup")
 	public String normalSignup(String emailID, String nick, String phone, String pw, String gender) {
 		memberService.normalSignup(emailID, nick, phone, pw, gender);
-		System.out.println("회원가입 사용자 성별 : " + gender);
 		MemberDTO dto = memberService.normalLoginSelectAll(emailID, pw);
 		session.setAttribute("loginSeq", dto.getSeq());
 		session.setAttribute("loginEmailID", dto.getEmailID());
@@ -91,10 +92,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "normalLogin", produces = "application/text;charset=utf-8")
 	public String normalLogin(String emailID, String pw) {
-		System.out.println("넘어온 일반로그인 아이디 : " + emailID);
-		System.out.println("넘어온 일반로그인 PW : " + pw);
 		int result = memberService.normalLoginCheck(emailID, pw);
-		System.out.println("로그인 조회 결과 : " + result);
 		if (result == 0) {
 			return "0";
 		} else {
@@ -102,79 +100,62 @@ public class MemberController {
 			session.setAttribute("loginSeq", dto.getSeq());
 			session.setAttribute("loginEmailID", dto.getEmailID());
 			session.setAttribute("loginNick", dto.getNick());
+			session.setAttribute("loginGender", dto.getGender());
 			return "1";
 		}
 	}
-	
-	String findPwTargetEmail = "";
+
 	// PW 찾기
+	String findPwTargetEmail = ""; // 찾을 email을 기억
+
 	@ResponseBody
 	@RequestMapping(value = "findPw", produces = "application/text;charset=utf-8")
-	public String pwFindPopup (String emailID) throws AddressException, MessagingException {
-		System.out.println("PW찾을 email : " + emailID);
+	public String pwFindPopup(String emailID) throws AddressException, MessagingException {
 		int result = memberService.emailCheck(emailID);
 		if (result == 0) {
 			return "0";
 		}
 		// 이메일 발송 시작
 		findPwTargetEmail = emailID; // 받는사람의 이메일
-		
-		// 보내는 개발자?의 메일계정
-		String user = "wlsrb2611@naver.com";
-		String password = "";
-		
-		// SMTP 서버 정보 설정
-		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.naver.com");
-		props.put("mail.smtp.port", 465);
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.ssl.enable", "true");
-		props.put("mail.smtp.ssl.trust", "smtp.naver.com");
-		
+
 		// SMTP 서버정보랑 사용자등록해서 Session 인스턴스 생성
-		Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+		Session mailSession = Session.getDefaultInstance(memberService.smtpSetting(), new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(user, password);
+				return new PasswordAuthentication(Statics.FIND_PW_CALLER_EMAIL, Statics.FIND_PW_CALLER_PW);
 			}
 		});
-		
+
 		// Message 클래스로 수신자랑 내용 제목의 메세지 전달
 		MimeMessage message = new MimeMessage(mailSession);
-		message.setFrom(new InternetAddress(user));
+		message.setFrom(new InternetAddress(Statics.FIND_PW_CALLER_EMAIL));
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(findPwTargetEmail));
 		message.setSubject("TripMate PW찾기 인증번호입니다.");
-		int verificationCode = (int) (Math.random() * (9999 - 1000)) + 1000;
+		int verificationCode = (int) (Math.random() * (9999 - 1000)) + 1000; // 얘때문에 애매하네
 		message.setText("TripMate PW찾기 인증번호는 : " + verificationCode + " 입니다.");
+
 		Transport.send(message);
 		return String.valueOf(verificationCode);
 	}
-	
+
 	// PW찾기 후 비밀번호 변경
 	@RequestMapping("findPwChange")
 	public String findPwChange(String pw) {
-		System.out.println("변경할 대상 이메일 : " + findPwTargetEmail);
 		memberService.findPwChange(findPwTargetEmail, pw);
 		return "redirect:/";
 	}
-	
-	
-	///////////// 카카오 로그인 시작 /////////////
-	private final String CLIENT_ID = "b7b0a7f6722957ddef971b2ff4061bd7"; // REST ID
-	private final String REDIRECT_URL = "http://localhost/member/kakaoLogin"; // 리퀘스트시킬 URL(나중엔 아이피로 변경 카카오 디벨로퍼에서도
-																				// 변경해줘야함.)
 
+	// 카카오 코드생성
 	@ResponseBody
 	@RequestMapping("getKakaoAuthUrl")
 	public String getKakaoAuthUrl() { // 로그인 ajax동작시 오는곳(카카오 자체 서버에서 코드를 받아와야하기때문)
-		String KaUrl = "https://kauth.kakao.com/oauth/authorize?client_id=" + CLIENT_ID + "&redirect_uri="
-				+ REDIRECT_URL + "&response_type=code";
-		return KaUrl; // 이러면 여기 코드가 왔겠지
+		String KaUrl = "https://kauth.kakao.com/oauth/authorize?client_id=" + Statics.KAKAO_CLIENT_ID + "&redirect_uri="
+				+ Statics.KAKAO_REDIRECT_URL + "&response_type=code";
+		return KaUrl;
 	}
 
+	// 카카오 로그인
 	@RequestMapping("kakaoLogin") // 서비스레이어로 뺄까 고민했지만 Http통신이 있어 컨트롤러에 있는게 맞을듯
 	public String kakaoLogin(String code, String error) {
-		System.out.println("반환된 카카오로그인 코드 : " + code);
-		System.out.println("반환된 카카오로그인 에러코드 : " + error);
 		if (error != null) { // 에러코드가 있다면 사용자가 무언가 취소를 한것.(null이 아닐때 전부 메인으로 보내버리면될수도)
 			return "redirect:/";
 //			if(error.equals("")) {
@@ -185,7 +166,7 @@ public class MemberController {
 		Gson gson = new Gson();
 		// POST방식으로 key=value 데이터를 요청(카카오쪽으로)
 		RestTemplate rt = new RestTemplate(); // 곧 지원중지될 API라 WebClient이걸 공부해야될듯
-		
+
 		// HttpHeader 오브젝트 생성
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); // 내가 보낼 데이터 타입이 key=value값이다
@@ -193,8 +174,8 @@ public class MemberController {
 		// HttpBody 오브젝트 생성( POST방식은 Body에 담아 보내야 하니까 )
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "authorization_code");
-		params.add("client_id", CLIENT_ID);
-		params.add("redirect_uri", REDIRECT_URL);
+		params.add("client_id", Statics.KAKAO_CLIENT_ID);
+		params.add("redirect_uri", Statics.KAKAO_REDIRECT_URL);
 		params.add("code", code);
 
 		// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
@@ -206,10 +187,8 @@ public class MemberController {
 
 		// json객체를 자바객체로 변환
 		KakaoToken data = gson.fromJson(response.getBody(), KakaoToken.class);
-		// 얻은 액세스 토큰
-		System.out.println("얻어낸 액세스 토큰" + data.getAccess_token());
 
-		/////// 액세스토큰을 이용해 유저정보 받기 //////
+		// 액세스토큰을 이용해 유저정보 받기
 		RestTemplate rt2 = new RestTemplate();
 
 		// HttpHeader2 오브젝트 생성
@@ -224,8 +203,6 @@ public class MemberController {
 		ResponseEntity<String> response2 = rt2.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.POST,
 				kakaoTokenRequest2, String.class);
 		// 유저 정보 빼오기
-		System.out.println("얻어낸 카카오 유저정보 : " + response2.getBody());
-
 		// jsonpojo로 바꾸면 카멜케이스때문에 에러나는데 일일히 바꿔줬음. 근데 한번에 바꾸는거 있을듯.
 		// 카카오 프로필정보 빼오는 코드(사용자가 동의 안해도 다빼옴;)
 		KakaoProfile kProfile = gson.fromJson(response2.getBody(), KakaoProfile.class);
@@ -235,7 +212,7 @@ public class MemberController {
 		String kakaoLoginNick = kProfile.properties.nickname;
 		// 이메일 동의 거부했을 경우 id로 구분해야한다
 		int kakaoLoginId = kProfile.id;
-		
+
 		int kakaoResult = memberService.kakaoLoginLookup(kakaoLoginId);
 		if (kakaoResult == 1) { // 가입내역이 있다면 정보를 빼서 세션에 담고
 			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginId);
@@ -251,13 +228,6 @@ public class MemberController {
 			session.setAttribute("loginNick", kakaoDto.getNick());
 			session.setAttribute("loginKakaoID", kakaoDto.getSns_division());
 		}
-
-		System.out.println("로그인한 카카오 이메일 : " + kProfile.kakao_account.email);
-		System.out.println("로그인한 카카오 id값 : " + kProfile.id);
-		System.out.println("로그인한 카카오 닉네임 : " + kProfile.properties.nickname);
-		System.out.println("로그인한 카카오 프로필이미지 : " + kProfile.properties.profile_image);
-		System.out.println("로그인한 카카오 성별 : " + kProfile.kakao_account.gender);
-
 		return "redirect:/";
 	}
 
@@ -268,53 +238,124 @@ public class MemberController {
 		return "redirect:/";
 		// 나중에 현재페이지 로그인&로그아웃으로 변경할것
 	}
-	
+
 	// 마이페이지 이동시 정보 빼오기
 	@RequestMapping("mypageGo")
 	public String mypageGo(Model model) {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
-		String filePath = "\\images" + "\\" + dto.getPhoto();
-		System.out.println(filePath);
+		String filePath = "\\images" + "\\" + dto.getPhoto(); // \image를 안붙여주면 경로가 c에서부터 찾음
 		dto.setPhoto(filePath);
 		model.addAttribute("loginInfo", dto);
 		return "mypage/myInfo";
 	}
-	
+
 	// 일반회원 정보수정Ok
 	@RequestMapping("myInfoChangeOk")
 	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
-		dto.setSeq((int)session.getAttribute("loginSeq"));
-		System.out.println("선호" + dto.getPreference());
-		String realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
+		dto.setSeq((int) session.getAttribute("loginSeq"));
+		String realPath = session.getServletContext().getRealPath("") + "\\resources\\images";
+		System.out.println("리얼패스 : " + realPath);
 		memberService.myInfoChangeOk(dto, file, realPath);
+		session.setAttribute("loginNick", dto.getNick());
+		session.setAttribute("loginGender", dto.getGender());
 		return "redirect:/member/mypageGo";
 	}
-	
+
 	// 비밀번호 수정
 	@RequestMapping("myInfoPwChange")
 	public String myInfoPwChange(String pw) {
 		memberService.myInfoPwChange(pw);
 		return "redirect:/member/mypageGo";
 	}
-	
+
 	// 회원탈퇴
 	@RequestMapping("deleteAccount")
 	public String deleteAccount(int seq) {
-		System.out.println("넘어온 탈퇴 seq : " + seq);
 		memberService.deleteAccount(seq);
 		session.invalidate();
 		return "redirect:/";
 	}
-	
+
 	// 카카오 로그아웃
 	@ResponseBody
 	@RequestMapping("kakaoLogOut")
 	public String kakaoLogOut(int seq) {
 		session.invalidate();
+		// 여기도 추후 AWS IP로 변경
 		return "https://kauth.kakao.com/oauth/logout?client_id=b7b0a7f6722957ddef971b2ff4061bd7&logout_redirect_uri=http://localhost";
 	}
+
+	// 상대방 프로필 조회
+	@ResponseBody
+	@RequestMapping("showMember")
+	public String showMember(int mem_seq) {
+		return memberService.showMember(mem_seq);
+	}
+
+	// 찜목록 처음불러오기
+	@RequestMapping("saveList")
+	public String saveList(Model model) throws Exception {
+		int loginSeq = (int) session.getAttribute("loginSeq");
+		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
+		String filePath = "\\images" + "\\" + dto.getPhoto();
+		dto.setPhoto(filePath); // 프로필 사진 설정
+		// 찜목록 조회 갯수
+		List<AreaDTO> adto = new ArrayList<>();
+		List<Integer> mySaveListSeq = memberService.mySaveListSeq(loginSeq, Statics.SAVE_LIST_START,
+				Statics.SAVE_LIST_END);
+		List<Integer> isMySaveListMore = memberService.mySaveListSeq(loginSeq, Statics.IS_MY_SAVE_LIST_MORE,
+				Statics.IS_MY_SAVE_LIST_MORE);
+		List<String> savedListRate = new ArrayList<>();
+		for (int saveSeq : mySaveListSeq) {
+			adto.add(areaService.detailBuild(saveSeq));
+			String rate = memberService.savedAreaGrade(saveSeq);
+			savedListRate.add(rate);
+		}
+		model.addAttribute("isMySaveListMore", isMySaveListMore);
+		model.addAttribute("savedListRate", savedListRate);
+		model.addAttribute("mySaveListSeq", mySaveListSeq);
+		model.addAttribute("saveList", adto);
+		model.addAttribute("loginInfo", dto);
+		return "mypage/saveList";
+	}
+
+	// 찜목록 더보기
+	@ResponseBody
+	@RequestMapping(value = "moreSaving", produces = "application/text;charset=utf-8")
+	public String moreSaving(int btn) throws Exception {
+		int loginSeq = (int) session.getAttribute("loginSeq");
+		return memberService.moreSaving(loginSeq, btn);
+	}
+
+	// 게시글 관리
+	@RequestMapping("writenList")
+	public String writenList(Model model, Integer currentPage) {
+		int loginSeq = (int) session.getAttribute("loginSeq");
+		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
+		String filePath = "\\images" + "\\" + dto.getPhoto();
+		dto.setPhoto(filePath); // 프로필 사진 설정
+		
+		int cpage = memberService.myPostPageDefender(loginSeq, currentPage);
+		int start = cpage * Statics.RECORD_COUNT_PER_PAGE - (Statics.RECORD_COUNT_PER_PAGE - 1);
+		int end = cpage * Statics.RECORD_COUNT_PER_PAGE;
+
+		List<MyPostDTO> list = memberService.getMyPostList(loginSeq, start, end);
+		String navi = memberService.getMyPostNavi(loginSeq, cpage);
+		model.addAttribute("navi", navi);
+		model.addAttribute("list", list);
+		model.addAttribute("loginInfo", dto);
+		return "mypage/writenList";
+	}
 	
+	// 선택한 게시글 삭제
+	@ResponseBody
+	@RequestMapping(value = "myPostDelList", produces = "application/text;charset=utf-8")
+	public String myPostDelList(String list) {
+		return memberService.isMyPostDel(list);
+	}
+
+	// 에러는 여기로
 	@ExceptionHandler
 	public String ExceptionHandler(Exception e) {
 		e.printStackTrace();

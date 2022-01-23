@@ -5,12 +5,20 @@
 
 <mapper namespace="TourBoard">
 
-	<select id="selectAll" resultType="kh.spring.dto.TourBoardDTO">
+	<select id="selectAllWriter" resultType="kh.spring.dto.TourBoardDTO">
+		select * from (select tour_board.*, row_number() over(order by seq desc) rn from tour_board where nick like '%'||#{searchText}||'%' ) where rn between #{start} and #{end}
+	</select>
+	
+	<select id="selectAllTitle" resultType="kh.spring.dto.TourBoardDTO">
+		select * from (select tour_board.*, row_number() over(order by seq desc) rn from tour_board where title like '%'||#{searchText}||'%' ) where rn between #{start} and #{end}
+	</select>
+	
+	<select id="selectAll" resultType="kh.spring.dto.TourBoardDTO">		
 		select * from (select tour_board.*, row_number() over(order by seq desc) rn from tour_board) where rn between #{start} and #{end}
 	</select>
 	
 	<insert id="insert">
-		insert into tour_board values(tourb_seq.nextval, 1,	#{title}, #{contents}, #{category}, sysdate, default, default, default)
+		insert into tour_board values(tourb_seq.nextval, #{mem_seq}, #{title}, #{contents}, #{category}, sysdate, default, default, default , #{nick}, default)
 	</insert>
 	
 	<select id="selectBySeq" resultType="kh.spring.dto.TourBoardDTO">
@@ -28,13 +36,56 @@
 	<delete id="delete">
 		delete from tour_board where seq=#{value}
 	</delete>
-	
-	<select id="recordCount" resultType="int">
-     	select count(*) from tour_board
+     
+     <select id="recordCountWriter" resultType="int">
+     	select count(*) from tour_board where nick like '%'||#{searchText}||'%'
+     </select>
+     
+     <select id="recordCountTitle" resultType="int">
+     	select count(*) from tour_board where title like '%'||#{searchText}||'%'
      </select>
    
+   	 <select id="recordCount" resultType="int">
+     	select count(*) from tour_board
+     </select>
+     
      <select id="replyCount" resultType="int">
      	select count(*) from tour_reply where par_seq = #{seq}
      </select>
      
+     <select id="relyReplyCount" resultType="int">
+     	select count(*) from tour_board b join tour_reply r on(b.seq=r.par_seq) join tour_reply_reply p on(r.seq=p.par_seq) where r.par_seq = #{seq} 
+     </select>
+
+	 <update id="totalReplyCount">
+	 	update tour_board set rep_count=#{rep_count} where seq = #{seq}
+	 </update>
+	 
+	 <delete id="delete2">
+    	delete from tb_heart where par_seq=#{value}
+     </delete>
+	 
+	 <insert id="createBoardLike"> 
+        insert into tb_heart values (tb_heart_seq.nextval, #{par_seq}, #{mem_seq})
+     </insert>
+
+     <delete id="deleteBoardLike">
+        delete from tb_heart
+            where par_seq = #{par_seq} AND mem_seq = #{mem_seq}
+     </delete>
+
+     <select id="updateBoardLike"> 
+        update tour_board
+        set
+        rec_count = (select count(*)
+        from tb_heart
+        where par_seq = #{value})
+        where seq = #{value}
+     </select>
+
+     <select id="getBoardLike" resultType="int">
+        select count(seq) from tb_heart 
+          	where par_seq = #{par_seq} and mem_seq = #{mem_seq}
+     </select>
+
 </mapper>

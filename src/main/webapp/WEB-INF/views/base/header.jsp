@@ -1,21 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <!DOCTYPE html>
-    <html>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
     <head>
-      <meta charset="UTF-8">
-      <title>Trip Mate</title>
-      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Poor+Story&display=swap"
         rel="stylesheet">
       <link rel="stylesheet" href="/css/login.css" type="text/css">
+      <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
       <script defer src="/js/login.js"></script>
     </head>
     <style>
@@ -53,7 +46,7 @@
 
     <body>
       <!-- 로그인 모달창 -->
-      <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+      <div class="modal" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -79,7 +72,7 @@
         </div>
       </div>
       <!-- 회원가입 모달창 -->
-      <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+      <div class="modal" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content modal-signup-content">
@@ -97,6 +90,11 @@
                 <div class="signupBoxs">
                   <input type="text" placeholder="닉네임" class="signupNickNameInput" id="signupNickName" name="nick"
                     required><button type="button" class="signupCheckBtn" id="signupNickNameCheckBtn">중복확인</button>
+                  <div class="nickNameConfirm signupInputConfirm"></div>
+                </div>
+                <div class="signupBoxs">
+                  <span class="genderHead">성별</span><input type="radio" class="genderInput" value="male" name="gender">
+                  남성&nbsp;&nbsp;&nbsp;<input type="radio" class="genderInput" name="gender" value="female"> 여성
                   <div class="nickNameConfirm signupInputConfirm"></div>
                 </div>
                 <div class="signupBoxs">
@@ -130,7 +128,7 @@
         </div>
       </div>
       <!-- PW찾기 모달창 -->
-      <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+      <div class="modal" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -170,8 +168,8 @@
         <div class="container">
 
           <!-- Brand -->
-          <a class="navbar-brand d-none d-lg-block order-lg-1" href="#">
-            <img width="142" src="trip2.png" alt="TripMate" />
+          <a class="navbar-brand d-none d-lg-block order-lg-1" href="/">
+            <img width="142" src="/images/trip2.png" alt="TripMate" />
           </a>
 
 
@@ -196,7 +194,7 @@
             <hr class="d-lg-none my-3">
             <ul class="navbar-nav">
               <li class="nav-item active"><a class="nav-link" id="triplist">여행지</a></li>
-              <li class="nav-item"><a class="nav-link" href="">여행일정</a></li>
+              <li class="nav-item"><a class="nav-link" id="tripPlan">여행일정</a></li>
               <li class="nav-item active"><a class="nav-link" id="tourboard">여행게시판</a></li>
               <li class="nav-item"><a class="nav-link" id="companyboard">동행게시판</a></li>
               <li class="searchbar"> <i class="fas fa-search"></i><input class="form-control rounded-start" type="text"
@@ -208,7 +206,7 @@
                     <div id="loginAfterBox">
                       ${loginNick} 님
                       <a href="/member/normalLogout">로그아웃</a>
-                      <a hred="/member/mypageGo">마이페이지</a>
+                      <a href="/member/mypageGo">마이페이지</a>
                     </div>
                   </c:when>
                   <c:otherwise>
@@ -224,20 +222,24 @@
 
       <script>
         $("#tourboard").on("click", function () {
-          location.href = "/tourboard/list";
+          location.href = "/tourboard/list?cpage=1";
         })
-      </script>
-
-      <script>
-        $("#toParyBoard").on("click", function () {
-          location.href = "/companyboard/list";
+        
+        $("#tripPlan").on("click",function(){
+        	if(${loginEmailID ne null}){
+            	location.href = "/plan/main?page=1";        		
+        	}else{
+        		alert("회원 전용 기능입니다.");
+        	}
         })
-      </script>
+        $("#companyboard").on("click", function () {
+          location.href = "/companyboard/list?cpage=1";
 
-      <script>
+        })
+        
         $("#triplist").on("click", function () {
           location.href = "/area/main?area=0&contentType=0&page=1";
         })
       </script>
     </body>
-    </html>
+</html>

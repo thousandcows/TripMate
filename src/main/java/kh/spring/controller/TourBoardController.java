@@ -1,19 +1,33 @@
 package kh.spring.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.JsonObject;
 
 import kh.spring.dao.TourBoardDAO;
 import kh.spring.dao.TourReplyDAO;
 import kh.spring.dto.TourBoardDTO;
+import kh.spring.dto.TourBoardLikeDTO;
 import kh.spring.dto.TourReplyDTO;
+import kh.spring.dto.TourReplyReplyDTO;
 import kh.spring.service.TourBoardService;
 import kh.spring.service.TourReplyService;
 import kh.spring.statics.Statics;
@@ -34,32 +48,79 @@ public class TourBoardController {
 	@Autowired
 	public TourReplyService rservice;
 	
+	@Autowired
+	private HttpSession session;
+	
 	@RequestMapping("list")
 	public String list(Model model, HttpServletRequest request) throws Exception{
 		
-		String cpage = request.getParameter("cpage");
-		if(cpage == null) {cpage = "1";}
+		String searchOption = request.getParameter("searchOption");
+		String searchText = request.getParameter("searchText");
+		System.out.println("컨트롤러에 들어오는 searchOption : searchText = " + searchOption + " : " + searchText);
 		
-		int currentPage = Integer.parseInt(request.getParameter("cpage"));
-		int pageTotalCount = bservice.getPageTotalCount();
-		
-		if(currentPage < 1) {
-			currentPage = 1;
-		}
-		if(currentPage > pageTotalCount) {
-			currentPage = pageTotalCount;
-		}
-		
-		int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
-		int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
-		
-		String navi = bservice.getPageNavi(currentPage);
-		
-		List<TourBoardDTO> list = bservice.selectAll(start, end);
-		model.addAttribute("list", list);
-		model.addAttribute("navi", navi);
-		
-		return "tourboard/list";
+		if(searchText==null&&searchOption==null) {
+			
+			String cpage = request.getParameter("cpage");
+			if(cpage == null) {cpage = "1";}
+			
+			
+			int currentPage = Integer.parseInt(request.getParameter("cpage"));
+			int pageTotalCount = bservice.getPageTotalCount(searchOption, searchText);
+			System.out.println("pageTotalCount : " + pageTotalCount);
+			
+			if(currentPage < 1) {
+				currentPage = 1;
+			}
+			if(currentPage > pageTotalCount) {
+				currentPage = pageTotalCount;
+			}
+			
+			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
+			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
+			
+			List<TourBoardDTO> list = bservice.selectAll(start, end, null, null);			
+			String navi = bservice.getPageNavi(currentPage, searchOption, searchText);
+			
+			String loginEmailId = (String)request.getSession().getAttribute("loginEmailID");
+			System.out.println("loginEmailId : " + loginEmailId);
+			
+			model.addAttribute("writer", loginEmailId);
+			model.addAttribute("list", list);
+			model.addAttribute("navi", navi);
+			
+			return "tourboard/list";
+			
+		}else{			
+			
+			String cpage = request.getParameter("cpage");
+			if(cpage == null) {cpage = "1";}
+			
+			
+			int currentPage = Integer.parseInt(request.getParameter("cpage"));
+			int pageTotalCount = bservice.getPageTotalCount(searchOption, searchText);
+			System.out.println("pageTotalCount : " + pageTotalCount);
+			
+			if(currentPage < 1) {
+				currentPage = 1;
+			}
+			if(currentPage > pageTotalCount) {
+				currentPage = pageTotalCount;
+			}
+			
+			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
+			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
+			List<TourBoardDTO> list = bservice.selectAll(start, end, searchOption, searchText);
+			
+			String navi = bservice.getPageNavi(currentPage, searchOption, searchText);
+			
+			String loginEmailId = (String)request.getSession().getAttribute("loginEmailID");
+			
+			model.addAttribute("writer", loginEmailId);
+			model.addAttribute("list", list);
+			model.addAttribute("navi", navi);
+			
+			return "tourboard/list";
+		}		
 	}
 	
 	@RequestMapping("write")
@@ -69,38 +130,86 @@ public class TourBoardController {
 	}
 	
 	@RequestMapping("writeProc")
-	public String writeProc(TourBoardDTO bdto, MultipartFile[] file) {
+	public String writeProc(TourBoardDTO bdto) throws Exception{
 		
-//		String writer = (String) session.getAttribute("loginID");
-//		dto.setWriter(writer);	
-
-//		String realPath = session.getServletContext().getRealPath("upload");	
-
-//		tourb_seq.nextval, 1,	#{title}, #{contents}, 'trip', default, default, default, default
-//		System.out.println("explanation : " + explanation);
-//		String contents = explanation;
+		String nick = (String) session.getAttribute("loginNick");
+		bdto.setNick(nick);
 		
-		bservice.writeProc(bdto);
+		int mem_id = (int)session.getAttribute("loginSeq");
+		bdto.setMem_seq(mem_id);
+	
+		bservice.writeProc(bdto);		
 		
 		return "redirect:/tourboard/list?cpage=1";
 	}
+
+	@RequestMapping(value="imageUpload" , produces = "application/text;charset=utf-8")
+	@ResponseBody
+	public String imageUpload(MultipartFile[] file) throws Exception{		
+	
+		String sysName = null;
+		String realPath = null;
+		for (MultipartFile mf : file) {
+			// 파일이 비어있지 않다면 for문을 돌리라는 의미이다. 빈 파일을 업로드하지 못하게 막는 코드이다.
+			if (!mf.isEmpty()) {
+				// cos.jar를 통해 request를 multipart request로 업그레이드 시켜 데이터를 뽑아내어 사용했다.
+				// spring은 apachi fileupload를 사용하기 때문에 maven repository에서 다운로드 받아온다.
+
+				realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
+				// Servers -> Tomcat 우클릭 -> Browse Deployment Location... : realPath의 위치
+
+				// realPath 객체를 만들고 만약에 realPathFile 폴더가 없으면 폴더를 만들라는 이야기
+				File realPathFile = new File(realPath);
+				if (!realPathFile.exists()) {
+					realPathFile.mkdir();
+				}
+
+				// oriName : 사용자가 업로드한 파일의 원본 이름
+				String oriName = mf.getOriginalFilename();
+
+				// sysName : 서버에 저장할 파일 이름
+				// UUID.randomUUID() : 절대 겹치지 않는 문자배열을 만들어준다.
+				sysName = UUID.randomUUID() + "_" + oriName;
+
+				// 서버에 업로드되어 메모리에 적재된 파일의 내용을 어디에 저장할지 결정하는 부분
+				mf.transferTo(new File(realPath + "/" + sysName));
+			}
+		}
+		System.out.println(realPath + "/" + sysName);
+		return "\\images\\" + sysName;
+	}
 	
 	@RequestMapping("detail")
-	public String detail(int seq, Model model) {
+	public String detail(int seq, Model model, HttpServletRequest request) throws Exception {
+		
+		String loginNick = (String)request.getSession().getAttribute("loginNick");	
+		
         TourBoardDTO dto = bservice.selectBySeq(seq);
         
         bservice.addViewCount(seq);
-        int replyCount = bservice.replyCount(seq);
         
-        dto.setRep_count(replyCount);
+        int replyCount = bservice.replyCount(seq);
+        int replyReplyCount = bservice.replyReplyCount(seq);
+        
+        int totalReplyCount = replyCount + replyReplyCount;
+        dto.setRep_count(totalReplyCount);
+        bservice.addReplyCount(seq, totalReplyCount);
+        
         List<TourReplyDTO> rp_list = rservice.selectAll(seq);
         
-//		int parentSeq = bdto.getSeq();        
-//		List<FilesDTO> files = fservice.selectByParentSeq(parentSeq);
+        List<TourReplyReplyDTO> re_list = rservice.selectReAll();
 
+        // 좋아요 반영
+        TourBoardLikeDTO c_dto = new TourBoardLikeDTO();
+     	c_dto.setPar_seq(seq);
+     	int boardlike = bservice.getBoardLike(c_dto);
+     
+     	model.addAttribute("heart", boardlike);     		
         
+     	model.addAttribute("loginNick", loginNick);
         model.addAttribute("dto", dto);
-        model.addAttribute("rp_list", rp_list);        
+        model.addAttribute("rp_list", rp_list); 
+        model.addAttribute("re_list", re_list);
 //        model.addAttribute("files", files);
         return "tourboard/detail";
     }
@@ -120,5 +229,40 @@ public class TourBoardController {
 		return "redirect:/tourboard/list?cpage=1";
 	}
 	
-	
+	@ResponseBody
+    @RequestMapping(value = "heart", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Integer> heart(HttpServletRequest httpRequest) throws Exception {
+
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		
+        int heart = Integer.parseInt(httpRequest.getParameter("heart"));
+        int loginSeq = (int)session.getAttribute("loginSeq");
+        int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));   
+        int rec_count_no = Integer.parseInt(httpRequest.getParameter("rec_count_no"));
+
+        TourBoardLikeDTO dto = new TourBoardLikeDTO();
+        TourBoardDTO dto2 = bservice.selectBySeq(boardId);
+        
+        dto.setPar_seq(boardId);
+        dto.setMem_seq(loginSeq);
+ 
+        if(heart >= 1) {
+            bservice.deleteBoardLike(dto);
+            heart=0;
+            dto2.setRec_count(dto2.getRec_count()-1);
+            rec_count_no = dto2.getRec_count();            
+            map.put("heart", heart);
+            map.put("rec_count_no", rec_count_no);
+        } else {
+            bservice.insertBoardLike(dto);
+            heart=1;
+            dto2.setRec_count(dto2.getRec_count()+1); 
+            rec_count_no = dto2.getRec_count();
+            map.put("heart", heart);
+            map.put("rec_count_no", rec_count_no);
+        }
+        
+        return map;
+
+    }
 }

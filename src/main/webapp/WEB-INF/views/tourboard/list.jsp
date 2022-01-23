@@ -9,6 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<jsp:include page="../base/header.jsp"></jsp:include>
     <style>
         * {box-sizing: border-box;}
 
@@ -128,20 +129,23 @@
             <div> > </div>
             <div class="tourboard"><a href="/tourboard/list?cpage=1">여행지 게시판</a></div>
         </div>
+        <form action="/tourboard/list?cpage=1" method="post" id="frmSearch">
+        <input type=hidden name="cpage" value=1>
         <div class="searchbar">
-            <select>
-                <option value="search_title">제목</option>
-                <option value="search_writer">작성자</option>
+            <select name="searchOption">
+                <option name="searchTitle" value="search_title">제목</option>
+                <option name="searchId" value="search_writer">작성자</option>
             </select>
-            <input type=text list="trip" placeholder="input search content">
+            <input type=text list="trip" placeholder="input search content" id="searchText" name="searchText">
             	<datalist id="trip">
             		<option value="여행지 추천">
             		<option value="맛집">
             		<option value="명소">
             		<option value="재미있게 다녀오는 방법">
             	</datalist>
-            <input type=button id="search" value="검색">
+            <input type=submit id="search_btn" value="검색">
         </div>
+        </form>
         <div class="board">
             <div class="board_header">
                 <div class="seq" style="width: 10%;">번호</div>
@@ -156,23 +160,43 @@
     	  		<div class="board_enroll">
        		        <div class="seq" style="width: 10%;">${i.seq }</div>
        		        <div class="category" style="width: 10%;">[${i.category }]</div>
-       		        <div class="title" style="width: 30%;"><a href="/tourboard/detail?seq=${i.seq}">${i.title }</a></div>
-       		        <div class="mem_seq" style="width: 10%;">${i.mem_seq }</div>
-       		        <div class="writen_time" style="width: 20%;">${i.writen_time }</div>
+       		        <div class="title" style="width: 30%;"><a href="/tourboard/detail?seq=${i.seq}">${i.title }</a>
+       		        	<c:if test="${i.rep_count!=0 }">
+       		        		[${i.rep_count }]
+       		        	</c:if>
+       		        </div>
+       		        <div class="mem_seq" style="width: 10%;">${i.nick }</div>
+       		        <div class="writen_time" style="width: 20%;">${i.writen_date }</div>
        		        <div class="view_count" style="width: 10%;">${i.view_count }</div>
        		        <div class="rec_count" style="width: 10%;">${i.rec_count }</div>
        		    </div>
             </c:forEach>
         </div>
+        <c:if test="${!empty loginEmailID}">
         <div class="btn">
         	<input type=button value="글쓰기" id="toWrite_btn">
         </div>
+        </c:if>
         <div class="page">
             <div class="paging">
                 <div>${navi  }</div>
             </div>
         </div>       
     </div>
+    
+    <script>
+    $("#search_btn").on("click", function(){
+		
+    	if($("#searchText").val()==""){
+    		alert("검색어를 입력해주세요");
+    		return false;
+    	}
+    	if($("#searchOption").val()==""){
+    		alert("검색어를 선택해주세요");
+    		return false;
+    	}
+    })
+    </script>
     
     <script>
     $("#toWrite_btn").on("click", function(){

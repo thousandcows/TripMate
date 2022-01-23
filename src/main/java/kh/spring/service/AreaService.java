@@ -314,6 +314,21 @@ public class AreaService {
 		String result= post(new URL(urlBuilder.toString()));
 		return search(result);
 	}
+	
+	//검색 for Ajax
+	public String searchAjax(int pageNum, String target) throws Exception{
+		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword"); /*URL*/
+		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + Statics.areaViewNo); /*한 페이지 결과 수*/
+		urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + pageNum); /*현재페이지 번호*/
+		urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰),AND(안드로이드),WIN(원도우폰),ETC*/
+		urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
+		urlBuilder.append("&" + URLEncoder.encode("arrange","UTF-8") + "=" + URLEncoder.encode("P", "UTF-8")); /*조회순 정렬*/
+		urlBuilder.append("&" + URLEncoder.encode("keyword","UTF-8") + "=" + URLEncoder.encode(target, "UTF-8")); /*검색어*/
+		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
+		String result= post(new URL(urlBuilder.toString()));
+		return result;
+	}
 	//검색
 	public List<AreaListDTO> search(String target) throws Exception{
 		List<AreaListDTO> list = new ArrayList<>();
@@ -340,7 +355,10 @@ public class AreaService {
 					addr1 = addr1.substring(1,addr1.length()-1);
 					String cat1 = tmp.get("cat1").toString();
 					cat1 = categorySort(cat1.substring(1,cat1.length()-1));
-					int areacode = tmp.get("areacode").getAsInt();
+					int areacode = 0;
+					if(tmp.has("areacode")) {
+						areacode = tmp.get("areacode").getAsInt();						
+					}
 					String cat3 = tmp.get("cat3").toString();
 					cat3 = cat3.substring(1,cat3.length()-1);
 					String firstimage = "";
@@ -482,7 +500,6 @@ public class AreaService {
 	}
 	
 	
-	
 	/*찜관련 부분*/
 	//찜확인
 	public int saveCheck(SavedDTO dto) {
@@ -578,5 +595,20 @@ public class AreaService {
 			}
 		}
 		return result;
+	}
+	
+	public void checkDB(String[] check) {
+		
+		for(int i = 0; i<check.length;i++) {
+			String[] arr = check[i].split("&");
+			int seq = Integer.parseInt(arr[0]);
+			AreaDTO dto = new AreaDTO();
+			dto.setName(arr[1]);
+			dto.setLocation(arr[2]);
+			dto.setPhoto(arr[3]);
+			if(dao.checkDB(seq) == 0) {
+				dao.insertArea(seq,dto);
+			}							
+		}
 	}
 }

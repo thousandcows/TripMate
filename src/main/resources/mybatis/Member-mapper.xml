@@ -18,7 +18,7 @@
 	</select>
 	
 	<insert id="normalSignup">
-		insert into member (seq, emailid, pw, nick, phone, gender, violation) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, #{gender}, 0)
+		insert into member (seq, emailid, pw, nick, phone, gender, violation, photo) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, #{gender}, 0, 'default_profileqwerkjhgdiute.jpg')
 	</insert>
 	
 	<select id="normalLoginCheck" resultType="int">
@@ -43,7 +43,7 @@
 	</select>
 	
 	<insert id="kakaoSignup">
-		insert into member (seq, emailid, nick, violation, sns_division) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0, #{kakaoId})
+		insert into member (seq, emailid, nick, violation, sns_division, photo) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0, #{kakaoId}, 'default_profileqwerkjhgdiute.jpg')
 	</insert>
 	
 	<!-- 마이페이지 -->
@@ -55,6 +55,10 @@
 		update member set nick = #{nick}, gender = #{gender}, age = #{age}, phone = #{phone}, ph_open = #{ph_Open}, preference = #{preference}, text = #{text}, photo = #{photo} where seq = #{seq}
 	</update>
 	
+	<update id="myInfoChangeOkNoFile">
+		update member set nick = #{nick}, gender = #{gender}, age = #{age}, phone = #{phone}, ph_open = #{ph_Open}, preference = #{preference}, text = #{text} where seq = #{seq}
+	</update>
+	
 	<update id="myInfoPwChange">
 		update member set pw = #{value}
 	</update>
@@ -63,4 +67,39 @@
 		delete from member where seq = #{value}
 	</delete>
 	
+	<select id="existingPhotoStr" resultType="String">
+		select photo from member where seq = #{value}
+	</select>
+	
+	<!-- 찜목록 시작 -->
+	<select id="mySaveListSeq" resultType="Integer">
+		select area_seq from (select saved.*, row_number() over(order by seq desc)rn from saved where mem_seq = #{loginSeq}) where (rn between #{start} and #{end})
+	</select>
+	
+	<select id="savedAreaGrade" resultType="String">
+		select round(avg(score),2) from area_reply where area_seq = ${value}
+	</select>
+	
+	<!-- 게시글 관리 -->
+	<select id="getMyPostCountC" resultType="int">
+		select count(*) from company_board where mem_seq = ${value}
+	</select>
+	<select id="getMyPostCountT" resultType="int">
+		select count(*) from tour_board where mem_seq = ${value}
+	</select>
+	
+	<select id="getMyPostList" resultType="kh.spring.dto.MyPostDTO">
+		SELECT *
+		FROM(
+		SELECT seq, title, view_count, rec_count, rep_count, writen_date, board_num, ROW_NUMBER() OVER(ORDER BY seq desc) rn
+		FROM(
+		SELECT seq, title, view_count, rec_count, rep_count, writen_date, board_num
+		FROM tour_board
+		WHERE mem_seq = #{loginSeq}
+		UNION ALL
+		SELECT seq, title, view_count, rec_count, rep_count, writen_date, board_num
+		FROM company_board
+		WHERE mem_seq = #{loginSeq}))
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
 </mapper>
