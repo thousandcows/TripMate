@@ -127,7 +127,12 @@
             padding: 8px 0px 8px 0px;
             /* border-top: solid 1px #404040; */
             border-bottom: solid 1px rgb(207, 207, 207);
+            
         }
+        
+       /*  .board_enroll>div : hover{
+            background-color : rgb(228, 228, 228);
+        } */
 
         /* 작성 버튼 및 페이지네이션  */
         .button{
@@ -196,7 +201,7 @@
             		<div class="seq" style="width: 5%;">${l.seq }</div>
                 	<div class="tour" style="width: 7%; color: rgb(56, 181, 174); font-weight: bold">${l.tour }</div>
                 	<div class="title" style="width: 44%; text-align:left; padding-left:10px"><a href="/companyboard/detail?seq=${l.seq}">${l.title }&nbsp</a>
-                		<i class="far fa-comment-dots" style="color: rgb(161, 161, 161)"></i><span id="rep_count" name="rep_count" style="color: rgb(161, 161, 161)"> ${l.rep_count}</span></div>
+                		<i class="far fa-comment-dots" style="color: rgb(161, 161, 161)"></i><span id="rep_count" name="rep_count" style="color: red"> [${l.rep_count}] </span></div>
                 	<div class="recruit" style="width: 9%;">${l.recruit }</div>
                 	<div class="mem_seq" style="width: 10%;">${l.nick}</div>
                 	<div class="writen_date" style="width: 10%;">${l.writen_date }</div>
