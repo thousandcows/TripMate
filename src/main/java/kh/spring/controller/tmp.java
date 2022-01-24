@@ -15,15 +15,16 @@ import kh.spring.dto.MemberDTO;
 public class tmp {
 	
 	@Autowired
-	private SqlSessionTemplate mybatis;
-	
+	private SqlSessionTemplate mybatis;	
 	
 	@ResponseBody
 	@RequestMapping("showMember")
 	public String showMember(int mem_seq) {
+		System.out.println("tmp에 값 들어옴? : " + mem_seq);
 		//DAO
 		MemberDTO dto = mybatis.selectOne("Member.myInfoSelectAll",mem_seq);
 		System.out.println(dto.getPh_Open());
+		System.out.println("나이 : " + dto.getAge() + " 닉네임 : " + dto.getNick());
 		//Service
 		Gson gson = new Gson();
 		dto.setPw("");

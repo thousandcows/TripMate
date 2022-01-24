@@ -29,7 +29,8 @@ public class TourReplyController {
 		
 		int seq = rseq;
 		String loginNick = (String)request.getSession().getAttribute("loginNick");
-		rservice.reply(seq, reply, loginNick);
+		int mem_seq = (int)session.getAttribute("loginSeq");
+		rservice.reply(seq, reply, loginNick, mem_seq);
 		return "redirect:/tourboard/detail?seq="+seq;
 	}
 	
@@ -59,7 +60,6 @@ public class TourReplyController {
 	@RequestMapping("remodify")
 	public String remodify(int writeseq, int idseq, String recontent) {
 		
-		System.out.println(idseq + " : " + recontent);
 		rservice.remodify(idseq, recontent);
 		return "redirect:/tourboard/detail?seq="+writeseq;
 	}
@@ -67,7 +67,6 @@ public class TourReplyController {
 	@RequestMapping("redelete")
 	public String redelete(int idseq, int writeseq) {
 		
-		System.out.println(idseq + " : " + writeseq);
 		rservice.redelete(idseq);
 		return "redirect:/tourboard/detail?seq="+writeseq;
 	}
