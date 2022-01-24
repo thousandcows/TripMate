@@ -92,6 +92,7 @@
         /* 컨테이너 ----------------------------------------------------- */
         .container {
             /* border: 1px solid red; */
+            padding-bottom :30px;
         }
 
         /* 미니 사이트맵 루트 */
@@ -193,7 +194,7 @@
         	line-height:30px;
         }
         
-        #heart, #cant_heart{
+        #heart, #cant_heart, .recruit_list_see{
         	cursor: pointer;
         }
 
@@ -256,6 +257,22 @@
         .e_rep_con{ width: 100%; padding: 5px 20px 5px 20px; border: none; }
         
         .rep_btn > button {margin: 2px;}
+        
+        /* 참가자리스트 */
+        .recruit_list{
+            /* border: 1px solid red; */
+            text-align: center;
+            width: 100%;
+            padding: 10px 300px 10px 300px;
+            overflow: auto;
+        }
+        
+        .recruit_list>div{
+         	text-align: center;
+         	padding-top: 10px;
+         	padding-bottom : 10px;
+            border-bottom: solid 1px rgb(207, 207, 207);
+        }
     </style>
     
 </head>
@@ -276,10 +293,9 @@
             <div class="partyboard"><a href="/companyboard/list?cpage=1">동행게시판</a></div>
         </div>
     
-        <form action="/companyboard/modify" method="post" id="frmDetail">
+        <form  action="/companyboard/modify" method="post" id="frmDetail">
             <div class="board">
             	<input type=hidden value="${dto.seq}" name=seq > <!-- 글 번호에 맞춰 불러오기 위한 꼼수 -->
-            	
             	<div class="title">
                     <span style="width: 20%;">
                         <h3 style="color: rgb(56, 181, 174); font-weight: bold; display: inline; padding: 5px;">${dto.tour}</h3> 
@@ -351,32 +367,77 @@
                     <textarea id="summernote"  name="contents">${dto.contents }</textarea>
                 </div>
     
-    			<c:if test="${dto.nick == loginNick}">
-                	<div class="button">
+    			<div class="button">
+    				<c:if test="${!empty loginNick }">
                 		<button type=button id=back class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
+                	<c:if test="${dto.nick == loginNick}">
                 		<button type=button id=modify class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">수정</span></button>
                 		<button type=button id=delete class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">삭제</span></button>
-                		<button type=button id=recruitEnd class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">모집마감</span></button>
-                		<button type=button id=modOk class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정완료</span></button>
+                		<c:if test="${dto.expired == '진행'}">
+                			<button type=button id=recruitEnd class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">모집마감</span></button>
+                		</c:if>
+                		<c:if test="${dto.expired == '마감'}">
+                			<button type=button id=recruitEndCancel class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">마감취소</span></button>
+                		</c:if>
+                		<button type=submit id=modOk class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정완료</span></button>
                 		<button type=button id=modCancel class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">취소</span></button>
-               		</div>
-                </c:if>
+                	</c:if>
+                	
+                	<c:if test="${dto.nick != loginNick}">
+                		<c:if test="${dto.expired == '진행'}">
+                		<button type=button id=attend class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">참여신청</span></button>
+                		</c:if>
+                	</c:if>
+                	</c:if>
+                </div>
                 
                 <div class="like_n_rep">
-                	<div id=like_icon>
-                		<a class="heart">
-                			<c:if test="${!empty loginNick}">
-           						<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${dto.rec_count}</span>
-           					</c:if>
-           					<c:if test="${empty loginNick}">
-           						<img id="cant_heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${dto.rec_count}</span>
-           					</c:if>
-       					</a>
-                	</div>
+              		<c:if test="${!empty loginNick}">
+                		<div id=like_icon>
+                			<a class="heart">
+           						<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
+       						</a>
+                		</div>
+                	</c:if>
+                	<c:if test="${empty loginNick}">
+                		<div id=like_icon>
+                			<a class="heart_nonmem">
+           						<img id="heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
+       						</a>
+                		</div>
+                	</c:if>
                 	<div id=rep_icon>
                 		<i class="far fa-comment-dots" style="color: black"></i><span id="rep_count" name="rep_count"> ${dto.rep_count}</span>
                 	</div>
+                	<div id=recruit_icon>
+                		<a class="recruit_list_see">
+                			<i class="far fa-user" style="color: black"></i><span id="mem_count" name="mem_count"> ${memCount} </span>
+                		</a>
+                	</div>
                 </div>
+                
+                <div class = "recruit_list" style="display: none;">
+                	<c:if test="${dto.expired == '진행'}">
+                		<span style="font-weight: bold; text-align:center; "> 신청자 리스트 (모집 진행 중) </span>
+                	</c:if>
+                	<c:forEach var="rl" items="${recruit_list }">
+                		<div class="recruit_mem" >${rl.nick } (  ${rl.gender}, ${rl.age} 세  )&nbsp
+                			<c:if test="${dto.nick == loginNick}">
+                				<!-- <button type=button class="btn btn-primary btn-sm " id="recruit_ok" style="border: none;background-color: blue;"><span style="font-size: small;">승인</span></button> -->
+                				<button type=button class="btn btn-primary btn-sm recruit_no" id="recruit_no${rl.seq }" style="border: none;background-color: hsl(22, 100%, 75%);"><span style="font-size: small;">거부</span></button>
+                			</c:if>
+                		</div>
+                	</c:forEach>
+                </div>
+                <c:if test="${dto.expired == '마감'}">
+                	<div class = "recruit_list" >
+                		<span style="font-weight: bold; text-align:center; "> 동행자 </span>
+                			<c:forEach var="rl" items="${recruit_list }">
+                				<div class="recruit_mem" >${rl.nick } (  ${rl.gender}, ${rl.age} 세  )</div>
+                			</c:forEach>
+                	</div>
+                	</div>
+                </c:if>
          	</form> 
                	<form action="/comreply/reply" method="post" id="frmReply" enctype="multipart/form-data">
 					<input type=hidden value="${dto.seq}" name=rseq>
@@ -492,7 +553,7 @@
    		$(".re_rep_del").on("click", function(){
 			let id = this.id.substr(10);
 			location.href = "/comreply/redelete?idseq="+id+"&writeseq=${dto.seq}";
-			})
+		})
 	
 		$(".re_rep_modok").on("click", function(){
 			let id = this.id.substr(12);
@@ -649,6 +710,10 @@
 			$("#modCancel").css("display", "inline");	
 			
 			// 썸머노트 쓰기 활성화
+			/* $('#summernote').summernote({
+    		  airmode: false;
+    		}); */
+			
 			$('#summernote').summernote('enable');
 		})
 		
@@ -702,20 +767,59 @@
 	
 	<!-- 썸머노트 -->
 	<script>
-    $(document).ready(function() {
-    
-    	//여기 아래 부분
-    	$('#summernote').summernote({
-    		  height: 300,				 // 에디터 높이
-    		  minHeight: 300,             // 최소 높이
+	$(document).ready(function() {
+		//여기 아래 부분
+		$('#summernote').summernote({
+              height:500, // 에디터 높이
+    		  minHeight: 500,             // 최소 높이
     		  maxHeight: null,             // 최대 높이
     		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-    		  lang: "ko-KR",					// 한글 설정 
-    		  placeholder: '최대 2048자까지 쓸 수 있습니다' 	//placeholder 설정
-    	});
-    	
-    	$('#summernote').summernote('disable');
-    });
+    		  lang: "ko-KR",					// 한글 설정
+    		  toolbar: [
+				    // [groupName, [list of button]]
+				    ['fontname', ['fontname']],
+				    ['fontsize', ['fontsize']],
+				    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				    ['color', ['forecolor','color']],
+				    ['table', ['table']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['height', ['height']],
+				    ['insert',['picture','link','video']],
+				    ['view', ['fullscreen', 'help']]],
+			  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			  fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+    		  placeholder: '최대 2048자까지 쓸 수 있습니다', 	//placeholder 설정
+    		  
+    		  callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+					onImageUpload : function(files) {
+						sendFile(files[0],this);
+					}
+				}
+    	});    	
+		$('#summernote').summernote('disable');
+	});
+	
+	/**
+	* 이미지 파일 업로드
+	*/
+	function sendFile(file, editor) {
+        var form_data = new FormData();
+        form_data.append('file', file);
+        $.ajax({
+            data : form_data,
+            type : "POST",
+            url : "/companyboard/imageUpload",
+            cache : false,
+            contentType : false,
+            enctype : "multipart/form-data",
+            processData : false,
+            success : function(sysName) {
+                console.log(sysName + "b")
+				console.log("write에 왔습니다.")
+                $(editor).summernote('insertImage', sysName);
+            }
+        });
+    }
     </script> 
     
     <!-- 좋아요 -->
@@ -741,9 +845,7 @@
 
         var that = $(".heart");
 
-        var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name'), 'rec_count_no' : '${dto.rec_count}'};
-        
-        //console.log(that.prop('name'));
+        var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name')};
         
         $.ajax({
             url :'/companyboard/heart',
@@ -751,19 +853,16 @@
             data : sendData,
             success : function(data){
                 that.prop('name',data.heart);   
-    		    
+                
                 var heart = data.heart;
-                var rec_count_no = data.rec_count_no;
                 
                 if(heart==1) {
                     $('#heart').prop("src","/images/like.png");
-                   /*  console.log("heart값이 1일때 dto의 추천수 : " + rec_count_no); */
-                    $('#rec_count').html(" " + data.rec_count_no);
+                    $("#rec_count").html(" " + data.likeCount);
                 }
                 else{
                     $('#heart').prop("src","/images/dislike.png");
-                    /* console.log("heart값이 0일때 dto의 추천수 : " + rec_count_no); */
-                    $('#rec_count').html(" " + data.rec_count_no);
+                    $("#rec_count").html(" " + data.likeCount);
                 }
             }
         });
@@ -773,6 +872,61 @@
     $("#cant_heart").on("click",function(){
     	alert("로그인 후 이용 가능합니다. ");
     });
+    </script>
+    
+    
+    
+    <!-- 참여신청 -->
+    <script>
+    	$("#attend").on("click",function(){
+    	
+    		
+    		if(confirm("참여신청 하시겠습니까?")){
+        			alert("참가여부는 모집마감 글 하단 참가자 리스트에서 확인 가능합니다.");
+        			location.href="/companyboard/attend?seq=${dto.seq}"; 
+        	}
+    		
+    	});
+
+    </script>
+    
+    <!-- 모집마감 / 마감취소-->
+    <script>
+    	$("#recruitEnd").on("click",function(){
+    		if(confirm("모집을 마감하겠습니까?")){    
+				location.href="/companyboard/expired?seq=${dto.seq}"; 
+			} 
+		});
+    	
+    	$("#recruitEndCancel").on("click",function(){
+    		if(confirm("마감을 취소하시곘습니까?")){    	
+				location.href="/companyboard/expiredCancel?seq=${dto.seq}"; 
+			} 
+		});
+    </script>
+    
+    <!-- 참가 신청자 리스트 확인 -->
+    <script>
+    	$(".recruit_list_see").on("click",function(){
+    		$(".recruit_list").slideToggle("1000");
+    	});
+    </script>
+    
+    <!-- 삭제버튼 누르면 참가 신청자 리스트에서 삭제 -->
+    <script>
+    	$(".recruit_no").on("click",function(){
+    		if(confirm("해당 신청을 거부하시겠습니까?")){    	
+				let id = this.id.substr(10);
+				location.href = "/companyboard/deleteMem?seq="+id+"&writeseq=${dto.seq}";
+			} 
+    	});
+    </script>
+    
+    <!-- 비회원이 하트 클릭시  -->
+    <script>
+    	$(".heart_nonmem").on("click",function(){
+    		alert("로그인 후 이용하세요");
+    	});
     </script>
     
     

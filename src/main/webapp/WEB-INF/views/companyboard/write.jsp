@@ -92,6 +92,7 @@
         /* 컨테이너 ----------------------------------------------------- */
         .container {
            /*  border: 1px solid red; */
+           padding-bottom :30px;
         }
 
         /* 미니 사이트맵 루트 */
@@ -197,7 +198,7 @@
         <form action="/companyboard/writeProc" method="post" >
             <div class="board">
                 <div class="select_tour"><span style="font-weight: bold;">여행지 : </span>
-                    <select name="tour">
+                    <select name="tour" id="tour">
                     	<option value="" selected disabeled hidden>여행지</option>
                         <option value="서울">서울</option>
                         <option value="인천">인천</option>
@@ -220,7 +221,7 @@
                 </div>
 
                 <div class="select_recruit"><span style="font-weight: bold;">모집 인원 : </span>
-                    <select name="recruit">
+                    <select name="recruit" id="recruit">
                     	<option value="" selected disabeled hidden>인원</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -244,7 +245,7 @@
                 </div>
 
                 <div class="title">
-                    <input type="text" placeholder="제목을 입력해 주세요" name=title autocomplete='off'>
+                    <input type="text" placeholder="제목을 입력해 주세요" name=title id="title" autocomplete='off'>
                 </div>
 
                 <div class="write_con">
@@ -253,7 +254,7 @@
 
                 <div class="button">
                 	<button type=button id=back class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
-                    <button class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성완료</span></button>
+                    <button id="write_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성완료</span></button>
                 </div>
             </div>
         </form>
@@ -276,15 +277,56 @@
 		
 		$(document).ready(function() {
     		//여기 아래 부분
-    		$('#summernote').summernote({
-               	height: 300,				 // 에디터 높이
-    		  	minHeight: 300,             // 최소 높이
-    		  	maxHeight: null,             // 최대 높이
-    		  	focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-    		  	lang: "ko-KR",					// 한글 설정
-    		  	placeholder: '최대 2048자까지 쓸 수 있습니다' 	//placeholder 설정
-    		});
+			$('#summernote').summernote({
+	              height:500, // 에디터 높이
+	    		  minHeight: 500,             // 최소 높이
+	    		  maxHeight: null,             // 최대 높이
+	    		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+	    		  lang: "ko-KR",					// 한글 설정
+	    		  toolbar: [
+					    // [groupName, [list of button]]
+					    ['fontname', ['fontname']],
+					    ['fontsize', ['fontsize']],
+					    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+					    ['color', ['forecolor','color']],
+					    ['table', ['table']],
+					    ['para', ['ul', 'ol', 'paragraph']],
+					    ['height', ['height']],
+					    ['insert',['picture','link','video']],
+					    ['view', ['fullscreen', 'help']]],
+				  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+				  fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+	    		  placeholder: '최대 2048자까지 쓸 수 있습니다', 	//placeholder 설정
+	    		  
+	    		  callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+						onImageUpload : function(files) {
+							sendFile(files[0],this);
+						}
+					}
+	    	});    	
     	});
+		
+		/**
+		* 이미지 파일 업로드
+		*/
+		function sendFile(file, editor) {
+	        var form_data = new FormData();
+	        form_data.append('file', file);
+	        $.ajax({
+	            data : form_data,
+	            type : "POST",
+	            url : "/companyboard/imageUpload",
+	            cache : false,
+	            contentType : false,
+	            enctype : "multipart/form-data",
+	            processData : false,
+	            success : function(sysName) {
+	                console.log(sysName + "b")
+					console.log("write에 왔습니다.")
+	                $(editor).summernote('insertImage', sysName);
+	            }
+	        });
+	    }
     </script>    
 	
 <!-- datepicker  -->
@@ -318,6 +360,63 @@
             });
         });
 	</script>
+	
+	<!-- 공란시 alert창 띄우기 -->
+    <script>
+    $("#write_btn").on("click", function() {
+    	
+    	 	if($("#tour").val()==""){
+    			
+    			alert("여행지를 선택해주세요");
+    			return false;
+    		}
+    		
+    		if($("#recruit").val()==""){
+    			
+    			alert("인원수를 선택해주세요");
+    			return false;
+    		} 
+    		
+			if($("#startDate").val()=="" && $("#endDate").val()==""){
+    			
+    			alert("여행 날짜를 선택해주세요");
+    			return false;
+    		}
+    		
+    		if($("#startDate").val()=="" ){
+    			
+    			alert("여행 시작 날짜를 선택해주세요");
+    			return false;
+    		}
+    		
+			if( $("#endDate").val()==""){
+    			
+    			alert("여행 종료 날짜를 선택해주세요");
+    			return false;
+    		}
+    		
+    		if(!$('input:radio[name=gender]').is(':checked') ){
+    			
+    			alert("성별을 선택해주세요");
+    			return false;
+    		} 
+    	    
+    	    if($("#title").val()==""){
+    			
+    			alert("제목을 입력해주세요");
+    			return false;
+    		}
+    		
+    		if($("#summernote").val()==""){
+    			
+    			alert("내용을 입력해주세요");
+    			return false;
+    		} 
+    	
+    }); 
+    
+   
+    </script>
 	
 </body>
 </html>

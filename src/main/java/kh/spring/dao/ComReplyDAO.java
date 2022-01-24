@@ -107,4 +107,5 @@ public class ComReplyDAO {
 		System.out.println(idseq);
 		return mybatis.delete("ComReply.redelete", map);
 	}
+	
 }
