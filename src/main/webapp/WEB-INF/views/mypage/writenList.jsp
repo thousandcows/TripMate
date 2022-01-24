@@ -200,6 +200,11 @@
           .delBtnBox {
             text-align: right;
           }
+
+          .nowPage{
+            color:red;
+            font-size:17px;
+          }
         </style>
       </head>
 

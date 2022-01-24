@@ -33,7 +33,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
+
 		<!-- Gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -98,12 +98,12 @@
 		</dependency>
 
 		<!-- 대용량 파일 처리 -->
-          <dependency>
-              <groupId>commons-io</groupId>
-              <artifactId>commons-io</artifactId>
-              <version>2.6</version>
-          </dependency>
-          
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
+
 		<!-- com.sun.mail -->
 		<dependency>
 			<groupId>com.sun.mail</groupId>

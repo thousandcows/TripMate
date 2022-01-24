@@ -42,6 +42,17 @@
       header li a:hover {
         color: #000000;
       }
+
+      .noticeList{
+        width:300px;
+        height:300px;
+        border:1px solid black;
+        position:absolute;
+        top:50px;
+        background-color:white;
+        right:200px;
+        z-index:9999;
+      }
     </style>
 
     <body>
@@ -202,6 +213,8 @@
                 <c:choose>
                   <c:when test="${loginEmailID != null}">
                     <div id="loginAfterBox">
+                      <button type="button" class="notice" id="noticeBtn">TEST</button>
+                      <div class="noticeList" id="noticeList" style="display: none;"></div>
                       ${loginNick} 님
                       <a href="/member/normalLogout">로그아웃</a>
                       <a href="/member/mypageGo">마이페이지</a>
