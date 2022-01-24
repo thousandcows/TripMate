@@ -48,4 +48,5 @@
 	<delete id="deleteReply">
 		delete from com_reply_reply where par_seq=#{seq}
 	</delete>
+	
   </mapper>
