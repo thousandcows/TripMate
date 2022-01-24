@@ -405,12 +405,12 @@
                   <tr>
                     <th class="text-center">여행 선호방식</th>
                     <td><select class="preferenceInput" name="preference" value=${loginInfo.preference}>
-                        <option value="0" <c:if test="${loginInfo.preference == 0}">selected</c:if>>선택해주세요.</option>
-                        <option value="1" <c:if test="${loginInfo.preference == 1}">selected</c:if>>힐링여행</option>
-                        <option value="2" <c:if test="${loginInfo.preference == 2}">selected</c:if>>먹거리 여행</option>
-                        <option value="3" <c:if test="${loginInfo.preference == 3}">selected</c:if>>관광지 투어</option>
-                        <option value="4" <c:if test="${loginInfo.preference == 4}">selected</c:if>>액티비티</option>
-                        <option value="5" <c:if test="${loginInfo.preference == 5}">selected</c:if>>기분따라</option>
+                        <option value="0" <c:if test="${loginInfo.preference == '0'}">selected</c:if>>선택해주세요.</option>
+                        <option value="힐링 여행" <c:if test="${loginInfo.preference == '힐링 여행'}">selected</c:if>>힐링여행</option>
+                        <option value="먹거리 여행" <c:if test="${loginInfo.preference == '먹거리 여행'}">selected</c:if>>먹거리 여행</option>
+                        <option value="관광지 투어" <c:if test="${loginInfo.preference == '관광지 투어'}">selected</c:if>>관광지 투어</option>
+                        <option value="액티비티" <c:if test="${loginInfo.preference == '액티비티'}">selected</c:if>>액티비티</option>
+                        <option value="기분따라" <c:if test="${loginInfo.preference == '기분따라'}">selected</c:if>>기분따라</option>
                       </select></td>
                   </tr>
                   <tr>

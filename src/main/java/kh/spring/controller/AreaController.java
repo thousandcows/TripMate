@@ -43,7 +43,7 @@ public class AreaController {
 		model.addAttribute("pageView",pageView);
 		model.addAttribute("areaCode",area);
 		model.addAttribute("contentType",contentType);
-		return "/area/tmp";
+		return "/area/main";
 	}
 	
 	@RequestMapping(value="main", params= {"page","area","contentType","target"}) //검색 출력
@@ -57,7 +57,7 @@ public class AreaController {
 		model.addAttribute("areaCode",area);
 		model.addAttribute("contentType",contentType);
 		model.addAttribute("target",target);
-		return "/area/tmp";		
+		return "/area/main";		
 	}
 	
 	@RequestMapping("detail") //상세페이지

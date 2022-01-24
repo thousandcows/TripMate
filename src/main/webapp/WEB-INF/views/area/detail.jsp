@@ -342,11 +342,7 @@ ul>li{
     			$("#profileNick").text("사용자 명 : "+result.nick);
     			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
     			$("#profileGender").text("성별 : "+result.gender);
-    			if(result.ph_Open=='on'){
-    				$("#profilePhone").text("연락처 : " + result.phone);    				
-    			}else{
-     				$("#profilePhone").text("연락처 : 비공개 연락처입니다.");    				 				
-    			}
+    			$("#profilePhone").text("연락처 : " + result.phone);    				
     			$("#profileAge").text("연령 : "+result.age);
     			$("#profileViolation").text("신고 횟수 : " + result.violation);
     			$("#profileTxt").text("자기소개 : "+result.text);
@@ -559,40 +555,36 @@ ul>li{
 		
 		
 		// 주소로 좌표를 검색합니다
-		geocoder
-				.addressSearch(
-						'${dto.lo_detail }',
-						function(result, status) {
+		if("${dto.lo_detail}" != "온라인개최"){
+			geocoder.addressSearch('${dto.lo_detail }',function(result, status) {
 
-							// 정상적으로 검색이 완료됐으면 
-							if (status === kakao.maps.services.Status.OK) {
-
-								var coords = new kakao.maps.LatLng(result[0].y,
-										result[0].x);
-
-								// 결과값으로 받은 위치를 마커로 표시합니다
-								var marker = new kakao.maps.Marker({
-									map : map,
-									position : coords
-								});
+				// 정상적으로 검색이 완료됐으면 
+				if (status === kakao.maps.services.Status.OK) {
+					var coords = new kakao.maps.LatLng(result[0].y,result[0].x);
+					// 결과값으로 받은 위치를 마커로 표시합니다
+					var marker = new kakao.maps.Marker({
+						map : map,
+						position : coords
+					});
 
 
-								// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-								map.setCenter(coords);
-								
-								var iwContent = '<div style="padding:5px;">${dto.name}</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-							    iwPosition = coords, //인포윈도우 표시 위치입니다
-							    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+					// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+					map.setCenter(coords);
+					
+					var iwContent = '<div style="padding:5px;">${dto.name}</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+				    iwPosition = coords, //인포윈도우 표시 위치입니다
+				    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
-								// 인포윈도우를 생성하고 지도에 표시합니다
-								var infowindow = new kakao.maps.InfoWindow({
-								    map: map, // 인포윈도우가 표시될 지도
-								    position : iwPosition, 
-								    content : iwContent,
-								    removable : iwRemoveable
-								});
-							}
-						});
+					// 인포윈도우를 생성하고 지도에 표시합니다
+					var infowindow = new kakao.maps.InfoWindow({
+					    map: map, // 인포윈도우가 표시될 지도
+					    position : iwPosition, 
+					    content : iwContent,
+					    removable : iwRemoveable
+					});
+				}
+			});			
+		}
 
 	</script>
 </body>
