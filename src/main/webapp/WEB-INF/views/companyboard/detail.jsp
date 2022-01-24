@@ -409,11 +409,20 @@
                 	<div id=rep_icon>
                 		<i class="far fa-comment-dots" style="color: black"></i><span id="rep_count" name="rep_count"> ${dto.rep_count}</span>
                 	</div>
+                	<c:if test="${dto.expired == '진행'}">
                 	<div id=recruit_icon>
                 		<a class="recruit_list_see">
                 			<i class="far fa-user" style="color: black"></i><span id="mem_count" name="mem_count"> ${memCount} </span>
                 		</a>
                 	</div>
+                	</c:if>
+                	<c:if test="${dto.expired == '마감'}">
+                	<div id=recruit_icon>
+                		<a class="recruit_list_see_no">
+                			<i class="far fa-user" style="color: black"></i><span id="mem_count" name="mem_count"> ${memCount} </span>
+                		</a>
+                	</div>
+                	</c:if>
                 </div>
                 
                 <div class = "recruit_list" style="display: none;">
@@ -435,7 +444,6 @@
                 			<c:forEach var="rl" items="${recruit_list }">
                 				<div class="recruit_mem" >${rl.nick } (  ${rl.gender}, ${rl.age} 세  )</div>
                 			</c:forEach>
-                	</div>
                 	</div>
                 </c:if>
          	</form> 

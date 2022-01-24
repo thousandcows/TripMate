@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.TourBoardDTO;
 import kh.spring.dto.TourBoardLikeDTO;
 
@@ -124,24 +125,23 @@ public class TourBoardDAO {
 		
 		return mybatis.delete("TourBoard.delete2", seq);
 	}
-	public int getBoardLike(TourBoardLikeDTO dto) throws Exception{
-		
-		return mybatis.selectOne("TourBoard.getBoardLike", dto);
-	}
+	public void insertBoardLike(TourBoardLikeDTO dto) throws Exception {
+        mybatis.insert("TourBoard.createBoardLike",dto);
+    }
 	
-	public void insertBoardLike(TourBoardLikeDTO dto) throws Exception{
-		
-		mybatis.insert("TourBoard.createBoardLike", dto);
-	}
-	
-	public void deleteBoardLike(TourBoardLikeDTO dto) throws Exception{
-		
-		mybatis.delete("TourBoard.deleteBoardLike", dto);
-	}
-	
-	public void updateBoardLike(int boardId) throws Exception{
-		
-		mybatis.update("TourBoard.updateBoardLike", boardId);
-	}
+	public void deleteBoardLike(TourBoardLikeDTO dto) throws Exception {
+       mybatis.delete("TourBoard.deleteBoardLike", dto);
+    }
 
+	public void updateBoardLike(int boardId) throws Exception {
+        mybatis.update("TourBoard.updateBoardLike",boardId);
+    }
+	
+	public int totalBoardLike(int seq) throws Exception {
+        return mybatis.selectOne("TourBoard.totalBoardLike",seq);
+    }
+
+	public int likeDuplCheck(TourBoardLikeDTO dto) {
+		return mybatis.selectOne("TourBoard.likeDuplCheck",dto);
+	}
 }
