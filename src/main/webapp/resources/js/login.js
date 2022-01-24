@@ -6,6 +6,7 @@ let nickNameSubmitCheck = false;
 let phoneSubmitCheck = false;
 let pwSubmitCheck = false;
 let pwReSubmitCheck = false;
+let ws; // 웹소켓
 // 이메일 중복확인
 let eventCheck = document.querySelector("#signupEmailCheckBtn");
 if (eventCheck != null) {
@@ -247,7 +248,7 @@ if (eventCheck != null) {
   });
 
   // 일반 회원가입 끝
-
+  
   // 일반 로그인 시작
   document.querySelector("#normalLoginBtn").addEventListener("click", () => {
     let emailID = document.querySelector("#normalLoginID").value
@@ -268,7 +269,7 @@ if (eventCheck != null) {
       } else {
         location.reload();
       }
-    })
+    });
   });
 
   // 카카오 로그인
@@ -278,7 +279,7 @@ if (eventCheck != null) {
       type: 'get'
     }).done(function (res) {
       location.href = res;
-    })
+    });
   });
 
   // 비밀번호 찾기
@@ -334,13 +335,27 @@ if (eventCheck != null) {
   });
 
 }
+
 if(document.querySelector("#noticeBtn") != null){
+  ws = new WebSocket("ws://localhost/notice");
   document.querySelector("#noticeBtn").addEventListener("click", () => {
-    console.log("클릭");
     if(document.querySelector("#noticeList").style.display == "none"){
       document.querySelector("#noticeList").style.display = "block"
     } else {
       document.querySelector("#noticeList").style.display = "none";
     }
   });
+}
+
+if(ws != null && ws != undefined){
+  document.querySelector("#testBtn").addEventListener("click", () => {
+    ws.send("홍진규");
+  });
+  ws.onmessage = function(e) {
+    console.log(e);
+    let line = $("<div class='websocTest'>");
+    line.append(e.data);
+  
+    $("#defaultHeader").append(line);
+  }
 }

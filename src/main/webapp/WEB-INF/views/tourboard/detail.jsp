@@ -601,7 +601,6 @@ a:active {
 
 	<script>
 		$("#write_btn").on("click", function() {
-			
 			if($("#rep_con").val() == ""){
 	             alert("댓글을 작성해주세요");
 	             return false;

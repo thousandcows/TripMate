@@ -338,7 +338,7 @@
             let searchTitle = document.querySelector("#myPostSearchInput").value;
             console.log(searchTitle);
             location.href="/member/writenList?searchTitle="+searchTitle;
-          })
+          });
         </script>
       </body>
 

@@ -53,6 +53,11 @@
         right:200px;
         z-index:9999;
       }
+      .websocTest{
+        width:200px;
+        height:100px;
+        background-color:hotpink;
+      }
     </style>
 
     <body>
@@ -175,7 +180,7 @@
       <!-- 로그인&회원가입 모달창 끝 -->
 
       <!-- Basic navbar -->
-      <header class="navbar navbar-expand-lg navbar-light" style="background-color: #2cd4c6;">
+      <header class="navbar navbar-expand-lg navbar-light" style="background-color: #2cd4c6;" id="defaultHeader">
         <div class="container">
 
           <!-- Brand -->
@@ -218,6 +223,7 @@
                       ${loginNick} 님
                       <a href="/member/normalLogout">로그아웃</a>
                       <a href="/member/mypageGo">마이페이지</a>
+                      <button type="button" id="testBtn">웹소켓테스트</button>
                     </div>
                   </c:when>
                   <c:otherwise>
