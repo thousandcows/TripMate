@@ -33,10 +33,10 @@ public class MemberService {
 
 	@Autowired
 	CompanyBoardService companyBoardService;
-	
+
 	@Autowired
 	TourBoardService tourBoardService;
-	
+
 	@Autowired
 	AreaService aService;
 
@@ -177,7 +177,7 @@ public class MemberService {
 	public String moreSaving(int loginSeq, int btn) throws Exception {
 		int start = btn;
 		int end = start + Statics.SAVE_LIST_MORE;
-		List<Integer> isMySaveListMore = mySaveListSeq(loginSeq, end+1, end+1);
+		List<Integer> isMySaveListMore = mySaveListSeq(loginSeq, end + 1, end + 1);
 		List<Integer> mySaveListSeq = mySaveListSeq(loginSeq, start, end);
 		List<AreaSavedDTO> dto = new ArrayList<>();
 		for (int saveSeq : mySaveListSeq) {
@@ -205,15 +205,15 @@ public class MemberService {
 		}
 		return gson.toJson(dto);
 	}
-	
+
 	// 내 게시글 갯수
-	public int getMyPostTotalCount(int loginSeq) {
-		return memberDao.getMyPostCount(loginSeq);
+	public int getMyPostTotalCount(int loginSeq, String searchTitle) {
+		return memberDao.getMyPostCount(loginSeq, searchTitle);
 	}
-	
+
 	// 총 페이지 갯수
-	public int getMyPostPageTotalCount(int loginSeq) {
-		int totalPost = getMyPostTotalCount(loginSeq);
+	public int getMyPostPageTotalCount(int loginSeq, String searchTitle) {
+		int totalPost = getMyPostTotalCount(loginSeq, searchTitle);
 		int pageTotalCount = 0;
 		if (totalPost % Statics.RECORD_COUNT_PER_PAGE == 0) {
 			pageTotalCount = totalPost / Statics.RECORD_COUNT_PER_PAGE;
@@ -222,72 +222,94 @@ public class MemberService {
 		}
 		return pageTotalCount;
 	}
-	
+
 	// 내 게시글 리스트
-	public List<MyPostDTO> getMyPostList(int loginSeq, int start, int end){
-		return memberDao.getMyPostList(loginSeq, start, end);
+	public List<MyPostDTO> getMyPostList(int loginSeq, int start, int end, String searchTitle) {
+		return memberDao.getMyPostList(loginSeq, start, end, searchTitle);
 	}
-	
+
 	// 네비
-	public String getMyPostNavi(int loginSeq, int cpage) {
-		int pageTotalCount = getMyPostPageTotalCount(loginSeq);
-		int startNavi = (cpage-1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
+	public String getMyPostNavi(int loginSeq, int cpage, String searchTitle, int isSearch) {
+		int pageTotalCount = getMyPostPageTotalCount(loginSeq, searchTitle);
+		int startNavi = (cpage - 1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
 		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;
-		
-		if(endNavi > pageTotalCount) {
+
+		if (endNavi > pageTotalCount) {
 			endNavi = pageTotalCount;
 		}
 
 		boolean needPrev = true;
 		boolean needNext = true;
-		
-		if(startNavi == 1) {
+
+		if (startNavi == 1) {
 			needPrev = false;
 		}
 
-		if(endNavi == pageTotalCount) {
+		if (endNavi == pageTotalCount) {
 			needNext = false;
 		}
 		
 		String pageNavi = "";
-		
-		if(needPrev) {
-			pageNavi += "<a href='/member/writenList?currentPage="+(startNavi-1)+"'><</a> ";
+		if(isSearch == 0) {
+
+			if (needPrev) {
+				pageNavi += "<a href='/member/writenList?currentPage=" + (startNavi - 1) + "'><</a> ";
+			}
+
+			for (int i = startNavi; i <= endNavi; i++) {
+				pageNavi += "<a href='/member/writenList?currentPage=" + i + "'>" + i + "</a> ";
+			}
+
+			if (needNext) {
+				pageNavi += "<a href='/member/writenList?currentPage=" + (endNavi + 1) + "'>></a>";
+			}
+		} else {
+
+			if (needPrev) {
+				pageNavi += "<a href='/member/writenList?currentPage=" + (startNavi - 1) + "&searchTitle=" + searchTitle
+						+ "'><</a> ";
+			}
+
+			for (int i = startNavi; i <= endNavi; i++) {
+				pageNavi += "<a href='/member/writenList?currentPage=" + i + "&searchTitle=" + searchTitle + "'>" + i
+						+ "</a> ";
+			}
+
+			if (needNext) {
+				pageNavi += "<a href='/member/writenList?currentPage=" + (endNavi + 1) + "&searchTitle=" + searchTitle
+						+ "'>></a>";
+			}
 		}
 		
-		for(int i = startNavi ; i <= endNavi; i++) {
-			pageNavi += "<a href='/member/writenList?currentPage="+i+"'>" + i + "</a> ";
-		}
-		
-		if(needNext) {
-			pageNavi += "<a href='/member/writenList?currentPage="+(endNavi+1)+"'>></a>";
-		}
 		return pageNavi;
 	}
-	
+
 	// cpage조정
-	public int myPostPageDefender(int loginSeq, Integer currentPage) {
-		if(currentPage == null || currentPage == 0) {currentPage = 1;}
+	public int myPostPageDefender(int loginSeq, Integer currentPage, String searchTitle) {
+		if (currentPage == null || currentPage == 0) {
+			currentPage = 1;
+		}
 		int cpage = currentPage;
-		if(cpage < 1) {
+		if (cpage < 1) {
 			cpage = 1;
 		}
-		int pageTotalCount = getMyPostPageTotalCount(loginSeq);
-		if(cpage > pageTotalCount) {
+		int pageTotalCount = getMyPostPageTotalCount(loginSeq, searchTitle);
+		if (cpage > pageTotalCount) {
 			cpage = pageTotalCount;
 		}
 		return cpage;
 	}
-	
+
 	// 게시글 삭제
 	public String isMyPostDel(String list) {
 		boolean isDel = list.contains("[]");
-		if(isDel) {
+		if (isDel) {
 			return "0";
 		}
-		List<MyPostDelListDTO> delList = gson.fromJson(list, new TypeToken<List<MyPostDelListDTO>>(){}.getType());
+		List<MyPostDelListDTO> delList = gson.fromJson(list, new TypeToken<List<MyPostDelListDTO>>() {
+		}.getType());
 		for (MyPostDelListDTO dto : delList) {
-			if(dto.getBoard_num() == 1) {
+			if (dto.getBoard_num() == 1) {
 				System.out.println("여행게시판 삭제 seq : " + dto.getSeq());
 				tourBoardService.delete(dto.getSeq());
 				tourBoardService.delete2(dto.getSeq());
