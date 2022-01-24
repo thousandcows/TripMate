@@ -56,7 +56,6 @@ public class TourBoardController {
 		
 		String searchOption = request.getParameter("searchOption");
 		String searchText = request.getParameter("searchText");
-		System.out.println("컨트롤러에 들어오는 searchOption : searchText = " + searchOption + " : " + searchText);
 		
 		if(searchText==null&&searchOption==null) {
 			
@@ -66,7 +65,6 @@ public class TourBoardController {
 			
 			int currentPage = Integer.parseInt(request.getParameter("cpage"));
 			int pageTotalCount = bservice.getPageTotalCount(searchOption, searchText);
-			System.out.println("pageTotalCount : " + pageTotalCount);
 			
 			if(currentPage < 1) {
 				currentPage = 1;
@@ -82,7 +80,6 @@ public class TourBoardController {
 			String navi = bservice.getPageNavi(currentPage, searchOption, searchText);
 			
 			String loginEmailId = (String)request.getSession().getAttribute("loginEmailID");
-			System.out.println("loginEmailId : " + loginEmailId);
 			
 			model.addAttribute("writer", loginEmailId);
 			model.addAttribute("list", list);
@@ -98,7 +95,6 @@ public class TourBoardController {
 			
 			int currentPage = Integer.parseInt(request.getParameter("cpage"));
 			int pageTotalCount = bservice.getPageTotalCount(searchOption, searchText);
-			System.out.println("pageTotalCount : " + pageTotalCount);
 			
 			if(currentPage < 1) {
 				currentPage = 1;
@@ -175,7 +171,6 @@ public class TourBoardController {
 				mf.transferTo(new File(realPath + "/" + sysName));
 			}
 		}
-		System.out.println(realPath + "/" + sysName);
 		return "\\images\\" + sysName;
 	}
 	

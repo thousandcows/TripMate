@@ -18,12 +18,13 @@ public class TourReplyDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
-	public int insert(int rseq, String reply, String loginNick) {
+	public int insert(int rseq, String reply, String loginNick, int mem_seq) {
 
 		Map<String, String> map = new HashMap<>();
 		map.put("rseq", String.valueOf(rseq));
 		map.put("reply", reply);
 		map.put("nick", loginNick);
+		map.put("mem_seq", String.valueOf(mem_seq));
 		return mybatis.insert("TourReply.insert", map);
 	}
 

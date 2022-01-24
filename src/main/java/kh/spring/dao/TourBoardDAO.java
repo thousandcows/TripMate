@@ -18,8 +18,6 @@ public class TourBoardDAO {
 	private SqlSessionTemplate mybatis;
 
 	public List<TourBoardDTO> selectAll(int start, int end, String searchOption, String searchText) {
-
-		System.out.println("DAO selectAll에서의 searchOption : " + searchOption);
 		
 		if (searchOption==null) {
 			Map<String, String> map = new HashMap<>();
@@ -29,7 +27,6 @@ public class TourBoardDAO {
 			return mybatis.selectList("TourBoard.selectAll", map);
 			
 		}else if(searchOption.equals("search_title")){
-			System.out.println("DAO selectAll에서 제목으로 찾는 중 : " + searchText);
 			Map<String, String> map = new HashMap<>();
 			map.put("start", String.valueOf(start));
 			map.put("end", String.valueOf(end));
@@ -38,7 +35,6 @@ public class TourBoardDAO {
 			return mybatis.selectList("TourBoard.selectAllTitle", map);
 			
 		}else {
-			System.out.println("DAO selectAll에서 작성자로 찾는 중 : " + searchText);
 			Map<String, String> map = new HashMap<>();
 			map.put("start", String.valueOf(start));
 			map.put("end", String.valueOf(end));
@@ -81,19 +77,14 @@ public class TourBoardDAO {
 	}
 
 	public int getRecordCount(String searchOption, String searchText) throws Exception {
-
-		System.out.println("DAO recoredCount에서의 searchOption : " + searchOption);
 		
 		if (searchOption==null) {
-			System.out.println("DAO recordCount에서 searchText : " + searchText);
 			return mybatis.selectOne("TourBoard.recordCount");
 			
 		} else if(searchOption.equals("search_title")){
-			System.out.println("DAO recordCount 제목으로 찾기에서 searchText : " + searchText);
 			return mybatis.selectOne("TourBoard.recordCountTitle", searchText);
 			
 		}else {
-			System.out.println("DAO recordCount에서 작성자로 찾는 중  : " + searchText);
 			return mybatis.selectOne("TourBoard.recordCountWriter", searchText);
 		}
 	}
