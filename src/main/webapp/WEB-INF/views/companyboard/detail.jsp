@@ -467,7 +467,7 @@
                         		<div class="rep_top">
                         			<input type=hidden value="${repl.seq}" name=seq>
             						<input type=hidden value="${repl.par_seq}" name=par_seq>
-                            		<span class="rep_writer">
+                            		<span class="rep_writer" value="${repl.mem_seq }">
                                 		${repl.nick }
                             		</span>
                             		<span class="rep_date" > 
@@ -514,7 +514,7 @@
                             					<div style="width: 5%; float: left; text-align: right; padding-right: 10px; color: orange;"><i class="fas fa-reply fa-rotate-180"></i></div>
                             					<div style="width: 95%; float: left;">
                                 					<div class="re_rp_title" style="width: 100%;">
-                                    					<span class="re_rp_id" style="font-weight: bolder;width: 50%; display:inline-block; padding-left: 20px ;">${rerepl.nick }</span>
+                                    					<span class="re_rp_id" value="${rerepl.mem_seq }" style="font-weight: bolder;width: 50%; display:inline-block; padding-left: 20px ;">${rerepl.nick }</span>
                                     					<span class="re_rp_time" style="color: gray; width:  49%; display:inline-block; text-align: right; padding-right: 20px;"> ${rerepl.writen_date }</span>
                                 					</div>
                                 					<div class="re_rp_contents" style="width: 100%;">
@@ -543,7 +543,83 @@
                	</c:forEach>
     	</div>
     	
-    <!-- 대댓글 -->
+    	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	        <div class="modal-header">
+	          <h4 class="modal-title text-center">프로필 조회</h4>
+	        </div>
+	      <div class="modal-body">
+	      	<img id="profileImg" style="width:100px;height:100px;">
+	        <span id="profileNick"></span><br>
+	        <span id="profilePreference"></span><br>
+	        <span id="profileGender"></span><br>
+	        <span id="profilePhone"></span><br>
+	        <span id="profileAge"></span><br>
+	        <span id="profileTxt"></span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" id="modalCloseBtn" data-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+   <script>
+   $(document).on("click",".rep_writer",function(){
+		let mem_seq = $(this).attr("value");
+		console.log("대댓글 멤버 시퀀스 값 : " + mem_seq);
+		$.ajax({
+			url:"/tmp/showMember?mem_seq="+mem_seq,
+   		dataType:"json",
+   		success:function(result){
+   			$('#myModal').modal('toggle');
+   			if(result.photo!=undefined){
+       			$("#profileImg").attr("src","/images/"+result.photo);    				
+   			}else{
+   				$("#profileImg").attr("src","/images/noPhoto.png");
+   			}
+   			$("#profileNick").text("사용자 명 : "+result.nick);
+   			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
+   			$("#profileGender").text("성별 : "+result.gender);    			
+   			$("#profilePhone").text("연락처 : " + result.phone);    			
+   			$("#profileAge").text("연령 : "+result.age);
+   			$("#profileTxt").text("자기소개 : "+result.text);
+   			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+   		}			
+		})
+	})
+	$(document).on("click",".re_rp_id",function(){
+		let mem_seq = $(this).attr("value");
+		console.log("대댓글 멤버 시퀀스 값 : " + mem_seq);
+		$.ajax({
+			url:"/tmp/showMember?mem_seq="+mem_seq,
+   		dataType:"json",
+   		success:function(result){
+   			$('#myModal').modal('toggle');
+   			if(result.photo!=undefined){
+       			$("#profileImg").attr("src","/images/"+result.photo);    				
+   			}else{
+   				$("#profileImg").attr("src","/images/noPhoto.png");
+   			}
+   			$("#profileNick").text("사용자 명 : "+result.nick);
+   			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
+   			$("#profileGender").text("성별 : "+result.gender);    			
+   			$("#profilePhone").text("연락처 : " + result.phone);    			
+   			$("#profileAge").text("연령 : "+result.age);
+   			$("#profileTxt").text("자기소개 : "+result.text);
+   			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+   		}			
+		})
+	})
+	$('#modalCloseBtn').on("click",function(){
+		$("#myModal").modal("toggle");
+	})
+   </script> 	
+    	
+   <!-- 대댓글 -->
    <script>
 	
    		/* 답글 달기 창 관련 */
