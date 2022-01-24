@@ -101,5 +101,6 @@
 		FROM company_board
 		WHERE mem_seq = #{loginSeq}))
 		WHERE rn BETWEEN #{start} and #{end}
+		ORDER BY writen_date desc
 	</select>
 </mapper>

@@ -24,6 +24,7 @@ import com.google.gson.JsonObject;
 
 import kh.spring.dao.TourBoardDAO;
 import kh.spring.dao.TourReplyDAO;
+import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.TourBoardDTO;
 import kh.spring.dto.TourBoardLikeDTO;
 import kh.spring.dto.TourReplyDTO;
@@ -195,11 +196,19 @@ public class TourBoardController {
         List<TourReplyReplyDTO> re_list = rservice.selectReAll();
 
         // 좋아요 반영
-        TourBoardLikeDTO c_dto = new TourBoardLikeDTO();
-     	c_dto.setPar_seq(seq);
-     	int boardlike = bservice.getBoardLike(c_dto);
-     
-     	model.addAttribute("heart", boardlike);     		
+     	if(loginNick != null) {
+     		int loginSeq = (int) session.getAttribute("loginSeq");   
+     		TourBoardLikeDTO t_dto = new TourBoardLikeDTO();
+     		t_dto.setPar_seq(seq);
+     		t_dto.setMem_seq(loginSeq);
+     		int boardlike = bservice.likeDuplCheck(t_dto);
+     			
+     		model.addAttribute("heart", boardlike);
+     	}
+     	
+     	// 좋아요 카운트
+     	int likeCount = bservice.totalBoardLike(seq);
+     	model.addAttribute("likeCount", likeCount);
         
      	model.addAttribute("loginNick", loginNick);
         model.addAttribute("dto", dto);
@@ -224,40 +233,43 @@ public class TourBoardController {
 		return "redirect:/tourboard/list?cpage=1";
 	}
 	
-	@ResponseBody
-    @RequestMapping(value = "heart", method = RequestMethod.POST, produces = "application/json")
-    public HashMap<String, Integer> heart(HttpServletRequest httpRequest) throws Exception {
+	// 좋아요
+		@ResponseBody
+	    @RequestMapping(value = "heart", method = RequestMethod.POST, produces = "application/json")
+	    public HashMap<String, Integer> heart(HttpServletRequest httpRequest) throws Exception {
 
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		
-        int heart = Integer.parseInt(httpRequest.getParameter("heart"));
-        int loginSeq = (int)session.getAttribute("loginSeq");
-        int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));   
-        int rec_count_no = Integer.parseInt(httpRequest.getParameter("rec_count_no"));
+			HashMap<String, Integer> map = new HashMap<String, Integer>();
+			
+	        int heart = Integer.parseInt(httpRequest.getParameter("heart"));
+	        int loginSeq = (int) session.getAttribute("loginSeq");     
+	        int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));  
 
-        TourBoardLikeDTO dto = new TourBoardLikeDTO();
-        TourBoardDTO dto2 = bservice.selectBySeq(boardId);
-        
-        dto.setPar_seq(boardId);
-        dto.setMem_seq(loginSeq);
- 
-        if(heart >= 1) {
-            bservice.deleteBoardLike(dto);
-            heart=0;
-            dto2.setRec_count(dto2.getRec_count()-1);
-            rec_count_no = dto2.getRec_count();            
-            map.put("heart", heart);
-            map.put("rec_count_no", rec_count_no);
-        } else {
-            bservice.insertBoardLike(dto);
-            heart=1;
-            dto2.setRec_count(dto2.getRec_count()+1); 
-            rec_count_no = dto2.getRec_count();
-            map.put("heart", heart);
-            map.put("rec_count_no", rec_count_no);
-        }
-        
-        return map;
+	        TourBoardLikeDTO dto = new TourBoardLikeDTO();
+	        
+	        dto.setPar_seq(boardId);
+	        dto.setMem_seq(loginSeq);
+	        
+	        
+			 
+	        if(heart >= 1) {
+	        	bservice.deleteBoardLike(dto);
+	            heart=0;
+	            map.put("heart", heart);
+	        } else {
+	        	int dupl = bservice.likeDuplCheck(dto);
+	        	if(dupl==0) {
+	        		bservice.insertBoardLike(dto);
+	                heart=1;
+	                map.put("heart", heart);
+	        	}else {
+	        		heart=1;
+	        		map.put("heart", heart);
+	        	}
+	        }
+	        
+	        int likeCount = bservice.totalBoardLike(boardId);
+	        map.put("likeCount", likeCount);
+	        return map;
+		}
 
-    }
 }

@@ -12,7 +12,7 @@
  		</insert>
  		
  		<select id="selectAllWriter" resultType="kh.spring.dto.CompanyBoardDTO">
-			select * from (select company_board.*, row_number() over(order by seq desc) rn from company_board where mem_seq like '%'||#{searchText}||'%' ) where rn between #{start} and #{end}
+			select * from (select company_board.*, row_number() over(order by seq desc) rn from company_board where nick like '%'||#{searchText}||'%' ) where rn between #{start} and #{end}
 		</select>
 	
 		<select id="selectAllTitle" resultType="kh.spring.dto.CompanyBoardDTO">
@@ -48,7 +48,7 @@
 		
 		<!-- 페이징 -->
 		<select id="recordCountWriter" resultType="int">
-     		select count(*) from company_board where mem_seq like '%'||#{searchText}||'%'
+     		select count(*) from company_board where nick like '%'||#{searchText}||'%'
      	</select>
      
      	<select id="recordCountTitle" resultType="int">
@@ -78,10 +78,17 @@
             where seq = #{value}
         </select>
 
-        <select id="getBoardLike" resultType="int">
-            select count(seq) from cb_heart 
-            	where par_seq = #{par_seq} and mem_seq = #{mem_seq}
-        </select>
+        <!-- <select id="getBoardLike" resultType="int">
+            select count(seq) from cb_heart where par_seq = #{par_seq} and mem_seq = #{mem_seq}
+        </select> -->
+        
+        <select id="likeDuplCheck" resultType="int">
+ 			select count(*) from cb_heart where par_seq = #{par_seq} and mem_seq = #{mem_seq}
+ 		</select>
+ 		
+    	<select id="totalBoardLike" resultType="int">
+     		select count(*) from cb_heart where par_seq = #{value}
+     	</select>
         
         <!-- 댓글 개수 -->
 		<select id="replyCount" resultType="int">
@@ -92,4 +99,47 @@
      	<select id="replyReplyCount" resultType="int">
      		select count(*) from company_board b join com_reply r on(b.seq=r.par_seq) join com_reply_reply p on(r.seq=p.par_seq) where r.par_seq = #{seq} 
     	</select>
+    	
+    	<!-- 댓글개수 테이블 반영 -->
+    	<update id="totalReplyCount">
+       		update company_board set rep_count=#{rep_count} where seq = #{seq}
+    	</update>
+    	
+    	<!-- 참여멤버 insert  -->
+    	<insert id="insertMem">
+ 			insert into com_mem values(#{par_seq},#{mem_seq})
+ 		</insert>
+ 		
+ 		<!-- 중복제거 위한 추가 커리(기존 테이블에 회원여부 체크) -->
+ 		<select id="memDuplCheck" resultType="int">
+ 			select count(*) from com_mem where par_seq = #{par_seq} and mem_seq = #{mem_seq}
+ 		</select>
+ 		
+ 		<!-- 모집마감 -->
+ 		<update id="updateExpired">
+ 			update company_board set expired='마감' where seq=#{seq}
+ 		</update>
+ 		
+ 		<!-- 마감취소 -->
+ 		<update id="updateExpiredCancel">
+ 			update company_board set expired='진행' where seq=#{seq}
+ 		</update>
+ 		
+ 		<!-- 신청자 리스트 -->
+ 		<select id="selectAllMem" resultType="kh.spring.dto.MemberDTO">		
+			select * from member m 
+    			join com_mem c on(m.seq=c.mem_seq) 
+    			join company_board b on(c.par_seq = b.seq)
+    			where b.seq = ${seq}
+		</select>
+		
+		<!-- 신청자 빼기 -->
+		<delete id="deleteMem">
+    		delete from com_mem where mem_seq=#{value}
+    	</delete>
+    	
+    	<!-- 신청자 카운트 -->
+    	<select id="memCount" resultType="int">
+     		select count(*) from com_mem where par_seq = #{value}
+     	</select>
   </mapper>

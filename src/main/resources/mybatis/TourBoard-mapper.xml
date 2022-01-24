@@ -83,9 +83,12 @@
         where seq = #{value}
      </select>
 
-     <select id="getBoardLike" resultType="int">
-        select count(seq) from tb_heart 
-          	where par_seq = #{par_seq} and mem_seq = #{mem_seq}
+     <select id="likeDuplCheck" resultType="int">
+ 		select count(*) from tb_heart where par_seq = #{par_seq} and mem_seq = #{mem_seq}
+ 	</select>
+ 		
+    <select id="totalBoardLike" resultType="int">
+     	select count(*) from tb_heart where par_seq = #{value}
      </select>
 
 </mapper>

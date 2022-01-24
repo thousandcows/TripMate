@@ -8,7 +8,7 @@ public class MyPostDTO {
 	private int view_count;
 	private int rec_count;
 	private int rep_count;
-	private Date writen_time;
+	private Date writen_date;
 	private int board_num;
 	public int getSeq() {
 		return seq;
@@ -40,11 +40,11 @@ public class MyPostDTO {
 	public void setRep_count(int rep_count) {
 		this.rep_count = rep_count;
 	}
-	public Date getWriten_time() {
-		return writen_time;
+	public Date getWriten_date() {
+		return writen_date;
 	}
-	public void setWriten_time(Date writen_time) {
-		this.writen_time = writen_time;
+	public void setWriten_date(Date writen_date) {
+		this.writen_date = writen_date;
 	}
 	public int getBoard_num() {
 		return board_num;
@@ -52,7 +52,7 @@ public class MyPostDTO {
 	public void setBoard_num(int board_num) {
 		this.board_num = board_num;
 	}
-	public MyPostDTO(int seq, String title, int view_count, int rec_count, int rep_count, Date writen_time,
+	public MyPostDTO(int seq, String title, int view_count, int rec_count, int rep_count, Date writen_date,
 			int board_num) {
 		super();
 		this.seq = seq;
@@ -60,11 +60,12 @@ public class MyPostDTO {
 		this.view_count = view_count;
 		this.rec_count = rec_count;
 		this.rep_count = rep_count;
-		this.writen_time = writen_time;
+		this.writen_date = writen_date;
 		this.board_num = board_num;
 	}
 	public MyPostDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 }
