@@ -20,6 +20,7 @@
                 padding: 0;
                 font-family: 'Poor Story', cursive;
                 font-size: 25px;
+                
             }
     
             body {
@@ -27,6 +28,7 @@
                 background-color: #ffffff;
                 margin: 0px;
                 font-family: 'Poor Story', cursive;
+                
             }
 
     header li{
@@ -47,9 +49,18 @@
       color: #000000;
     }
 
+    .btn-toolbar{
+       position: relative;
+       left:708px;
+       top:50px;
+    }
     
+    .triplist{
+    cursor:pointer;
+    }
 
     </style>
+    
 <body>
  <!-- Basic navbar -->
     <header class="navbar navbar-expand-lg navbar-light" style="background-color: #2cd4c6;">
@@ -95,23 +106,29 @@
     </div>
   </header>
   
+  
+    
    <div id="tirp list" class="triplist">
     
     <div class="triplist">
       <div class="triplist">
-        <src="/images/trip-1.jpg" class="d-block w-100" alt="…">
-        
-	<form action="/area/main">
+        <img src="/images/trip-1.jpg" class="d-block w-100" alt="…">
+    
+    <div class="container">
+    <div class="row">
+    <div class="col">   
+	<form action="/area/main" style="float: right; margin-top: 20px; position: relative;  right:300px; top: 30px; margin-bottom:40px;">
 		<input type="text" name="target">
 			<input type="hidden" value=1 name="page">
 	<input type="hidden" value="${contentType }" name="contentType">
 	<input type = "hidden" value="${areaCode }" name="area">
 	
-		<input type="submit">
+		<input type="submit"  style="background-color: #f5e3b9; border-radius: 10px; width: 60px;">
 	</form>
-
-	<form action="/area/main">
-	<select id=area name="area">
+	</div>
+    <div class="col">
+	<form action="/area/main"  style="float: left; margin-top: 20px; position: relative; left: 750px; top: 30px;">
+	<select id=area name="area" style="width: 100px; height: 40px;">
 		<option value="1">서울</option>
 		<option value ="2">인천</option>
 		 <option value ="3">대전</option>
@@ -130,7 +147,7 @@
 		 <option value ="38">전라남도</option>
 		 <option value ="39">제주도</option>
 	</select>
-	<input type=submit>
+	<input type=submit style="width:50px; background-color: #f5e3b9; border-radius: 10px; width: 60px;">
 	<input type="hidden" value=1 name="page">
 	<input type="hidden" value="${contentType }" name="contentType">
 		<c:if test="${target ne null}">
@@ -138,9 +155,10 @@
 		</c:if>
 
 	</form>
-
-	<form action="/area/main">
-		<select id=contentType name=contentType>
+	</div>
+	<div class="col">
+	<form action="/area/main" style="float:left; margin-top: 20px; position: relative; left: 500px; top: 30px;">
+		<select id=contentType name=contentType style="width: 100px; height: 40px;">
 		<option value =12>관광지</option>
 		<option value =14>문화시설</option>
 		<option value =15>행사/공연/축제</option>
@@ -155,66 +173,87 @@
 		<c:if test="${target ne null}">
 			<input type="hidden" value="${target }" name="target">
 		</c:if>
-		<input type=submit>
+		<input type=submit style="width:50px; background-color: #f5e3b9; border-radius: 10px; width: 60px;">
 		
 	</form>
-	<c:if test="${pageView.size()>0 }">
-	<c:forEach var="i" items="${pageView }">
-		<div class=page id=${i }>
-			<c:choose>
-			<c:when test="${i eq -1 }">
-				<
-			</c:when>
-			<c:when test="${i eq -2 }">
-				>
-			</c:when>
-			<c:otherwise>
-				${i }
-			</c:otherwise>
-			</c:choose>
-		</div>		
-	</c:forEach>
-	</c:if>
-	<script>
-		$(".page").on("click",function(){
-			let val = 0;
-			let arr = ${pageView};
-				if(this.id==-1){
-					val = arr[1]-1;
-				}else if(this.id==-2){
-					val = arr[arr.length-2]+1;
-				}else{
-					val = this.id;
-				}
-				let target = '${target}';
-			
-			if(target == ""){
-				location.href="/area/main?area="+${areaCode}+"&contentType="+${contentType}+"&page="+val;				
-			}else{
-				location.href="/area/main?area="+${areaCode}+"&contentType="+${contentType}+"&target=${target}&page="+val;
-			}
-		})
-	</script>
+	</div>
+	</div>
+	</div>
+	
 	<br>
-	${pageNo }현재페이지<br>
+	
 	
 	<c:if test="${list.size() > 0}">
-	<c:forEach var="item" items="${list }">
-		<div class="detail" id="${item.contentid }">
-		${item.title }<br>
-		${item.contenttypeid }<br>
-		${item.addr1 }<br>
-		${item.areacode}<br>
-		${item.cat3}<br>
-		${item.cat1 }<br>
-		${item.readcount }<br>
-		<c:if test="${item.firstimage ne null }">
-			<img src="${item.firstimage}"><br>
-		</c:if>
-		</div>
+	<div class="row">
+
+								
+								<c:forEach var="item" items="${list }">
+						
+							
+									
+										<div id="${item.contentid }"
+											class="detail col-3 align-items-center justify-content-center text-center">
+											<c:if test="${item.firstimage ne null }">
+												<img src="${item.firstimage}"
+													style="width: 200px; height: 200px;">
+											</c:if>
+											<br>${item.title }<br> ${item.contenttypeid }<br>
+												${item.addr1 }<br> 
+												${item.cat1 }<br>
+												${item.readcount }<br>
+										</div>
+										
+											
+											
+									
+								
+
+							
+					</c:forEach>
+					</div>
+					<c:if test="${pageView.size()>0 }">
+	
+	<div class="btn-toolbar" role="toolbar" aria-label="Pagination">
+    <div class="btn-group me-2 mb-2" role="group" aria-label="First group">
+	<c:forEach var="i" items="${pageView }">
+	
 		
-		<p></p> 
+			
+			<c:choose>
+			<c:when test="${i eq -1 }">
+			 
+			 <button type="button" class="btn btn-outline-secondary page" id=${i } > 
+			 
+			 <	
+			
+			</c:when>
+			<c:when test="${i eq -2 }">
+			
+			<button type="button" class="btn btn-outline-secondary page" id=${i } > 
+			 	
+			 > 
+			</c:when>
+			
+			<c:when test="${i eq pageNo }">
+			
+			<button type="button" class="btn btn-outline-secondary page" style="background-color: #f5e3b9;" id=${i } >
+			${i }
+			</c:when>
+			<c:otherwise>
+			 	
+			 <button type="button" class="btn btn-outline-secondary page" id=${i } >
+			 ${i } 
+			</c:otherwise>
+			</c:choose>
+		</button>
+			
 	</c:forEach>
+	</div>	
+	</div>
+	
+	</c:if>
+
+							
 	</c:if>
 	<script>
 		$(".detail").on("click",function(){
@@ -235,9 +274,7 @@
 	</script>
 	
 	<script>
-		document.querySelector("#loginProc").addEventListener("click", () => {
-			location.href = "/member/Proc";
-		})
+		
 	</script>
 	
 	<script>
@@ -245,5 +282,27 @@
 			location.href="/area/main?area=0&contentType=0&page=1";
 		})
 	</script>
+	
+	<script>
+		$(".page").on("click",function(){
+			let val = 0;
+			let arr = ${pageView};
+				if(this.id==-1){
+					val = arr[1]-1;
+				}else if(this.id==-2){
+					val = arr[arr.length-2]+1;
+				}else{
+					val = this.id;
+				}
+			let target ='${target}';
+			
+			if(target == ""){
+				location.href="/area/main?area="+${areaCode}+"&contentType="+${contentType}+"&page="+val;				
+			}else{
+				location.href="/area/main?area="+${areaCode}+"&contentType="+${contentType}+"&target=${target}&page="+val;
+			}
+		})
+	</script>
 </body>
+</div>
 </html>
