@@ -15,25 +15,14 @@ import kh.spring.dto.MemberDTO;
 public class tmp {
 
 	@Autowired
-<<<<<<< HEAD
 	private SqlSessionTemplate mybatis;
 
-
-=======
-	private SqlSessionTemplate mybatis;	
-	
->>>>>>> branch 'main' of https://github.com/Carroth23/KHFinalProject.git
 	@ResponseBody
 	@RequestMapping("showMember")
 	public String showMember(int mem_seq) {
-		System.out.println("tmp에 값 들어옴? : " + mem_seq);
 		//DAO
 		MemberDTO dto = mybatis.selectOne("Member.myInfoSelectAll",mem_seq);
-<<<<<<< HEAD
-=======
-		System.out.println(dto.getPh_Open());
-		System.out.println("나이 : " + dto.getAge() + " 닉네임 : " + dto.getNick());
->>>>>>> branch 'main' of https://github.com/Carroth23/KHFinalProject.git
+
 		//Service
 		Gson gson = new Gson();
 		dto.setPw("");
