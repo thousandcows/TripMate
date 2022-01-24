@@ -13,11 +13,15 @@ public class AdminController {
 		  return "admin/dashboard"; 
 	  }
 	  
-	  @RequestMapping("tables") 
-	  public String tables() { 
-		  return "admin/tables"; 
+	  @RequestMapping("member") 
+	  public String member() { 
+		  return "admin/member"; 
 	  }
 	  
+	  @RequestMapping("board")
+	  public String board() {
+		  return "admin/board";
+	  }
 	  
 	 
 }
