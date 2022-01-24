@@ -281,7 +281,6 @@ ul>li{
 				<c:if test="${i.mem_seq ne loginSeq}">
 				<div class="row">
 					<div class="col text-end">
-						<button type="button" class="btn btn-success">신고</button>
 					</div>
 				</div>
 				</c:if>
@@ -314,11 +313,9 @@ ul>li{
 			        <span id="profileGender"></span><br>
 			        <span id="profilePhone"></span><br>
 			        <span id="profileAge"></span><br>
-			        <span id="profileViolation"></span><br>
 			        <span id="profileTxt"></span>
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" id="profileMsg" class="btn btn-primary">쪽지보내기</button>
 			        <button type="button" class="btn btn-secondary" id="modalCloseBtn" data-dismiss="modal">닫기</button>
 			      </div>
 			    </div>
@@ -344,7 +341,6 @@ ul>li{
     			$("#profileGender").text("성별 : "+result.gender);
     			$("#profilePhone").text("연락처 : " + result.phone);    				
     			$("#profileAge").text("연령 : "+result.age);
-    			$("#profileViolation").text("신고 횟수 : " + result.violation);
     			$("#profileTxt").text("자기소개 : "+result.text);
     			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
     		}
@@ -475,7 +471,6 @@ ul>li{
 								:
 									'<div class="row">'+
 									'<div class="col text-end">'+
-										'<button type="button" class="btn btn-success">신고</button>'+
 									'</div>'+
 								'</div>'
 							)+

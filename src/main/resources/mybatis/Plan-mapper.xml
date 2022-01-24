@@ -34,11 +34,30 @@
 		
 	</select>
 	
-	<select id="detailPlanSort" resultType="int">
-		select area_seq from detail_plan where par_seq = #{seq} and plan_date = #{date} order by seq
+	<select id="detailPlanSort" resultType="kh.spring.dto.DetailPlanDTO">
+		select * from detail_plan where par_seq = #{seq} and plan_date = #{date} order by seq
+	</select>
+	
+	<select id="detailPlanSeq" resultType="int">
+		select seq from detail_plan where area_seq = par_seq=#{seq}
 	</select>
 	
 	<select id="planListPrint" resultType="kh.spring.dto.AreaDTO">
 		select * from area where seq=#{value}
 	</select>
+	
+	<select id="getDetail" resultType="kh.spring.dto.PlanDTO">
+		select * from plan where seq=#{value}
+	</select>
+	
+	<update id="sortZero">
+		<selectKey keyProperty="tar" resultType="int" order="BEFORE">
+			select sort_seq.nextval from dual  
+		</selectKey>
+		update detail_plan set seq = ${tar} where seq = #{value}
+	</update>
+	
+	<update id="sortPlan">
+		update detail_plan set seq = #{firstSeq} where seq = #{secondSeq}
+	</update>
 </mapper> 

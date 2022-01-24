@@ -30,18 +30,27 @@
 <link rel="stylesheet"
 	href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a5fa8abac646238f15601b89cae524ec&libraries=services"></script>
-	
+<link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" ></script>
+
 <jsp:include page="../base/header.jsp"></jsp:include>
+<style>
+li.drag-sort-active {
+  background: transparent;
+  color: transparent;
+  border: 1px solid #4ca1af;
+  
+}
 
-<script>
 
-</script>
+</style>
+
 </head>
 <body>
 
 	<div class="container">
-		<div class="row">
-			<div class="col">
+		<div class="row mb-5 mt-5 d-flex justify-content-center">
+			<div class="col-8 d-flex justify-content-between">
 				<button type="button" class="btn btn-primary" id="firstBtn">일정 생성</button>
 				<button type="button" class="btn btn-primary" id="secondBtn">여행지 선택</button>
 				<button type="button" class="btn btn-primary" id="thirdBtn">일정 순서 지정</button>
@@ -229,7 +238,7 @@
 		<div class="row" id="thirdForm" style="display:none;">
 			<div class="col">
 				<div class="row">
-					<div class="col-1" id="planDate">
+					<div class="col-2" id="planDate">
 						<c:if test="${!empty seq }">
 						<c:forEach var="i" items="${date }">
 							<c:set var="j" value="${j+1 }"/>
@@ -244,10 +253,10 @@
 						</c:forEach>
 						</c:if>
 					</div>
-					<div class="col-3" id="planList">
+					<ul class="col-4 border drag-sort-enable" id="planList" ondragover="onDragOver(event)">
 						리스트
-					</div>
-					<div class="col-6 w-100" id=map style="height:800px;"> <!-- 지도, 수정해야 -->
+					</ul>
+					<div class="col-6" id=map style="height:600px;">
 					</div>
 				</div>
 			</div>
@@ -314,6 +323,7 @@
 					$("#firstForm").hide();
 					$("#secondForm").hide();
 					$("#fourthForm").hide();
+					
 				}else{
 					$("#thirdForm").hide();
 				}
@@ -401,11 +411,77 @@
 			url:"/plan/detailPlanList?seq=${seq}&date=${dto.startDate}",
 			dataType:"json",
 			success:function(data){
+		        //지도
+	        	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			mapOption = {
+				center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+				level : 5
+			// 지도의 확대 레벨
+			};
+
+			// 지도를 생성합니다    
+			var map = new kakao.maps.Map(mapContainer, mapOption);
+			
+			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+			var mapTypeControl = new kakao.maps.MapTypeControl();
+
+			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+			// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+			map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+			var zoomControl = new kakao.maps.ZoomControl();
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+			
+			// 주소-좌표 변환 객체를 생성합니다
+			var geocoder = new kakao.maps.services.Geocoder();
+				
+				
+				
 				let result = "";
+				let positions = [];
 					for(let i = 0; i<data.length;i++){
-						result += '<div class="row"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</div>'						
+						result += '<li class="row border mb-2" id='+data[i].seq+' dragable="true"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</li>';
+						
+						//지도 관련
+						// 주소로 좌표를 검색합니다
+						geocoder.addressSearch(data[i].location, function(result, status) {
+
+						    // 정상적으로 검색이 완료됐으면 
+						     if (status === kakao.maps.services.Status.OK) {
+
+						        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+						        // 결과값으로 받은 위치를 마커로 표시합니다
+						        var marker = new kakao.maps.Marker({
+						            map: map,
+						            position: coords
+						        });
+
+						        // 인포윈도우로 장소에 대한 설명을 표시합니다
+						        var infowindow = new kakao.maps.InfoWindow({
+						            content: data[i].name
+						        });
+						        infowindow.open(map, marker);
+
+						      
+						    } 
+						});    
 					}
-					$("#planList").html(result)
+					$("#planList").html(result);
+					
+					
+				//지도관련
+					// 주소로 좌표를 검색합니다
+					geocoder.addressSearch(data[0].location, function(result, status) {
+
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === kakao.maps.services.Status.OK) {
+					        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+					        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+					        map.setCenter(coords);
+					    } 
+					});    
 			}
 		})
 	})
@@ -417,7 +493,7 @@
 			success:function(data){
 				let result = "";
 				for(let i = 0; i<data.length;i++){
-					result += '<div class="row"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</div>'						
+					result += '<li class="row border mb-2" id='+data[i].seq+' dragable="true"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</li>'						
 				}
 				$("#planList").html(result)
 			}
@@ -474,29 +550,33 @@
           })
         });
         
+       
+        //드래그앤 드랍      
+        $(function() {
+   	 		$("#planList").sortable();
+   		 $("#planList").disableSelection();
+		});
+
+        $(document).on("mouseup","#planList",function(){
+        	let target = [];
+        	setTimeout(function(){
+            	for(let i = 1; i<=$("#planList").children().length;i++){
+            		target.push(($("#planList li:nth-child("+i+")").attr("id"))*1)
+            	}
+            	console.log(target);
+            		$.ajax({
+            			url:"/plan/planSort",
+            			data:{"target":target},
+            			success:function(data){
+            				
+            			}
+            		})
+        		
+        	},300)
+        })
         
-        //지도
-        	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		mapOption = {
-			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-			level : 5
-		// 지도의 확대 레벨
-		};
-
-		// 지도를 생성합니다    
-		var map = new kakao.maps.Map(mapContainer, mapOption);
-		
-		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-		var mapTypeControl = new kakao.maps.MapTypeControl();
-
-		// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-		// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-		map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-
-		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-		var zoomControl = new kakao.maps.ZoomControl();
-		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-		
+        
+        
 		</script>
 </body>
 </html>
