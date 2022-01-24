@@ -460,11 +460,9 @@ a:active {
 	        <span id="profileGender"></span><br>
 	        <span id="profilePhone"></span><br>
 	        <span id="profileAge"></span><br>
-	        <span id="profileViolation"></span><br>
 	        <span id="profileTxt"></span>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" id="profileMsg" class="btn btn-primary">쪽지보내기</button>
 	        <button type="button" class="btn btn-secondary" id="modalCloseBtn" data-dismiss="modal">닫기</button>
 	      </div>
 	    </div>
@@ -490,7 +488,6 @@ a:active {
     			$("#profileGender").text("성별 : "+result.gender);    			
     			$("#profilePhone").text("연락처 : " + result.phone);    			
     			$("#profileAge").text("연령 : "+result.age);
-    			$("#profileViolation").text("신고 횟수 : " + result.violation);
     			$("#profileTxt").text("자기소개 : "+result.text);
     			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
     		}			
@@ -514,7 +511,6 @@ a:active {
     			$("#profileGender").text("성별 : "+result.gender);    			
     			$("#profilePhone").text("연락처 : " + result.phone);    			
     			$("#profileAge").text("연령 : "+result.age);
-    			$("#profileViolation").text("신고 횟수 : " + result.violation);
     			$("#profileTxt").text("자기소개 : "+result.text);
     			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
     		}			
