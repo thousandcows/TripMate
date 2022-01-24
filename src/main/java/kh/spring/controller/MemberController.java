@@ -256,6 +256,11 @@ public class MemberController {
 		dto.setSeq((int) session.getAttribute("loginSeq"));
 		String realPath = session.getServletContext().getRealPath("") + "\\resources\\images";
 		System.out.println("리얼패스 : " + realPath);
+		System.out.println("폰 오픈 : " + dto.getPh_Open());
+		if(dto.getPh_Open() == null) {
+			dto.setPh_Open("off");
+		}
+		System.out.println("폰 오픈 변경후 : " + dto.getPh_Open());
 		memberService.myInfoChangeOk(dto, file, realPath);
 		session.setAttribute("loginNick", dto.getNick());
 		session.setAttribute("loginGender", dto.getGender());
@@ -330,12 +335,15 @@ public class MemberController {
 
 	// 게시글 관리
 	@RequestMapping("writenList")
-	public String writenList(Model model, Integer currentPage) {
+	public String writenList(Model model, Integer currentPage, String searchTitle) {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
 		String filePath = "\\images" + "\\" + dto.getPhoto();
 		dto.setPhoto(filePath); // 프로필 사진 설정
 		
+		if (searchTitle != null) {
+			
+		}
 		int cpage = memberService.myPostPageDefender(loginSeq, currentPage);
 		int start = cpage * Statics.RECORD_COUNT_PER_PAGE - (Statics.RECORD_COUNT_PER_PAGE - 1);
 		int end = cpage * Statics.RECORD_COUNT_PER_PAGE;
