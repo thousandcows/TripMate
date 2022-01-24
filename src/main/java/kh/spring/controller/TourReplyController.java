@@ -53,7 +53,8 @@ public class TourReplyController {
 	public String rereply(int writeseq, int rpseq, String recontents, HttpServletRequest request) {
 		
 		String loginNick = (String)request.getSession().getAttribute("loginNick");
-		rservice.reinsert(rpseq, recontents, loginNick);
+		int mem_seq = (int)session.getAttribute("loginSeq");
+		rservice.reinsert(rpseq, recontents, loginNick, mem_seq);
 		return "redirect:/tourboard/detail?seq="+writeseq;
 	}
 	

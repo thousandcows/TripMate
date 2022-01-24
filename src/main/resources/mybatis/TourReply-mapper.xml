@@ -33,12 +33,12 @@
    	</delete>
 	
 	<insert id="reinsert">
-		insert into tour_reply_reply values(tourrr_seq.nextval, #{rpseq}, 1, #{recontent}, default, #{nick})
+		insert into tour_reply_reply values(tourrr_seq.nextval, #{rpseq}, #{mem_seq}, #{recontent}, default, #{nick})
 		
 	</insert>
 	
 	<select id="selectReAll" resultType="kh.spring.dto.TourReplyReplyDTO">
-		select p.seq, p.par_seq, p.nick, p.contents, p.writen_date from tour_board b join tour_reply r on(b.seq=r.par_seq) join tour_reply_reply p on(r.seq=p.par_seq) order by p.writen_date desc
+		select p.seq, p.par_seq, p.mem_seq, p.contents, p.writen_date, p.nick from tour_board b join tour_reply r on(b.seq=r.par_seq) join tour_reply_reply p on(r.seq=p.par_seq) order by p.writen_date desc
 	</select>
 	
 	<update id="remodify">

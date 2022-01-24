@@ -68,12 +68,13 @@ public class TourReplyDAO {
 	    return mybatis.delete("TourReply.deleteAllRe", seq);
 	}
 	
-	public int reinsert(int rpseq, String recontent, String loginNick) {
+	public int reinsert(int rpseq, String recontent, String loginNick, int mem_seq) {
 
 		Map<String, String> map = new HashMap<>();
 		map.put("rpseq", String.valueOf(rpseq));
 		map.put("recontent", recontent);
 		map.put("nick", loginNick);
+		map.put("mem_seq", String.valueOf(mem_seq));
 		
 		return mybatis.insert("TourReply.reinsert", map);
 	}
