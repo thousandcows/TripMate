@@ -5,12 +5,12 @@
 
 <mapper namespace="TourReply">
 	<insert id="insert">
-		insert into tour_reply values(tourr_seq.nextval, #{rseq}, 1, #{reply}, default, #{nick})
+		insert into tour_reply values(tourr_seq.nextval, #{rseq}, #{mem_seq}, #{reply}, default, #{nick})
 		
 	</insert>
 	
 	<select id="selectAll" resultType="kh.spring.dto.TourReplyDTO">
-		select r.seq, r.par_seq, r.nick, r.contents, r.writen_date, r.nick from tour_reply r join tour_board b on(r.par_seq=b.seq) order by r.writen_date desc
+		select r.seq, r.par_seq, r.mem_seq, r.contents, r.writen_date, r.nick from tour_reply r join tour_board b on(r.par_seq=b.seq) order by r.writen_date desc
 	</select>
 	
 	<update id="modify">
@@ -33,12 +33,12 @@
    	</delete>
 	
 	<insert id="reinsert">
-		insert into tour_reply_reply values(tourrr_seq.nextval, #{rpseq}, 1, #{recontent}, default, #{nick})
+		insert into tour_reply_reply values(tourrr_seq.nextval, #{rpseq}, #{mem_seq}, #{recontent}, default, #{nick})
 		
 	</insert>
 	
 	<select id="selectReAll" resultType="kh.spring.dto.TourReplyReplyDTO">
-		select p.seq, p.par_seq, p.nick, p.contents, p.writen_date from tour_board b join tour_reply r on(b.seq=r.par_seq) join tour_reply_reply p on(r.seq=p.par_seq) order by p.writen_date desc
+		select p.seq, p.par_seq, p.mem_seq, p.contents, p.writen_date, p.nick from tour_board b join tour_reply r on(b.seq=r.par_seq) join tour_reply_reply p on(r.seq=p.par_seq) order by p.writen_date desc
 	</select>
 	
 	<update id="remodify">

@@ -180,18 +180,24 @@
           }
 
           /* 임시 색상 지정 */
-          .tBoardHeader{
-            color:rgb(12, 102, 64);
-            font-weight: bold;
-          }
-          .cBoardHeader{
-            color:rgb(133, 121, 19);
+          .tBoardHeader {
+            color: rgb(12, 102, 64);
             font-weight: bold;
           }
 
+          .cBoardHeader {
+            color: rgb(133, 121, 19);
+            font-weight: bold;
+          }
+
+          .myPostSearchBox{
+            text-align: left;
+          }
+          .myPostNaviBox{
+            text-align: center;
+          }
           /* 삭제버튼 */
           .delBtnBox {
-            width: 100%;
             text-align: right;
           }
         </style>
@@ -225,6 +231,7 @@
             <c:if test="${fn:length(list) == 0}">
               작성한 게시글이 없습니다.
             </c:if>
+            검색된 게시글 수 : ${postCount}
             <c:forEach var="list" items="${list}">
               <ul class="postContents">
                 <li>${list.writen_date}</li>
@@ -255,8 +262,12 @@
                     value="${list.board_num},${list.seq}"></li>
               </ul>
             </c:forEach>
-            <div>${navi}</div>
-            <div class="delBtnBox"><button type="button" id="delBtn">삭제</button></div>
+            <div class="row">
+              <div class="col-4 myPostSearchBox"><input type="text" id="myPostSearchInput"><button type="button"
+                  id="myPostSearchBtn">검색</button></div>
+              <div class="col-4 myPostNaviBox">${navi}</div>
+              <div class="col-4 delBtnBox"><button type="button" id="delBtn">삭제</button></div>
+            </div>
           </div>
         </div>
 
@@ -317,6 +328,12 @@
               }
             }
           });
+
+          document.querySelector("#myPostSearchBtn").addEventListener("click", () => {
+            let searchTitle = document.querySelector("#myPostSearchInput").value;
+            console.log(searchTitle);
+            location.href="/member/writenList?searchTitle="+searchTitle;
+          })
         </script>
       </body>
 

@@ -146,9 +146,15 @@ public class AreaService {
 		cat3 = cat3.substring(1,cat3.length()-1);
 		String cat2 = item.get("cat2").toString();
 		cat2 = cat2.substring(1,cat2.length()-1);
-		String location = item.get("areacode").toString(); //지역코드		
-		String lo_detail = item.get("addr1").toString(); //주소
-		lo_detail = lo_detail.substring(1,lo_detail.length()-1);
+		String location = "";
+		if(item.has("areacode")) {
+			location = item.get("areacode").toString(); //지역코드		
+		}
+		String lo_detail = "";
+		if(item.has("addr1")) {
+			lo_detail = item.get("addr1").toString(); //주소
+			lo_detail = lo_detail.substring(1,lo_detail.length()-1);			
+		}
 		String tel = "null";
 		if(item.has("tel")) {
 			tel = item.get("tel").toString().replace("\"", "");		
@@ -277,7 +283,10 @@ public class AreaService {
 			addr1 = addr1.substring(1,addr1.length()-1);
 			String cat1 = tmp.get("cat1").toString();
 			cat1 = categorySort(cat1.substring(1,cat1.length()-1));
-			int areacode = tmp.get("areacode").getAsInt();
+			int areacode = 0;
+			if(tmp.has("areacode")) {
+				areacode = tmp.get("areacode").getAsInt();				
+			}
 			String cat3 = tmp.get("cat3").toString();
 			cat3 = cat3.substring(1,cat3.length()-1);
 			String firstimage = "";

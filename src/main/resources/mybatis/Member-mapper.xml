@@ -82,10 +82,10 @@
 	
 	<!-- 게시글 관리 -->
 	<select id="getMyPostCountC" resultType="int">
-		select count(*) from company_board where mem_seq = ${value}
+		select count(*) from company_board where mem_seq = ${loginSeq} and title like '%'||#{searchTitle}||'%'
 	</select>
 	<select id="getMyPostCountT" resultType="int">
-		select count(*) from tour_board where mem_seq = ${value}
+		select count(*) from tour_board where mem_seq = ${loginSeq} and title like '%'||#{searchTitle}||'%'
 	</select>
 	
 	<select id="getMyPostList" resultType="kh.spring.dto.MyPostDTO">
@@ -95,11 +95,12 @@
 		FROM(
 		SELECT seq, title, view_count, rec_count, rep_count, writen_date, board_num
 		FROM tour_board
-		WHERE mem_seq = #{loginSeq}
+		WHERE mem_seq = #{loginSeq} and title like '%'||#{searchTitle}||'%'
 		UNION ALL
 		SELECT seq, title, view_count, rec_count, rep_count, writen_date, board_num
 		FROM company_board
-		WHERE mem_seq = #{loginSeq}))
+		WHERE mem_seq = #{loginSeq} and title like '%'||#{searchTitle}||'%'))
 		WHERE rn BETWEEN #{start} and #{end}
+		ORDER BY writen_date desc
 	</select>
 </mapper>
