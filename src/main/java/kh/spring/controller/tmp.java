@@ -28,6 +28,9 @@ public class tmp {
 		//Service
 		Gson gson = new Gson();
 		dto.setPw("");
+		if(!dto.getPh_Open().isEmpty() && dto.getPh_Open().equals("on")) {
+			dto.setPhone("비공개 연락처입니다.");
+		}
 		String result = gson.toJson(dto);
 		return result;
 	}
