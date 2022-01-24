@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.TourBoardDAO;
 import kh.spring.dao.TourReplyDAO;
+import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.TourBoardDTO;
 import kh.spring.dto.TourBoardLikeDTO;
 import kh.spring.statics.Statics;
@@ -152,25 +153,26 @@ public class TourBoardService {
 		return pageNavi;		
 	}	
 	
-	public void insertBoardLike(TourBoardLikeDTO dto) throws Exception{
+	// 좋아요
+	public void insertBoardLike(TourBoardLikeDTO dto) throws Exception {
+	    bdao.insertBoardLike(dto);
+	    bdao.updateBoardLike(dto.getPar_seq());
+	}
 		
-		bdao.insertBoardLike(dto);
-		bdao.updateBoardLike(dto.getPar_seq());
+	public void deleteBoardLike(TourBoardLikeDTO dto) throws Exception {
+	    bdao.deleteBoardLike(dto);
+	    bdao.updateBoardLike(dto.getPar_seq());
 	}
 	
-	public void deleteBoardLike(TourBoardLikeDTO dto) throws Exception{
-		
-		bdao.deleteBoardLike(dto);
-		bdao.updateBoardLike(dto.getPar_seq());
-	}
-	
-	public int getBoardLike(TourBoardLikeDTO dto) throws Exception{
-		
-		return bdao.getBoardLike(dto);
+	public  int totalBoardLike(int seq) throws Exception {
+        return bdao.totalBoardLike(seq);
 	}
 	
 	public int delete2(int seq) {
-		
 		return bdao.delete2(seq);
-	}	
+	}
+	
+	public int likeDuplCheck(TourBoardLikeDTO dto) {
+		return bdao.likeDuplCheck(dto);
+	}
 }

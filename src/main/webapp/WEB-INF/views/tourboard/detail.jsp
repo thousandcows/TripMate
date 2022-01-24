@@ -351,16 +351,20 @@ a:active {
 		<br>
 		
 		<div class="like_n_rep">
-        	<div id=like_icon>
-          		<a class="heart">          			
-          				<c:if test="${!empty loginNick }">
-    	     	  			<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count">${dto.rec_count}</span>
-	       	    		</c:if>	     
-	       	    		<c:if test="${empty loginNick }">  	    		
-           					<img id="cant_heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${dto.rec_count}</span>
-           				</c:if>           				           			
-       			</a>
-            </div>
+        	<c:if test="${!empty loginNick}">
+                <div id=like_icon>
+               		<a class="heart">
+           				<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
+       				</a>
+          		</div>
+          	</c:if>
+          	<c:if test="${empty loginNick}">
+                <div id=like_icon>
+          			<a class="heart_nonmem">
+   						<img id="heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
+    				</a>
+                </div>
+            </c:if>
             <div id=rep_icon>
                 <i class="far fa-comment-dots" style="color: black"></i><span id="rep_count" name="rep_count"> ${dto.rep_count}</span>
             </div>
@@ -711,7 +715,7 @@ a:active {
 	</script>
 
 
-   <!-- 좋아요 -->
+  <!-- 좋아요 -->
     <script>
     $(document).ready(function () {
 
@@ -727,15 +731,14 @@ a:active {
             $("#heart").prop("src", "/images/dislike.png");
             $(".heart").prop('name',heartval)
         }
-
+        
     });
     
     $(".heart").on("click", function () {
 
         var that = $(".heart");
-        var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name'), 'rec_count_no' : '${dto.rec_count}'};
-        
-        //console.log(that.prop('name'));
+
+        var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name')};
         
         $.ajax({
             url :'/tourboard/heart',
@@ -743,28 +746,27 @@ a:active {
             data : sendData,
             success : function(data){
                 that.prop('name',data.heart);   
-    		    
+                
                 var heart = data.heart;
-                var rec_count_no = data.rec_count_no;
                 
                 if(heart==1) {
                     $('#heart').prop("src","/images/like.png");
-                    console.log("heart값이 1일때 dto의 추천수 : " + rec_count_no);
-                    $('#rec_count').html(data.rec_count_no);
+                    $("#rec_count").html(" " + data.likeCount);
                 }
                 else{
                     $('#heart').prop("src","/images/dislike.png");
-                    console.log("heart값이 0일때 dto의 추천수 : " + rec_count_no);
-                    $('#rec_count').html(data.rec_count_no);
+                    $("#rec_count").html(" " + data.likeCount);
                 }
             }
         });
     });
+    </script>
     
-    $("#cant_heart").on("click", function(){
-    	alert("로그인 후 이용 가능합니다. ");
-    	false;
-    })
+    <!-- 비회원이 하트 클릭시  -->
+    <script>
+    	$(".heart_nonmem").on("click",function(){
+    		alert("로그인 후 이용하세요");
+    	});
     </script>
 
 </body>
