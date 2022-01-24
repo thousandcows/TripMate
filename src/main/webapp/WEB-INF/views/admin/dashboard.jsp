@@ -55,20 +55,19 @@
             <!-- Heading -->
             <div class="sidebar-heading">
                 Management
-            </div>
+            </div>            
             
             <li class="nav-item">
-                <a class="nav-link" href="tables">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Board</span></a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="tables2">
+                <a class="nav-link" href="member">
                     <i class="fas fa-user-circle"></i>
                     <span>Member</span></a>
             </li>
-
+            
+			<li class="nav-item">
+                <a class="nav-link" href="board">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Board</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
 
