@@ -6,7 +6,7 @@ let nickNameSubmitCheck = false;
 let phoneSubmitCheck = false;
 let pwSubmitCheck = false;
 let pwReSubmitCheck = false;
-let ws; // 웹소켓
+let ws = new WebSocket("ws://localhost/notice"); // 웹소켓
 // 이메일 중복확인
 let eventCheck = document.querySelector("#signupEmailCheckBtn");
 if (eventCheck != null) {
@@ -337,7 +337,6 @@ if (eventCheck != null) {
 }
 
 if(document.querySelector("#noticeBtn") != null){
-  ws = new WebSocket("ws://localhost/notice");
   document.querySelector("#noticeBtn").addEventListener("click", () => {
     if(document.querySelector("#noticeList").style.display == "none"){
       document.querySelector("#noticeList").style.display = "block"
@@ -347,15 +346,16 @@ if(document.querySelector("#noticeBtn") != null){
   });
 }
 
-if(ws != null && ws != undefined){
+if(document.querySelector("#testBtn") != null){
   document.querySelector("#testBtn").addEventListener("click", () => {
     ws.send("홍진규");
   });
   ws.onmessage = function(e) {
     console.log(e);
-    let line = $("<div class='websocTest'>");
+    let line = $("<div id='websocTest'>");
     line.append(e.data);
   
-    $("#defaultHeader").append(line);
+    $("#defaultHeader").after(line);
+    $("#websocTest").delay(3000).fadeOut(2000);
   }
 }

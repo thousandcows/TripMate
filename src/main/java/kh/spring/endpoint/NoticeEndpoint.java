@@ -30,8 +30,12 @@ public class NoticeEndpoint {
 		// Config에서 넣은 세션을 가져옴
 		this.session = (HttpSession) config.getUserProperties().get("hSession");
 		String nick = (String) this.session.getAttribute("loginNick");
-		map.put(nick, session);
-		System.out.println(nick + " 님 로그인");
+		if(nick != null) {
+			map.put(nick, session);
+			System.out.println(nick + " 님 로그인");
+		} else {
+			System.out.println(nick + " 님 널?");
+		}
 	}
 	// 해쉬맵으로 nick을 키로주고 세션을 밸류로 줘서 저장한 후, 이벤트 발생시 해당 키값의 세션으로 메세지를 뿌리면 실시간은 가능할거같은데 으엉ㄴㅁ어
 	@OnMessage

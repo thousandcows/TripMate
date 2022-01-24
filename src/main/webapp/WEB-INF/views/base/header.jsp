@@ -53,10 +53,14 @@
         right:200px;
         z-index:9999;
       }
-      .websocTest{
-        width:200px;
-        height:100px;
-        background-color:hotpink;
+      #websocTest{
+        width:340px;
+        height:50px;
+        background-color:#008080;
+        position:absolute;
+        top:820px;
+        right:90px;
+        color:white;
       }
     </style>
 
