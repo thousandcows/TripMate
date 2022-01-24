@@ -334,3 +334,13 @@ if (eventCheck != null) {
   });
 
 }
+if(document.querySelector("#noticeBtn") != null){
+  document.querySelector("#noticeBtn").addEventListener("click", () => {
+    console.log("클릭");
+    if(document.querySelector("#noticeList").style.display == "none"){
+      document.querySelector("#noticeList").style.display = "block"
+    } else {
+      document.querySelector("#noticeList").style.display = "none";
+    }
+  });
+}

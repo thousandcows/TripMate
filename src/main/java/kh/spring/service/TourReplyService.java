@@ -18,9 +18,9 @@ public class TourReplyService {
 	@Autowired
 	public TourReplyService rservice;
 
-	public int reply(int rseq, String reply, String loginNick) {
+	public int reply(int rseq, String reply, String loginNick, int mem_seq) {
 
-		return rdao.insert(rseq, reply, loginNick);
+		return rdao.insert(rseq, reply, loginNick, mem_seq);
 	}
 	
 	public List<TourReplyDTO> selectAll(int seq) {
@@ -37,9 +37,9 @@ public class TourReplyService {
 		return rdao.delete(seq);
 	}
 
-	public int reinsert(int rpseq, String recontent, String loginNick) {
+	public int reinsert(int rpseq, String recontent, String loginNick, int mem_seq) {
 		
-		return rdao.reinsert(rpseq, recontent, loginNick);
+		return rdao.reinsert(rpseq, recontent, loginNick, mem_seq);
 	}
 	
 	public List<TourReplyReplyDTO> selectReAll(){

@@ -330,7 +330,7 @@ ul>li{
 			url:"/tmp/showMember?mem_seq="+mem_seq,
     		dataType:"json",
     		success:function(result){
-    			$('#myModal').modal('toggle');
+    			$('#myModal').modal("toggle");
     			if(result.photo!=undefined){
         			$("#profileImg").attr("src","/images/"+result.photo);    				
     			}else{

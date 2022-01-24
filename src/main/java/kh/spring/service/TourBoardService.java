@@ -117,8 +117,7 @@ public class TourBoardService {
 		
 		String pageNavi = "";
 		
-		if(searchText == null || searchText.equals("")) {			
-			System.out.println("서비스에서 검색 안했을 때 출력되는 중");
+		if(searchText == null || searchText.equals("")) {		
 			if(needPrev) {
 				pageNavi += "<a href='/tourboard/list?cpage="+(startNavi-1)+"'><</a> ";
 			}
@@ -133,7 +132,6 @@ public class TourBoardService {
 			
 		}else {
 			if(searchOption.equals("search_writer")||searchOption.equals("search_title")) {
-				System.out.println("서비스에서 검색 됐을 때 출력되는 중");
 				if(needPrev) {
 					pageNavi += "<a href='/tourboard/list?cpage="+(startNavi-1)+"&searchOption="+searchOption+"&searchText="+searchText+ "'>< </a>";
 				}

@@ -200,6 +200,11 @@
           .delBtnBox {
             text-align: right;
           }
+
+          .nowPage{
+            color:red;
+            font-size:17px;
+          }
         </style>
       </head>
 
@@ -231,6 +236,7 @@
             <c:if test="${fn:length(list) == 0}">
               작성한 게시글이 없습니다.
             </c:if>
+            검색된 게시글 수 : ${postCount}
             <c:forEach var="list" items="${list}">
               <ul class="postContents">
                 <li>${list.writen_date}</li>
