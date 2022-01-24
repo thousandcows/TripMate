@@ -500,6 +500,7 @@ a:active {
 		$("#myModal").modal("toggle");
 	})
 	</script>	
+	
 	<script>
 		$(".re_del_btn").on("click", function(){
 			
