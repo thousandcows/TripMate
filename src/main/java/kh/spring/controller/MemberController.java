@@ -341,16 +341,19 @@ public class MemberController {
 		String filePath = "\\images" + "\\" + dto.getPhoto();
 		dto.setPhoto(filePath); // 프로필 사진 설정
 		
-		if (searchTitle != null) {
-			
-		}
-		int cpage = memberService.myPostPageDefender(loginSeq, currentPage);
+		int cpage = memberService.myPostPageDefender(loginSeq, currentPage, searchTitle);
 		int start = cpage * Statics.RECORD_COUNT_PER_PAGE - (Statics.RECORD_COUNT_PER_PAGE - 1);
 		int end = cpage * Statics.RECORD_COUNT_PER_PAGE;
-
-		List<MyPostDTO> list = memberService.getMyPostList(loginSeq, start, end);
-		String navi = memberService.getMyPostNavi(loginSeq, cpage);
-		model.addAttribute("navi", navi);
+		List<MyPostDTO> list = memberService.getMyPostList(loginSeq, start, end, searchTitle);
+		if (searchTitle != null) {
+			String navi = memberService.getMyPostNavi(loginSeq, cpage, searchTitle, 1);
+			model.addAttribute("navi", navi);
+		} else {
+			String navi = memberService.getMyPostNavi(loginSeq, cpage, searchTitle, 0);
+			model.addAttribute("navi", navi);
+		}
+		int postCount = memberService.getMyPostTotalCount(loginSeq, searchTitle);
+		model.addAttribute("postCount", postCount);
 		model.addAttribute("list", list);
 		model.addAttribute("loginInfo", dto);
 		return "mypage/writenList";
