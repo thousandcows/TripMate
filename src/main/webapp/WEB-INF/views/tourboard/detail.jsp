@@ -8,39 +8,21 @@
 <title>title here</title>
 
 <!-- datepicker -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
     
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-	crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
-	crossorigin="anonymous">
-<!-- include libraries(jQuery, bootstrap) -->
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-	rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" 	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"	crossorigin="anonymous"><!-- include libraries(jQuery, bootstrap) -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- include summernote css/js -->
-<link
-	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-	<jsp:include page="../base/header.jsp"></jsp:include>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<jsp:include page="../base/header.jsp"></jsp:include>
+
 <style>
 
 * {
@@ -274,6 +256,8 @@ a:active {
         	width: 100%;
         	height: 30px;
         	text-align: right;
+        	
+        	padding-left: 80px;
         }
         
         .like_n_rep>div{
@@ -315,8 +299,8 @@ a:active {
 			<div class="writeForm">
 				<div class="catetitle">
 					<div class="category">
-						<input type=text value="[${dto.category }]" id="discategory"
-							style="border: 0px; text-align: center; width: 100%;" readonly>
+						<input type=text value="[${dto.category }]" id="discategory" style="border: 0px; text-align: center; width: 100%;" readonly>
+						<input type=hidden value="${dto.category }" id="categoryValue">
 						<select style="display: none" ; id="modcategory" name="category">
 							<option value="">말머리</option>
 							<option value="명소">명소</option>
@@ -371,8 +355,7 @@ a:active {
        </div>
                
 		<br>
-		<form action="/tourreply/reply" method="post" id="frmReply"	enctype="multipart/form-data">
-		
+		<form action="/tourreply/reply" method="post" id="frmReply"	enctype="multipart/form-data">		
 			<div class="reply">
 				<input type=hidden value="${dto.seq}" name=rseq>
 				<div class="rp_input">
@@ -394,7 +377,7 @@ a:active {
 				<form method="post" id="frmRpMod" enctype="multipart/form-data">
 					<div class="reply_title">
 						<input type=hidden value="${rp.seq}" name=seq> <input type=hidden value="${rp.par_seq}" name=par_seq>
-						<div class="rp_id">${rp.nick }</div>
+						<div class="rp_id" value="${rp.mem_seq }">${rp.nick }</div>
 						<div class="rp_time" name="writen_date">${rp.writen_date }</div>
 					</div>
 					<br>
@@ -419,7 +402,7 @@ a:active {
 							<c:when test="${re.par_seq == rp.seq}">
                        			<div class="re_reply" id="re_reply${rp.seq }">
                             		<div class="re_rp_title">
-                                		<div class="re_rp_id" style="text-align:left;"> ${re.nick }</div>
+                                		<div class="re_rp_id" value="${re.mem_seq }" style="text-align:left;"> ${re.nick }</div>
                                 		<div class="re_rp_time" style="text-align:center;">${re.writen_date }</div>
                             		</div>
                             		<br>
@@ -463,8 +446,84 @@ a:active {
 
 	</div>	
 	
-	<!-- 좋아요 -->
-    
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	        <div class="modal-header">
+	          <h4 class="modal-title text-center">프로필 조회</h4>
+	        </div>
+	      <div class="modal-body">
+	      	<img id="profileImg" style="width:100px;height:100px;">
+	        <span id="profileNick"></span><br>
+	        <span id="profilePreference"></span><br>
+	        <span id="profileGender"></span><br>
+	        <span id="profilePhone"></span><br>
+	        <span id="profileAge"></span><br>
+	        <span id="profileViolation"></span><br>
+	        <span id="profileTxt"></span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="profileMsg" class="btn btn-primary">쪽지보내기</button>
+	        <button type="button" class="btn btn-secondary" id="modalCloseBtn" data-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<script>
+	$(document).on("click",".rp_id",function(){
+		let mem_seq = $(this).attr("value");
+		console.log(mem_seq);
+		$.ajax({
+			url:"/tmp/showMember?mem_seq="+mem_seq,
+    		dataType:"json",
+    		success:function(result){
+    			$('#myModal').modal('toggle');
+    			if(result.photo!=undefined){
+        			$("#profileImg").attr("src","/images/"+result.photo);    				
+    			}else{
+    				$("#profileImg").attr("src","/images/noPhoto.png");
+    			}
+    			$("#profileNick").text("사용자 명 : "+result.nick);
+    			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
+    			$("#profileGender").text("성별 : "+result.gender);    			
+    			$("#profilePhone").text("연락처 : " + result.phone);    			
+    			$("#profileAge").text("연령 : "+result.age);
+    			$("#profileViolation").text("신고 횟수 : " + result.violation);
+    			$("#profileTxt").text("자기소개 : "+result.text);
+    			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+    		}			
+		})
+	})
+	$(document).on("click",".re_rp_id",function(){
+		let mem_seq = $(this).attr("value");
+		console.log("대댓글 멤버 시퀀스 값 : " + mem_seq);
+		$.ajax({
+			url:"/tmp/showMember?mem_seq="+mem_seq,
+    		dataType:"json",
+    		success:function(result){
+    			$('#myModal').modal('toggle');
+    			if(result.photo!=undefined){
+        			$("#profileImg").attr("src","/images/"+result.photo);    				
+    			}else{
+    				$("#profileImg").attr("src","/images/noPhoto.png");
+    			}
+    			$("#profileNick").text("사용자 명 : "+result.nick);
+    			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
+    			$("#profileGender").text("성별 : "+result.gender);    			
+    			$("#profilePhone").text("연락처 : " + result.phone);    			
+    			$("#profileAge").text("연령 : "+result.age);
+    			$("#profileViolation").text("신고 횟수 : " + result.violation);
+    			$("#profileTxt").text("자기소개 : "+result.text);
+    			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+    		}			
+		})
+	})
+	$('#modalCloseBtn').on("click",function(){
+		$("#myModal").modal("toggle");
+	})
+	</script>	
 	
 	<script>
 		$(".re_del_btn").on("click", function(){
@@ -592,7 +651,7 @@ a:active {
 	<script>
 		let bkTitle = "";
 		let bkContents = "";
-
+		let categoryValue = "";
 		$("#mod").on("click", function() {
 
 			bkTitle = $("#title").val();
@@ -607,7 +666,9 @@ a:active {
 			$("#modOk").css("display", "inline");
 			$("#modCancel").css("display", "inline");
 			$("#discategory").css("display", "none");
+			categoryValue = $("#categoryValue").val();
 			$("#modcategory").css("display", "inline");
+			$("#modcategory").val(""+categoryValue+"");
 			
 			$('.summernote').summernote({
 				airMode : false
