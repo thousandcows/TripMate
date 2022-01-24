@@ -1,7 +1,9 @@
 package kh.spring.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.ComMemDTO;
@@ -300,6 +303,44 @@ public class CompanyBoardController {
 	public String deleteMem(int seq, int writeseq) throws Exception{
 		int result = cbs.deleteMem(seq);
 		return "redirect:/companyboard/detail?seq="+writeseq;
+	}
+	
+	
+	// 이미지
+	@RequestMapping(value="imageUpload" , produces = "application/text;charset=utf-8")
+	@ResponseBody
+	public String imageUpload(MultipartFile[] file) throws Exception{		
+	
+		String sysName = null;
+		String realPath = null;
+		for (MultipartFile mf : file) {
+			// 파일이 비어있지 않다면 for문을 돌리라는 의미이다. 빈 파일을 업로드하지 못하게 막는 코드이다.
+			if (!mf.isEmpty()) {
+				// cos.jar를 통해 request를 multipart request로 업그레이드 시켜 데이터를 뽑아내어 사용했다.
+				// spring은 apachi fileupload를 사용하기 때문에 maven repository에서 다운로드 받아온다.
+
+				realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
+				// Servers -> Tomcat 우클릭 -> Browse Deployment Location... : realPath의 위치
+
+				// realPath 객체를 만들고 만약에 realPathFile 폴더가 없으면 폴더를 만들라는 이야기
+				File realPathFile = new File(realPath);
+				if (!realPathFile.exists()) {
+					realPathFile.mkdir();
+				}
+
+				// oriName : 사용자가 업로드한 파일의 원본 이름
+				String oriName = mf.getOriginalFilename();
+
+				// sysName : 서버에 저장할 파일 이름
+				// UUID.randomUUID() : 절대 겹치지 않는 문자배열을 만들어준다.
+				sysName = UUID.randomUUID() + "_" + oriName;
+
+				// 서버에 업로드되어 메모리에 적재된 파일의 내용을 어디에 저장할지 결정하는 부분
+				mf.transferTo(new File(realPath + "/" + sysName));
+			}
+		}
+		System.out.println(realPath + "/" + sysName);
+		return "\\images\\" + sysName;
 	}
 	
 

@@ -767,21 +767,59 @@
 	
 	<!-- 썸머노트 -->
 	<script>
-    $(document).ready(function() {
-    
-    	//여기 아래 부분
-    	$('#summernote').summernote({
-    		  height: 300,				 // 에디터 높이
-    		  minHeight: 300,             // 최소 높이
+	$(document).ready(function() {
+		//여기 아래 부분
+		$('#summernote').summernote({
+              height:500, // 에디터 높이
+    		  minHeight: 500,             // 최소 높이
     		  maxHeight: null,             // 최대 높이
     		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-    		  lang: "ko-KR",					// 한글 설정 
-    		  placeholder: '최대 2048자까지 쓸 수 있습니다' 	//placeholder 설정
-    		 /*  airmode: true;  */
-    	});
-    	
-    	$('#summernote').summernote('disable');
-    });
+    		  lang: "ko-KR",					// 한글 설정
+    		  toolbar: [
+				    // [groupName, [list of button]]
+				    ['fontname', ['fontname']],
+				    ['fontsize', ['fontsize']],
+				    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				    ['color', ['forecolor','color']],
+				    ['table', ['table']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['height', ['height']],
+				    ['insert',['picture','link','video']],
+				    ['view', ['fullscreen', 'help']]],
+			  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			  fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+    		  placeholder: '최대 2048자까지 쓸 수 있습니다', 	//placeholder 설정
+    		  
+    		  callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+					onImageUpload : function(files) {
+						sendFile(files[0],this);
+					}
+				}
+    	});    	
+		$('#summernote').summernote('disable');
+	});
+	
+	/**
+	* 이미지 파일 업로드
+	*/
+	function sendFile(file, editor) {
+        var form_data = new FormData();
+        form_data.append('file', file);
+        $.ajax({
+            data : form_data,
+            type : "POST",
+            url : "/companyboard/imageUpload",
+            cache : false,
+            contentType : false,
+            enctype : "multipart/form-data",
+            processData : false,
+            success : function(sysName) {
+                console.log(sysName + "b")
+				console.log("write에 왔습니다.")
+                $(editor).summernote('insertImage', sysName);
+            }
+        });
+    }
     </script> 
     
     <!-- 좋아요 -->
