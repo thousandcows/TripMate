@@ -131,18 +131,28 @@ public class MemberDAO {
 	}
 	
 	// 내 게시글 갯수
-	public int getMyPostCount(int loginSeq) {
-		int cBoardCount = mybatis.selectOne("Member.getMyPostCountC", loginSeq);
-		int tBoardCount = mybatis.selectOne("Member.getMyPostCountT", loginSeq);
+	public int getMyPostCount(int loginSeq, String searchTitle) {
+		if(searchTitle == null) {
+			searchTitle = "";
+		}
+		Map<String, String> map = new HashMap<>();
+		map.put("loginSeq", String.valueOf(loginSeq));
+		map.put("searchTitle", searchTitle);
+		int cBoardCount = mybatis.selectOne("Member.getMyPostCountC", map);
+		int tBoardCount = mybatis.selectOne("Member.getMyPostCountT", map);
 		return cBoardCount + tBoardCount;
 	}
 	
 	// 내 게시글 리스트
-	public List<MyPostDTO> getMyPostList(int loginSeq, int start, int end){
+	public List<MyPostDTO> getMyPostList(int loginSeq, int start, int end, String searchTitle){
+		if(searchTitle == null) {
+			searchTitle = "";
+		}
 		Map<String, String> map = new HashMap<>();
 		map.put("loginSeq", String.valueOf(loginSeq));
 		map.put("start", String.valueOf(start));
 		map.put("end", String.valueOf(end));
+		map.put("searchTitle", searchTitle);
 		return mybatis.selectList("Member.getMyPostList", map);
 	}
 
