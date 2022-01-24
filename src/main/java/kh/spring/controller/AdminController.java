@@ -9,11 +9,15 @@ public class AdminController {
 	
 	
 	  @RequestMapping("dashboard") 
-	  public String dashboard() { return
-	  "admin/dashboard"; }
+	  public String dashboard() { 
+		  return "admin/dashboard"; 
+	  }
 	  
 	  @RequestMapping("tables") 
-	  public String tables() { return
-			  "admin/tables"; }
+	  public String tables() { 
+		  return "admin/tables"; 
+	  }
+	  
+	  
 	 
 }
