@@ -567,6 +567,13 @@
 	</div>
 	
 	
+	<script>
+		let wsObj = new Object();
+		wsObj.seq = "${dto.seq}";
+		wsObj.title = "${dto.title}";
+		wsObj.nick = "${dto.nick}";
+		wsObj.board_num = "${dto.board_num}";
+	</script>
    <script>
    $(document).on("click",".rep_writer",function(){
 		let mem_seq = $(this).attr("value");
@@ -678,6 +685,8 @@
 	 			var answer = confirm("이대로 작성하시겠습니까?");
 	 			
 	 			if(answer){
+					wsObj.reaction = 'comment';
+					ws.send(JSON.stringify(wsObj));
 	 				$("#frmReply").submit();
 	 			}else{
 	 				$("#rep_con").val("");
@@ -936,11 +945,12 @@
             type :'POST',
             data : sendData,
             success : function(data){
-                that.prop('name',data.heart);   
-                
+                that.prop('name',data.heart);
                 var heart = data.heart;
                 
                 if(heart==1) {
+										wsObj.reaction = 'like';
+										ws.send(JSON.stringify(wsObj));
                     $('#heart').prop("src","/images/like.png");
                     $("#rec_count").html(" " + data.likeCount);
                 }
@@ -967,6 +977,8 @@
     		
     		if(confirm("참여신청 하시겠습니까?")){
         			alert("참가여부는 모집마감 글 하단 참가자 리스트에서 확인 가능합니다.");
+							wsObj.reaction = 'joinTrip';
+							ws.send(JSON.stringify(wsObj));
         			location.href="/companyboard/attend?seq=${dto.seq}"; 
         	}
     		

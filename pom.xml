@@ -56,6 +56,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- WebSocket -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
 		<!-- Database Related -->
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
