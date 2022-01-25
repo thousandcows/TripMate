@@ -98,9 +98,9 @@ public class AreaService {
 		System.out.println("Response code: " + conn.getResponseCode());
 		BufferedReader rd;
 		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
 		} else {
-			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(),"UTF-8"));
 		}
 		StringBuilder sb = new StringBuilder();
 		String line;
@@ -174,7 +174,7 @@ public class AreaService {
 		if(item.has("firstimage")) {
 			photo = item.get("firstimage").toString().replace("\"", "");
 		}
-		AreaDTO dto = new AreaDTO(name, category,cat2,cat3, location,lo_detail,tel,detail,homepage,photo);
+		AreaDTO dto = new AreaDTO(0, name, category,cat2,cat3, location,lo_detail,tel,detail,homepage,photo);
 		return dto;
 	}
 
