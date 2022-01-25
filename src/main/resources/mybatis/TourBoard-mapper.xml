@@ -17,6 +17,10 @@
 		select * from (select tour_board.*, row_number() over(order by seq desc) rn from tour_board) where rn between #{start} and #{end}
 	</select>
 	
+	<select id="ntselectAll" resultType="kh.spring.dto.NoticeDTO">
+		select * from notice order by seq desc
+	</select>
+	
 	<insert id="insert">
 		insert into tour_board values(tourb_seq.nextval, #{mem_seq}, #{title}, #{contents}, #{category}, sysdate, default, default, default , #{nick}, default)
 	</insert>
@@ -25,12 +29,20 @@
 		select * from tour_board where seq = #{value}
 	</select>
 	
+	<select id="selectByNtSeq" resultType="kh.spring.dto.NoticeDTO">
+		select * from notice where seq = #{value}
+	</select>
+	
 	<update id="addViewCount">
 		update tour_board set view_count = view_count + 1 where seq = #{seq}
 	</update>
 	
 	<update id="modify">
 		update tour_board set title=#{title}, contents=#{contents}, category=#{category} where seq = #{seq}
+	</update>
+	
+	<update id="noticeModify">
+		update notice set title=#{title}, contents=#{contents} where seq = #{seq}
 	</update>
 	
 	<delete id="delete">

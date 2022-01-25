@@ -1,15 +1,8 @@
 package kh.spring.dto;
 
 public class AreaSavedDTO extends AreaDTO{
-	private int seq;
 	private String savedListRate;
 	private int isMore;
-	public int getSeq() {
-		return seq;
-	}
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
 	public String getSavedListRate() {
 		return savedListRate;
 	}
@@ -22,9 +15,8 @@ public class AreaSavedDTO extends AreaDTO{
 	public void setIsMore(int isMore) {
 		this.isMore = isMore;
 	}
-	public AreaSavedDTO(int seq, String savedListRate, int isMore) {
+	public AreaSavedDTO(String savedListRate, int isMore) {
 		super();
-		this.seq = seq;
 		this.savedListRate = savedListRate;
 		this.isMore = isMore;
 	}
@@ -32,12 +24,12 @@ public class AreaSavedDTO extends AreaDTO{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public AreaSavedDTO(String name, String category, String cat2, String cat3, String location, String lo_detail,
-			String phone, String detail, String homepage, String photo) {
-		super(name, category, cat2, cat3, location, lo_detail, phone, detail, homepage, photo);
+	public AreaSavedDTO(int seq, String name, String category, String cat2, String cat3, String location,
+			String lo_detail, String phone, String detail, String homepage, String photo) {
+		super(seq, name, category, cat2, cat3, location, lo_detail, phone, detail, homepage, photo);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 
 	
 	

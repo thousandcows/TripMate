@@ -6,6 +6,7 @@ let nickNameSubmitCheck = false;
 let phoneSubmitCheck = false;
 let pwSubmitCheck = false;
 let pwReSubmitCheck = false;
+let ws = new WebSocket("ws://localhost/notice"); // 웹소켓
 // 이메일 중복확인
 let eventCheck = document.querySelector("#signupEmailCheckBtn");
 if (eventCheck != null) {
@@ -247,7 +248,7 @@ if (eventCheck != null) {
   });
 
   // 일반 회원가입 끝
-
+  
   // 일반 로그인 시작
   document.querySelector("#normalLoginBtn").addEventListener("click", () => {
     let emailID = document.querySelector("#normalLoginID").value
@@ -268,7 +269,7 @@ if (eventCheck != null) {
       } else {
         location.reload();
       }
-    })
+    });
   });
 
   // 카카오 로그인
@@ -278,7 +279,7 @@ if (eventCheck != null) {
       type: 'get'
     }).done(function (res) {
       location.href = res;
-    })
+    });
   });
 
   // 비밀번호 찾기
@@ -334,3 +335,46 @@ if (eventCheck != null) {
   });
 
 }
+
+if(document.querySelector("#noticeBtn") != null){
+  document.querySelector("#noticeBtn").addEventListener("click", () => {
+    if(document.querySelector("#noticeList").style.display == "none"){
+      document.querySelector("#noticeList").style.display = "block"
+    } else {
+      document.querySelector("#noticeList").style.display = "none";
+    }
+  });
+}
+
+let noticeProcNum = 0;
+ws.onmessage = function(e) {
+  noticeProcNum++;
+  let line;
+  const notice = JSON.parse(e.data);
+  let seq = notice.seq;
+  let title = notice.title;
+  let board_num = notice.board_num;
+  let reaction = notice.reaction;
+  if(reaction == 'comment' && board_num == 1){
+    line = `<div id='noticeProc${noticeProcNum}' class='websocTest'><a href='/tourboard/detail?seq=${seq}' class='websocLine'>여행게시판 ${title} 글에 댓글이 달렸습니다.</a></div>`;
+  } else if(reaction == 'comment' && board_num == 2) {
+    line = `<div id='noticeProc${noticeProcNum}' class='websocTest'><a href='/companyboard/detail?seq=${seq}' class='websocLine'>동행게시판 ${title} 글에 댓글이 달렸습니다.</a></div>`;
+  }
+
+  if(reaction == 'like' && board_num == 1){
+    line = `<div id='noticeProc${noticeProcNum}' class='websocTest'><a href='/tourboard/detail?seq=${seq}' class='websocLine'>여행게시판 ${title} 글에 좋아요 반응이 있습니다.</a></div>`;
+  } else if(reaction == 'like' && board_num == 2){
+    line = `<div id='noticeProc${noticeProcNum}' class='websocTest'><a href='/companyboard/detail?seq=${seq}' class='websocLine'>동행게시판 ${title} 글에 좋아요 반응이 있습니다.</a></div>`;
+  }
+
+  if(reaction == 'joinTrip'){
+    line = `<div id='noticeProc${noticeProcNum}' class='websocTest'><a href='/companyboard/detail?seq=${seq}' class='websocLine'>동행게시판 ${title} 글에 동행 신청이 있습니다.</a></div>`;
+  }
+  console.log(noticeProcNum);
+  $("#noticeGround").prepend(line);
+  $(`#noticeProc${noticeProcNum}`).delay(3000).fadeOut(1000);
+  setTimeout(function(){
+    $(`#noticeProc${noticeProcNum}`).remove();
+  },4000);
+}
+

@@ -8,7 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kh.spring.dto.ComBoardLikeDTO;
+import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.TourBoardDTO;
 import kh.spring.dto.TourBoardLikeDTO;
 
@@ -45,6 +45,11 @@ public class TourBoardDAO {
 		}
 
 	}
+	
+	public List<NoticeDTO> ntselectAll(){
+		
+		return mybatis.selectList("TourBoard.ntselectAll");
+	}
 
 	public int insert(TourBoardDTO bdto) {
 		
@@ -54,6 +59,11 @@ public class TourBoardDAO {
 	public TourBoardDTO selectBySeq(int seq) {
 
 		return mybatis.selectOne("TourBoard.selectBySeq", seq);
+	}
+	
+	public NoticeDTO selectByNtSeq(int seq) {
+		
+		return mybatis.selectOne("TourBoard.selectByNtSeq", seq);
 	}
 
 	public int addViewCount(int seq) {
@@ -70,6 +80,16 @@ public class TourBoardDAO {
 		map.put("seq", String.valueOf(seq));
 
 		return mybatis.update("TourBoard.modify", map);
+	}
+	
+	public int noticeModify(int seq, String title, String contents) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("title",  title);
+		map.put("contents", contents);
+		map.put("seq", String.valueOf(seq));
+		
+		return mybatis.update("TourBoard.noticeModify", map);
 	}
 
 	public int delete(int seq) {

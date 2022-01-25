@@ -200,6 +200,11 @@
           .delBtnBox {
             text-align: right;
           }
+
+          .nowPage{
+            color:red;
+            font-size:17px;
+          }
         </style>
       </head>
 
@@ -333,7 +338,7 @@
             let searchTitle = document.querySelector("#myPostSearchInput").value;
             console.log(searchTitle);
             location.href="/member/writenList?searchTitle="+searchTitle;
-          })
+          });
         </script>
       </body>
 

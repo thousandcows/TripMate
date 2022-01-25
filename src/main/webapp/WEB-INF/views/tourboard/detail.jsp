@@ -463,6 +463,11 @@ a:active {
 	</div>
 	
 	<script>
+  let wsObj = new Object();
+	wsObj.seq = "${dto.seq}";
+	wsObj.title = "${dto.title}";
+	wsObj.nick = "${dto.nick}";
+	wsObj.board_num = "${dto.board_num}";
 	$(document).on("click",".rp_id",function(){
 		let mem_seq = $(this).attr("value");
 		console.log(mem_seq);
@@ -601,17 +606,19 @@ a:active {
 
 	<script>
 		$("#write_btn").on("click", function() {
-			
 			if($("#rep_con").val() == ""){
 	             alert("댓글을 작성해주세요");
 	             return false;
 	          }else{ 
-	             if(confirm("이대로 작성하시겠습니까?")){
+	        	  var answer = confirm("댓글을 작성하시겠습니까?");
+	        	  if(answer){
+									wsObj.reaction = 'comment';
+									ws.send(JSON.stringify(wsObj));
 	                $("#frmReply").submit();
-	             }else{
+	        	  }else{
 	                $("#rep_con").val() = "";
 	                return false;
-	             }
+	        	  }	             
 	          }
 		});
 	</script>
@@ -800,6 +807,8 @@ a:active {
                 var heart = data.heart;
                 
                 if(heart==1) {
+										wsObj.reaction = 'like';
+										ws.send(JSON.stringify(wsObj));
                     $('#heart').prop("src","/images/like.png");
                     $("#rec_count").html(" " + data.likeCount);
                 }

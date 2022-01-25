@@ -257,7 +257,11 @@ public class MemberService {
 			}
 
 			for (int i = startNavi; i <= endNavi; i++) {
-				pageNavi += "<a href='/member/writenList?currentPage=" + i + "'>" + i + "</a> ";
+				if(cpage == i) {
+					pageNavi += "<a href='/member/writenList?currentPage=" + i + "' class='nowPage'>" + i + "</a> ";
+				} else {
+					pageNavi += "<a href='/member/writenList?currentPage=" + i + "'>" + i + "</a> ";
+				}
 			}
 
 			if (needNext) {
@@ -271,8 +275,13 @@ public class MemberService {
 			}
 
 			for (int i = startNavi; i <= endNavi; i++) {
-				pageNavi += "<a href='/member/writenList?currentPage=" + i + "&searchTitle=" + searchTitle + "'>" + i
-						+ "</a> ";
+				if(cpage == i) {
+					pageNavi += "<a href='/member/writenList?currentPage=" + i + "&searchTitle=" + searchTitle + "' class='nowPage'>" + i
+							+ "</a> ";
+				} else {
+					pageNavi += "<a href='/member/writenList?currentPage=" + i + "&searchTitle=" + searchTitle + "'>" + i
+							+ "</a> ";
+				}
 			}
 
 			if (needNext) {

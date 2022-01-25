@@ -13,24 +13,23 @@ import kh.spring.dto.MemberDTO;
 @Controller
 @RequestMapping("/tmp/")
 public class tmp {
-	
+
 	@Autowired
-	private SqlSessionTemplate mybatis;	
-	
+	private SqlSessionTemplate mybatis;
+
 	@ResponseBody
 	@RequestMapping("showMember")
 	public String showMember(int mem_seq) {
-		System.out.println("tmp에 값 들어옴? : " + mem_seq);
 		//DAO
 		MemberDTO dto = mybatis.selectOne("Member.myInfoSelectAll",mem_seq);
-		System.out.println(dto.getPh_Open());
-		System.out.println("나이 : " + dto.getAge() + " 닉네임 : " + dto.getNick());
+
 		//Service
 		Gson gson = new Gson();
 		dto.setPw("");
-		if(!dto.getPh_Open().isEmpty() && dto.getPh_Open().equals("on")) {
+		if(!dto.getPh_Open().equals("on")) {
 			dto.setPhone("비공개 연락처입니다.");
-		}
+		}			
+
 		String result = gson.toJson(dto);
 		return result;
 	}

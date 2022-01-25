@@ -1,8 +1,6 @@
 package kh.spring.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -10,21 +8,17 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonObject;
-
 import kh.spring.dao.TourBoardDAO;
 import kh.spring.dao.TourReplyDAO;
-import kh.spring.dto.ComBoardLikeDTO;
+import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.TourBoardDTO;
 import kh.spring.dto.TourBoardLikeDTO;
 import kh.spring.dto.TourReplyDTO;
@@ -82,6 +76,9 @@ public class TourBoardController {
 			
 			String loginEmailId = (String)request.getSession().getAttribute("loginEmailID");
 			
+			List<NoticeDTO> nt_list = bservice.ntselectAll();  
+			
+			model.addAttribute("nt_list", nt_list);
 			model.addAttribute("writer", loginEmailId);
 			model.addAttribute("list", list);
 			model.addAttribute("navi", navi);
@@ -208,13 +205,12 @@ public class TourBoardController {
      	
      	// 좋아요 카운트
      	int likeCount = bservice.totalBoardLike(seq);
-     	model.addAttribute("likeCount", likeCount);
-        
+     	
+     	model.addAttribute("likeCount", likeCount);        
      	model.addAttribute("loginNick", loginNick);
         model.addAttribute("dto", dto);
         model.addAttribute("rp_list", rp_list); 
         model.addAttribute("re_list", re_list);
-//        model.addAttribute("files", files);
         return "tourboard/detail";
     }
 
@@ -234,42 +230,57 @@ public class TourBoardController {
 	}
 	
 	// 좋아요
-		@ResponseBody
-	    @RequestMapping(value = "heart", method = RequestMethod.POST, produces = "application/json")
-	    public HashMap<String, Integer> heart(HttpServletRequest httpRequest) throws Exception {
+	@ResponseBody
+    @RequestMapping(value = "heart", method = RequestMethod.POST, produces = "application/json")
+    public HashMap<String, Integer> heart(HttpServletRequest httpRequest) throws Exception {
 
-			HashMap<String, Integer> map = new HashMap<String, Integer>();
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
 			
-	        int heart = Integer.parseInt(httpRequest.getParameter("heart"));
-	        int loginSeq = (int) session.getAttribute("loginSeq");     
-	        int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));  
+        int heart = Integer.parseInt(httpRequest.getParameter("heart"));
+        int loginSeq = (int) session.getAttribute("loginSeq");     
+        int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));  
+        TourBoardLikeDTO dto = new TourBoardLikeDTO();
+	        
+        dto.setPar_seq(boardId);
+        dto.setMem_seq(loginSeq);
+	        
+        if(heart >= 1) {
+        	bservice.deleteBoardLike(dto);
+            heart=0;
+            map.put("heart", heart);
+        } else {
+        	int dupl = bservice.likeDuplCheck(dto);
+        	if(dupl==0) {
+        		bservice.insertBoardLike(dto);
+                heart=1;
+                map.put("heart", heart);
+        	}else {
+        		heart=1;
+        		map.put("heart", heart);
+        	}
+        }
+	        
+        int likeCount = bservice.totalBoardLike(boardId);
+        map.put("likeCount", likeCount);
+        return map;
+	}
+	
+	@RequestMapping("noticeDetail")
+	public String noticeDetail(int seq, Model model) {
 
-	        TourBoardLikeDTO dto = new TourBoardLikeDTO();
-	        
-	        dto.setPar_seq(boardId);
-	        dto.setMem_seq(loginSeq);
-	        
-	        
-			 
-	        if(heart >= 1) {
-	        	bservice.deleteBoardLike(dto);
-	            heart=0;
-	            map.put("heart", heart);
-	        } else {
-	        	int dupl = bservice.likeDuplCheck(dto);
-	        	if(dupl==0) {
-	        		bservice.insertBoardLike(dto);
-	                heart=1;
-	                map.put("heart", heart);
-	        	}else {
-	        		heart=1;
-	        		map.put("heart", heart);
-	        	}
-	        }
-	        
-	        int likeCount = bservice.totalBoardLike(boardId);
-	        map.put("likeCount", likeCount);
-	        return map;
-		}
-
+		NoticeDTO ndto = bservice.selectByNtSeq(seq);
+		
+		model.addAttribute("dto", ndto);
+		
+		return "tourboard/noticeDetail";
+	}
+	
+	@RequestMapping("noticeModify")
+	public String noticeModify(int seq, String title, String explanation) throws Exception{
+		
+		String contents = explanation;
+		bservice.noticeModify(seq, title, contents);
+		System.out.println("다시 돌아갈 준비 중");
+		return "redirect:/tourboard/noticeDetail?seq="+seq;
+	}
 }
