@@ -31,7 +31,7 @@
 	href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a5fa8abac646238f15601b89cae524ec&libraries=services"></script>
 <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" ></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" ></script>
 
 <jsp:include page="../base/header.jsp"></jsp:include>
 <style>
@@ -244,17 +244,19 @@ li.drag-sort-active {
 							<c:set var="j" value="${j+1 }"/>
 							<fmt:parseDate value="${i }" var="dateFor" pattern="yyyy.MM.dd"/>
 							<fmt:formatDate value="${dateFor}" var="date" pattern="yyyy.MM.dd" />
-							<div class="row border">
-								<div class="col datePick" id="${i }">
+							<ul class="row border ui-widget-content ui-state-default" id="day">
+								<li class="col datePick" id="${i }">
 									${j }일차<br>
 									${i }
-								</div>
-							</div>
+								</li>
+							</ul>
 						</c:forEach>
+							<div class="w-100" id="deletePlan" style="height:100px;">삭제</div>
+						
 						</c:if>
 					</div>
-					<ul class="col-4 border drag-sort-enable" id="planList" ondragover="onDragOver(event)">
-						리스트
+						<!-- 리스트 -->
+					<ul class="col-4 border drag-sort-enable ui-helper-reset ui-helper-clearfix" id="planList" ondragover="onDragOver(event)">
 					</ul>
 					<div class="col-6" id=map style="height:600px;">
 					</div>
@@ -441,7 +443,7 @@ li.drag-sort-active {
 				let result = "";
 				let positions = [];
 					for(let i = 0; i<data.length;i++){
-						result += '<li class="row border mb-2" id='+data[i].seq+' dragable="true"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</li>';
+						result += '<li class="row border mb-2 ui-widget-content ui-corner-tr" id='+data[i].seq+' dragable="true"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</li>';
 						
 						//지도 관련
 						// 주소로 좌표를 검색합니다
@@ -487,17 +489,20 @@ li.drag-sort-active {
 	})
 	
 	$(".datePick").on("click",function(){
+		let id = this.id;
+		setTimeout(function(){
 		$.ajax({
-			url:"/plan/detailPlanList?seq=${seq}&date="+this.id,
+			url:"/plan/detailPlanList?seq=${seq}&date="+id,
 			dataType:"json",
 			success:function(data){
 				let result = "";
 				for(let i = 0; i<data.length;i++){
-					result += '<li class="row border mb-2" id='+data[i].seq+' dragable="true"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</li>'						
+					result += '<li class="row border mb-2 ui-widget-content ui-corner-tr" id='+data[i].seq+' dragable="true"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</li>'						
 				}
 				$("#planList").html(result)
 			}
 		})
+		},200)
 	})
 	
 	//찜목록 더보기
@@ -551,32 +556,80 @@ li.drag-sort-active {
         });
         
        
-        //드래그앤 드랍      
-        $(function() {
-   	 		$("#planList").sortable();
-   		 $("#planList").disableSelection();
-		});
+        //드래그앤 드랍 순서변경 임시 보류
+        /*$(function() {
+   	 		$("#planList").sortable({
+   	  			stop: function(event, ui) { 
+   	         	let target = [];
+   	         	setTimeout(function(){
+   	             	for(let i = 1; i<=$("#planList").children().length;i++){
+   	             		target.push(($("#planList li:nth-child("+i+")").attr("id"))*1)
+   	             	}
+   	             	console.log(target);
+   	             		$.ajax({
+   	             			url:"/plan/planSort",
+   	              			async:false,
+   	             			data:{"target":target}
+   	             		})   	         		
+   	         	},200)
+   	   			}
+			})
+        })*/
+    $(function(){
+    	$("#planList").sortable({
+    		
+    	})
+    })
+        
+    //일정 수정    
+    $( function() {
+	    // There's the gallery and the trash
+	    var $planList = $( "#planList" ),
+	      $day = $( "#day" );
+	 
+	    // Let the trash be droppable, accepting the gallery items
+	    $("#day>li").droppable({
+	      accept: "#planList > li",
+	      drop: function( event, ui ) {
+	        changeDate( ui.draggable,this.id );
+	      }
+	    });
 
-        $(document).on("mouseup","#planList",function(){
-        	let target = [];
-        	setTimeout(function(){
-            	for(let i = 1; i<=$("#planList").children().length;i++){
-            		target.push(($("#planList li:nth-child("+i+")").attr("id"))*1)
-            	}
-            	console.log(target);
-            		$.ajax({
-            			url:"/plan/planSort",
-            			data:{"target":target},
-            			success:function(data){
-            				
-            			}
-            		})
-        		
-        	},300)
-        })
-        
-        
-        
-		</script>
+	    $("#deletePlan").droppable({
+		      accept: "#planList>li",
+		      drop: function( event, ui ) {
+		        deleteDate( ui.draggable );
+		      }
+		});
+	    
+	    // Image deletion function
+	    function changeDate( $item, $id ) {
+	      $item.fadeOut(function() {
+	    	  $.ajax({
+	    			url:"/plan/planDateSort",
+	    			async:false,
+	    			data:{"day":$id,"seq":$item.attr("id")},
+	    			success:function(data){
+	    		    	  $item.remove();    				
+	    			}   
+	      		});
+	   	 	});
+  		}
+	    
+	    function deleteDate( $item ) {
+		      $item.fadeOut(function() {
+		    	  $.ajax({
+		    			url:"/plan/planDateDelete",
+		    			async:false,
+		    			data:{"seq":$item.attr("id")},
+		    			success:function(data){
+		    		    	  $item.remove();    				
+		    			}   
+		      		});
+		   	 	});
+	  		}
+	        
+	});
+</script>
 </body>
 </html>

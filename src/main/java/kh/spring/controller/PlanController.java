@@ -152,4 +152,18 @@ public class PlanController {
 		pServe.sortPlan(target);
 		return "OK";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="planDateSort", produces = "application/text;charset=utf-8")
+	public String planDateSort(@RequestParam(value="seq")int seq,@RequestParam(value="day") String day) throws Exception{
+		pServe.sortDatePlan(seq,day);
+		return "OK";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="planDateDelete", produces = "application/text;charset=utf-8")
+	public String planDateDelete(@RequestParam(value="seq")int seq) {
+		pServe.deletePlan(seq);
+		return "OK";
+	}
 }
