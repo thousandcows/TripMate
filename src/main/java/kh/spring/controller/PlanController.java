@@ -1,15 +1,17 @@
 package kh.spring.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -111,25 +113,43 @@ public class PlanController {
 	
 	@RequestMapping("saveList")
 	public String saveList(String[] check,int seq, RedirectAttributes re) {
-		
-		
-		
 		aService.checkDB(check);
 		pServe.saveList(check, seq);
-		
 		re.addAttribute("seq",seq);
 		return "redirect:/plan/modify";
 	}
 		
-	@RequestMapping("chooseSpot")
-	public String chooseSpot() {
-		return "";
-	}
 	
 	@ResponseBody
 	@RequestMapping(value="detailPlanList", produces = "application/text;charset=utf-8")
 	public String detailPlanList(int seq,String date) {
-		String list = pServe.detailPlanList(seq, date);
-		return list;
+		List<AreaDTO> list = pServe.detailPlanList(seq, date);
+		String result = pServe.detailToAjax(list);
+		return result;
+	}
+	
+	@RequestMapping("detail")
+	public String detail(int seq,Model model) throws Exception {
+		PlanDTO dto = pServe.getDetail(seq);
+		List<String> date = pServe.calDate(dto.getStartDate(),dto.getEndDate());
+		List<List<AreaDTO>> list = new ArrayList<>();
+		for(int i = 0; i<date.size();i++) {
+			list.add(pServe.detailPlanList(seq,date.get(i)));			
+		}
+		
+		model.addAttribute("dto",dto);
+		model.addAttribute("list",list);
+		return "/plan/detail";
+	}
+	
+	@Autowired
+	public HttpServletRequest request;
+
+	
+	@ResponseBody
+	@RequestMapping(value="planSort", produces = "application/text;charset=utf-8")
+	public String planSort(@RequestParam(value="target[]")int[] target) throws Exception{
+		pServe.sortPlan(target);
+		return "OK";
 	}
 }

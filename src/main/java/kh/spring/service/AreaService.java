@@ -174,7 +174,7 @@ public class AreaService {
 		if(item.has("firstimage")) {
 			photo = item.get("firstimage").toString().replace("\"", "");
 		}
-		AreaDTO dto = new AreaDTO(name, category,cat2,cat3, location,lo_detail,tel,detail,homepage,photo);
+		AreaDTO dto = new AreaDTO(0, name, category,cat2,cat3, location,lo_detail,tel,detail,homepage,photo);
 		return dto;
 	}
 

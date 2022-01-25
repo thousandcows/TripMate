@@ -1,8 +1,8 @@
 package kh.spring.service;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 
 import kh.spring.dao.PlanDAO;
 import kh.spring.dto.AreaDTO;
+import kh.spring.dto.DetailPlanDTO;
 import kh.spring.dto.PlanDTO;
 import kh.spring.statics.Statics;
 
@@ -30,28 +31,16 @@ public class PlanService {
 	public List<Integer> listCount(int mem_seq,int page) {
 		int total = dao.listCount(mem_seq);
 		int totalPage = 0;
-		if(total%Statics.RECORD_COUNT_PER_PAGE==0) {
-			totalPage = (total/Statics.RECORD_COUNT_PER_PAGE);			
-		}else {
-			totalPage = (total/Statics.RECORD_COUNT_PER_PAGE)+1;
-		}
+		if(total%Statics.RECORD_COUNT_PER_PAGE==0) {totalPage = (total/Statics.RECORD_COUNT_PER_PAGE);
+		}else {totalPage = (total/Statics.RECORD_COUNT_PER_PAGE)+1;}
 		int startNavi = (page-1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
 		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;         
 
 		boolean needPrev = true; 
 		boolean needNext = true; 
-		
-		if(startNavi == 1) {
-			needPrev = false;
-		}
-
-		if(endNavi >= totalPage) {
-			needNext = false;
-		}
-		
-		if(endNavi > totalPage) {
-			endNavi = totalPage;
-		}
+		if(startNavi == 1) {needPrev = false;}
+		if(endNavi >= totalPage) {needNext = false;}
+		if(endNavi > totalPage) {endNavi = totalPage;}
 
 		List<Integer> pageNavi = new ArrayList<>();
 		if(needPrev) {pageNavi.add(startNavi-2) ;}
@@ -60,8 +49,7 @@ public class PlanService {
 		}
 		if(needNext) { pageNavi.add(endNavi+1);}
 		return pageNavi;
-         
-		
+
 	}
 	
 	public List<PlanDTO> listing(int seq,int page){
@@ -88,16 +76,21 @@ public class PlanService {
 		}
 	}
 	
-	public String detailPlanList(int seq,String date){
-		System.out.println(date);
-		List<Integer> areaCode = dao.detailPlanSort(seq,date);
+	public List<AreaDTO> detailPlanList(int seq,String date){
+		List<DetailPlanDTO> areaCode = dao.detailPlanSort(seq,date);
 		List<AreaDTO> list = new ArrayList<>(); 
 		for(int i = 0; i<areaCode.size();i++) {
-			list.add(dao.planListPrint(areaCode.get(i)));
+			AreaDTO tmp = dao.planListPrint(areaCode.get(i).getArea_seq());
+			tmp.setSeq(areaCode.get(i).getSeq());
+			list.add(tmp);
 		}
+		return list;
+	}
+	
+	public String detailToAjax(List<AreaDTO> list) {
 		Gson gson = new Gson();
 		String result = gson.toJson(list);
-		return result;
+		return result;		
 	}
 	
 	public List<String> calDate(String start,String end) throws Exception{
@@ -114,10 +107,22 @@ public class PlanService {
 			c.add(Calendar.DAY_OF_MONTH, 1);
 			currentDate = c.getTime();
 		}
-		for (String date : list) {
-			System.out.println(date);
-		}
 		return list;
 	}
-
+	
+	public PlanDTO getDetail(int seq) {
+		return dao.getDetail(seq);
+	}
+	
+	public void sortPlan(int[] target) {
+		int[] tmp = target.clone();
+		Arrays.sort(tmp);
+		for(int i = 0; i<target.length;i++) {
+			if(tmp[i] != target[i]) {
+				int t = dao.sortZero(tmp[i]);
+				dao.sortPlan(tmp[i],target[i]);
+				dao.sortPlan(target[i],t);
+			}
+		}
+	}
 }
