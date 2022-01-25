@@ -24,12 +24,11 @@ import kh.spring.dto.ReactionDTO;
 public class NoticeEndpoint {
 
 	private HttpSession session;
-	// 클라이언트의 접속정보를 담을 세션이 있는데, 클라이언트는 한명만 접속하는게 아니기때문에 밖으로 꺼내서 List에 세션들을 담는다.
 	// static으로 해야 여러명이 접속해도 같은 List를 공유할 수 있다.(마찬가지로 동기화 처리해야함)
 //	private static List<Session> clients = Collections.synchronizedList(new ArrayList<>());
 	private static Map<String, Session> map = Collections.synchronizedMap(new HashMap<>());
 
-	@OnOpen // 엔드포인트로 클라이언트 접속시 실행되는 어노테이션
+	@OnOpen
 	public void onConnect(Session session, EndpointConfig config) { // 핸드쉐이크한 config 받아옴
 //		clients.add(session);
 		// Config에서 넣은 세션을 가져옴
@@ -41,7 +40,6 @@ public class NoticeEndpoint {
 		}
 	}
 
-	// 해쉬맵으로 nick을 키로주고 세션을 밸류로 줘서 저장한 후, 이벤트 발생시 해당 키값의 세션으로 메세지를 뿌리면 실시간은 가능할거같은데
 	@OnMessage
 	public void onMessage(String message) {
 		Gson gson = new Gson();
