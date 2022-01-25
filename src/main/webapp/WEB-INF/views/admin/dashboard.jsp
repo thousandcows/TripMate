@@ -44,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="dashboard">
                     <i class="fas fa-chart-line"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -79,7 +79,7 @@
             
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables">
+                <a class="nav-link" href="notice">
                     <i class="fas fa-edit"></i>
                     <span>Notice</span></a>
             </li>

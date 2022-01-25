@@ -80,6 +80,16 @@
             border: 1px solid red;
         }
 
+		.notice_enroll{
+            overflow: auto;
+        }
+
+        .board>.notice_enroll>div{
+            float:left;
+            border: 1px solid red;
+            background-color: red;
+        }
+        
         .board_enroll{
             overflow: auto;
         }
@@ -156,6 +166,19 @@
                 <div class="view_count" style="width: 10%;">조회수</div>
                 <div class="rec_count" style="width: 10%;">추천수</div>     
             </div>
+			
+            <c:forEach var="n" items="${nt_list }">
+    	  		<div class="notice_enroll">
+       		        <div class="nt_seq" style="width: 10%;">-</div>
+       		        <div class="nt_category" style="width: 10%;">공지</div>
+       		        <div class="nt_title" style="width: 30%;"><a href="/tourboard/noticeDetail?seq=${n.seq}">${n.title }</a></div>
+       		        <div class="nt_nick" style="width: 10%;">${n.nick }</div>
+       		        <div class="nt_writen_time" style="width: 20%;">${n.writen_date }</div>
+       		        <div class="nt_view_count" style="width: 10%;">${n.view_count }</div>
+       		        <div class="nt_rec_count" style="width: 10%;">-</div>
+       		    </div>
+            </c:forEach>
+            
             <c:forEach var="i" items="${list }">
     	  		<div class="board_enroll">
        		        <div class="seq" style="width: 10%;">${i.seq }</div>
@@ -165,7 +188,7 @@
        		        		[${i.rep_count }]
        		        	</c:if>
        		        </div>
-       		        <div class="mem_seq" style="width: 10%;">${i.nick }</div>
+       		        <div class="mem_nick" style="width: 10%;">${i.nick }</div>
        		        <div class="writen_time" style="width: 20%;">${i.writen_date }</div>
        		        <div class="view_count" style="width: 10%;">${i.view_count }</div>
        		        <div class="rec_count" style="width: 10%;">${i.rec_count }</div>
