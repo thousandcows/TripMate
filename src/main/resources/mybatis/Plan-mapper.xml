@@ -68,4 +68,8 @@
 	<delete id="deletePlan">
 		delete from detail_plan where seq = #{seq}
 	</delete>
+	
+	<insert id="insertMemo">
+		update plan set memo = #{memo} where seq = #{seq}
+	</insert>
 </mapper> 

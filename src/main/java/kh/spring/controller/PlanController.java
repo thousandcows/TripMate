@@ -118,6 +118,13 @@ public class PlanController {
 		re.addAttribute("seq",seq);
 		return "redirect:/plan/modify";
 	}
+	
+	@RequestMapping("insertMemo")
+	public String insertMemo(int seq, String memo,RedirectAttributes re) {
+		pServe.insertMemo(seq,memo);
+		re.addAttribute("seq",seq);
+		return "redirect:/plan/modify";
+	}
 		
 	
 	@ResponseBody
@@ -166,4 +173,5 @@ public class PlanController {
 		pServe.deletePlan(seq);
 		return "OK";
 	}
+	
 }

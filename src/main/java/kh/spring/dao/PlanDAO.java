@@ -89,4 +89,11 @@ public class PlanDAO {
 	public void deletePlan(int seq) {
 		mybatis.delete("Plan.deletePlan",seq);
 	}
+	
+	public void insertMemo(int seq, String memo) {
+		Map<String,String> map = new HashMap<>();
+		map.put("seq", Integer.toString(seq));
+		map.put("memo", memo);
+		mybatis.insert("Plan.insertMemo",map);
+	}
 }
