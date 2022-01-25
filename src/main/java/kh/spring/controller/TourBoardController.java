@@ -274,4 +274,13 @@ public class TourBoardController {
 		
 		return "tourboard/noticeDetail";
 	}
+	
+	@RequestMapping("noticeModify")
+	public String noticeModify(int seq, String title, String explanation) throws Exception{
+		
+		String contents = explanation;
+		bservice.noticeModify(seq, title, contents);
+		System.out.println("다시 돌아갈 준비 중");
+		return "redirect:/tourboard/noticeDetail?seq="+seq;
+	}
 }
