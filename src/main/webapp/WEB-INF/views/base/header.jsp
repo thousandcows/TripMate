@@ -65,7 +65,7 @@
         font-size:14px;
         text-decoration:none;
       }
-      #websocTest{
+      .websocTest{
         width:fit-content;
         background-color:#EEEEEE;
         border-radius:3px;

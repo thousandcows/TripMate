@@ -1,8 +1,10 @@
 package kh.spring.endpoint;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -18,39 +20,37 @@ import com.google.gson.Gson;
 import kh.spring.configurator.WSConfig;
 import kh.spring.dto.ReactionDTO;
 
-@ServerEndpoint(value="/notice", configurator = WSConfig.class) // 우리가 만든 Config를 쓰게함
+@ServerEndpoint(value = "/notice", configurator = WSConfig.class) // 우리가 만든 Config를 쓰게함
 public class NoticeEndpoint {
-	
+
 	private HttpSession session;
 	// 클라이언트의 접속정보를 담을 세션이 있는데, 클라이언트는 한명만 접속하는게 아니기때문에 밖으로 꺼내서 List에 세션들을 담는다.
 	// static으로 해야 여러명이 접속해도 같은 List를 공유할 수 있다.(마찬가지로 동기화 처리해야함)
 //	private static List<Session> clients = Collections.synchronizedList(new ArrayList<>());
 	private static Map<String, Session> map = Collections.synchronizedMap(new HashMap<>());
-	
+
 	@OnOpen // 엔드포인트로 클라이언트 접속시 실행되는 어노테이션
 	public void onConnect(Session session, EndpointConfig config) { // 핸드쉐이크한 config 받아옴
 //		clients.add(session);
 		// Config에서 넣은 세션을 가져옴
 		this.session = (HttpSession) config.getUserProperties().get("hSession");
 		String nick = (String) this.session.getAttribute("loginNick");
-		if(nick != null) {
+		if (nick != null) {
 			map.put(nick, session);
 			System.out.println(nick + " 님 로그인");
-		} else {
-			System.out.println(nick + " 님 널?");
 		}
 	}
-	// 해쉬맵으로 nick을 키로주고 세션을 밸류로 줘서 저장한 후, 이벤트 발생시 해당 키값의 세션으로 메세지를 뿌리면 실시간은 가능할거같은데 으엉ㄴㅁ어
+
+	// 해쉬맵으로 nick을 키로주고 세션을 밸류로 줘서 저장한 후, 이벤트 발생시 해당 키값의 세션으로 메세지를 뿌리면 실시간은 가능할거같은데
 	@OnMessage
 	public void onMessage(String message) {
 		Gson gson = new Gson();
-		System.out.println("웹소켈 들어오는 메세지 : " + message);
 		ReactionDTO dto = gson.fromJson(message, ReactionDTO.class);
 		String ReactionTarget = dto.getNick();
 		synchronized (map) { // 동기화 (포문 도는 중간에 한명이 나가버리면 예외발생해서 그걸 막음)
 			for (Map.Entry<String, Session> entry : map.entrySet()) {
 				String nick = entry.getKey();
-				if(nick.equals(ReactionTarget)) {
+				if (nick.equals(ReactionTarget)) {
 					try {
 						entry.getValue().getBasicRemote().sendText(gson.toJson(dto));
 						break;
@@ -66,7 +66,7 @@ public class NoticeEndpoint {
 	public void onClose(Session session) {
 //		clients.remove(session);
 		String nick = (String) this.session.getAttribute("loginNick");
-		map.remove(nick);
+		map.remove(nick, session);
 		System.out.println(nick + " 님 접속 끊김");
 	}
 }
