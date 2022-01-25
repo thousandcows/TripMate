@@ -8,7 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kh.spring.dto.ComBoardLikeDTO;
+import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.TourBoardDTO;
 import kh.spring.dto.TourBoardLikeDTO;
 
@@ -45,6 +45,11 @@ public class TourBoardDAO {
 		}
 
 	}
+	
+	public List<NoticeDTO> ntselectAll(){
+		
+		return mybatis.selectList("TourBoard.ntselectAll");
+	}
 
 	public int insert(TourBoardDTO bdto) {
 		
@@ -54,6 +59,11 @@ public class TourBoardDAO {
 	public TourBoardDTO selectBySeq(int seq) {
 
 		return mybatis.selectOne("TourBoard.selectBySeq", seq);
+	}
+	
+	public NoticeDTO selectByNtSeq(int seq) {
+		
+		return mybatis.selectOne("TourBoard.selectByNtSeq", seq);
 	}
 
 	public int addViewCount(int seq) {

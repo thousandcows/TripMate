@@ -35,7 +35,7 @@
 				<c:forEach var="i" items="${list }">
 					<div class="row">
 						<div class="col-6">
-						<a href="/plan/modify?seq=${i.seq }">${i.title }</a>
+						<a href="/plan/detail?seq=${i.seq }">${i.title }</a>
 						</div>
 						<div class="col-2">
 							${i.startDate }

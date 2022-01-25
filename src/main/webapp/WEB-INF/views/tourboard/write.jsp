@@ -245,7 +245,7 @@
 
     	
 		if (confirm("이대로 작성하시겠습니까?")) {
-				$("#frmDetail").submit();
+				$("#frmWrite").submit();
 			}
 		});   
     </script>

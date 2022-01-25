@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.AreaDTO;
+import kh.spring.dto.DetailPlanDTO;
 import kh.spring.dto.PlanDTO;
 
 @Repository
@@ -48,7 +49,7 @@ public class PlanDAO {
 		return mybatis.selectOne("Plan.listCount",seq);
 	}
 	
-	public List<Integer> detailPlanSort(int seq, String date){
+	public List<DetailPlanDTO> detailPlanSort(int seq, String date){
 		Map<String,String> map = new HashMap<>();
 		map.put("seq", Integer.toString(seq));
 		map.put("date", date);
@@ -57,5 +58,42 @@ public class PlanDAO {
 	
 	public AreaDTO planListPrint(int seq) {
 		return mybatis.selectOne("Plan.planListPrint",seq);
+	}
+	
+	public PlanDTO getDetail(int seq) {
+		return mybatis.selectOne("Plan.getDetail",seq);
+	}
+	
+	public int sortZero(int seq) {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("seq",seq);
+		map.put("tar", 0);
+		mybatis.update("Plan.sortZero",map);
+		return map.get("tar");
+	}
+	
+	public void sortPlan(int firstSeq, int secondSeq) {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("firstSeq", firstSeq);
+		map.put("secondSeq", secondSeq);
+		mybatis.update("Plan.sortPlan",map);
+	}
+	
+	public void sortDatePlan(int seq, String day) {
+		Map<String,String> map = new HashMap<>();
+		map.put("seq", Integer.toString(seq));
+		map.put("day", day);
+		mybatis.update("Plan.sortDatePlan",map);
+	}
+	
+	public void deletePlan(int seq) {
+		mybatis.delete("Plan.deletePlan",seq);
+	}
+	
+	public void insertMemo(int seq, String memo) {
+		Map<String,String> map = new HashMap<>();
+		map.put("seq", Integer.toString(seq));
+		map.put("memo", memo);
+		mybatis.insert("Plan.insertMemo",map);
 	}
 }

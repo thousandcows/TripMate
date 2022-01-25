@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Admin">
+	
+	<select id="memberAllList" resultType="kh.spring.dto.MemberDTO">
+		select * from member
+	</select>
+	
+	<select id="tourboardAllList" resultType="kh.spring.dto.TourBoardDTO">
+		select * from tour_board
+	</select>
+	
+	<select id="companyboardAllList" resultType="kh.spring.dto.CompanyBoardDTO">
+		select * from company_board
+	</select>
+	
+	<select id="noticeAllList" resultType="kh.spring.dto.NoticeDTO">
+		select * from notice
+	</select>
+	
+	<delete id="tourboardDelete">
+		delete from tour_board where seq=#{seq}
+	</delete>
+	
+	<delete id="companyboardDelete">
+		delete from company_board where seq=#{seq}
+	</delete>
+	
+	<delete id="noticeDelete">
+		delete from notice where seq=#{seq}
+	</delete>
+	
+	<delete id="tourboardReplyDelete">
+		delete from tour_reply where par_seq=#{seq} 
+	</delete>
+	
+	<delete id="companyboardReplyDelete">
+		delete from com_reply where par_seq=#{seq} 
+	</delete>
+	
+	<delete id="tourboardReplyReplyDelete">
+		delete from tour_reply_reply where par_seq in (select r.seq from tour_board b join tour_reply r on(b.seq=r.par_seq) where r.par_seq=#{seq}) 
+	</delete>
+	
+	<delete id="companyboardReplyReplyDelete">
+		delete from com_reply_reply where par_seq in (select r.seq from company_board b join com_reply r on(b.seq=r.par_seq) where r.par_seq=#{seq}) 
+	</delete>
+	
+	<delete id="memberLeave">
+		delete from member where seq=#{seq}
+	</delete>
+	
+	<insert id="noticeInsert">
+		insert into notice values(notice_seq.nextval, #{title}, #{contents}, '관리자', sysdate, default)
+	</insert>
+</mapper>
