@@ -355,6 +355,7 @@
                                             	<th>${mem.gender }</th>
                                             	<th>${mem.age }</th>
                                             	<th>${mem.phone }</th>
+                                            	<th>${mem.singup_date }</th>
                                             	<th></th>
 	                                            <th>
 	                                            	<a href="/admin/leave?seq=${mem.seq}" class="btn btn-danger btn-icon-split">

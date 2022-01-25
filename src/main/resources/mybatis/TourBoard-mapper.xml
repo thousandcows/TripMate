@@ -41,6 +41,10 @@
 		update tour_board set title=#{title}, contents=#{contents}, category=#{category} where seq = #{seq}
 	</update>
 	
+	<update id="noticeModify">
+		update notice set title=#{title}, contents=#{contents} where seq = #{seq}
+	</update>
+	
 	<delete id="delete">
 		delete from tour_board where seq=#{value}
 	</delete>

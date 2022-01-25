@@ -287,7 +287,7 @@ a:active {
 				<a href="/tourboard/list?cpage=1">여행지 게시판</a>
 			</div>
 		</div>
-		<form action="/tourboard/modify" method="post" id="frmDetail"
+		<form action="/tourboard/noticeModify" method="post" id="frmDetail"
 			enctype="multipart/form-data">
 			<div class="writeForm">
 				<div class="catetitle">
@@ -308,12 +308,10 @@ a:active {
 			<div class="ft_btn">
 				<a href="/tourboard/list?cpage=1"><button type=button>목록으로</button></a>
 				<c:if test="${!empty loginNick }">
-					<c:if test="${dto.nick == loginNick}">
 				<button type=button id=mod>수정하기</button>
 				<button type=button id=del>삭제하기</button>
 				<button type=button id=modOk style="display: none;">수정완료</button>
 				<button type=button id=modCancel style="display: none;">취소</button>
-					</c:if>
 				</c:if>
 			</div>
 		</form>
@@ -341,8 +339,6 @@ a:active {
 
 			bkTitle = $("#title").val();
 			bkContents = $("#summernote").val();
-
-			console.log("bkTitle : " + bkTitle + "bkContents : " + bkContents);
 
 			$("#title").removeAttr("readonly");
 			$("#contents").removeAttr("readonly");
