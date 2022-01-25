@@ -141,4 +141,8 @@ public class PlanService {
 	public void deletePlan(int seq) {
 		dao.deletePlan(seq);
 	}
+	
+	public void insertMemo(int seq, String memo) {
+		dao.insertMemo(seq,memo);
+	}
 }

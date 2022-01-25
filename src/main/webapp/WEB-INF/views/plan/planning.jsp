@@ -32,7 +32,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a5fa8abac646238f15601b89cae524ec&libraries=services"></script>
 <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" ></script>
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">
 <jsp:include page="../base/header.jsp"></jsp:include>
 <style>
 li.drag-sort-active {
@@ -42,9 +42,28 @@ li.drag-sort-active {
   
 }
 
+#planDate{
+	overflow-y:scroll;
+}
+
+#planShow{
+	overflow-y:scroll;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 80px;  /* Preferred icon size */
+  display: inline-block;
+
 
 </style>
-
+<script>
+	$(document).ready(function(){
+		$("#thirdForm").hide()
+	})
+</script>
 </head>
 <body>
 
@@ -59,8 +78,8 @@ li.drag-sort-active {
 		</div>
 
 		<!-- 날짜/제목 생성 -->
-		<div class="row" id="firstForm">
-			<div class="col">
+		<div class="row justify-content-center" id="firstForm">
+			<div class="col-8 ">
 			<c:if test="${!empty seq }">
 				<form action="/plan/changeTheme" method="post">
 				<input type="hidden" name="seq" value=${seq }>
@@ -68,15 +87,14 @@ li.drag-sort-active {
 			<c:if test="${empty seq }">
 				<form action="/plan/chooseTheme" method="post">
 			</c:if>
-				<div class="row">
-					<div class="col-12">
-						<h5 class="title">여행 계획 입력</h5>
+				<div class="row border d-flex justify-content-center">
+					<div class="col-10 text-center mt-4">
+						<h5 class="title text-center">여행 계획 입력</h5>
 						<div class="form-group">
-							<label for="planTitle">제목</label> 
 							<input type="text" name="title" class="form-control" id="planTitle" placeholder="제목을 입력하세요." value="${dto.title }">
 						</div>
 					</div>
-					<div class="col-12">
+					<div class="col-10 mt-2">
 						<div class="form-group">
 							<label for="planConcept">여행 테마 선택</label> 
 							<select class="form-control" id="planConcept" name="theme">
@@ -88,8 +106,8 @@ li.drag-sort-active {
 							</select>
 						</div>
 					</div>
-						<label for="planDate">날짜 선택</label>
-						<div class="form-group col-6">						
+						<div class="form-group col-5 mt-2">						
+						<label for="planDate">여행 시작 날짜</label>
 								<div class="form-group">
 									<div class="input-group date" id="datetimepicker1"
 										data-target-input="nearest">
@@ -104,7 +122,8 @@ li.drag-sort-active {
 									</div>
 								</div>
 							</div>
-							<div class="form-group col-6">
+							<div class="form-group col-5 mt-2">
+								<label for="planDate">여행 종료 날짜</label>
 								<div class="input-group date" id="datetimepicker2"
 									data-target-input="nearest">
 									<input type="text" class="form-control datetimepicker-input" name="endDate"
@@ -118,8 +137,7 @@ li.drag-sort-active {
 								</div>
 							</div>
 
-						<div class="row">
-							<div class="col text-end">
+							<div class="col-10 text-end mt-2 mb-2">
 							<c:if test="${empty seq }">
 								<input id="chooseThemeBtn" type="submit" class="btn btn-primary" value="저장"></input>
 							</c:if>
@@ -136,31 +154,34 @@ li.drag-sort-active {
 		
 		
 		<!-- 여행지 생성 -->
-		<div class="row" id="secondForm" style="display:none;">
-			<div class="col">
-				<div class="row">
+		<div class="row justify-content-center" id="secondForm" style="display:none;">
+			<div class="col-8 border">
+				<div class="row mt-2">
 					<div class="col">
-						<button type="button" id="searchCallBtn">검색</button>
-						<button type="button" id="savedCallBtn">찜 목록</button>
+						<button type="button" id="searchCallBtn" class="btn btn-primary">검색</button>
+						<button type="button" id="savedCallBtn" class="btn btn-primary">찜 목록</button>
 					</div>
 				</div>
 				
-				<div class="row" id="search">
+				<div class="row mt-4" id="search">
 					<div class="col">
 						<div class="row">
-							<div class="col">
+							<div class="col d-flex justify-content-center">
 								<form id="searchForm" name="searchForm" method="post">
 									<input type="text" name="target" placeholder="검색어를 입력하세요." id="searchTarget"> 
 									<input type="hidden" value=1 name="page" id="searchPageNo"> 
-									<input type="submit" onclick="searching(); return false">
+									<input type="submit" class="btn btn-success" onclick="searching(); return false">
 								</form>												
 							</div>
 						</div>
 						
 						<form action="/plan/saveList" method="post">
-						<div class="row">
-								<input type="submit" class="btn" value="저장하기">
-							<div class="col" id="searchResult">
+						<div class="row mt-4 mb-4">
+							<div class="col-12">
+								<input type="submit" class="btn btn-primary" value="저장하기">
+								
+							</div>
+							<div class="row" id="searchResult">
 								검색 결과가 없습니다.
 							</div>
 						</div>
@@ -175,14 +196,15 @@ li.drag-sort-active {
 				
 				<form action="/plan/saveList" method="post">
 				<div class="row" id="saved" style="display:none;">
-					<div class="col">
+					<div class="col-10">
 						<div class="row justify-content-center mt-4">
-							<input type="submit" class="btn" value="저장하기">
+							<div class="col-12">
+							<input type="submit"  class="btn btn-primary" value="저장하기">
 							<input type="hidden" name="seq" value="${seq }">
+							</div>
 							
 				              <c:forEach var='cnt' items="${saveList}" varStatus="status">
-				              <input type="checkbox" name="check" class="check" value="${mySaveListSeq[status.index]}&${cnt.name }&${cnt.lo_detail}&${cnt.photo }">
-				                <div class="col-9 align-self-center mt-4 delParent">
+				                <div class="col-9 align-self-center mt-4 delParent border">
 				                  <div class="row">
 				                    <div class="col-4">
 				                      <a href="/area/detail?num=${mySaveListSeq[status.index]}">
@@ -192,6 +214,8 @@ li.drag-sort-active {
 				                    <div class="col-8">
 				                      <div class="row">
 				                        <div class="col-10"><a href="/area/detail?num=${mySaveListSeq[status.index]}">${cnt.name}</a>
+				                   <input type="checkbox" name="check" class="check" value="${mySaveListSeq[status.index]}&${cnt.name }&${cnt.lo_detail}&${cnt.photo }">
+				                        
 				                        </div>
 				                      </div>
 				                      <div class="row">
@@ -199,16 +223,11 @@ li.drag-sort-active {
 				                      </div>
 				
 				                      <div class="row align-items-end mb-0  h-50">
-				                        <div class="col-2">
-				                          <ul class="list-group-horizontal star p-0">
-				                            <li>평점 :&nbsp;</li>
-				                            <li>
-				                              <c:if test="${empty savedListRate[status.index]}">
+				                        <div class="col-12">
+				                            평점:${savedListRate[status.index]}
+				                             <c:if test="${empty savedListRate[status.index]}">
 				                                -
 				                              </c:if>
-				                              ${savedListRate[status.index]}
-				                            </li>
-				                          </ul>
 				                        </div>
 				                      </div>
 				                    </div>
@@ -235,10 +254,10 @@ li.drag-sort-active {
 		
 		
 		<!-- 일정 순서 -->
-		<div class="row" id="thirdForm" style="display:none;">
-			<div class="col">
+		<div class="row justify-content-center" id="thirdForm">
+			<div class="col-10 ">
 				<div class="row">
-					<div class="col-2" id="planDate">
+					<div class="col-2" id="planDate" style="height:600px;">
 						<c:if test="${!empty seq }">
 						<c:forEach var="i" items="${date }">
 							<c:set var="j" value="${j+1 }"/>
@@ -251,13 +270,20 @@ li.drag-sort-active {
 								</li>
 							</ul>
 						</c:forEach>
-							<div class="w-100" id="deletePlan" style="height:100px;">삭제</div>
+							<div class="w-100" id="deletePlan" style="height:100px;">
+								<span class="material-icons">
+									delete
+								</span>
+							</div>
 						
 						</c:if>
 					</div>
+					
 						<!-- 리스트 -->
-					<ul class="col-4 border drag-sort-enable ui-helper-reset ui-helper-clearfix" id="planList" ondragover="onDragOver(event)">
+					<div class="col-4 border" id="planShow" style="height:600px;">
+					<ul class="drag-sort-enable ui-helper-reset ui-helper-clearfix" id="planList" ondragover="onDragOver(event)">
 					</ul>
+					</div>
 					<div class="col-6" id=map style="height:600px;">
 					</div>
 				</div>
@@ -265,8 +291,18 @@ li.drag-sort-active {
 		</div>
 		
 		<div class="row" id="fourthForm" style="display:none;">
-			<div class="col">
-				메모
+			<div class="col d-flex justify-content-center">
+				<form action="/plan/insertMemo" method="post">
+					<div class="row">
+						<div class="col-12">
+							<textarea name="memo" cols=100 rows=10 placeholder="메모를 남겨주세요." required>${dto.memo }</textarea>
+							<input type="hidden" name="seq" value="${seq }">
+						</div>
+						<div class="col-12 mt-2">
+							<input type="submit" class="btn btn-primary" value="저장">
+						</div>
+					</div>	
+				</form>
 			</div>
 		</div>
 	</div>	
@@ -291,6 +327,37 @@ li.drag-sort-active {
 	</script>
 	
 	<script>
+		    //지도
+	        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			mapOption = {
+				center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+				level : 5
+			// 지도의 확대 레벨
+			};
+
+			// 지도를 생성합니다    
+			var map = new kakao.maps.Map(mapContainer, mapOption);
+			
+			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+			var mapTypeControl = new kakao.maps.MapTypeControl();
+
+			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+			// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+			map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+			var zoomControl = new kakao.maps.ZoomControl();
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+			
+			// 주소-좌표 변환 객체를 생성합니다
+			var geocoder = new kakao.maps.services.Geocoder();
+			
+			let markers = [];
+			let infowindows = [];
+				
+				
+			
+			
 	//화면 숨기기/view 처리
 		$("#firstBtn").on("click",function(){
 			if($("#firstForm").css("display")==='none'){					
@@ -380,7 +447,7 @@ li.drag-sort-active {
             	let value = "";
                 for(let i = 0; i<data.response.body.items.item.length;i++){
 			    	let sData = data.response.body.items.item[i];
-			    	value += '<div class="row border"> <div class="col"> <input type="checkbox" name="check" class="check" value="'+sData.contentid+'&'+sData.title+'&'+sData.addr1+'&'+sData.firstimage+'"> <div>'+sData.title+'</div><br> <div>'+sData.addr1+'</div><br><div> <img src="'+sData.firstimage+'" style="width:150px;height:100px;"></div> </div></div>';
+			    	value += '<div class="col-6 border ml-1 mr-1"><div> <input type="checkbox" name="check" class="check" value="'+sData.contentid+'&'+sData.title+'&'+sData.addr1+'&'+sData.firstimage+'">저장하기</div> <div class="mt-2">'+sData.title+'</div><br> <div>'+sData.addr1+'</div><br><div> <img src="'+sData.firstimage+'" style="width:150px;height:100px;"></div> </div></div>';
 	            }
                 value +='   <div class="btn-toolbar" role="toolbar" aria-label="Pagination"> <div class="btn-group me-2 mb-2" role="group" aria-label="First group">';
 				let totalPage = data.response.body.totalCount/data.response.body.numOfRows;
@@ -413,33 +480,7 @@ li.drag-sort-active {
 			url:"/plan/detailPlanList?seq=${seq}&date=${dto.startDate}",
 			dataType:"json",
 			success:function(data){
-		        //지도
-	        	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-			mapOption = {
-				center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-				level : 5
-			// 지도의 확대 레벨
-			};
-
-			// 지도를 생성합니다    
-			var map = new kakao.maps.Map(mapContainer, mapOption);
-			
-			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-			var mapTypeControl = new kakao.maps.MapTypeControl();
-
-			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-			// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-			map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-
-			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-			var zoomControl = new kakao.maps.ZoomControl();
-			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-			
-			// 주소-좌표 변환 객체를 생성합니다
-			var geocoder = new kakao.maps.services.Geocoder();
-				
-				
-				
+	
 				let result = "";
 				let positions = [];
 					for(let i = 0; i<data.length;i++){
@@ -459,13 +500,13 @@ li.drag-sort-active {
 						            map: map,
 						            position: coords
 						        });
-
+								markers.push(marker);
 						        // 인포윈도우로 장소에 대한 설명을 표시합니다
 						        var infowindow = new kakao.maps.InfoWindow({
 						            content: data[i].name
 						        });
 						        infowindow.open(map, marker);
-
+						        infowindows.push(infowindow);
 						      
 						    } 
 						});    
@@ -490,19 +531,60 @@ li.drag-sort-active {
 	
 	$(".datePick").on("click",function(){
 		let id = this.id;
-		setTimeout(function(){
 		$.ajax({
 			url:"/plan/detailPlanList?seq=${seq}&date="+id,
 			dataType:"json",
 			success:function(data){
+				for(let a = 0; a<markers.length;a++){
+					markers[a].setMap(null);
+					infowindows[a].close();
+				}
+				
 				let result = "";
+				let positions = [];
 				for(let i = 0; i<data.length;i++){
 					result += '<li class="row border mb-2 ui-widget-content ui-corner-tr" id='+data[i].seq+' dragable="true"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</li>'						
+					
+					//지도 관련
+					// 주소로 좌표를 검색합니다
+					geocoder.addressSearch(data[i].location, function(result, status) {
+
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === kakao.maps.services.Status.OK) {
+
+					        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+					        // 결과값으로 받은 위치를 마커로 표시합니다
+					        var marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords
+					        });
+							markers.push(marker);
+
+					        // 인포윈도우로 장소에 대한 설명을 표시합니다
+					        var infowindow = new kakao.maps.InfoWindow({
+					            content: data[i].name
+					        });
+					        infowindow.open(map, marker);
+					        infowindows.push(infowindow);
+					      
+					    } 
+					});   
 				}
-				$("#planList").html(result)
+				$("#planList").html(result);
+				//지도관련
+				// 주소로 좌표를 검색합니다
+				geocoder.addressSearch(data[0].location, function(result, status) {
+
+				    // 정상적으로 검색이 완료됐으면 
+				     if (status === kakao.maps.services.Status.OK) {
+				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+				        map.setCenter(coords);
+				    } 
+				});    
 			}
 		})
-		},200)
 	})
 	
 	//찜목록 더보기
@@ -517,8 +599,7 @@ li.drag-sort-active {
             let result = JSON.parse(res);
             for (let i = 0; i < result.length; i++) {
               $("#seeMoreTag").before(
-                `<input type="checkbox" name="check" class="check" value="\${result[i].seq}&\${result[i].name }&\${result[i].lo_datail}&\${result[i].photo }">
-                <div class="col-9 align-self-center mt-4 delParent">
+                `<div class="col-9 align-self-center mt-4 delParent border">
                   <div class="row">
                     <div class="col-4">
                       <a href="/area/detail?num=\${result[i].seq}">
@@ -528,19 +609,18 @@ li.drag-sort-active {
                     <div class="col-8">
                       <div class="row">
                         <div class="col-10"><a
-                            href="/area/detail?num=\${result[i].seq}">\${result[i].name}</a></div>
+                            href="/area/detail?num=\${result[i].seq}">\${result[i].name}</a>
+                            <input type="checkbox" name="check" class="check" value="\${result[i].seq}&\${result[i].name }&\${result[i].lo_datail}&\${result[i].photo }">
+                            </div>
                       </div>
                       <div class="row">
                         <div class="col">\${result[i].lo_detail}</div>
                       </div>
                       <div class="row align-items-end mb-0  h-50">
-                        <div class="col-2">
-                          <ul class="list-group-horizontal star p-0">
-                            <li>평점 :&nbsp;</li>
-                            <li>
+                        <div class="col-12">
+                            <a>평점 :
                               \${result[i].savedListRate}
-                            </li>
-                          </ul>
+                            </a>
                         </div>
                       </div>
                     </div>
