@@ -53,19 +53,24 @@
         right:200px;
         z-index:9999;
       }
-      #websocTest{
-        width:fit-content;
-        background-color:#EEEEEE;
-        position:absolute;
-        top:820px;
-        right:90px;
-        padding:7px;
-        border-radius:3px;
+      #noticeGround{
+        display:flex;
+        flex-direction: column-reverse;
+        position:fixed;
+        bottom:80px;
+        right:100px;
       }
       .websocLine{
         color:black;
         font-size:14px;
         text-decoration:none;
+      }
+      #websocTest{
+        width:fit-content;
+        background-color:#EEEEEE;
+        border-radius:3px;
+        padding:3px;
+        margin:2px;
       }
     </style>
 
@@ -189,7 +194,7 @@
       <!-- 로그인&회원가입 모달창 끝 -->
 
       <!-- Basic navbar -->
-      <header class="navbar navbar-expand-lg navbar-light" style="background-color: #2cd4c6;" id="defaultHeader">
+      <header class="navbar navbar-expand-lg navbar-light" style="background-color: #2cd4c6;">
         <div class="container">
 
           <!-- Brand -->
@@ -227,12 +232,11 @@
                 <c:choose>
                   <c:when test="${loginEmailID != null}">
                     <div id="loginAfterBox">
-                      <button type="button" class="notice" id="noticeBtn">TEST</button>
+                      <span></span><button type="button" class="notice" id="noticeBtn">TEST</button>
                       <div class="noticeList" id="noticeList" style="display: none;"></div>
                       ${loginNick} 님
                       <a href="/member/normalLogout">로그아웃</a>
                       <a href="/member/mypageGo">마이페이지</a>
-                      <button type="button" id="testBtn">웹소켓테스트</button>
                     </div>
                   </c:when>
                   <c:otherwise>
@@ -245,6 +249,10 @@
           </div>
         </div>
       </header>
+
+      <div id="noticeGround">
+
+      </div>
 
       <script>
         $("#tourboard").on("click", function () {

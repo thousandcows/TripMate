@@ -360,7 +360,7 @@ if(document.querySelector("#testBtn") != null){
     if(reaction == 'comment' && board_num == 1){
       line = `<div id='websocTest'><a href='/tourboard/detail?seq=${seq}' class='websocLine'>여행게시판 ${title} 글에 댓글이 달렸습니다.</a></div>`;
     } else if(reaction == 'comment' && board_num == 2) {
-      line = `<div id='websocTest'><a href='/companyboard/detail?seq=${seq}' class='websocLine'>동행게시판 ${title} 글에 댓글이 달렸습니다.</a></div>`;
+      line = `<div id='websocTest' style='display:inline; z-index:9999'><a href='/companyboard/detail?seq=${seq}' class='websocLine'>동행게시판 ${title} 글에 댓글이 달렸습니다.</a></div>`;
     }
 
     if(reaction == 'like' && board_num == 1){
@@ -372,8 +372,11 @@ if(document.querySelector("#testBtn") != null){
     if(reaction == 'joinTrip'){
       line = `<div id='websocTest'><a href='/companyboard/detail?seq=${seq}' class='websocLine'>동행게시판 ${title} 글에 동행 신청이 있습니다.</a></div>`;
     }
-  
-    $("#defaultHeader").after(line);
-    $("#websocTest").delay(3000).fadeOut(2000);
+
+    $("#noticeGround").prepend(line);
+    $("#websocTest").delay(3000).fadeOut(1000);
+    setTimeout(function(){
+      $("#websocTest").remove();
+    },4000);
   }
 }
