@@ -54,13 +54,18 @@
         z-index:9999;
       }
       #websocTest{
-        width:340px;
-        height:50px;
-        background-color:#008080;
+        width:fit-content;
+        background-color:#EEEEEE;
         position:absolute;
         top:820px;
         right:90px;
-        color:white;
+        padding:7px;
+        border-radius:3px;
+      }
+      .websocLine{
+        color:black;
+        font-size:14px;
+        text-decoration:none;
       }
     </style>
 

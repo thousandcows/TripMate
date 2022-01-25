@@ -351,9 +351,27 @@ if(document.querySelector("#testBtn") != null){
     ws.send("홍진규");
   });
   ws.onmessage = function(e) {
-    console.log(e);
-    let line = $("<div id='websocTest'>");
-    line.append(e.data);
+    let line;
+    const notice = JSON.parse(e.data);
+    let seq = notice.seq;
+    let title = notice.title;
+    let board_num = notice.board_num;
+    let reaction = notice.reaction;
+    if(reaction == 'comment' && board_num == 1){
+      line = `<div id='websocTest'><a href='/tourboard/detail?seq=${seq}' class='websocLine'>여행게시판 ${title} 글에 댓글이 달렸습니다.</a></div>`;
+    } else if(reaction == 'comment' && board_num == 2) {
+      line = `<div id='websocTest'><a href='/companyboard/detail?seq=${seq}' class='websocLine'>동행게시판 ${title} 글에 댓글이 달렸습니다.</a></div>`;
+    }
+
+    if(reaction == 'like' && board_num == 1){
+      line = `<div id='websocTest'><a href='/tourboard/detail?seq=${seq}' class='websocLine'>여행게시판 ${title} 글에 좋아요 반응이 있습니다.</a></div>`;
+    } else if(reaction == 'like' && board_num == 2){
+      line = `<div id='websocTest'><a href='/companyboard/detail?seq=${seq}' class='websocLine'>동행게시판 ${title} 글에 좋아요 반응이 있습니다.</a></div>`;
+    }
+
+    if(reaction == 'joinTrip'){
+      line = `<div id='websocTest'><a href='/companyboard/detail?seq=${seq}' class='websocLine'>동행게시판 ${title} 글에 동행 신청이 있습니다.</a></div>`;
+    }
   
     $("#defaultHeader").after(line);
     $("#websocTest").delay(3000).fadeOut(2000);

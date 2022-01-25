@@ -13,7 +13,10 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import com.google.gson.Gson;
+
 import kh.spring.configurator.WSConfig;
+import kh.spring.dto.ReactionDTO;
 
 @ServerEndpoint(value="/notice", configurator = WSConfig.class) // 우리가 만든 Config를 쓰게함
 public class NoticeEndpoint {
@@ -40,20 +43,18 @@ public class NoticeEndpoint {
 	// 해쉬맵으로 nick을 키로주고 세션을 밸류로 줘서 저장한 후, 이벤트 발생시 해당 키값의 세션으로 메세지를 뿌리면 실시간은 가능할거같은데 으엉ㄴㅁ어
 	@OnMessage
 	public void onMessage(String message) {
-		System.out.println("웹소켓 들어온 메세지 : " + message);
+		Gson gson = new Gson();
+		System.out.println("웹소켈 들어오는 메세지 : " + message);
+		ReactionDTO dto = gson.fromJson(message, ReactionDTO.class);
+		String ReactionTarget = dto.getNick();
 		synchronized (map) { // 동기화 (포문 도는 중간에 한명이 나가버리면 예외발생해서 그걸 막음)
-			System.out.println("맵 사이즈 : " + map.size());
 			for (Map.Entry<String, Session> entry : map.entrySet()) {
 				String nick = entry.getKey();
-				System.out.println("포문도는 닉 : " + nick);
-				if(nick.equals(message)) {
-					System.out.println("닉일치");
+				if(nick.equals(ReactionTarget)) {
 					try {
-						entry.getValue().getBasicRemote().sendText("하이바이마마아아낭늠아음나앚ㅂ더ㅏㄴ어나ㅓ아ㅓㄴ");
-						System.out.println("보냄");
+						entry.getValue().getBasicRemote().sendText(gson.toJson(dto));
 						break;
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
