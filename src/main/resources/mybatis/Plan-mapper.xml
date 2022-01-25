@@ -60,4 +60,12 @@
 	<update id="sortPlan">
 		update detail_plan set seq = #{firstSeq} where seq = #{secondSeq}
 	</update>
+	
+	<update id="sortDatePlan">
+		update detail_plan set plan_date = #{day} where seq = #{seq}
+	</update>
+	
+	<delete id="deletePlan">
+		delete from detail_plan where seq = #{seq}
+	</delete>
 </mapper> 

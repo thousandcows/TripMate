@@ -117,6 +117,14 @@ public class PlanService {
 	public void sortPlan(int[] target) {
 		int[] tmp = target.clone();
 		Arrays.sort(tmp);
+		for(int a : target) {
+			System.out.print(a+ " ");
+		}
+		System.out.println();
+		for(int b : tmp) {
+			System.out.print(b+ " ");
+		}
+		System.out.println();
 		for(int i = 0; i<target.length;i++) {
 			if(tmp[i] != target[i]) {
 				int t = dao.sortZero(tmp[i]);
@@ -124,5 +132,13 @@ public class PlanService {
 				dao.sortPlan(target[i],t);
 			}
 		}
+	}
+	
+	public void sortDatePlan(int seq, String day) {
+		dao.sortDatePlan(seq,day);
+	}
+	
+	public void deletePlan(int seq) {
+		dao.deletePlan(seq);
 	}
 }
