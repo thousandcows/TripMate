@@ -59,6 +59,11 @@ public class TourBoardService {
 		return bdao.modify(seq, title, contents, category);
 	}
 	
+	public int noticeModify(int seq, String title, String contents) {
+		
+		return bdao.noticeModify(seq, title, contents);
+	}
+	
 	public int delete(int seq) {
 		
 		rdao.deleteAllRe(seq);

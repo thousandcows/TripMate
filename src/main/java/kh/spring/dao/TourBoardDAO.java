@@ -81,6 +81,16 @@ public class TourBoardDAO {
 
 		return mybatis.update("TourBoard.modify", map);
 	}
+	
+	public int noticeModify(int seq, String title, String contents) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("title",  title);
+		map.put("contents", contents);
+		map.put("seq", String.valueOf(seq));
+		
+		return mybatis.update("TourBoard.noticeModify", map);
+	}
 
 	public int delete(int seq) {
 
