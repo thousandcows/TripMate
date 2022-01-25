@@ -17,7 +17,6 @@ public class ComReplyService {
 	
 	public int reply(int rseq, String reply, String nick, int mem_seq) {
 
-		System.out.println("서비스 nick : " + nick + "mem_seq : " + mem_seq);
 		return rdao.insert(rseq, reply, nick, mem_seq);
 	}
 	

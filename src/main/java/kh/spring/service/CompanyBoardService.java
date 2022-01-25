@@ -96,8 +96,6 @@ public class CompanyBoardService {
 	public int getPageTotalCount(String searchOption, String searchText) throws Exception{
 
 		int recordTotalCount = cdao.getRecordCount(searchOption, searchText);
-		System.out.println("service 에서 recordTotalCount: " + recordTotalCount);
-		System.out.println("service 에서 searchOption, searchText: " + searchOption + " : " +  searchText);
 
 		int pageTotalCount = 0;
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+    
+  <mapper namespace="Dashboard">
+ 
+ 		<!-- 일별 신규 가입자 수 -->
+ 		<select id="CntSignupDaily">
+ 			select count(*) as cnt 
+				from member 
+				where to_char (signup_date, 'YYYYMMDD') = to_char(sysdate, 'YYYYMMDD')
+ 		</select>
+ 		
+ 		<!-- 월별 신규 가입자 수 -->
+ 		<select id="CntSignupMonthly">
+ 			select TO_CHAR(signup_date, 'YYYYMM') as signup_date, count(*) as cnt 
+				from member 
+				where to_char (signup_date, 'YYYYMM') = to_char(sysdate, 'YYYYMM')
+				group by to_char(signup_date, 'YYYYMM')
+ 		</select>
+ 		
+ 		<!-- 회원 성별 그룹화 -->
+ 		<select id="CntByGender">
+ 			select gender, count(*) as cnt from member group by gender
+ 		</select>
+ 		
+ 		<!--  여행게시판 글 수 -->
+ 		<select id="CntByTour">
+ 		    select count(*) as cnt from tour_board
+ 		</select>
+ 		
+ 		<!--  동행게시판 글 수 -->
+ 		<select id="CntByCompany">
+ 			select count(*) as cnt from company_board
+ 		</select>
+ 		
+ 		<!--  계획 글 수  -->
+ 		<select id="CntByPlan">
+ 			select count(*) as cnt from plan
+ 		</select>
+ 		
+ 		<!--  Dashboard 테이블에 데이터 삽입 : 일단 방문객은 보류(수요일날 개발)-->
+  </mapper>
