@@ -368,7 +368,15 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "reactionInserter", produces = "application/text;charset=utf-8")
 	public void reactionInserter(String reaction) {
-		memberService.insertReaction(reaction);
+		String loginNick = (String) session.getAttribute("loginNick");
+		memberService.insertReaction(reaction, loginNick);
+	}
+	
+	// 알림 삭제
+	@ResponseBody
+	@RequestMapping(value = "reactionRemove", produces = "application/text;charset=utf-8")
+	public void reactionRemove() {
+		memberService.reactionRemove((String) session.getAttribute("loginNick"));
 	}
 
 	// 에러는 여기로

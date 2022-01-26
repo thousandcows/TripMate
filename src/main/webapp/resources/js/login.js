@@ -28,7 +28,7 @@ if (eventCheck != null) {
           document.querySelector(".emailConfirm").innerHTML = "사용 가능한 이메일입니다.";
           emailSubmitCheck = true;
         }
-      })
+      });
     } else {
       document.querySelector(".emailConfirm").style.color = "red";
       document.querySelector(".emailConfirm").innerHTML = "이메일 양식을 확인해주세요.";
@@ -53,7 +53,7 @@ if (eventCheck != null) {
           document.querySelector(".nickNameConfirm").innerHTML = "사용 가능한 닉네임입니다.";
           nickNameSubmitCheck = true;
         }
-      })
+      });
     } else {
       document.querySelector(".nickNameConfirm").style.color = "red";
       document.querySelector(".nickNameConfirm").innerHTML = "완성된 한글, 영문, 숫자를 포함한 8글자 이내";
@@ -82,7 +82,7 @@ if (eventCheck != null) {
           document.querySelector(".phoneConfirm").innerHTML = "사용가능한 번호입니다.";
           phoneSubmitCheck = true;
         }
-      })
+      });
     } else {
       document.querySelector(".phoneConfirm").style.color = "red";
       document.querySelector(".phoneConfirm").innerHTML = "유효한 번호를 입력해주세요.";
@@ -146,7 +146,7 @@ if (eventCheck != null) {
           document.querySelector(".emailConfirm").innerHTML = "사용 가능한 이메일입니다.";
           emailSubmitCheck = true;
         }
-      })
+      });
     } else {
       document.querySelector(".emailConfirm").style.color = "red";
       document.querySelector(".emailConfirm").innerHTML = "이메일 양식을 확인해주세요.";
@@ -170,7 +170,7 @@ if (eventCheck != null) {
           document.querySelector(".nickNameConfirm").innerHTML = "사용 가능한 닉네임입니다.";
           nickNameSubmitCheck = true;
         }
-      })
+      });
     } else {
       document.querySelector(".nickNameConfirm").style.color = "red";
       document.querySelector(".nickNameConfirm").innerHTML = "완성된 한글, 영문, 숫자를 포함한 8글자 이내";
@@ -198,7 +198,7 @@ if (eventCheck != null) {
           document.querySelector(".phoneConfirm").innerHTML = "사용가능한 번호입니다.";
           phoneSubmitCheck = true;
         }
-      })
+      });
     } else {
       document.querySelector(".phoneConfirm").style.color = "red";
       document.querySelector(".phoneConfirm").innerHTML = "유효한 번호를 입력해주세요.";
@@ -302,7 +302,7 @@ if (eventCheck != null) {
         verificationCode = res;
         console.log(verificationCode);
       }
-    })
+    });
   });
 
   // 비밀번호 인증코드 확인
@@ -337,13 +337,29 @@ if (eventCheck != null) {
 }
 
 // 알림창 토글
-if(document.querySelector("#noticeBtn") != null){
-  document.querySelector("#noticeBtn").addEventListener("click", () => {
-    if(document.querySelector("#noticeList").style.display == "none"){
-      document.querySelector("#noticeList").style.display = "block"
+if(document.querySelector("#noticeListBtn") != null){
+  document.querySelector("#noticeListBtn").addEventListener("click", () => {
+    if(document.querySelector("#noticeListBox").style.display == "none"){
+      document.querySelector("#noticeListBox").style.display = "block"
     } else {
-      document.querySelector("#noticeList").style.display = "none";
+      document.querySelector("#noticeListBox").style.display = "none";
     }
+  });
+}
+if(document.querySelector("#noticeListBoxCloseBtn") != null){
+  document.querySelector("#noticeListBoxCloseBtn").addEventListener("click", () => {
+    document.querySelector("#noticeListBox").style.display = "none";
+  });
+}
+
+// 기존 알림 삭제
+if(document.querySelector("#noticeListRemoveBtn") != null){
+  document.querySelector("#noticeListRemoveBtn").addEventListener("click", () => {
+    $.ajax({
+      url: "/member/reactionRemove"
+    }).done(function(){
+      document.querySelector("#noticeListBoxIn").style.visibility = "hidden";
+    });
   });
 }
 

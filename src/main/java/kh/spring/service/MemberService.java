@@ -21,6 +21,7 @@ import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MyPostDTO;
 import kh.spring.dto.MyPostDelListDTO;
 import kh.spring.dto.ReactionDTO;
+import kh.spring.dto.ReactionsDTO;
 import kh.spring.statics.Statics;
 import kh.spring.utils.EncryptUtils;
 
@@ -328,9 +329,23 @@ public class MemberService {
 		return "1";
 	}
 	
-	public int insertReaction(String reaction) {
+	// 알림 저장
+	public int insertReaction(String reaction, String loginNick) {
 		ReactionDTO dto = gson.fromJson(reaction, ReactionDTO.class);
-		return memberDao.insertReaction(dto);
+		if(!loginNick.equals(dto.getNick())) {
+			return memberDao.insertReaction(dto);
+		}
+		return 2;
+	}
+	
+	// 알림 가져오기
+	public List<ReactionsDTO> selectReactions(String nick){
+		return memberDao.selectReactions(nick);
+	}
+	
+	// 알림 삭제
+	public int reactionRemove(String nick) {
+		return memberDao.reactionRemove(nick);
 	}
 
 }

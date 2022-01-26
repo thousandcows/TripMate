@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class ReactionAdvisor {
 	
-	
+	// 횡당관심사 안써도 될듯 혹시모르니 추후 삭제
 	
 }

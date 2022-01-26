@@ -107,4 +107,13 @@
 	<insert id="insertReaction">
 		insert into reactions values(#{seq}, #{title}, #{nick}, #{board_num}, #{reaction}, #{reactioner}, default)
 	</insert>
+	
+	<select id="selectReactions" resultType="kh.spring.dto.ReactionsDTO">
+		select * from (select reactions.*, row_number() over(order by time desc)rn from reactions where nick = #{value}) where rn between 1 and 7
+	</select>
+	
+	<delete id="reactionRemove">
+		delete from reactions where nick = #{value}
+	</delete>
+	
 </mapper>

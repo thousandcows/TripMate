@@ -1,5 +1,7 @@
 package kh.spring.interceptor;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -8,12 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import kh.spring.dto.SavedDTO;
+import kh.spring.dto.ReactionsDTO;
+import kh.spring.service.MemberService;
 
 public class Interceptor implements HandlerInterceptor{
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -33,10 +39,14 @@ public class Interceptor implements HandlerInterceptor{
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		
-//		System.out.println("add 이전 : " + modelAndView);
-		// 테스트 객체
-//		SavedDTO dto = new SavedDTO(1, 2, 3);
-		
+		if(session.getAttribute("loginNick") != null) {
+			String nick = (String) session.getAttribute("loginNick");
+			System.out.println("인터셉터 닉네임 : " + nick);
+			List<ReactionsDTO> reactions = memberService.selectReactions(nick);
+			if(reactions.size() != 0 && modelAndView != null) {
+				modelAndView.getModel().put("reactions", reactions);
+			}
+		}
 		// 1번시도
 //		if(modelAndView != null) {
 //			modelAndView.getModel().put("testPost", dto); // null에 점찍으면 에러남
@@ -46,8 +56,6 @@ public class Interceptor implements HandlerInterceptor{
 		// 3번시도
 //		modelAndView.addObject("testPost", dto);
 //		modelAndView.setViewName(modelAndView.getViewName());
-//		System.out.println("add 이후 : " + modelAndView);
-		
 		
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}
