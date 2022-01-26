@@ -368,7 +368,6 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "reactionInserter", produces = "application/text;charset=utf-8")
 	public void reactionInserter(String reaction) {
-		System.out.println("컨트롤러 리액션 : " + reaction);
 		memberService.insertReaction(reaction);
 	}
 

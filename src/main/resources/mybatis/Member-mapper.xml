@@ -105,6 +105,6 @@
 	</select>
 	
 	<insert id="insertReaction">
-		insert into reactions values(#{seq}, #{title}, #{nick}, #{board_num}, #{reaction}, default)
+		insert into reactions values(#{seq}, #{title}, #{nick}, #{board_num}, #{reaction}, #{reactioner}, default)
 	</insert>
 </mapper>

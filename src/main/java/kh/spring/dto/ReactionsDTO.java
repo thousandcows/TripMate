@@ -8,6 +8,7 @@ public class ReactionsDTO {
 	private String nick;
 	private int board_num;
 	private String reaction;
+	private String reactioner;
 	private Date time;
 	public int getSeq() {
 		return seq;
@@ -39,6 +40,12 @@ public class ReactionsDTO {
 	public void setReaction(String reaction) {
 		this.reaction = reaction;
 	}
+	public String getReactioner() {
+		return reactioner;
+	}
+	public void setReactioner(String reactioner) {
+		this.reactioner = reactioner;
+	}
 	public Date getTime() {
 		return time;
 	}
@@ -49,13 +56,15 @@ public class ReactionsDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ReactionsDTO(int seq, String title, String nick, int board_num, String reaction, Date time) {
+	public ReactionsDTO(int seq, String title, String nick, int board_num, String reaction, String reactioner,
+			Date time) {
 		super();
 		this.seq = seq;
 		this.title = title;
 		this.nick = nick;
 		this.board_num = board_num;
 		this.reaction = reaction;
+		this.reactioner = reactioner;
 		this.time = time;
 	}
 	

@@ -159,7 +159,6 @@ public class MemberDAO {
 	
 	// 리액션 인서터
 	public int insertReaction(ReactionDTO dto) {
-		System.out.println("dao 들어오는 리액션 : " + dto.getNick());
 		return mybatis.insert("Member.insertReaction", dto);
 	}
 

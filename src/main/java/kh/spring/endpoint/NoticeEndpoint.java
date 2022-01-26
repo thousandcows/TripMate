@@ -44,10 +44,11 @@ public class NoticeEndpoint {
 		Gson gson = new Gson();
 		ReactionDTO dto = gson.fromJson(message, ReactionDTO.class);
 		String ReactionTarget = dto.getNick();
+		String Reactioner = dto.getReactioner();
 		synchronized (map) { // 동기화 (포문 도는 중간에 한명이 나가버리면 예외발생해서 그걸 막음)
 			for (Map.Entry<String, Session> entry : map.entrySet()) {
 				String nick = entry.getKey();
-				if (nick.equals(ReactionTarget)) {
+				if (nick.equals(ReactionTarget) && !ReactionTarget.equals(Reactioner)) {
 					try {
 						entry.getValue().getBasicRemote().sendText(gson.toJson(dto));
 						break;

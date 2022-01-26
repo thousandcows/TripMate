@@ -573,6 +573,7 @@
 		wsObj.title = "${dto.title}";
 		wsObj.nick = "${dto.nick}";
 		wsObj.board_num = "${dto.board_num}";
+		wsObj.reactioner = "${loginNick}";
 	</script>
    <script>
    $(document).on("click",".rep_writer",function(){
@@ -687,6 +688,10 @@
 	 			if(answer){
 					wsObj.reaction = 'comment';
 					ws.send(JSON.stringify(wsObj));
+					$.ajax({
+						url: "/member/reactionInserter",
+						data: {reaction: JSON.stringify(wsObj)}
+					});
 	 				$("#frmReply").submit();
 	 			}else{
 	 				$("#rep_con").val("");
@@ -951,6 +956,10 @@
                 if(heart==1) {
 										wsObj.reaction = 'like';
 										ws.send(JSON.stringify(wsObj));
+										$.ajax({
+											url: "/member/reactionInserter",
+											data: {reaction: JSON.stringify(wsObj)}
+										});
                     $('#heart').prop("src","/images/like.png");
                     $("#rec_count").html(" " + data.likeCount);
                 }
@@ -979,6 +988,10 @@
         			alert("참가여부는 모집마감 글 하단 참가자 리스트에서 확인 가능합니다.");
 							wsObj.reaction = 'joinTrip';
 							ws.send(JSON.stringify(wsObj));
+							$.ajax({
+								url: "/member/reactionInserter",
+								data: {reaction: JSON.stringify(wsObj)}
+							});
         			location.href="/companyboard/attend?seq=${dto.seq}"; 
         	}
     		
