@@ -63,7 +63,7 @@ public class CompanyBoardController {
 			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
 			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
 			
-			List<CompanyBoardDTO> list = cbs.selectAll(start, end, null, null);			
+			List<CompanyBoardDTO> list = cbs.selectAll(start, end, null, null);
 			String navi = cbs.getPageNavi(currentPage, searchOption, searchText);
 			
 			String nick = (String) session.getAttribute("loginNick");

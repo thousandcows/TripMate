@@ -25,6 +25,10 @@
     
 <!-- chart.js cdn -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 <body id="page-top">
@@ -111,7 +115,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
                         <h1 class="h1 mb-0 text-gray-900 font-weight-bold">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-sync-alt fa-sm text-white-100"></i>&nbspRefresh</a>
+                        <a id="refresh" href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-sync-alt fa-sm text-white-100"></i>&nbspRefresh</a>
                     </div>
 
                     <!-- 그래프 : 방문자수-일자별(그래프), 방문자수-주간별(그래프) -->
@@ -125,7 +129,7 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div>
-  									<canvas id="visitors_daily"></canvas>
+  									<%-- <canvas id="visitors_daily"></canvas> --%>
 								</div>
                             </div>
                         </div>
@@ -139,7 +143,7 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div>
-  									<canvas id="visitors_monthly"></canvas>
+  									<%-- <canvas id="visitors_monthly"></canvas> --%>
 								</div>
                             </div>
                         </div>
@@ -156,7 +160,7 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div>
-  									<canvas id="newmem_daily" style="display: block; height: 350px;" ></canvas>
+  									<canvas id="line-chart"></canvas>
 								</div>
                             </div>
                         </div>
@@ -170,7 +174,7 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div>
-  									<canvas id="newmem_monthly" style="display: block; height: 350px;" ></canvas>
+  									<%-- <canvas id="newmem_monthly" style="display: block; height: 350px;" ></canvas> --%>
 								</div>
                             </div>
                         </div>
@@ -181,23 +185,7 @@
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-dark">Member Gender</h6>
                                 </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="mem_gender"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -213,7 +201,7 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div>
-  									<canvas id="newmem_daily"></canvas>
+  									<canvas id="line-chart2"></canvas>
 								</div>
                             </div>
                         </div>
@@ -227,7 +215,7 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div>
-  									<canvas id="newmem_monthly"></canvas>
+  									<canvas id="line-chart3"></canvas>
 								</div>
                             </div>
                         </div>
@@ -239,22 +227,9 @@
                                     <h6 class="m-0 font-weight-bold text-dark">Plan Post Count(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="mem_gender"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                                    </div>
-                                </div>
+                                <div>
+  									<canvas id="line-chart4"></canvas>
+								</div>
                             </div>
                         </div>
                     </div>
@@ -305,71 +280,233 @@
     <script src="/js/demo/chart-area-demo.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
     
-    <!-- chart : 일간 가입자수 -->
+    
+    <!--  refresh 버튼 누를 때 dashboard db셋팅 -->
+    <!--  또다른 방법은 그냥 페이지 새로고침 할때마다 하도록 해도됨! -->
     <script>
-    var ctx = document.getElementById('newmem_daily');
-	  
-	var config = {
-		type: 'line',
-		data: {
-			labels: [ // Date Objects
-				'data1',
-				'data2',
-				'data3',
-				'data4',
-				'data5',
-				'data6',
-				'data7'
-			],
-			datasets: [{
-				label: 'My First dataset',
-				backgroundColor: 'rgba(75, 192, 192, 1)',
-				borderColor: 'rgba(75, 192, 192, 1)',
-				fill: false,
-				data: [
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50)
-				],
-			}, {
-				label: 'My Second dataset',
-				backgroundColor: 'rgba(255, 99, 132, 1)',
-				borderColor: 'rgba(255, 99, 132, 1)',
-				fill: false,
-				data: [
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50),
-					Math.floor(Math.random() * 50)
-				],
-			}]
-		},
-		options: {
-			maintainAspectRatio: false,
-			title: {
-				text: 'Chart.js Time Scale'
-			},
-			scales: {
-				yAxes: [{
-					scaleLabel: {
-						display: true,
-						labelString: 'sign up'
-					}
-				}]
-			},
-		}
-	};
-	 
-	//차트 그리기
-	var myChart = new Chart(ctx, config);
+    	$("#refresh").on("click", function(){
+    		location.href="/dashboard/insertTable";
+    	})
     </script>
+    
+
+     <!-- chart : 일간 가입자수 -->
+     <script>
+
+		$(document).ready(function() {
+			getGraph();
+		});
+
+		function getGraph() {
+			let timeList = [];
+			let posList = [];
+			
+			$.ajax({
+				url : '/dashboard/newMemDaily',
+				type : 'POST',
+				dataType : 'json',
+				success : function(data) {
+				// console.log(data[0].pos_count);
+				// 그래프로 나타낼 자료 리스트에 담기
+				for (let i = 0; i < data.length; i++) {
+						timeList.push(data[i].stan_date);
+						posList.push(data[i].user_n);
+				}
+				console.log(timeList);
+				console.log(posList);  	
+				// 그래프
+				new Chart(
+						document.getElementById("line-chart"),
+				{
+						type : 'line',
+						data : {
+								labels : timeList, // X축 
+								datasets : [ {
+										data : posList, // 값
+										label : "new member",
+										borderColor : "green",
+										fill : false
+										} ]
+								},
+						options : {
+								title : {
+										display : true,
+										text : '일별 신규 가입자'
+									}
+								}
+						}); //그래프
+				},
+				error : function() {
+						alert("실패");
+				}
+
+			})
+		}
+	</script>
+	
+	<!-- chart : 여행 게시판 글 수 -->
+     <script>
+
+		$(document).ready(function() {
+			getGraph2();
+		});
+
+		function getGraph2() {
+			let timeList = [];
+			let posList = [];
+			
+			$.ajax({
+				url : '/dashboard/tourDaily',
+				type : 'POST',
+				dataType : 'json',
+				success : function(data) {
+				// console.log(data[0].pos_count);
+				// 그래프로 나타낼 자료 리스트에 담기
+				for (let i = 0; i < data.length; i++) {
+						timeList.push(data[i].stan_date);
+						posList.push(data[i].tour_board);
+				}
+				console.log(timeList);
+				console.log(posList);  	
+				// 그래프
+				new Chart(
+						document.getElementById("line-chart2"),
+				{
+						type : 'line',
+						data : {
+								labels : timeList, // X축 
+								datasets : [ {
+										data : posList, // 값
+										label : "new tour board post",
+										borderColor : "green",
+										fill : false
+										} ]
+								},
+						options : {
+								title : {
+										display : true,
+										text : '여행게시판 글 수'
+									}
+								}
+						}); //그래프
+				},
+				error : function() {
+						alert("실패");
+				}
+
+			})
+		}
+	</script>
+	
+	<!-- chart : 여행 게시판 글 수 -->
+     <script>
+
+		$(document).ready(function() {
+			getGraph3();
+		});
+
+		function getGraph3() {
+			let timeList = [];
+			let posList = [];
+			
+			$.ajax({
+				url : '/dashboard/comDaily',
+				type : 'POST',
+				dataType : 'json',
+				success : function(data) {
+				// console.log(data[0].pos_count);
+				// 그래프로 나타낼 자료 리스트에 담기
+				for (let i = 0; i < data.length; i++) {
+						timeList.push(data[i].stan_date);
+						posList.push(data[i].com_board);
+				}
+				console.log(timeList);
+				console.log(posList);  	
+				// 그래프
+				new Chart(
+						document.getElementById("line-chart3"),
+				{
+						type : 'line',
+						data : {
+								labels : timeList, // X축 
+								datasets : [ {
+										data : posList, // 값
+										label : "new accompany board post",
+										borderColor : "green",
+										fill : false
+										} ]
+								},
+						options : {
+								title : {
+										display : true,
+										text : '동행게시판 글 수'
+									}
+								}
+						}); //그래프
+				},
+				error : function() {
+						alert("실패");
+				}
+
+			})
+		}
+	</script>
+	
+	<!-- chart : 여행 게시판 글 수 -->
+     <script>
+
+		$(document).ready(function() {
+			getGraph4();
+		});
+
+		function getGraph4() {
+			let timeList = [];
+			let posList = [];
+			
+			$.ajax({
+				url : '/dashboard/planDaily',
+				type : 'POST',
+				dataType : 'json',
+				success : function(data) {
+				// console.log(data[0].pos_count);
+				// 그래프로 나타낼 자료 리스트에 담기
+				for (let i = 0; i < data.length; i++) {
+						timeList.push(data[i].stan_date);
+						posList.push(data[i].plan);
+				}
+				console.log(timeList);
+				console.log(posList);  	
+				// 그래프
+				new Chart(
+						document.getElementById("line-chart4"),
+				{
+						type : 'line',
+						data : {
+								labels : timeList, // X축 
+								datasets : [ {
+										data : posList, // 값
+										label : "new plan post",
+										borderColor : "green",
+										fill : false
+										} ]
+								},
+						options : {
+								title : {
+										display : true,
+										text : '여행계획 글 수'
+									}
+								}
+						}); //그래프
+				},
+				error : function() {
+						alert("실패");
+				}
+
+			})
+		}
+	</script>
+    
+   
 		
 </body>
 </html>

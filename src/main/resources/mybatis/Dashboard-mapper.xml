@@ -5,41 +5,42 @@
   
     
   <mapper namespace="Dashboard">
- 
- 		<!-- 일별 신규 가입자 수 -->
- 		<select id="CntSignupDaily">
- 			select count(*) as cnt 
-				from member 
-				where to_char (signup_date, 'YYYYMMDD') = to_char(sysdate, 'YYYYMMDD')
- 		</select>
+	
+	<select id="joinTable" resultType="kh.spring.dto.DashboardDTO">
+		select 
+    		u.stan_date, 
+    		nvl(u.user_n,0) as user_n,
+    		nvl(p.plan,0) as plan,
+    		nvl(t.tour_board,0) as tour_board,
+    		nvl(c.com_board,0) as com_board
+		from (select to_char(signup_date, 'YYYYMMDD') as stan_date, count(*) as user_n from member 
+            	where to_char(signup_date, 'YYYYMMDD') <![CDATA[ >= ]]> '20220125' and to_char(signup_date, 'YYYYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYYYMMDD')
+            	group by to_char(signup_date, 'YYYYMMDD')) u 
+    	full outer join(select to_char(writen_date, 'YYYYMMDD') as stan_date, count(*) as plan from plan
+                where to_char(writen_date, 'YYYYMMDD') <![CDATA[ >= ]]> '20220125' and to_char(writen_date, 'YYYYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYYYMMDD')
+                group by to_char(writen_date, 'YYYYMMDD')) p
+        	on(u.stan_date = p.stan_date)
+    	full outer join  (select to_char(writen_date, 'YYYYMMDD') as stan_date, count(*) as tour_board from tour_board
+                where to_char(writen_date, 'YYYYMMDD') <![CDATA[ >= ]]> '20220125' and to_char(writen_date, 'YYYYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYYYMMDD')
+                group by to_char(writen_date, 'YYYYMMDD')) t
+        	on(u.stan_date = t.stan_date)
+    	full outer join (select to_char(writen_date, 'YYYYMMDD') as stan_date, count(*) as com_board from company_board
+                where to_char(writen_date, 'YYYYMMDD') <![CDATA[ >= ]]> '20220125' and to_char(writen_date, 'YYYYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYYYMMDD')
+                group by to_char(writen_date, 'YYYYMMDD')) c
+        	on(u.stan_date = c.stan_date)
+			order by u.stan_date asc		
+	</select>
+	
+	<insert id="insertTable">
+		insert into dashboard values(${stan_date}, ${visitor}, ${user_n}, ${plan}, ${tour_board}, ${com_board})
+	</insert>
+	
+	<select id="selectAllDash" resultType="kh.spring.dto.DashboardDTO">
+		select * from dashboard
+	</select>
+	
+	<delete id ="deleteTable">
+		delete from dashboard
+	</delete>
  		
- 		<!-- 월별 신규 가입자 수 -->
- 		<select id="CntSignupMonthly">
- 			select TO_CHAR(signup_date, 'YYYYMM') as signup_date, count(*) as cnt 
-				from member 
-				where to_char (signup_date, 'YYYYMM') = to_char(sysdate, 'YYYYMM')
-				group by to_char(signup_date, 'YYYYMM')
- 		</select>
- 		
- 		<!-- 회원 성별 그룹화 -->
- 		<select id="CntByGender">
- 			select gender, count(*) as cnt from member group by gender
- 		</select>
- 		
- 		<!--  여행게시판 글 수 -->
- 		<select id="CntByTour">
- 		    select count(*) as cnt from tour_board
- 		</select>
- 		
- 		<!--  동행게시판 글 수 -->
- 		<select id="CntByCompany">
- 			select count(*) as cnt from company_board
- 		</select>
- 		
- 		<!--  계획 글 수  -->
- 		<select id="CntByPlan">
- 			select count(*) as cnt from plan
- 		</select>
- 		
- 		<!--  Dashboard 테이블에 데이터 삽입 : 일단 방문객은 보류(수요일날 개발)-->
   </mapper>

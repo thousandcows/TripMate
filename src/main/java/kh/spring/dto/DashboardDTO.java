@@ -1,21 +1,31 @@
 package kh.spring.dto;
 
-import java.sql.Date;
 
 public class DashboardDTO {
 
-	private Date date; 
+	private String stan_date; 
 	private int visitor;
 	private int user_n;
 	private int plan;
 	private int tour_board;
 	private int com_board;
-	
-	public Date getDate() {
-		return date;
+	public DashboardDTO(String stan_date, int visitor, int user_n, int plan, int tour_board, int com_board) {
+		super();
+		this.stan_date = stan_date;
+		this.visitor = visitor;
+		this.user_n = user_n;
+		this.plan = plan;
+		this.tour_board = tour_board;
+		this.com_board = com_board;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public DashboardDTO() {
+		super();
+	}
+	public String getStan_date() {
+		return stan_date;
+	}
+	public void setStan_date(String stan_date) {
+		this.stan_date = stan_date;
 	}
 	public int getVisitor() {
 		return visitor;
@@ -47,16 +57,14 @@ public class DashboardDTO {
 	public void setCom_board(int com_board) {
 		this.com_board = com_board;
 	}
-	public DashboardDTO() {
-	}
-	public DashboardDTO(Date date, int visitor, int user_n, int plan, int tour_board, int com_board) {
-		this.date = date;
-		this.visitor = visitor;
-		this.user_n = user_n;
-		this.plan = plan;
-		this.tour_board = tour_board;
-		this.com_board = com_board;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
