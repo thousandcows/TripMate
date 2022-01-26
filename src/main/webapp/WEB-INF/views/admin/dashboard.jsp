@@ -128,8 +128,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                NEW MEMBER (DAILY)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">??</div>
+                                                MEMBER (DAILY)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${cntMember}</div>
                                         </div>
                                         <div class="col-auto">
                                         	<i class="fas fa-user-alt fa-2x text-gray-300"></i>
@@ -163,18 +163,11 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Posts
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">??</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -193,68 +186,65 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                VISITORS</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">??</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        	<i class="far fa-eye fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="row">
+
+                        <!-- Area Chart -->
+                        <div class="col-xl-6">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Number of Visitors(Daily)</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="myAreaChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         
-                   	<div class="row">   
-                    	<div class="col-xl-6">
-						<div class="col-xl-12">
-                            <div class="card border-bottom-primary shadow mb-4">
+                        <!-- Area Chart -->
+                        <div class="col-xl-6">
+                            <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Number of Visitors(Daily)</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">New Member(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
-                                <div></div>
-                            </div>
-                        </div>
-                    
-                    <!--  신규회원수 카운트-->
-						<div class="col-xl-12">
-                            <div class="card border-bottom-info shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">New Member(Daily)</h6>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="line-chart"></canvas>
+                                    </div>
                                 </div>
-                                <!-- Card Body -->
-                                <div></div>
                             </div>
                         </div>
-                    
-                    <!-- 글 수 카운트 -->
-                    	<div class="col-xl-12">
-                            <div class="card border-bottom-info shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">New Member(Daily)</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div></div>
-                            </div>
-                        </div>    
-                        </div>
+                        
                     </div>
-                    
+                        
+                   	
                     <!-- 여행, 동행, 계획 글 수 -->
                     <div class="row">
-						<div class="col-xl-4">
-                            <div class="card border-bottom-warning shadow mb-4">
+						<div class="col-xl-6">
+                            <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Tour board Post Count(Daily)</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Tour board Post Count(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div>
@@ -263,12 +253,12 @@
                             </div>
                         </div>
                         
-                        <div class="col-xl-4">
-                            <div class="card border-bottom-warning shadow mb-4">
+                        <div class="col-xl-6">
+                            <div class="card  shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Accompany board Post Count(Daily)</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Accompany board Post Count(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div>
@@ -276,12 +266,14 @@
 								</div>
                             </div>
                         </div>
-                        	
-                        <div class="col-xl-4">
-                            <div class="card  border-bottom-warning  shadow mb-4">
+                    </div>
+                    
+                    <div class="row">
+						<div class="col-xl-6">
+                            <div class="card   shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Plan Post Count(Daily)</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Plan Post Count(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div>
@@ -289,9 +281,9 @@
 								</div>
                             </div>
                         </div>
-                    </div>
                         
-
+                        
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -339,11 +331,17 @@
     
     
     <!--  refresh 버튼 누를 때 dashboard db셋팅 -->
-    <!--  또다른 방법은 그냥 페이지 새로고침 할때마다 하도록 해도됨! -->
     <script>
     	$("#refresh").on("click", function(){
     		location.href="/dashboard/insertTable";
     	})
+    </script>
+    
+    <!--  또다른 방법은 그냥 페이지 새로고침 할때마다 하도록 해도됨! -->
+    <script>
+/*      	$(document).ready(function() {
+    		location.href="/dashboard/insertTable";
+		});  */
     </script>
     
 

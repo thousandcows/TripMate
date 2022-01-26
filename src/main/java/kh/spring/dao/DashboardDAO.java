@@ -29,6 +29,10 @@ public class DashboardDAO {
 	public int deleteTable() {
 		return mybatis.delete("Dashboard.deleteTable");
 	}
+	
+	public int cntMember() {
+		return mybatis.selectOne("Dashboard.cntMember");
+	}
 
 
 }

@@ -29,6 +29,10 @@ public class DashboardService {
 	public int deleteTable() {
 		return ddao.deleteTable();
 	}
+	
+	public int cntMember() {
+		return ddao.cntMember();
+	}
 
 
 }

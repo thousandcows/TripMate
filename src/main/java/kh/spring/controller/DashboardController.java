@@ -21,7 +21,7 @@ public class DashboardController {
 	private DashboardService ds;
 
 	@RequestMapping("insertTable")
-	public String insertTable() throws Exception {
+	public String insertTable(Model model) throws Exception {
 
 		List<DashboardDTO> dlist = ds.joinTable();
 		ds.deleteTable();
@@ -29,7 +29,19 @@ public class DashboardController {
 			ds.insertTable(dlist.get(i));
 		}
 
-		return "redirect:/admin/dashboard";
+		// 일간 가입자수 : 현재 가입자(증감량)
+		
+		  int cntMember = ds.cntMember(); 
+		  model.addAttribute("cntMember", cntMember);
+		 
+		
+		// 회원 탈퇴수 : -(오늘자 회원수 - 어제자 회원수)
+		
+		// 총 게시글 수(계획 + 여행지 + 동행)
+		
+		// 방문자수 : 오늘 방문자수(증감량)
+		
+		return "/admin/dashboard";
 	}
 
 	@RequestMapping("newMemDaily")

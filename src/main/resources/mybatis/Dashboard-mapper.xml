@@ -8,7 +8,7 @@
 	
 	<select id="joinTable" resultType="kh.spring.dto.DashboardDTO">
 		select 
-    		u.stan_date, 
+    		to_number(u.stan_date) as stan_date, 
     		nvl(u.user_n,0) as user_n,
     		nvl(p.plan,0) as plan,
     		nvl(t.tour_board,0) as tour_board,
@@ -28,7 +28,7 @@
                 where to_char(writen_date, 'YYMMDD') <![CDATA[ >= ]]> '220125' and to_char(writen_date, 'YYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYMMDD')
                 group by to_char(writen_date, 'YYMMDD')) c
         	on(u.stan_date = c.stan_date)
-			order by u.stan_date asc		
+		order by stan_date asc		
 	</select>
 	
 	<insert id="insertTable">
@@ -42,5 +42,10 @@
 	<delete id ="deleteTable">
 		delete from dashboard
 	</delete>
+	
+	<!-- 가입자 수 -->
+	<select id = "cntMember" resultType ="int">
+		select count(*) from member
+	</select>
  		
   </mapper>
