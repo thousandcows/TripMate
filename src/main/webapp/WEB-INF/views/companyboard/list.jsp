@@ -107,6 +107,7 @@
 
         .board_header{
             overflow: auto;
+            width:100%;
         }
 
         .board_header>div{
@@ -116,6 +117,7 @@
             border-bottom: solid 1.5px #404040; 
             background-color :white;
             font-weight: 700;
+            width: 100%
         }
 
 		.notice_enroll{
@@ -131,15 +133,19 @@
         
         .board_enroll{
             overflow: auto;
+            width:100%;
+            height:auto;
         }
+        
         
         .board_enroll>div{
             float: left;
             padding: 8px 0px 8px 0px;
             /* border-top: solid 1px #404040; */
-            border-bottom: solid 1px rgb(207, 207, 207);
-            
+            border-bottom: solid 1px rgb(207, 207, 207);  
+            height:auto;
         }
+        
         
        /*  .board_enroll>div : hover{
             background-color : rgb(228, 228, 228);

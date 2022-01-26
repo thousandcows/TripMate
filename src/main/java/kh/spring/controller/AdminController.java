@@ -67,7 +67,6 @@ public class AdminController {
 	@RequestMapping("noticeWrite")
 	public String noticeWrite() {
 		
-		System.out.println("지나갑니다~");
 		return "admin/noticeWrite";
 	}
 	

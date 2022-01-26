@@ -18,9 +18,7 @@ public class ComReplyDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
-	public int insert(int rseq, String reply, String nick, int mem_seq) {
-		
-		System.out.println("dao nick : " + nick + "mem_seq : " + mem_seq);
+	public int insert(int rseq, String reply, String nick, int mem_seq) {	
 
 		Map<String, String> map = new HashMap<>();
 		map.put("rseq", String.valueOf(rseq));
@@ -104,7 +102,6 @@ public class ComReplyDAO {
 		
 		Map<String, String> map = new HashMap<>();
 		map.put("idseq", String.valueOf(idseq));
-		System.out.println(idseq);
 		return mybatis.delete("ComReply.redelete", map);
 	}
 	

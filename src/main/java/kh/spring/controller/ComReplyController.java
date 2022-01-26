@@ -28,9 +28,6 @@ public class ComReplyController {
 		String nick = (String) request.getSession().getAttribute("loginNick");
 		int mem_seq = (int) request.getSession().getAttribute("loginSeq");
 
-		System.out.println("nick : " + nick + "mem_seq : " + mem_seq);
-		System.out.println("reply의 rseq : " + rseq);
-
 		crs.reply(seq, reply, nick, mem_seq);	
 		
 		return "redirect:/companyboard/detail?seq=" + seq;
@@ -65,7 +62,6 @@ public class ComReplyController {
 	@RequestMapping("remodify")
 	public String remodify(int writeseq, int idseq, String recontent) {
 
-		System.out.println(idseq + " : " + recontent);
 		crs.remodify(idseq, recontent);
 		return "redirect:/companyboard/detail?seq=" + writeseq;
 	}
@@ -73,7 +69,6 @@ public class ComReplyController {
 	@RequestMapping("redelete")
 	public String redelete(int idseq, int writeseq) {
 
-		System.out.println(idseq + " : " + writeseq);
 		crs.redelete(idseq);
 		return "redirect:/companyboard/detail?seq=" + writeseq;
 	}

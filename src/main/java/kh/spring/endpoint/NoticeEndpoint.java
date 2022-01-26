@@ -1,10 +1,8 @@
 package kh.spring.endpoint;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -15,10 +13,13 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.google.gson.Gson;
 
 import kh.spring.configurator.WSConfig;
 import kh.spring.dto.ReactionDTO;
+import kh.spring.service.MemberService;
 
 @ServerEndpoint(value = "/notice", configurator = WSConfig.class) // 우리가 만든 Config를 쓰게함
 public class NoticeEndpoint {
