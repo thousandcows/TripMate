@@ -46,8 +46,6 @@ public class CompanyBoardController {
 		String searchOption = request.getParameter("searchOption");
 		String searchText = request.getParameter("searchText");
 		
-		System.out.println("1컨트롤러에 들어오는 searchOption : searchText = "+ searchOption + " :  " + searchText);
-		
 		if(searchText==null&&searchOption==null) {
 			String cpage = request.getParameter("cpage");
 			if(cpage == null) {cpage = "1";}
@@ -65,11 +63,10 @@ public class CompanyBoardController {
 			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
 			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
 			
-			List<CompanyBoardDTO> list = cbs.selectAll(start, end, null, null);			
+			List<CompanyBoardDTO> list = cbs.selectAll(start, end, null, null);
 			String navi = cbs.getPageNavi(currentPage, searchOption, searchText);
 			
 			String nick = (String) session.getAttribute("loginNick");
-			System.out.println("loginNick = "+ nick);
 
 			
 			model.addAttribute("nick",nick);
@@ -85,7 +82,6 @@ public class CompanyBoardController {
 			
 			int currentPage = Integer.parseInt(request.getParameter("cpage"));
 			int pageTotalCount = cbs.getPageTotalCount(searchOption, searchText);
-			System.out.println("컨트롤러에 currentPage, pageTotalCount: " + currentPage + " : " + pageTotalCount);
 			
 			if(currentPage < 1) {
 				currentPage = 1;
@@ -97,14 +93,10 @@ public class CompanyBoardController {
 			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
 			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
 			List<CompanyBoardDTO> list = cbs.selectAll(start, end, searchOption, searchText);
-			//System.out.println("컨트롤러에 가져온 작성자 이름 검색 값 : " + list.get(0).getNick());
-			System.out.println("컨트롤러에 start, end, searchoption, searchtext: " + start + " : " + end + " : " + searchOption + " : " + searchText);
-			
-			
+		
 			String navi = cbs.getPageNavi(currentPage, searchOption, searchText);
 			
 			String nick = (String) session.getAttribute("loginNick");
-			System.out.println("loginNick = "+ nick);
 			
 			model.addAttribute("nick",nick);
 			model.addAttribute("list", list);
@@ -161,12 +153,8 @@ public class CompanyBoardController {
 		}
 		
 		
-		//댓글+대댓글 갯수
-//		System.out.println("seq : " + seq);
 		int replyCount = cbs.replyCount(seq);
-//		System.out.println("replyCount : " + replyCount);
 		int replyReplyCount = cbs.replyReplyCount(seq);
-//		System.out.println("replyReplyCount : " + replyReplyCount);
 		
         List<ComReplyDTO> rep_list = crs.selectAll(seq);
         List<ComReplyReplyDTO> re_rep_list = crs.selectReAll();
@@ -186,12 +174,10 @@ public class CompanyBoardController {
 		 
 		 // 신청자 카운트
 		 int memCount = cbs.memCount(seq);
-		 System.out.println(memCount + ": memcount 입니다.");
 		 model.addAttribute("memCount",memCount);
 		 
 		 // 좋아요 카운트
 		 int likeCount = cbs.totalBoardLike(seq);
-		 System.out.println(likeCount + ": likeCount 입니다.");
 		 model.addAttribute("likeCount", likeCount);
 		 
         
@@ -251,7 +237,6 @@ public class CompanyBoardController {
         
         int likeCount = cbs.totalBoardLike(boardId);
         map.put("likeCount", likeCount);
-        System.out.println("likeCount 값 controller에서.. " + likeCount);
 
         return map;
 
@@ -269,7 +254,6 @@ public class CompanyBoardController {
 		dto.setPar_seq(seq);
 		
 		int dupl = cbs.memDuplCheck(dto);
-		System.out.println(dupl + "");
 		if(dupl == 0) {
 			cbs.insertMem(dto);	
 		}
