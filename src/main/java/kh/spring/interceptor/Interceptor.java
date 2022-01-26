@@ -32,20 +32,23 @@ public class Interceptor implements HandlerInterceptor{
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		System.out.println("add 이전 : " + modelAndView);
 		
+//		System.out.println("add 이전 : " + modelAndView);
 		// 테스트 객체
-		SavedDTO dto = new SavedDTO(1, 2, 3);
+//		SavedDTO dto = new SavedDTO(1, 2, 3);
 		
 		// 1번시도
-		modelAndView.getModel().put("testPost", dto);
+//		if(modelAndView != null) {
+//			modelAndView.getModel().put("testPost", dto); // null에 점찍으면 에러남
+//		}
 		// 2번시도
 //		modelAndView.getModelMap().addAttribute("testPost", dto);
 		// 3번시도
 //		modelAndView.addObject("testPost", dto);
 //		modelAndView.setViewName(modelAndView.getViewName());
+//		System.out.println("add 이후 : " + modelAndView);
 		
-		System.out.println("add 이후 : " + modelAndView);
+		
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}
 	

@@ -350,7 +350,7 @@ let noticeProcNum = 0;
 ws.onmessage = function(e) {
   noticeProcNum++;
   let line;
-  const notice = JSON.parse(e.data);
+  let notice = JSON.parse(e.data);
   let seq = notice.seq;
   let title = notice.title;
   let board_num = notice.board_num;

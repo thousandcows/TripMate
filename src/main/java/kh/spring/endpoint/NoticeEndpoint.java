@@ -13,13 +13,10 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.google.gson.Gson;
 
 import kh.spring.configurator.WSConfig;
 import kh.spring.dto.ReactionDTO;
-import kh.spring.service.MemberService;
 
 @ServerEndpoint(value = "/notice", configurator = WSConfig.class) // 우리가 만든 Config를 쓰게함
 public class NoticeEndpoint {
@@ -37,7 +34,6 @@ public class NoticeEndpoint {
 		String nick = (String) this.session.getAttribute("loginNick");
 		if (nick != null) {
 			map.put(nick, session);
-			System.out.println(nick + " 님 로그인");
 		}
 	}
 
@@ -66,6 +62,5 @@ public class NoticeEndpoint {
 //		clients.remove(session);
 		String nick = (String) this.session.getAttribute("loginNick");
 		map.remove(nick, session);
-		System.out.println(nick + " 님 접속 끊김");
 	}
 }
