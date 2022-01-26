@@ -614,6 +614,10 @@ a:active {
 	        	  if(answer){
 									wsObj.reaction = 'comment';
 									ws.send(JSON.stringify(wsObj));
+									$.ajax({
+										url: "/member/reactionInserter",
+										data: {reaction: JSON.stringify(wsObj)}
+									})
 	                $("#frmReply").submit();
 	        	  }else{
 	                $("#rep_con").val() = "";

@@ -336,6 +336,7 @@ if (eventCheck != null) {
 
 }
 
+// 알림창 토글
 if(document.querySelector("#noticeBtn") != null){
   document.querySelector("#noticeBtn").addEventListener("click", () => {
     if(document.querySelector("#noticeList").style.display == "none"){
@@ -346,6 +347,7 @@ if(document.querySelector("#noticeBtn") != null){
   });
 }
 
+// 웹소켓 관련
 let noticeProcNum = 0;
 ws.onmessage = function(e) {
   noticeProcNum++;

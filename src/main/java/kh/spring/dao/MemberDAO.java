@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MyPostDTO;
+import kh.spring.dto.ReactionDTO;
 
 @Repository
 public class MemberDAO {
@@ -154,6 +155,12 @@ public class MemberDAO {
 		map.put("end", String.valueOf(end));
 		map.put("searchTitle", searchTitle);
 		return mybatis.selectList("Member.getMyPostList", map);
+	}
+	
+	// 리액션 인서터
+	public int insertReaction(ReactionDTO dto) {
+		System.out.println("dao 들어오는 리액션 : " + dto.getNick());
+		return mybatis.insert("Member.insertReaction", dto);
 	}
 
 }

@@ -17,23 +17,25 @@ import com.google.gson.Gson;
 
 import kh.spring.configurator.WSConfig;
 import kh.spring.dto.ReactionDTO;
+import kh.spring.service.MemberService;
 
 @ServerEndpoint(value = "/notice", configurator = WSConfig.class) // 우리가 만든 Config를 쓰게함
 public class NoticeEndpoint {
-
+	
 	private HttpSession session;
 	// static으로 해야 여러명이 접속해도 같은 List를 공유할 수 있다.(마찬가지로 동기화 처리해야함)
 //	private static List<Session> clients = Collections.synchronizedList(new ArrayList<>());
 	private static Map<String, Session> map = Collections.synchronizedMap(new HashMap<>());
 
+	private String loginNick = "";
 	@OnOpen
 	public void onConnect(Session session, EndpointConfig config) { // 핸드쉐이크한 config 받아옴
 //		clients.add(session);
 		// Config에서 넣은 세션을 가져옴
 		this.session = (HttpSession) config.getUserProperties().get("hSession");
-		String nick = (String) this.session.getAttribute("loginNick");
-		if (nick != null) {
-			map.put(nick, session);
+		loginNick = (String) this.session.getAttribute("loginNick");
+		if (loginNick != null) {
+			map.put(loginNick, session);
 		}
 	}
 
@@ -60,7 +62,7 @@ public class NoticeEndpoint {
 	@OnClose
 	public void onClose(Session session) {
 //		clients.remove(session);
-		String nick = (String) this.session.getAttribute("loginNick");
-		map.remove(nick, session);
+		String loginNick = (String) this.session.getAttribute("loginNick");
+		map.remove(loginNick, session);
 	}
 }
