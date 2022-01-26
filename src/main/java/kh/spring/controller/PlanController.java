@@ -63,8 +63,11 @@ public class PlanController {
 		for(int i = 0; i<date.size();i++) {
 			list.add(pServe.detailPlanList(seq,date.get(i)));			
 		}
+		int loginSeq = (int)session.getAttribute("loginSeq");
+		
 		model.addAttribute("dto",dto);
 		model.addAttribute("list",list);
+		model.addAttribute("loginSeq",loginSeq);
 		return "/plan/detail";
 	}
 	
@@ -101,6 +104,12 @@ public class PlanController {
 		model.addAttribute("seq",seq);
 		model.addAttribute("dto",dto);
 		return "/plan/planning";
+	}
+	
+	@RequestMapping("delete")
+	public String delete(int seq) {
+		pServe.delete(seq);
+		return "redirect:/plan/main?page=1";
 	}
 	
 	// 찜목록 더보기
@@ -175,7 +184,7 @@ public class PlanController {
 	@ResponseBody
 	@RequestMapping(value="planDateDelete", produces = "application/text;charset=utf-8")
 	public String planDateDelete(@RequestParam(value="seq")int seq) {
-		pServe.deletePlan(seq);
+		pServe.deleteDatePlan(seq);
 		return "OK";
 	}
 	

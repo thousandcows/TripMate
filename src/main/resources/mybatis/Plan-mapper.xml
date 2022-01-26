@@ -65,11 +65,17 @@
 		update detail_plan set plan_date = #{day} where seq = #{seq}
 	</update>
 	
-	<delete id="deletePlan">
+	<delete id="deleteDatePlan">
 		delete from detail_plan where seq = #{seq}
 	</delete>
 	
 	<update id="insertMemo">
 		update plan set memo = #{memo} where seq = #{seq}
 	</update>
+
+	<delete id="deletePlan">
+		delete from plan where seq = #{seq}
+	</delete>
+
+
 </mapper> 
