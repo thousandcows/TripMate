@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.TourBoardDAO;
 import kh.spring.dao.TourReplyDAO;
-import kh.spring.dto.ComBoardLikeDTO;
+import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.TourBoardDTO;
 import kh.spring.dto.TourBoardLikeDTO;
 import kh.spring.statics.Statics;
@@ -29,6 +29,11 @@ public class TourBoardService {
 		return bdao.selectAll(start, end, searchOption, searchText);
 	}
 	
+	public List<NoticeDTO> ntselectAll(){
+		
+		return bdao.ntselectAll();
+	}
+	
 	public int writeProc(TourBoardDTO bdto) throws Exception{
 		
 		return bdao.insert(bdto);
@@ -39,6 +44,11 @@ public class TourBoardService {
 		return bdao.selectBySeq(seq);
 	}
 	
+	public NoticeDTO selectByNtSeq(int seq) {
+		
+		return bdao.selectByNtSeq(seq);
+	}
+	
 	public int addViewCount(int seq) {
 		
 		return bdao.addViewCount(seq);
@@ -47,6 +57,11 @@ public class TourBoardService {
 	public int modify(int seq, String title, String contents, String category) {
 		
 		return bdao.modify(seq, title, contents, category);
+	}
+	
+	public int noticeModify(int seq, String title, String contents) {
+		
+		return bdao.noticeModify(seq, title, contents);
 	}
 	
 	public int delete(int seq) {

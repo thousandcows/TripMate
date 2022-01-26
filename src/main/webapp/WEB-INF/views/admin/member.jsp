@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-<title>SB Admin 2 - Tables</title>
+<title>SB Admin - Member</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -25,7 +25,14 @@
 
     <!-- Custom styles for this page -->
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+<style>
+        /* 링크 속성 지우기 */
+        a { text-decoration:none  } 
+        a:hover { text-decoration:none;}
+        a:link {text-decoration: none;}
+        a:visited {text-decoration: none;}
+        a:active {text-decoration: none;}
+</style>
 </head>
 <body id="page-top">
 
@@ -48,7 +55,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="dashboard">
                     <i class="fas fa-chart-line"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -83,7 +90,7 @@
             
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables">
+                <a class="nav-link" href="notice">
                     <i class="fas fa-edit"></i>
                     <span>Notice</span></a>
             </li>
@@ -328,33 +335,37 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
+                                            <th>Num</th>
+                                            <th>Nick</th>                                            
+                                            <th>EmailId</th>
+                                            <th>Gender</th>
                                             <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>Contact</th>
+                                            <th>SignUpDate</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                    </tfoot>
+                                
                                     <tbody>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
+                                    	<c:forEach var="mem" items="${mem_list }">
+                                        	<tr>
+                                            	<th>${mem.seq }</th>
+                                            	<th>${mem.nick }</th>
+                                            	<th>${mem.emailID }</th>
+                                            	<th>${mem.gender }</th>
+                                            	<th>${mem.age }</th>
+                                            	<th>${mem.phone }</th>
+                                            	<th>${mem.singup_date }</th>
+                                            	<th></th>
+	                                            <th>
+	                                            	<a href="/admin/leave?seq=${mem.seq}" class="btn btn-danger btn-icon-split">
+                                 				       <span class="icon text-white-50">
+                                  				          <i class="far fa-trash-alt text-gray-100"></i>
+                                 				       </span>
+                                				    </a>
+	                                            </th>
+                                        	</tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

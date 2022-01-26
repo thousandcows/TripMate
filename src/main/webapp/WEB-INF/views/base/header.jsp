@@ -53,6 +53,25 @@
         right:200px;
         z-index:9999;
       }
+      #noticeGround{
+        display:flex;
+        flex-direction: column-reverse;
+        position:fixed;
+        bottom:80px;
+        right:100px;
+      }
+      .websocLine{
+        color:black;
+        font-size:14px;
+        text-decoration:none;
+      }
+      .websocTest{
+        width:fit-content;
+        background-color:#EEEEEE;
+        border-radius:3px;
+        padding:3px;
+        margin:2px;
+      }
     </style>
 
     <body>
@@ -213,7 +232,7 @@
                 <c:choose>
                   <c:when test="${loginEmailID != null}">
                     <div id="loginAfterBox">
-                      <button type="button" class="notice" id="noticeBtn">TEST</button>
+                      <span></span><button type="button" class="notice" id="noticeBtn">TEST</button>
                       <div class="noticeList" id="noticeList" style="display: none;"></div>
                       ${loginNick} 님
                       <a href="/member/normalLogout">로그아웃</a>
@@ -230,6 +249,10 @@
           </div>
         </div>
       </header>
+
+      <div id="noticeGround">
+
+      </div>
 
       <script>
         $("#tourboard").on("click", function () {
