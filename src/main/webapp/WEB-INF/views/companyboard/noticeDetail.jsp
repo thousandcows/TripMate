@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여행지 게시판</title>
+<title>동행 게시판</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -246,8 +246,8 @@
 <body>
 	<div class="banner">
         <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
-        <div class="banner_title"> 여행지 게시판 </div>
-        <div class="banner_content"> 각 지역의 여행 후기를 남겨보세요 </div>
+        <div class="banner_title"> 동행 게시판 </div>
+        <div class="banner_content"> 함께 여행갈 친구들을 만들어 보세요 </div>
     </div>
     
     <div class="container">
@@ -256,7 +256,7 @@
             <div> > </div>
             <div class="community"><a href="/companyboard/list?cpage=1">커뮤니티</a></div>
             <div> > </div>
-            <div class="partyboard"><a href="/companyboard/list?cpage=1">여행지 게시판</a></div>
+            <div class="partyboard"><a href="/companyboard/list?cpage=1">동행게시판</a></div>
         </div>
     
         <form  action="/companyboard/modify" method="post" id="frmDetail">
