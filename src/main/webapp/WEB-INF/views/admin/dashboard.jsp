@@ -40,7 +40,7 @@
         <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="sidebar-brand-icon rotate-n-15">
                 	<i class="fas fa-map-marked-alt"></i>
                 </div>
@@ -118,9 +118,96 @@
                         <a id="refresh" href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-sync-alt fa-sm text-white-100"></i>&nbspRefresh</a>
                     </div>
 
-                    <!-- 그래프 : 방문자수-일자별(그래프), 방문자수-주간별(그래프) -->
-                    <div class="row">   
-						<div class="col-xl-6">
+                    <!-- 방문자수 카운트 -->
+                    <div class="row">
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                NEW MEMBER (DAILY)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">??</div>
+                                        </div>
+                                        <div class="col-auto">
+                                        	<i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                WITHDRAWAL (DAILY)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">??</div>
+                                        </div>
+                                        <div class="col-auto">
+                                        	<i class="fas fa-user-alt-slash fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                            </div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress progress-sm mr-2">
+                                                        <div class="progress-bar bg-info" role="progressbar"
+                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pending Requests Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Pending Requests</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                   	<div class="row">   
+                    	<div class="col-xl-6">
+						<div class="col-xl-12">
                             <div class="card border-bottom-primary shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
@@ -128,30 +215,12 @@
                                     <h6 class="m-0 font-weight-bold text-dark">Number of Visitors(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
-                                <div>
-  									<%-- <canvas id="visitors_daily"></canvas> --%>
-								</div>
+                                <div></div>
                             </div>
                         </div>
-                        
-                        <div class="col-xl-6">
-                            <div class="card border-bottom-primary shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Number of Visitors(Monthly)</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div>
-  									<%-- <canvas id="visitors_monthly"></canvas> --%>
-								</div>
-                            </div>
-                        </div>
-                    </div>
                     
-                    <!--  신규회원(일간)  신규회원(월간) 회원 성별-->
-                    <div class="row">
-						<div class="col-xl-4">
+                    <!--  신규회원수 카운트-->
+						<div class="col-xl-12">
                             <div class="card border-bottom-info shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
@@ -159,34 +228,22 @@
                                     <h6 class="m-0 font-weight-bold text-dark">New Member(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
-                                <div>
-  									<canvas id="line-chart"></canvas>
-								</div>
+                                <div></div>
                             </div>
                         </div>
-                        
-                        <div class="col-xl-4">
+                    
+                    <!-- 글 수 카운트 -->
+                    	<div class="col-xl-12">
                             <div class="card border-bottom-info shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">New Member(Monthly)</h6>
+                                    <h6 class="m-0 font-weight-bold text-dark">New Member(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
-                                <div>
-  									<%-- <canvas id="newmem_monthly" style="display: block; height: 350px;" ></canvas> --%>
-								</div>
+                                <div></div>
                             </div>
-                        </div>
-                        	
-                        <div class="col-xl-4">
-                            <div class="card  border-bottom-info  shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Member Gender</h6>
-                                </div>
-                                
-                            </div>
+                        </div>    
                         </div>
                     </div>
                     
