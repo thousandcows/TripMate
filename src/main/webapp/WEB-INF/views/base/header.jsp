@@ -250,6 +250,7 @@
         </div>
       </header>
 
+      ${testPost}
       <div id="noticeGround">
 
       </div>

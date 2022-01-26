@@ -42,18 +42,19 @@
 	<!-- 밑에 Namespaces에서 aop체크 -->
 	<aop:aspectj-autoproxy/> <!-- @Aspect를 활성화 시켜줌 -->
 	
-	<!-- 인터셉터 부분
 	<interceptors>
 		<interceptor>
 			<mapping path="/**"/>
+			<!--
 			<exclude-mapping path="/"/>
 			<exclude-mapping path="/member/join"/>
 			<exclude-mapping path="/member/login"/>
 			<exclude-mapping path="/images/**"/>
+			-->
 			<beans:bean class="kh.spring.interceptor.Interceptor"/>
 		</interceptor>
 	</interceptors>
-	-->
+
 	<!--
 	서블릿 필터는 스프링안에 있지않다.(오토와이어드같은거 사용불가)
 	인터셉터는 스프링 안에 있어, 스프링 기능들을 사용 가능하다(오토와이어드같은거 사용가능)
