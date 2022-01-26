@@ -118,6 +118,17 @@
             font-weight: 700;
         }
 
+		.notice_enroll{
+            overflow: auto;
+        }
+        
+        .notice_enroll>div{
+            float: left;
+            padding: 8px 0px 8px 0px;
+            /* border-top: solid 1px #404040; */
+            border-bottom: solid 1px rgb(207, 207, 207);            
+        }
+        
         .board_enroll{
             overflow: auto;
         }
@@ -195,6 +206,19 @@
                 <div class="view_count" style="width: 7%;">조회수</div>
                 <div class="expired" style="width: 8%;">마감 여부</div>
             </div>
+            
+            <c:forEach var="n" items="${nt_list }">
+    	  		<div class="notice_enroll">
+       		        <div class="nt_seq" style="width: 5%;"><i class="fas fa-bullhorn"></i></div>
+       		        <div class="nt_tour" style="width: 7%;">공지</div>
+       		        <div class="nt_title" style="width: 44%;"><a href="/tourboard/noticeDetail?seq=${n.seq}">${n.title }</a></div>
+       		        <div class="nt_recruit" style="width: 9%;">-</div>
+       		        <div class="nt_nick" style="width: 10%;">${n.nick }</div>
+       		        <div class="nt_writen_time" style="width: 10%;">${n.writen_date }</div>
+       		        <div class="nt_view_count" style="width: 7%;">${n.view_count }</div>
+       		        <div class="nt_rec_count" style="width: 8%;">-</div>
+       		    </div>
+            </c:forEach>
             
             <div class="board_enroll">
             	<c:forEach var="l" items="${list }">

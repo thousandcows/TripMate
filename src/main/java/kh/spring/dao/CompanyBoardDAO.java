@@ -12,6 +12,7 @@ import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.ComMemDTO;
 import kh.spring.dto.CompanyBoardDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.NoticeDTO;
 
 @Repository
 public class CompanyBoardDAO {
@@ -48,6 +49,11 @@ public class CompanyBoardDAO {
 
 			return mybatis.selectList("CompanyBoard.selectAllWriter", map);
 		}
+	}
+	
+	public List<NoticeDTO> ntselectAll(){
+		
+		return mybatis.selectList("CompanyBoard.ntselectAll");
 	}
 	
 	public CompanyBoardDTO selectBySeq(int seq) {

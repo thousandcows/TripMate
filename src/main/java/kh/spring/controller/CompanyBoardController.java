@@ -22,6 +22,7 @@ import kh.spring.dto.ComReplyDTO;
 import kh.spring.dto.ComReplyReplyDTO;
 import kh.spring.dto.CompanyBoardDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.NoticeDTO;
 import kh.spring.service.ComReplyService;
 import kh.spring.service.CompanyBoardService;
 import kh.spring.statics.Statics;
@@ -70,8 +71,10 @@ public class CompanyBoardController {
 			
 			String nick = (String) session.getAttribute("loginNick");
 			System.out.println("loginNick = "+ nick);
-
 			
+			List<NoticeDTO> nt_list = cbs.ntselectAll();  
+			
+			model.addAttribute("nt_list", nt_list);			
 			model.addAttribute("nick",nick);
 			model.addAttribute("list", list);
 			model.addAttribute("navi", navi);

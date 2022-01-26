@@ -11,6 +11,7 @@ import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.ComMemDTO;
 import kh.spring.dto.CompanyBoardDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.NoticeDTO;
 import kh.spring.statics.Statics;
 
 @Service
@@ -29,6 +30,11 @@ public class CompanyBoardService {
 	public List<CompanyBoardDTO> selectAll(int start, int end, String searchOption, String searchText) {
 		
 		return cdao.selectAll(start, end, searchOption, searchText);
+	}
+	
+	public List<NoticeDTO> ntselectAll(){
+		
+		return cdao.ntselectAll();
 	}
 	
 	public CompanyBoardDTO selectBySeq(int seq) {

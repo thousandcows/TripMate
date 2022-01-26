@@ -1,6 +1,8 @@
 package kh.spring.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +80,19 @@ public class AdminDAO {
 	public int noticeInsert(NoticeDTO ndto) {
 		
 		return mybatis.insert("Admin.noticeInsert", ndto);
+	}
+	
+	public NoticeDTO selectBySeq(int seq) {
+		
+		return mybatis.selectOne("Admin.selectBySeq", seq);
+	}
+	
+	public int noticeModify(int seq, String title, String contents) {
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("title", title);
+		map.put("contents", contents);
+		map.put("seq", String.valueOf(seq));
+		return mybatis.update("Admin.noticeModify", map);
 	}
 }

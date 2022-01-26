@@ -87,7 +87,6 @@
         .board>.notice_enroll>div{
             float:left;
             border: 1px solid red;
-            background-color: red;
         }
         
         .board_enroll{
@@ -169,7 +168,7 @@
 			
             <c:forEach var="n" items="${nt_list }">
     	  		<div class="notice_enroll">
-       		        <div class="nt_seq" style="width: 10%;">-</div>
+       		        <div class="nt_seq" style="width: 10%;"><i class="fas fa-bullhorn"></i></div>
        		        <div class="nt_category" style="width: 10%;">공지</div>
        		        <div class="nt_title" style="width: 30%;"><a href="/tourboard/noticeDetail?seq=${n.seq}">${n.title }</a></div>
        		        <div class="nt_nick" style="width: 10%;">${n.nick }</div>

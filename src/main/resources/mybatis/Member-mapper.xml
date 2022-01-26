@@ -18,7 +18,7 @@
 	</select>
 	
 	<insert id="normalSignup">
-		insert into member (seq, emailid, pw, nick, phone, gender, violation, photo) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, #{gender}, 0, 'default_profileqwerkjhgdiute.jpg')
+		insert into member (seq, emailid, pw, nick, phone, gender, violation, photo, signup_date) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, #{gender}, 0, 'default_profileqwerkjhgdiute.jpg', default)
 	</insert>
 	
 	<select id="normalLoginCheck" resultType="int">
@@ -43,7 +43,7 @@
 	</select>
 	
 	<insert id="kakaoSignup">
-		insert into member (seq, emailid, nick, violation, sns_division, photo) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0, #{kakaoId}, 'default_profileqwerkjhgdiute.jpg')
+		insert into member (seq, emailid, nick, violation, sns_division, photo, signup_date) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0, #{kakaoId}, 'default_profileqwerkjhgdiute.jpg', default)
 	</insert>
 	
 	<!-- 마이페이지 -->
