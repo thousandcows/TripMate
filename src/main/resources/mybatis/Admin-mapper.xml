@@ -56,4 +56,12 @@
 	<insert id="noticeInsert">
 		insert into notice values(notice_seq.nextval, #{title}, #{contents}, '관리자', sysdate, default)
 	</insert>
+	
+	<select id="selectBySeq" resultType="kh.spring.dto.NoticeDTO">
+		select * from notice where seq=#{seq}
+	</select>
+	
+	<update id="noticeModify">
+		update notice set title=#{title}, contents=#{contents} where seq = #{seq}
+	</update>
 </mapper>

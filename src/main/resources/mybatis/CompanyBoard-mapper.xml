@@ -22,6 +22,10 @@
 		<select id="selectAll" resultType="kh.spring.dto.CompanyBoardDTO">		
 			select * from (select company_board.*, row_number() over(order by seq desc) rn from company_board) where rn between #{start} and #{end}
 		</select>
+		
+		<select id="ntselectAll" resultType="kh.spring.dto.NoticeDTO">
+			select * from notice order by seq desc
+		</select>
 	
  		
  		<select id="selectBySeq" resultType="kh.spring.dto.CompanyBoardDTO">
