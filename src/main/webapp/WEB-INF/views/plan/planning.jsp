@@ -91,7 +91,7 @@ li.drag-sort-active {
 					<div class="col-10 text-center mt-4">
 						<h5 class="title text-center">여행 계획 입력</h5>
 						<div class="form-group">
-							<input type="text" name="title" class="form-control" id="planTitle" placeholder="제목을 입력하세요." value="${dto.title }">
+							<input type="text" name="title" class="form-control" id="planTitle" placeholder="제목을 입력하세요." value="${dto.title }" required>
 						</div>
 					</div>
 					<div class="col-10 mt-2">
@@ -112,7 +112,7 @@ li.drag-sort-active {
 									<div class="input-group date" id="datetimepicker1"
 										data-target-input="nearest">
 										<input type="text" class="form-control datetimepicker-input" name="startDate"
-											data-target="#datetimepicker1" value="${dto.startDate }">
+											data-target="#datetimepicker1" value="${dto.startDate }" required>
 										<div class="input-group-append" data-target="#datetimepicker1"
 											data-toggle="datetimepicker">
 											<div class="input-group-text">
@@ -127,7 +127,7 @@ li.drag-sort-active {
 								<div class="input-group date" id="datetimepicker2"
 									data-target-input="nearest">
 									<input type="text" class="form-control datetimepicker-input" name="endDate"
-										data-target="#datetimepicker2" value="${dto.endDate }">
+										data-target="#datetimepicker2" value="${dto.endDate }" required>
 									<div class="input-group-append" data-target="#datetimepicker2"
 										data-toggle="datetimepicker">
 										<div class="input-group-text">
@@ -168,7 +168,7 @@ li.drag-sort-active {
 						<div class="row">
 							<div class="col d-flex justify-content-center">
 								<form id="searchForm" name="searchForm" method="post">
-									<input type="text" name="target" placeholder="검색어를 입력하세요." id="searchTarget"> 
+									<input type="text" name="target" placeholder="검색어를 입력하세요." id="searchTarget" required> 
 									<input type="hidden" value=1 name="page" id="searchPageNo"> 
 									<input type="submit" class="btn btn-success" onclick="searching(); return false">
 								</form>												

@@ -94,6 +94,6 @@ public class PlanDAO {
 		Map<String,String> map = new HashMap<>();
 		map.put("seq", Integer.toString(seq));
 		map.put("memo", memo);
-		mybatis.insert("Plan.insertMemo",map);
+		mybatis.update("Plan.insertMemo",map);
 	}
 }

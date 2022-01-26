@@ -14,7 +14,7 @@
 		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
 			select plan_seq.nextval from dual  
 		</selectKey>
-		insert into plan values (#{seq}, #{mem_seq}, #{title},#{startDate},#{endDate},#{theme},0,'')
+		insert into plan values (#{seq}, #{mem_seq}, #{title},#{startDate},#{endDate},#{theme},0,'',default)
 	</insert>
 	
 	<update id="changeTheme">
@@ -69,7 +69,7 @@
 		delete from detail_plan where seq = #{seq}
 	</delete>
 	
-	<insert id="insertMemo">
+	<update id="insertMemo">
 		update plan set memo = #{memo} where seq = #{seq}
-	</insert>
+	</update>
 </mapper> 
