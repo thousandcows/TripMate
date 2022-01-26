@@ -4,21 +4,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>title here</title>
+<title>여행지 게시판</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 <jsp:include page="../base/header.jsp"></jsp:include>
     <style>
-        * {box-sizing: border-box;}
+        *{
+            box-sizing: border-box;
+        }
 
         body{
             margin: 0;  /* 임시로 body margin 0px */
         }
 
+        /* 링크 속성 지우기 */
+        a { text-decoration:none  } 
+        a:hover { text-decoration:none; color: black; }
+        a:link {text-decoration: none; color: black; }
+        a:visited {text-decoration: none; color: black; }
+        a:active {text-decoration: none; color: black; }
+
         /* div{border:1px solid black} */
 
+        /* 헤더----------------------------------------------------- */
         .banner{
             background-color: rgb(56, 181, 174);
             height:200px;
@@ -42,30 +52,49 @@
             padding-left: 100px;
         }
 
+        /* 컨테이너 ----------------------------------------------------- */
         .container{
-            border:1px solid red;
+            /* border:1px solid red; */
+            padding-bottom :30px;
         }
 
+        /* 미니 사이트맵 루트 */
         .container>.root{
             padding-left: 80px;
             overflow: auto;
         }
 
         .root>div{
-            border:1px solid red;
+           /*  border:1px solid red; */
             float:left;
             margin: 40px 0px 40px 0px;
             padding-right: 10px;
         }
 
-        .searchbar{
-            border: 1px solid red;
-            text-align: right;
-            padding-right: 80px;
+        .fa-home{
+            color: rgb(56, 181, 174);
         }
 
+        /* 검색창 */
+        .searchbar{
+            /* border: 1px solid red; */
+            text-align: right;
+            padding-right: 80px;
+            height: 30px;
+        }
+        
+        .searchbar > button{
+        	height: 30px;
+        	border: none;
+        }
+        
+        .searchbar > select{
+        	height: 30px;
+        }
+
+        /* 게시글 올라오는 목록 부분 */
         .board{
-            border: 1px solid red;
+            /* border: 1px solid red; */
             width: 100%;
             padding : 20px 80px 0px 80px;
             text-align: center;
@@ -73,52 +102,63 @@
 
         .board_header{
             overflow: auto;
+            width:100%;
         }
 
-        .board>.board_header>div{
-            float:left;
-            border: 1px solid red;
+        .board_header>div{
+            float: left;
+            padding: 8px 0px 8px 0px;
+            border-top: solid 1.5px #404040;
+            border-bottom: solid 1.5px #404040; 
+            background-color :white;
+            font-weight: 700;
+            width: 100%
         }
 
 		.notice_enroll{
             overflow: auto;
         }
-
-        .board>.notice_enroll>div{
-            float:left;
-            border: 1px solid red;
-            background-color: red;
+        
+        .notice_enroll>div{
+            float: left;
+            padding: 8px 0px 8px 0px;
+            /* border-top: solid 1px #404040; */
+            border-bottom: solid 1px rgb(207, 207, 207);            
         }
         
         .board_enroll{
             overflow: auto;
-        }
-
-        .board>.board_enroll>div{
-            float:left;
-            border: 1px solid red;
-        }
-
-        /* 링크 속성 지우기 */
-        a { text-decoration:none  } 
-        a:hover { text-decoration:none; color: black; }
-        a:link {text-decoration: none; color: black; }
-        a:visited {text-decoration: none; color: black; }
-        a:active {text-decoration: none; color: black; }
-        
-        .fa-home{
-            color: rgb(56, 181, 174);
-        }
-
-        .btn{
-            border: 1px solid red;
             width:100%;
+            height:auto;
+        }
+        
+        
+        .board_enroll>div{
+            float: left;
+            padding: 8px 0px 8px 0px;
+            /* border-top: solid 1px #404040; */
+            border-bottom: solid 1px rgb(207, 207, 207);  
+            height:auto;
+        }
+        
+        
+       /*  .board_enroll>div : hover{
+            background-color : rgb(228, 228, 228);
+        } */
+
+        /* 작성 버튼 및 페이지네이션  */
+        .writebtn{
+        	text-align: right;
+        	padding: 20px 80px 0px 0px;
+        }
+        .button{
+            /* border: 1px solid red; */
             text-align: right;
-            padding: 20px 80px 0px 0px;
+            padding: 20px 80px 0px 0px ;
         }
 
         .page{
-            border: 1px solid red;
+            /* border: 1px solid red; */
             text-align: center;
             padding: 20px 0px 0px 0px;
             line-height: 20px;
@@ -146,14 +186,14 @@
                 <option name="searchTitle" value="search_title">제목</option>
                 <option name="searchId" value="search_writer">작성자</option>
             </select>
-            <input type=text list="trip" placeholder="input search content" id="searchText" name="searchText">
+            <input type=text list="trip" placeholder="search" id="searchText" name="searchText">
             	<datalist id="trip">
             		<option value="여행지 추천">
             		<option value="맛집">
             		<option value="명소">
             		<option value="재미있게 다녀오는 방법">
             	</datalist>
-            <input type=submit id="search_btn" value="검색">
+            <input type=submit id="search_btn" class="btn btn-primary btn-sm" style="background-color: rgb(56, 181, 174);" value="검색">
         </div>
         </form>
         <div class="board">
@@ -169,7 +209,7 @@
 			
             <c:forEach var="n" items="${nt_list }">
     	  		<div class="notice_enroll">
-       		        <div class="nt_seq" style="width: 10%;">-</div>
+       		        <div class="nt_seq" style="width: 10%;"><i class="fas fa-bullhorn"></i></div>
        		        <div class="nt_category" style="width: 10%;">공지</div>
        		        <div class="nt_title" style="width: 30%;"><a href="/tourboard/noticeDetail?seq=${n.seq}">${n.title }</a></div>
        		        <div class="nt_nick" style="width: 10%;">${n.nick }</div>
@@ -182,11 +222,9 @@
             <c:forEach var="i" items="${list }">
     	  		<div class="board_enroll">
        		        <div class="seq" style="width: 10%;">${i.seq }</div>
-       		        <div class="category" style="width: 10%;">[${i.category }]</div>
-       		        <div class="title" style="width: 30%;"><a href="/tourboard/detail?seq=${i.seq}">${i.title }</a>
-       		        	<c:if test="${i.rep_count!=0 }">
-       		        		[${i.rep_count }]
-       		        	</c:if>
+       		        <div class="category" style="width: 10%; color: rgb(56, 181, 174); font-weight: bold">${i.category }</div>
+       		        <div class="title" style="width: 30%;"><a href="/tourboard/detail?seq=${i.seq}">${i.title }&nbsp</a>
+       		        	<i class="far fa-comment-dots" style="color: rgb(161, 161, 161)"></i><span id="rep_count" name="rep_count" style="color: red"> [${i.rep_count}] </span>
        		        </div>
        		        <div class="mem_nick" style="width: 10%;">${i.nick }</div>
        		        <div class="writen_time" style="width: 20%;">${i.writen_date }</div>
@@ -196,8 +234,8 @@
             </c:forEach>
         </div>
         <c:if test="${!empty loginEmailID}">
-        <div class="btn">
-        	<input type=button value="글쓰기" id="toWrite_btn">
+        <div class="writebtn">
+        	<input type=button class="btn btn-primary btn-sm" style="background-color: rgb(56, 181, 174);" value="작성하기" id="toWrite_btn">
         </div>
         </c:if>
         <div class="page">
