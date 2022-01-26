@@ -149,7 +149,7 @@
                                     	<c:forEach var="nt" items="${nt_list }">
                                     		<tr>
                                             	<th>${nt.seq }</th>
-                                            	<th><a href="/tourboard/noticeDetail?seq=${nt.seq}">${nt.title }</a></th>
+                                            	<th><a href="/admin/noticeDetail?seq=${nt.seq}">${nt.title }</a></th>
                                             	<th>${nt.nick }</th>
                                             	<th>${nt.writen_date }</th>
                                             	<th>${nt.view_count }</th>

@@ -1,5 +1,7 @@
 package kh.spring.dto;
 
+import java.sql.Date;
+
 public class MemberDTO {
 	private int seq;
 	private String emailID;
@@ -14,12 +16,12 @@ public class MemberDTO {
 	private String photo;
 	private int violation;
 	private int sns_division;
-	public MemberDTO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	private Date signup_date;
+	
+	public MemberDTO() {}
 	public MemberDTO(int seq, String emailID, String pw, String nick, String gender, int age, String phone,
-			String ph_Open, String preference, String text, String photo, int violation, int sns_division) {
+			String ph_Open, String preference, String text, String photo, int violation, int sns_division,
+			Date signup_date) {
 		super();
 		this.seq = seq;
 		this.emailID = emailID;
@@ -34,6 +36,7 @@ public class MemberDTO {
 		this.photo = photo;
 		this.violation = violation;
 		this.sns_division = sns_division;
+		this.signup_date = signup_date;
 	}
 	public int getSeq() {
 		return seq;
@@ -113,4 +116,12 @@ public class MemberDTO {
 	public void setSns_division(int sns_division) {
 		this.sns_division = sns_division;
 	}
+	public Date getSignup_date() {
+		return signup_date;
+	}
+	public void setSignup_date(Date signup_date) {
+		this.signup_date = signup_date;
+	}
+
+	
 }

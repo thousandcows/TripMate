@@ -108,7 +108,9 @@ public class TourBoardController {
 			String navi = bservice.getPageNavi(currentPage, searchOption, searchText);
 			
 			String loginEmailId = (String)request.getSession().getAttribute("loginEmailID");
+			List<NoticeDTO> nt_list = bservice.ntselectAll();  
 			
+			model.addAttribute("nt_list", nt_list);
 			model.addAttribute("writer", loginEmailId);
 			model.addAttribute("list", list);
 			model.addAttribute("navi", navi);
