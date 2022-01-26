@@ -217,7 +217,7 @@
     	  		<div class="notice_enroll">
        		        <div class="nt_seq" style="width: 5%;"><i class="fas fa-bullhorn"></i></div>
        		        <div class="nt_tour" style="width: 7%;">공지</div>
-       		        <div class="nt_title" style="width: 44%;"><a href="/tourboard/noticeDetail?seq=${n.seq}">${n.title }</a></div>
+       		        <div class="nt_title" style="width: 44%;"><a href="/companyboard/noticeDetail?seq=${n.seq}">${n.title }</a></div>
        		        <div class="nt_recruit" style="width: 9%;">-</div>
        		        <div class="nt_nick" style="width: 10%;">${n.nick }</div>
        		        <div class="nt_writen_time" style="width: 10%;">${n.writen_date }</div>

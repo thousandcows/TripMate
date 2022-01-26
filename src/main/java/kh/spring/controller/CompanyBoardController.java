@@ -25,6 +25,7 @@ import kh.spring.dto.MemberDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.service.ComReplyService;
 import kh.spring.service.CompanyBoardService;
+import kh.spring.service.TourBoardService;
 import kh.spring.statics.Statics;
 
 @Controller
@@ -36,6 +37,9 @@ public class CompanyBoardController {
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private TourBoardService bservice;
 	
 	@Autowired
 	public ComReplyService crs;
@@ -330,5 +334,22 @@ public class CompanyBoardController {
 		return "\\images\\" + sysName;
 	}
 	
+	@RequestMapping("noticeDetail")
+	public String noticeDetail(int seq, Model model) {
 
+		NoticeDTO ndto = bservice.selectByNtSeq(seq);
+		
+		model.addAttribute("dto", ndto);
+		
+		return "companyboard/noticeDetail";
+	}
+	
+	@RequestMapping("noticeModify")
+	public String noticeModify(int seq, String title, String explanation) throws Exception{
+		
+		String contents = explanation;
+		bservice.noticeModify(seq, title, contents);
+		System.out.println("다시 돌아갈 준비 중");
+		return "redirect:/companyboard/noticeDetail?seq="+seq;
+	}
 }
