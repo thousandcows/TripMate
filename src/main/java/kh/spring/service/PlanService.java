@@ -31,8 +31,8 @@ public class PlanService {
 	public List<Integer> listCount(int mem_seq,int page) {
 		int total = dao.listCount(mem_seq);
 		int totalPage = 0;
-		if(total%Statics.RECORD_COUNT_PER_PAGE==0) {totalPage = (total/Statics.RECORD_COUNT_PER_PAGE);
-		}else {totalPage = (total/Statics.RECORD_COUNT_PER_PAGE)+1;}
+		if(total%Statics.RECORD_PLAN==0) {totalPage = (total/Statics.RECORD_PLAN);
+		}else {totalPage = (total/Statics.RECORD_PLAN)+1;}
 		int startNavi = (page-1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
 		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;         
 
@@ -53,8 +53,8 @@ public class PlanService {
 	}
 	
 	public List<PlanDTO> listing(int seq,int page){
-		int startNum = (page*Statics.RECORD_COUNT_PER_PAGE)-(Statics.RECORD_COUNT_PER_PAGE-1);
-		int endNum = page*Statics.RECORD_COUNT_PER_PAGE;
+		int startNum = (page*Statics.RECORD_PLAN)-(Statics.RECORD_PLAN-1);
+		int endNum = page*Statics.RECORD_PLAN;
 		return dao.listing(seq,startNum,endNum);
 	}
 	

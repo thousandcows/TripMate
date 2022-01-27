@@ -50,24 +50,60 @@
 		<div class="banner_content"> 여행 계획을 세워보세요. </div>
 	</div>
 	<div class="container mt-4">
-		<div class="row border mt-4 d-flex justify-content-center">
-				<c:set var="now" value="<%=new java.util.Date()%>" />
+		<div class="row border mt-4">
+			<div class="col">
+				<div class="row border">
+					<div class="col-3 col-xl-8 text-center">
+						<span>제목</span>
+					</div>
+					<div class="col-3 col-xl-1 text-center">
+						<span>분류</span>
+					</div>
+					<div class="col-2 col-xl-1 text-center">
+						<span>여행 시작일</span>
+					</div>
+					<div class="col-2 col-xl-1 text-center">
+						<span>여행 종료일</span>
+					</div>
+					<div class="col-2 col-xl-1 text-center">
+						<span>진행 상황</span>
+					</div>
+				</div>
+							<c:set var="now" value="<%=new java.util.Date()%>" />
 				<c:forEach var="i" items="${list }">
-						<div class="card p-2 m-2" style="width: 18rem;">
-							<a href="/plan/detail?seq=${i.seq }">
-						
-								  <div class="card-body">
-								    <h5 class="card-title">${i.title }</h5>
-								    <h6 class="card-subtitle mb-2 text-muted">${i.theme }</h6>
-								    <p class="card-text">							
-									<span>시작일 : ${i.startDate }</span><br>
-									<span>종료일 : ${i.endDate }</span>
-									</p>	
-								  </div>
-						</a>
+					<div class="row border">
+						<div class="col-3 col-xl-8">
+						<a href="/plan/detail?seq=${i.seq }"><span>${i.title }</span></a>
 						</div>
+						<div class="col-3 col-xl-1 text center">
+							<span>${i.theme }</span>
+						</div>
+						<div class="col-2 col-xl-1 text-center">
+							<span>${i.startDate }</span>
+						</div>
+						<div class="col-2 col-xl-1 text-center">
+							<span>${i.endDate }</span>
+						</div>
+						<div class="col-2 col-lg-1 text-center">
+							<fmt:parseDate value="${i.startDate }" var="startDate" pattern="yyyy.MM.dd"/>
+							<fmt:parseDate value="${i.endDate }" var="endDate" pattern="yyyy.MM.dd"/>
+							<fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="start"/>
+							<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="end"/>
+							<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowD"/>
+							<c:if test="${start-nowD > 0 }">
+								<div>예정</div>
+							</c:if>
+							<c:if test="${start-nowD < 0 and end-nowD >= 0}">
+								<div>진행중</div>
+							</c:if>
+							<c:if test="${end-nowD < 0}">
+								<div>완료</div>
+							</c:if>
 							
+						</div>
+					</div>
 				</c:forEach>
+			</div>
 		</div>
 		<div class="row mt-4">
 			<div class="col text-end">
