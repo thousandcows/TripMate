@@ -27,13 +27,12 @@ public class NoticeEndpoint {
 //	private static List<Session> clients = Collections.synchronizedList(new ArrayList<>());
 	private static Map<String, Session> map = Collections.synchronizedMap(new HashMap<>());
 
-	private String loginNick = "";
 	@OnOpen
 	public void onConnect(Session session, EndpointConfig config) { // 핸드쉐이크한 config 받아옴
 //		clients.add(session);
 		// Config에서 넣은 세션을 가져옴
 		this.session = (HttpSession) config.getUserProperties().get("hSession");
-		loginNick = (String) this.session.getAttribute("loginNick");
+		String loginNick = (String) this.session.getAttribute("loginNick");
 		if (loginNick != null) {
 			map.put(loginNick, session);
 		}
