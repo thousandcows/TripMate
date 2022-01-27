@@ -431,6 +431,37 @@ a:active {
 	</div>
 	
 	<script>
+<<<<<<< HEAD
+  let wsObj = new Object();
+	wsObj.seq = "${dto.seq}";
+	wsObj.mem_seq = "${dto.mem_seq}";
+	wsObj.loginSeq = "${loginSeq}";
+	wsObj.title = "${dto.title}";
+	wsObj.nick = "${dto.nick}";
+	wsObj.board_num = "${dto.board_num}";
+	wsObj.reactioner = "${loginNick}";
+	$(document).on("click",".rp_id",function(){
+		let mem_seq = $(this).attr("value");
+		console.log(mem_seq);
+		$.ajax({
+			url:"/tmp/showMember?mem_seq="+mem_seq,
+    		dataType:"json",
+    		success:function(result){
+    			$('#myModal').modal('toggle');
+    			if(result.photo!=undefined){
+        			$("#profileImg").attr("src","/images/"+result.photo);    				
+    			}else{
+    				$("#profileImg").attr("src","/images/noPhoto.png");
+    			}
+    			$("#profileNick").text("사용자 명 : "+result.nick);
+    			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
+    			$("#profileGender").text("성별 : "+result.gender);    			
+    			$("#profilePhone").text("연락처 : " + result.phone);    			
+    			$("#profileAge").text("연령 : "+result.age);
+    			$("#profileTxt").text("자기소개 : "+result.text);
+    			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+    		}			
+=======
 	  let wsObj = new Object();
 		wsObj.seq = "${dto.seq}";
 		wsObj.title = "${dto.title}";
@@ -458,6 +489,7 @@ a:active {
     				$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
     			}			
 			})
+>>>>>>> 5f378f2926322cf04ed4f3190702cd2ce9f75b5f
 		})
 		$(document).on("click",".re_rp_id",function(){
 			let mem_seq = $(this).attr("value");
@@ -580,8 +612,17 @@ a:active {
 	          }else{ 
 	        	  var answer = confirm("댓글을 작성하시겠습니까?");
 	        	  if(answer){
+<<<<<<< HEAD
+									wsObj.reaction = 'comment';
+									ws.send(JSON.stringify(wsObj));
+									$.ajax({
+										url: "/member/reactionInserter",
+										data: {reaction: JSON.stringify(wsObj)}
+									});
+=======
 					wsObj.reaction = 'comment';
 					ws.send(JSON.stringify(wsObj));
+>>>>>>> 5f378f2926322cf04ed4f3190702cd2ce9f75b5f
 	                $("#frmReply").submit();
 	        	  }else{
 	                $("#rep_con").val() = "";
@@ -777,6 +818,10 @@ a:active {
                 if(heart==1) {
 										wsObj.reaction = 'like';
 										ws.send(JSON.stringify(wsObj));
+										$.ajax({
+										url: "/member/reactionInserter",
+										data: {reaction: JSON.stringify(wsObj)}
+										});
                     $('#heart').prop("src","/images/like.png");
                     $("#rec_count").html(" " + data.likeCount);
                 }

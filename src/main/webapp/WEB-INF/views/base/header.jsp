@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -43,16 +44,6 @@
         color: #000000;
       }
 
-      .noticeList{
-        width:300px;
-        height:300px;
-        border:1px solid black;
-        position:absolute;
-        top:50px;
-        background-color:white;
-        right:200px;
-        z-index:9999;
-      }
       #noticeGround{
         display:flex;
         flex-direction: column-reverse;
@@ -64,6 +55,7 @@
         color:black;
         font-size:14px;
         text-decoration:none;
+        z-index:999999;
       }
       .websocTest{
         width:fit-content;
@@ -71,6 +63,44 @@
         border-radius:3px;
         padding:3px;
         margin:2px;
+        z-index:999999;
+      }
+
+      /* 헤더 알림글씨 */
+      .noticeListBox{
+        width:350px;
+        height:320px;
+        border:1px solid black;
+        position:absolute;
+        top:50px;
+        background-color:white;
+        right:200px;
+      }
+      .noticeListBoxIn{
+        height: 270px;
+        overflow: auto;
+      }
+      .noticeLista{
+        color:black;
+        font-size:13px;
+      }
+      .noticeLista:hover{
+        color:gray;
+      }
+      .noticeList{
+        margin-top:15px;
+      }
+      .noticeListBoxClose{
+        width:100%;
+        text-align:center;
+      }
+      .noticeListBoxCloseBtn{
+        width:80px;
+        height:30px;
+        background-color:white;
+        border:1px solid gray;
+        border-radius:4px;
+        margin:5px;
       }
     </style>
 
@@ -230,10 +260,45 @@
 
               <li class="nav-item">
                 <c:choose>
-                  <c:when test="${loginEmailID != null}">
+                  <c:when test="${loginSeq != null}">
                     <div id="loginAfterBox">
-                      <span></span><button type="button" class="notice" id="noticeBtn">TEST</button>
-                      <div class="noticeList" id="noticeList" style="display: none;"></div>
+                      <span></span><button type="button" id="noticeListBtn">알림</button>
+                      <div class="noticeListBox" id="noticeListBox" style="display: none;">
+                        <div class="noticeListBoxIn" id="noticeListBoxIn">
+                          <c:forEach var="reactions" items="${reactions}">
+                            <c:choose>
+                              <c:when test="${reactions.reaction eq 'comment'}">
+                                <c:if test="${reactions.board_num eq 1}">
+                                  <div class="noticeList"><a href="/tourboard/detail?seq=${reactions.seq}" class="noticeLista">여행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
+                                </c:if>
+                                <c:if test="${reactions.board_num eq 2}">
+                                  <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}" class="noticeLista">동행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
+                                </c:if>
+                              </c:when>
+                              <c:when test="${reactions.reaction eq 'like'}">
+                                <c:if test="${reactions.board_num eq 1}">
+                                  <div class="noticeList"><a href="/tourboard/detail?seq=${reactions.seq}" class="noticeLista">여행게시판 ${reactions.title} 글에 좋아요 반응이 있습니다.</a></div>
+                                </c:if>
+                                <c:if test="${reactions.board_num eq 2}">
+                                  <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}" class="noticeLista">동행게시판 ${reactions.title} 글에 좋아요 반응이 있습니다.</a></div>
+                                </c:if>
+                              </c:when>
+                              <c:when test="${reactions.reaction eq 'joinTrip'}">
+                                <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}" class="noticeLista">동행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 동행을 요청하였습니다.</a></div>
+                              </c:when>
+                            </c:choose>
+                          </c:forEach>
+                          <c:if test="${fn:length(reactions) == 0}">
+                            새로운 알림이 없습니다.
+                          </c:if>
+                        </div>
+                        <div class="noticeListBoxClose">
+                          <c:if test="${fn:length(reactions) != 0}">
+                            <button type="button" class="noticeListBoxCloseBtn" id="noticeListRemoveBtn">모두삭제</button>
+                          </c:if>
+                          <button type="button" class="noticeListBoxCloseBtn" id="noticeListBoxCloseBtn">닫기</button>
+                        </div>
+                      </div>
                       ${loginNick} 님
                       <a href="/member/normalLogout">로그아웃</a>
                       <a href="/member/mypageGo">마이페이지</a>
@@ -250,7 +315,6 @@
         </div>
       </header>
 
-      ${testPost}
       <div id="noticeGround">
 
       </div>
