@@ -53,4 +53,13 @@ public class AdminService {
 		return adao.noticeInsert(ndto);
 	}
 	
+	public NoticeDTO selectBySeq(int seq) {
+		
+		return adao.selectBySeq(seq);
+	}
+	
+	public int noticeModify(int seq, String title, String contents) {
+		
+		return adao.noticeModify(seq, title, contents);
+	}
 }

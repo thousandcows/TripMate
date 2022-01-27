@@ -355,15 +355,14 @@
                                             	<th>${mem.gender }</th>
                                             	<th>${mem.age }</th>
                                             	<th>${mem.phone }</th>
-                                            	<th>${mem.singup_date }</th>
-                                            	<th></th>
-	                                            <th>
-	                                            	<a href="/admin/leave?seq=${mem.seq}" class="btn btn-danger btn-icon-split">
+                                            	<th>${mem.signup_date }</th>
+                                            	<th>
+                                            		<a href="/admin/leave?seq=${mem.seq}" class="btn btn-danger btn-icon-split">
                                  				       <span class="icon text-white-50">
                                   				          <i class="far fa-trash-alt text-gray-100"></i>
                                  				       </span>
                                 				    </a>
-	                                            </th>
+                                				</th>
                                         	</tr>
                                         </c:forEach>
                                     </tbody>

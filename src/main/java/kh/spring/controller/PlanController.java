@@ -43,11 +43,32 @@ public class PlanController {
 		List<Integer> paging = pServe.listCount(loginSeq,page);
 		List<PlanDTO> list = pServe.listing(loginSeq,page);
 		model.addAttribute("paging",paging);
-		model.addAttribute("firstNum",paging.get(0));
-		model.addAttribute("lastNum",paging.get(paging.size()-1));
+		if(paging.size()>0) {
+			model.addAttribute("firstNum",paging.get(0));
+			model.addAttribute("lastNum",paging.get(paging.size()-1));
+		}else {
+			model.addAttribute("firstNum",0);					
+			model.addAttribute("lastNum",0);
+		}
 		model.addAttribute("page",page);
 		model.addAttribute("list",list);
 		return "/plan/main";
+	}
+	
+	@RequestMapping("detail")
+	public String detail(int seq,Model model) throws Exception {
+		PlanDTO dto = pServe.getDetail(seq);
+		List<String> date = pServe.calDate(dto.getStartDate(),dto.getEndDate());
+		List<List<AreaDTO>> list = new ArrayList<>();
+		for(int i = 0; i<date.size();i++) {
+			list.add(pServe.detailPlanList(seq,date.get(i)));			
+		}
+		int loginSeq = (int)session.getAttribute("loginSeq");
+		
+		model.addAttribute("dto",dto);
+		model.addAttribute("list",list);
+		model.addAttribute("loginSeq",loginSeq);
+		return "/plan/detail";
 	}
 	
 	@RequestMapping("newPlan")
@@ -59,6 +80,11 @@ public class PlanController {
 	public String modify(int seq, Model model) throws Exception{
 		PlanDTO dto = pServe.callPlan(seq);
 		int loginSeq = (int) session.getAttribute("loginSeq");
+		//공유 기능 추가시 제거, 공유기능 추가시 DB 별도테이블 생성
+		if(dto.getMem_seq() != loginSeq) {
+			return "/";
+		}
+		
 		// 찜목록 조회 갯수
 		List<AreaDTO> adto = new ArrayList<>();
 		List<Integer> mySaveListSeq = mServe.mySaveListSeq(loginSeq, Statics.SAVE_LIST_START,Statics.SAVE_LIST_END);
@@ -78,6 +104,12 @@ public class PlanController {
 		model.addAttribute("seq",seq);
 		model.addAttribute("dto",dto);
 		return "/plan/planning";
+	}
+	
+	@RequestMapping("delete")
+	public String delete(int seq) {
+		pServe.delete(seq);
+		return "redirect:/plan/main?page=1";
 	}
 	
 	// 찜목록 더보기
@@ -135,24 +167,6 @@ public class PlanController {
 		return result;
 	}
 	
-	@RequestMapping("detail")
-	public String detail(int seq,Model model) throws Exception {
-		PlanDTO dto = pServe.getDetail(seq);
-		List<String> date = pServe.calDate(dto.getStartDate(),dto.getEndDate());
-		List<List<AreaDTO>> list = new ArrayList<>();
-		for(int i = 0; i<date.size();i++) {
-			list.add(pServe.detailPlanList(seq,date.get(i)));			
-		}
-		
-		model.addAttribute("dto",dto);
-		model.addAttribute("list",list);
-		return "/plan/detail";
-	}
-	
-	@Autowired
-	public HttpServletRequest request;
-
-	
 	@ResponseBody
 	@RequestMapping(value="planSort", produces = "application/text;charset=utf-8")
 	public String planSort(@RequestParam(value="target[]")int[] target) throws Exception{
@@ -170,7 +184,7 @@ public class PlanController {
 	@ResponseBody
 	@RequestMapping(value="planDateDelete", produces = "application/text;charset=utf-8")
 	public String planDateDelete(@RequestParam(value="seq")int seq) {
-		pServe.deletePlan(seq);
+		pServe.deleteDatePlan(seq);
 		return "OK";
 	}
 	

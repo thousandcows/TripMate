@@ -22,8 +22,10 @@ import kh.spring.dto.ComReplyDTO;
 import kh.spring.dto.ComReplyReplyDTO;
 import kh.spring.dto.CompanyBoardDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.NoticeDTO;
 import kh.spring.service.ComReplyService;
 import kh.spring.service.CompanyBoardService;
+import kh.spring.service.TourBoardService;
 import kh.spring.statics.Statics;
 
 @Controller
@@ -37,6 +39,9 @@ public class CompanyBoardController {
 	private HttpSession session;
 	
 	@Autowired
+	private TourBoardService bservice;
+	
+	@Autowired
 	public ComReplyService crs;
 	
 	@RequestMapping("list")
@@ -45,8 +50,6 @@ public class CompanyBoardController {
 //		검색어 
 		String searchOption = request.getParameter("searchOption");
 		String searchText = request.getParameter("searchText");
-		
-		System.out.println("1컨트롤러에 들어오는 searchOption : searchText = "+ searchOption + " :  " + searchText);
 		
 		if(searchText==null&&searchOption==null) {
 			String cpage = request.getParameter("cpage");
@@ -65,13 +68,14 @@ public class CompanyBoardController {
 			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
 			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
 			
-			List<CompanyBoardDTO> list = cbs.selectAll(start, end, null, null);			
+			List<CompanyBoardDTO> list = cbs.selectAll(start, end, null, null);
 			String navi = cbs.getPageNavi(currentPage, searchOption, searchText);
 			
 			String nick = (String) session.getAttribute("loginNick");
-			System.out.println("loginNick = "+ nick);
-
 			
+			List<NoticeDTO> nt_list = cbs.ntselectAll();  
+			
+			model.addAttribute("nt_list", nt_list);			
 			model.addAttribute("nick",nick);
 			model.addAttribute("list", list);
 			model.addAttribute("navi", navi);
@@ -85,7 +89,6 @@ public class CompanyBoardController {
 			
 			int currentPage = Integer.parseInt(request.getParameter("cpage"));
 			int pageTotalCount = cbs.getPageTotalCount(searchOption, searchText);
-			System.out.println("컨트롤러에 currentPage, pageTotalCount: " + currentPage + " : " + pageTotalCount);
 			
 			if(currentPage < 1) {
 				currentPage = 1;
@@ -97,14 +100,10 @@ public class CompanyBoardController {
 			int start =  currentPage*Statics.RECORD_COUNT_PER_PAGE-(Statics.RECORD_COUNT_PER_PAGE-1);
 			int end = currentPage*Statics.RECORD_COUNT_PER_PAGE;
 			List<CompanyBoardDTO> list = cbs.selectAll(start, end, searchOption, searchText);
-			//System.out.println("컨트롤러에 가져온 작성자 이름 검색 값 : " + list.get(0).getNick());
-			System.out.println("컨트롤러에 start, end, searchoption, searchtext: " + start + " : " + end + " : " + searchOption + " : " + searchText);
-			
-			
+		
 			String navi = cbs.getPageNavi(currentPage, searchOption, searchText);
 			
 			String nick = (String) session.getAttribute("loginNick");
-			System.out.println("loginNick = "+ nick);
 			
 			model.addAttribute("nick",nick);
 			model.addAttribute("list", list);
@@ -161,12 +160,8 @@ public class CompanyBoardController {
 		}
 		
 		
-		//댓글+대댓글 갯수
-//		System.out.println("seq : " + seq);
 		int replyCount = cbs.replyCount(seq);
-//		System.out.println("replyCount : " + replyCount);
 		int replyReplyCount = cbs.replyReplyCount(seq);
-//		System.out.println("replyReplyCount : " + replyReplyCount);
 		
         List<ComReplyDTO> rep_list = crs.selectAll(seq);
         List<ComReplyReplyDTO> re_rep_list = crs.selectReAll();
@@ -186,12 +181,10 @@ public class CompanyBoardController {
 		 
 		 // 신청자 카운트
 		 int memCount = cbs.memCount(seq);
-		 System.out.println(memCount + ": memcount 입니다.");
 		 model.addAttribute("memCount",memCount);
 		 
 		 // 좋아요 카운트
 		 int likeCount = cbs.totalBoardLike(seq);
-		 System.out.println(likeCount + ": likeCount 입니다.");
 		 model.addAttribute("likeCount", likeCount);
 		 
         
@@ -251,7 +244,6 @@ public class CompanyBoardController {
         
         int likeCount = cbs.totalBoardLike(boardId);
         map.put("likeCount", likeCount);
-        System.out.println("likeCount 값 controller에서.. " + likeCount);
 
         return map;
 
@@ -269,7 +261,6 @@ public class CompanyBoardController {
 		dto.setPar_seq(seq);
 		
 		int dupl = cbs.memDuplCheck(dto);
-		System.out.println(dupl + "");
 		if(dupl == 0) {
 			cbs.insertMem(dto);	
 		}
@@ -343,5 +334,22 @@ public class CompanyBoardController {
 		return "\\images\\" + sysName;
 	}
 	
+	@RequestMapping("noticeDetail")
+	public String noticeDetail(int seq, Model model) {
 
+		NoticeDTO ndto = bservice.selectByNtSeq(seq);
+		
+		model.addAttribute("dto", ndto);
+		
+		return "companyboard/noticeDetail";
+	}
+	
+	@RequestMapping("noticeModify")
+	public String noticeModify(int seq, String title, String explanation) throws Exception{
+		
+		String contents = explanation;
+		bservice.noticeModify(seq, title, contents);
+		System.out.println("다시 돌아갈 준비 중");
+		return "redirect:/companyboard/noticeDetail?seq="+seq;
+	}
 }

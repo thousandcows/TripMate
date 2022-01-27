@@ -138,11 +138,16 @@ public class PlanService {
 		dao.sortDatePlan(seq,day);
 	}
 	
-	public void deletePlan(int seq) {
-		dao.deletePlan(seq);
+	public void deleteDatePlan(int seq) {
+		dao.deleteDatePlan(seq);
 	}
 	
 	public void insertMemo(int seq, String memo) {
 		dao.insertMemo(seq,memo);
 	}
+	
+	public void delete(int seq) {
+		dao.deletePlan(seq);
+	}
+	
 }

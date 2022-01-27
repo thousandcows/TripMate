@@ -12,6 +12,7 @@ import kh.spring.dto.ComBoardLikeDTO;
 import kh.spring.dto.ComMemDTO;
 import kh.spring.dto.CompanyBoardDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.NoticeDTO;
 
 @Repository
 public class CompanyBoardDAO {
@@ -50,6 +51,11 @@ public class CompanyBoardDAO {
 		}
 	}
 	
+	public List<NoticeDTO> ntselectAll(){
+		
+		return mybatis.selectList("CompanyBoard.ntselectAll");
+	}
+	
 	public CompanyBoardDTO selectBySeq(int seq) {
 		return mybatis.selectOne("CompanyBoard.selectBySeq",seq);
 	}
@@ -74,8 +80,6 @@ public class CompanyBoardDAO {
 	
 	// 페이징
 	public int getRecordCount(String searchOption, String searchText) throws Exception {
-
-		System.out.println("DAO recoredCount에서의 searchOption : " + searchOption);
 		
 		if (searchOption==null) {
 			return mybatis.selectOne("CompanyBoard.recordCount");
@@ -84,16 +88,10 @@ public class CompanyBoardDAO {
 			return mybatis.selectOne("CompanyBoard.recordCountTitle", searchText);
 			
 		}else {
-			System.out.println("DAO recordCount에서 작성자로 찾는 중  : " + searchText);
 			return mybatis.selectOne("CompanyBoard.recordCountWriter", searchText);
 		}
 	}
 	
-	//	좋아요
-	/*
-	 * public int getBoardLike(ComBoardLikeDTO dto) throws Exception { return
-	 * mybatis.selectOne("CompanyBoard.getBoardLike", dto); }
-	 */
 	public void insertBoardLike(ComBoardLikeDTO dto) throws Exception {
         mybatis.insert("CompanyBoard.createBoardLike",dto);
     }

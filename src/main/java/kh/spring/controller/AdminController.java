@@ -67,7 +67,6 @@ public class AdminController {
 	@RequestMapping("noticeWrite")
 	public String noticeWrite() {
 		
-		System.out.println("지나갑니다~");
 		return "admin/noticeWrite";
 	}
 	
@@ -96,5 +95,21 @@ public class AdminController {
 		
 		aservice.memberLeave(seq);
 		return "redirect:/admin/member";
+	}
+	
+	@RequestMapping("noticeDetail")
+	public String noticeDetail(int seq, Model model) {
+		
+		NoticeDTO ndto = aservice.selectBySeq(seq);
+		
+		model.addAttribute("ndto", ndto);
+		return "/admin/noticeDetail";
+	}
+	
+	@RequestMapping("noticeModify")
+	public String noticeModify(int seq, String title, String contents) {
+		
+		aservice.noticeModify(seq, title, contents);
+		return "redirect:/admin/noticeDetail?seq="+seq;
 	}
 }

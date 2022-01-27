@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>title here</title>
+<title>여행지 게시판</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -50,24 +50,15 @@ body {
 	padding-left: 100px;
 }
 
-.container {
-	border: 1px solid red;
-}
-
 .container>.root {
 	padding-left: 80px;
 	overflow: auto;
 }
 
 .root>div {
-	border: 1px solid red;
 	float: left;
 	margin: 40px 0px 40px 0px;
 	padding-right: 10px;
-}
-
-.writeForm {
-	border: 1px solid red;
 }
 
 .catetitle {
@@ -81,7 +72,6 @@ body {
 }
 
 .title {
-	border: 1px solid red;
 	width: 90%;
 	float: left;
 }
@@ -90,16 +80,11 @@ body {
 	width: 100%;
 }
 
-.writeForm>div {
-	border: 1px solid red;
-}
-
 .contents {
 	padding-right: 80px;
 }
 
 .ft_btn {
-	border: 1px solid red;
 	width: 100%;
 	text-align: right;
 	padding: 0px 80px 0px 80px;
@@ -108,31 +93,22 @@ body {
 
 
 .reply {
-	border: 1px solid red;
 	padding: 0px 80px 0px 80px;
 }
 
-.reply>div {
-	border: 1px solid red;
-}
-
 .reply_list {
-	border: 1px solid red;
 	padding: 0px 80px 0px 80px;
 }
 
 .reply_title {
-	border: 1px solid red;
 	overflow: auto;
 }
 
 .reply_title>div {
 	float: left;
-	border: 1px solid red;
 }
 
 .reply_title>.rp_id {
-	border: 1px solid red;
 	width: 85%;
 	padding-left: 10px;
 }
@@ -144,17 +120,14 @@ body {
 
 .reply_contents {
 	overflow: auto;
-	border: 1px solid red;
 	width: 100%;
 }
 
 .reply_contents>div {
 	float: left;
-	border: 1px solid red;
 }
 
 .reply_contents>.rp_content {
-	border: 1px solid red;
 	width: 85%;
 }
 
@@ -172,7 +145,6 @@ body {
 }
 
 .re_reply{
-    border: 1px solid red;
     width: 100%;
     float: left;
     padding: 0px 80px 0px 80px;
@@ -180,12 +152,10 @@ body {
 
 .re_reply>.re_rp_title{
     overflow: auto;
-    border: 1px solid red;
 }
 
 .re_rp_title>div{
     float: left;
-    border: 1px solid red;
 }
 
 .re_rp_title>.re_rp_id{
@@ -202,7 +172,6 @@ body {
 
 .re_rp_contents>div{
     float: left;
-    border: 1px solid red;
 }
 
 .re_rp_contents>.re_rp_content{
@@ -245,7 +214,6 @@ a:active {
 
 /* 좋아요, 댓글란  */
         .like_n_rep{
-        	border: 1px solid red;
         	width: 100%;
         	height: 30px;
         	text-align: right;
@@ -254,7 +222,6 @@ a:active {
         }
         
         .like_n_rep>div{
-        	border: 1px solid red;
         	height:30px;
         	width: 55px;
         	text-align:center;
@@ -272,9 +239,10 @@ a:active {
 
 	<!-- .banner에 이미지 추가해야한다.-->
 	<div class="banner">
-		<div class="banner_title" href="">여행지 게시판</div>
-		<div class="banner_content">각 지역의 여행 후기를 남겨보세요</div>
+		<div class="banner_title" href=""> 여행지 게시판 </div>
+		<div class="banner_content"> 각 지역의 여행 후기를 남겨보세요 </div>
 	</div>
+	
 	<div class="container">
 		<div class="root">
 			<div class="home">
@@ -314,13 +282,13 @@ a:active {
 				</div>
 			</div>
 			<div class="ft_btn">
-				<a href="/tourboard/list?cpage=1"><button type=button>목록으로</button></a>
+				<a href="/tourboard/list?cpage=1"><button type=button class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">목록으로</button></a>
 				<c:if test="${!empty loginNick }">
 					<c:if test="${dto.nick == loginNick}">
-				<button type=button id=mod>수정하기</button>
-				<button type=button id=del>삭제하기</button>
-				<button type=button id=modOk style="display: none;">수정완료</button>
-				<button type=button id=modCancel style="display: none;">취소</button>
+				<button type=button id=mod class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">수정하기</button>
+				<button type=button id=del class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">삭제하기</button>
+				<button type=button id=modOk style="display: none;" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">수정완료</button>
+				<button type=button id=modCancel style="display: none;" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">취소</button>
 					</c:if>
 				</c:if>
 			</div>
@@ -358,7 +326,7 @@ a:active {
 				</div>
 				<div class="rp_write" style="text-align: right;">
 					<c:if test="${!empty loginNick }">
-						<button type=submit id="write_btn">작성하기</button>
+						<button type=submit id="write_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">작성하기</button>
 					</c:if>
 				</div>
 			</div>
@@ -380,12 +348,12 @@ a:active {
 						</div>
 						<div class="rp_btns">
 							<c:if test="${!empty loginNick }">
-							<button type=button class="rp_reply_btn" id="rp_reply_btn${rp.seq }">rep</button>
+							<button type=button class="rp_reply_btn" id="rp_reply_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">rep</button>
 								<c:if test="${rp.nick == loginNick}">
-							<button type=button class="rp_mod_btn" id="rp_mod_btn${rp.seq }">mod</button>
-							<button type=button class="rp_del_btn" id="rp_del_btn${rp.seq }" style="color: red;"><b>del</b></button>
-							<button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none;" formaction="/tourreply/modify">ok</button>
-							<button type=button class="rp_cancle_btn" id="rp_cancle_btn${rp.seq }" style="color: red; display: none;"><b>can</b></button>
+							<button type=button class="rp_mod_btn" id="rp_mod_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">mod</button>
+							<button type=button class="rp_del_btn" id="rp_del_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">del</button>
+							<button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none;" formaction="/tourreply/modify" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">ok</button>
+							<button type=button class="rp_cancle_btn" id="rp_cancle_btn${rp.seq }" style="display: none;" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">can</button>
 								</c:if>
 							</c:if>
 						</div>
@@ -407,10 +375,10 @@ a:active {
                                 		<div class="re_rp_btns" style="text-align:center">
                                 			<c:if test="${!empty loginNick }">
                                 				<c:if test="${re.nick == loginNick}">
-                             			   			<button type=button class="re_mod_btn" id="re_mod_btn${re.seq }" rpseq=${rp.seq }>mod</button>
-                                					<button type=button class="re_del_btn" id="re_del_btn${re.seq }" style="color: red;"><b>del</b></button>
-                                					<button type=button class="re_modOk_btn" id="re_modOk_btn${re.seq }" rpseq=${rp.seq } style="display: none;">ok</button>
-                                					<button type=button class="re_cancle_btn" id="re_cancle_btn${re.seq }" style="display: none;">can</button>
+                             			   			<button type=button class="re_mod_btn" id="re_mod_btn${re.seq }" rpseq=${rp.seq } class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">mod</button>
+                                					<button type=button class="re_del_btn" id="re_del_btn${re.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">del</button>
+                                					<button type=button class="re_modOk_btn" id="re_modOk_btn${re.seq }" rpseq=${rp.seq } style="display: none;" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">ok</button>
+                                					<button type=button class="re_cancle_btn" id="re_cancle_btn${re.seq }" style="display: none;" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">can</button>
                                 				</c:if>
                                 			</c:if>
                                 		</div>
@@ -463,6 +431,7 @@ a:active {
 	</div>
 	
 	<script>
+<<<<<<< HEAD
   let wsObj = new Object();
 	wsObj.seq = "${dto.seq}";
 	wsObj.mem_seq = "${dto.mem_seq}";
@@ -492,34 +461,62 @@ a:active {
     			$("#profileTxt").text("자기소개 : "+result.text);
     			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
     		}			
+=======
+	  let wsObj = new Object();
+		wsObj.seq = "${dto.seq}";
+		wsObj.title = "${dto.title}";
+		wsObj.nick = "${dto.nick}";
+		wsObj.board_num = "${dto.board_num}";
+		$(document).on("click",".rp_id",function(){
+			let mem_seq = $(this).attr("value");
+			console.log(mem_seq);
+			$.ajax({
+				url:"/tmp/showMember?mem_seq="+mem_seq,
+    			dataType:"json",
+    			success:function(result){
+	    			$('#myModal').modal('toggle');
+    				if(result.photo!=undefined){
+	        			$("#profileImg").attr("src","/images/"+result.photo);    				
+    				}else{
+	    				$("#profileImg").attr("src","/images/noPhoto.png");
+    				}
+    				$("#profileNick").text("사용자 명 : "+result.nick);
+    				$("#profilePreference").text("여행 선호 방식 : "+result.preference);
+    				$("#profileGender").text("성별 : "+result.gender);    			
+    				$("#profilePhone").text("연락처 : " + result.phone);    			
+    				$("#profileAge").text("연령 : "+result.age);
+    				$("#profileTxt").text("자기소개 : "+result.text);
+    				$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+    			}			
+			})
+>>>>>>> 5f378f2926322cf04ed4f3190702cd2ce9f75b5f
 		})
-	})
-	$(document).on("click",".re_rp_id",function(){
-		let mem_seq = $(this).attr("value");
-		console.log("대댓글 멤버 시퀀스 값 : " + mem_seq);
-		$.ajax({
-			url:"/tmp/showMember?mem_seq="+mem_seq,
-    		dataType:"json",
-    		success:function(result){
-    			$('#myModal').modal('toggle');
-    			if(result.photo!=undefined){
-        			$("#profileImg").attr("src","/images/"+result.photo);    				
-    			}else{
-    				$("#profileImg").attr("src","/images/noPhoto.png");
-    			}
-    			$("#profileNick").text("사용자 명 : "+result.nick);
-    			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
-    			$("#profileGender").text("성별 : "+result.gender);    			
-    			$("#profilePhone").text("연락처 : " + result.phone);    			
-    			$("#profileAge").text("연령 : "+result.age);
-    			$("#profileTxt").text("자기소개 : "+result.text);
-    			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
-    		}			
+		$(document).on("click",".re_rp_id",function(){
+			let mem_seq = $(this).attr("value");
+			console.log("대댓글 멤버 시퀀스 값 : " + mem_seq);
+			$.ajax({
+				url:"/tmp/showMember?mem_seq="+mem_seq,
+    			dataType:"json",
+    			success:function(result){
+	    			$('#myModal').modal('toggle');
+    				if(result.photo!=undefined){
+	        			$("#profileImg").attr("src","/images/"+result.photo);    				
+    				}else{
+	    				$("#profileImg").attr("src","/images/noPhoto.png");
+    				}
+    				$("#profileNick").text("사용자 명 : "+result.nick);
+    				$("#profilePreference").text("여행 선호 방식 : "+result.preference);
+    				$("#profileGender").text("성별 : "+result.gender);    			
+    				$("#profilePhone").text("연락처 : " + result.phone);    			
+    				$("#profileAge").text("연령 : "+result.age);
+    				$("#profileTxt").text("자기소개 : "+result.text);
+    				$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+    			}			
+			})
 		})
-	})
-	$('#modalCloseBtn').on("click",function(){
-		$("#myModal").modal("toggle");
-	})
+		$('#modalCloseBtn').on("click",function(){
+			$("#myModal").modal("toggle");
+		})
 	</script>	
 	
 	<script>
@@ -615,12 +612,17 @@ a:active {
 	          }else{ 
 	        	  var answer = confirm("댓글을 작성하시겠습니까?");
 	        	  if(answer){
+<<<<<<< HEAD
 									wsObj.reaction = 'comment';
 									ws.send(JSON.stringify(wsObj));
 									$.ajax({
 										url: "/member/reactionInserter",
 										data: {reaction: JSON.stringify(wsObj)}
 									});
+=======
+					wsObj.reaction = 'comment';
+					ws.send(JSON.stringify(wsObj));
+>>>>>>> 5f378f2926322cf04ed4f3190702cd2ce9f75b5f
 	                $("#frmReply").submit();
 	        	  }else{
 	                $("#rep_con").val() = "";
