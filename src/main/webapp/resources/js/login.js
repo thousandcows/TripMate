@@ -253,8 +253,6 @@ if (eventCheck != null) {
   document.querySelector("#normalLoginBtn").addEventListener("click", () => {
     let emailID = document.querySelector("#normalLoginID").value
     let pw = document.querySelector("#normalLoginPW").value
-    console.log("아이디 : " + emailID);
-    console.log("비번 : " + pw);
     $.ajax({
       type: "post",
       url: "/member/normalLogin",
@@ -266,8 +264,10 @@ if (eventCheck != null) {
       if (res == 0) {
         document.querySelector(".normalLoginConfirm").style.color = "red";
         document.querySelector(".normalLoginConfirm").innerHTML = "계정과 패스워드를 확인해주세요.";
-      } else {
+      } else if(res == 1) {
         location.reload();
+      } else if(res == 2){
+        location.href="/dashsboard/admin/dashboard";
       }
     });
   });
