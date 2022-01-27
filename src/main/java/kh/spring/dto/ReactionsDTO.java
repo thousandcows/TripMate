@@ -1,6 +1,7 @@
 package kh.spring.dto;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class ReactionsDTO {
 	private int seq;
@@ -82,6 +83,39 @@ public class ReactionsDTO {
 		this.reaction = reaction;
 		this.reactioner = reactioner;
 		this.time = time;
+	}
+	
+	public String getFormedDate() { // 날짜값 내가 정해서 꺼내는것
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+		return sdf.format(this.time.getTime());
+	}
+	
+	public String getDetailDate() { // 몇분전 몇시간전 이런식으로 작성일 꺼내는거
+		long current_time = System.currentTimeMillis(); // 현재의 TimeStamp
+		long write_time = this.time.getTime();	// 글이 작성된 시점의 TimeStamp
+		
+		long time_gap = current_time - write_time; // 작성된 시점과 현재시간의 갭
+		
+		if(time_gap < 60000) {
+			return "1분 전";
+		} else if (time_gap < 120000) {
+			return "2분 전";
+		} else if (time_gap < 180000) {
+			return "3분 전";
+		} else if (time_gap < 240000) {
+			return "4분 전";
+		} else if (time_gap < 300000) {
+			return "5분 전";
+		} else if (time_gap < 600000) {
+			return "10분 전";
+		} else if (time_gap < 3600000) {
+			return "1시간 전";
+		} else if (time_gap < 86400000) {
+			return "오늘";
+		} else {
+			return getFormedDate();
+		}
+		
 	}
 	
 	

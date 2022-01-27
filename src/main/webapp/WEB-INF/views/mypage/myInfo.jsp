@@ -326,7 +326,7 @@
           <div class="sideMyNick">${loginInfo.nick}</div>
           <ul class="sideBarMenuBox">
             <li><a href="/member/mypageGo">개인정보 수정</a></li>
-            <li><a href="/member/myplan?page=1">여행 기록</a></li>
+            <li><a href="/member/myplan?page=1">내 여행계획</a></li>
             <li><a href="/member/saveList">찜 여행 목록</a></li>
             <li><a href="/member/writenList">게시글 관리</a></li>
           </ul>
