@@ -30,14 +30,13 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import kh.spring.dto.AreaDTO;
 import kh.spring.dto.KakaoProfile;
 import kh.spring.dto.KakaoToken;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MyPostDTO;
-import kh.spring.dto.MyPostDelListDTO;
+import kh.spring.dto.ReactionDTO;
 import kh.spring.service.AreaService;
 import kh.spring.service.DashboardService;
 import kh.spring.service.MemberService;
@@ -248,7 +247,9 @@ public class MemberController {
 	// 로그아웃
 	@RequestMapping("normalLogout")
 	public String normalLogout() {
-		session.invalidate(); // 이게 맞을듯
+//		session.invalidate(); // 이게 맞을 것 같은데 웹소켓 에러때문에 일단 보류
+		session.removeAttribute("loginSeq");
+		session.removeAttribute("loginNick");
 		return "redirect:/";
 		// 나중에 현재페이지 로그인&로그아웃으로 변경할것
 	}
@@ -270,11 +271,9 @@ public class MemberController {
 		dto.setSeq((int) session.getAttribute("loginSeq"));
 		String realPath = session.getServletContext().getRealPath("") + "\\resources\\images";
 		System.out.println("리얼패스 : " + realPath);
-		System.out.println("폰 오픈 : " + dto.getPh_Open());
 		if(dto.getPh_Open() == null) {
 			dto.setPh_Open("off");
 		}
-		System.out.println("폰 오픈 변경후 : " + dto.getPh_Open());
 		memberService.myInfoChangeOk(dto, file, realPath);
 		session.setAttribute("loginNick", dto.getNick());
 		session.setAttribute("loginGender", dto.getGender());
@@ -378,6 +377,21 @@ public class MemberController {
 	@RequestMapping(value = "myPostDelList", produces = "application/text;charset=utf-8")
 	public String myPostDelList(String list) {
 		return memberService.isMyPostDel(list);
+	}
+	
+	// 리액션 insert용
+	@ResponseBody
+	@RequestMapping(value = "reactionInserter", produces = "application/text;charset=utf-8")
+	public void reactionInserter(String reaction) {
+		int loginSeq = (int) session.getAttribute("loginSeq");
+		memberService.insertReaction(reaction, loginSeq);
+	}
+	
+	// 알림 삭제
+	@ResponseBody
+	@RequestMapping(value = "reactionRemove", produces = "application/text;charset=utf-8")
+	public void reactionRemove() {
+		memberService.reactionRemove((int) session.getAttribute("loginSeq"));
 	}
 
 	// 에러는 여기로

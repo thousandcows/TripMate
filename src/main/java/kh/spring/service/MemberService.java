@@ -14,14 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import kh.spring.dao.CompanyBoardDAO;
 import kh.spring.dao.MemberDAO;
-import kh.spring.dao.TourBoardDAO;
 import kh.spring.dto.AreaDTO;
 import kh.spring.dto.AreaSavedDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MyPostDTO;
 import kh.spring.dto.MyPostDelListDTO;
+import kh.spring.dto.ReactionDTO;
+import kh.spring.dto.ReactionsDTO;
 import kh.spring.statics.Statics;
 import kh.spring.utils.EncryptUtils;
 
@@ -172,7 +172,7 @@ public class MemberService {
 	public String savedAreaGrade(int seq) {
 		return memberDao.savedAreaGrade(seq);
 	}
-
+	
 	// 찜목록 더보기
 	public String moreSaving(int loginSeq, int btn) throws Exception {
 		int start = btn;
@@ -319,16 +319,33 @@ public class MemberService {
 		}.getType());
 		for (MyPostDelListDTO dto : delList) {
 			if (dto.getBoard_num() == 1) {
-				System.out.println("여행게시판 삭제 seq : " + dto.getSeq());
 				tourBoardService.delete(dto.getSeq());
 				tourBoardService.delete2(dto.getSeq());
 			} else {
-				System.out.println("동행게시판 삭제 seq : " + dto.getSeq());
 				companyBoardService.delete(dto.getSeq());
 				companyBoardService.delete2(dto.getSeq());
 			}
 		}
 		return "1";
+	}
+	
+	// 알림 저장
+	public int insertReaction(String reaction, int loginSeq) {
+		ReactionDTO dto = gson.fromJson(reaction, ReactionDTO.class);
+		if(loginSeq != dto.getMem_seq()) {
+			return memberDao.insertReaction(dto);
+		}
+		return 2;
+	}
+	
+	// 알림 가져오기
+	public List<ReactionsDTO> selectReactions(int loginSeq){
+		return memberDao.selectReactions(loginSeq);
+	}
+	
+	// 알림 삭제
+	public int reactionRemove(int loginSeq) {
+		return memberDao.reactionRemove(loginSeq);
 	}
 
 }
