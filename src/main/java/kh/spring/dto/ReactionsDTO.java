@@ -61,9 +61,6 @@ public class ReactionsDTO {
 	public void setReactioner(String reactioner) {
 		this.reactioner = reactioner;
 	}
-	public Date getTime() {
-		return time;
-	}
 	public void setTime(Date time) {
 		this.time = time;
 	}
@@ -86,30 +83,30 @@ public class ReactionsDTO {
 	}
 	
 	public String getFormedDate() { // 날짜값 내가 정해서 꺼내는것
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-		return sdf.format(this.time.getTime());
+		SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일");
+		return sdf.format(this.time);
 	}
 	
-	public String getDetailDate() { // 몇분전 몇시간전 이런식으로 작성일 꺼내는거
+	public String getTime() {
 		long current_time = System.currentTimeMillis(); // 현재의 TimeStamp
 		long write_time = this.time.getTime();	// 글이 작성된 시점의 TimeStamp
 		
 		long time_gap = current_time - write_time; // 작성된 시점과 현재시간의 갭
 		
 		if(time_gap < 60000) {
-			return "1분 전";
+			return "방금";
 		} else if (time_gap < 120000) {
-			return "2분 전";
+			return "2분전";
 		} else if (time_gap < 180000) {
-			return "3분 전";
+			return "3분전";
 		} else if (time_gap < 240000) {
-			return "4분 전";
+			return "4분전";
 		} else if (time_gap < 300000) {
-			return "5분 전";
+			return "5분전";
 		} else if (time_gap < 600000) {
-			return "10분 전";
+			return "10분전";
 		} else if (time_gap < 3600000) {
-			return "1시간 전";
+			return "1시간전";
 		} else if (time_gap < 86400000) {
 			return "오늘";
 		} else {
