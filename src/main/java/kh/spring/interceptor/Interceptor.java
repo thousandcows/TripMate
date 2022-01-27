@@ -40,9 +40,8 @@ public class Interceptor implements HandlerInterceptor{
 			ModelAndView modelAndView) throws Exception {
 		
 		if(session.getAttribute("loginNick") != null) {
-			String nick = (String) session.getAttribute("loginNick");
-			System.out.println("인터셉터 닉네임 : " + nick);
-			List<ReactionsDTO> reactions = memberService.selectReactions(nick);
+			int loginSeq = (int) session.getAttribute("loginSeq");
+			List<ReactionsDTO> reactions = memberService.selectReactions(loginSeq);
 			if(reactions.size() != 0 && modelAndView != null) {
 				modelAndView.getModel().put("reactions", reactions);
 			}

@@ -234,7 +234,8 @@ public class MemberController {
 	@RequestMapping("normalLogout")
 	public String normalLogout() {
 //		session.invalidate(); // 이게 맞을 것 같은데 웹소켓 에러때문에 일단 보류
-		session.removeAttribute("loginEmailID");
+		session.removeAttribute("loginSeq");
+		session.removeAttribute("loginNick");
 		return "redirect:/";
 		// 나중에 현재페이지 로그인&로그아웃으로 변경할것
 	}
@@ -368,15 +369,15 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value = "reactionInserter", produces = "application/text;charset=utf-8")
 	public void reactionInserter(String reaction) {
-		String loginNick = (String) session.getAttribute("loginNick");
-		memberService.insertReaction(reaction, loginNick);
+		int loginSeq = (int) session.getAttribute("loginSeq");
+		memberService.insertReaction(reaction, loginSeq);
 	}
 	
 	// 알림 삭제
 	@ResponseBody
 	@RequestMapping(value = "reactionRemove", produces = "application/text;charset=utf-8")
 	public void reactionRemove() {
-		memberService.reactionRemove((String) session.getAttribute("loginNick"));
+		memberService.reactionRemove((int) session.getAttribute("loginSeq"));
 	}
 
 	// 에러는 여기로

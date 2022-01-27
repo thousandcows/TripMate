@@ -570,6 +570,8 @@
 	<script>
 		let wsObj = new Object();
 		wsObj.seq = "${dto.seq}";
+		wsObj.mem_seq = "${dto.mem_seq}";
+		wsObj.loginSeq = "${loginSeq}";
 		wsObj.title = "${dto.title}";
 		wsObj.nick = "${dto.nick}";
 		wsObj.board_num = "${dto.board_num}";

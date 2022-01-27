@@ -330,22 +330,22 @@ public class MemberService {
 	}
 	
 	// 알림 저장
-	public int insertReaction(String reaction, String loginNick) {
+	public int insertReaction(String reaction, int loginSeq) {
 		ReactionDTO dto = gson.fromJson(reaction, ReactionDTO.class);
-		if(!loginNick.equals(dto.getNick())) {
+		if(loginSeq != dto.getMem_seq()) {
 			return memberDao.insertReaction(dto);
 		}
 		return 2;
 	}
 	
 	// 알림 가져오기
-	public List<ReactionsDTO> selectReactions(String nick){
-		return memberDao.selectReactions(nick);
+	public List<ReactionsDTO> selectReactions(int loginSeq){
+		return memberDao.selectReactions(loginSeq);
 	}
 	
 	// 알림 삭제
-	public int reactionRemove(String nick) {
-		return memberDao.reactionRemove(nick);
+	public int reactionRemove(int loginSeq) {
+		return memberDao.reactionRemove(loginSeq);
 	}
 
 }

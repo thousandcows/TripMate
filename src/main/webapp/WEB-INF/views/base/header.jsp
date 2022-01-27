@@ -258,7 +258,7 @@
 
               <li class="nav-item">
                 <c:choose>
-                  <c:when test="${loginEmailID != null}">
+                  <c:when test="${loginSeq != null}">
                     <div id="loginAfterBox">
                       <span></span><button type="button" id="noticeListBtn">알림</button>
                       <div class="noticeListBox" id="noticeListBox" style="display: none;">

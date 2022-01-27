@@ -164,13 +164,13 @@ public class MemberDAO {
 	}
 	
 	// 알림 꺼내오기
-	public List<ReactionsDTO> selectReactions(String nick){
-		return mybatis.selectList("Member.selectReactions", nick);
+	public List<ReactionsDTO> selectReactions(int loginSeq){
+		return mybatis.selectList("Member.selectReactions", loginSeq);
 	}
 	
 	// 알림 삭제
-	public int reactionRemove(String nick) {
-		return mybatis.delete("Member.reactionRemove", nick);
+	public int reactionRemove(int loginSeq) {
+		return mybatis.delete("Member.reactionRemove", loginSeq);
 	}
 
 }
