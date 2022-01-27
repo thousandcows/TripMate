@@ -36,9 +36,11 @@ import kh.spring.dto.KakaoProfile;
 import kh.spring.dto.KakaoToken;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MyPostDTO;
-import kh.spring.dto.ReactionDTO;
+import kh.spring.dto.PlanDTO;
 import kh.spring.service.AreaService;
+import kh.spring.service.DashboardService;
 import kh.spring.service.MemberService;
+import kh.spring.service.PlanService;
 import kh.spring.statics.Statics;
 
 @Controller
@@ -50,9 +52,16 @@ public class MemberController {
 
 	@Autowired
 	public AreaService areaService;
+	
+	@Autowired
+	public PlanService pServe;
+	
+	@Autowired
+	private DashboardService ds;
 
 	@Autowired
 	private HttpSession session;
+	
 
 	// 이메일 체크
 	@ResponseBody
@@ -100,6 +109,10 @@ public class MemberController {
 			session.setAttribute("loginEmailID", dto.getEmailID());
 			session.setAttribute("loginNick", dto.getNick());
 			session.setAttribute("loginGender", dto.getGender());
+			
+			// 방문자 통계용 코드
+			ds.setVisitTotalCount();
+			
 			return "1";
 		}
 	}
@@ -219,6 +232,11 @@ public class MemberController {
 			session.setAttribute("loginEmailID", kakaoDto.getEmailID());
 			session.setAttribute("loginNick", kakaoDto.getNick());
 			session.setAttribute("loginKakaoID", kakaoDto.getSns_division());
+			
+			// 방문자 통계용 코드
+			ds.setVisitTotalCount();
+						
+						
 		} else { // 가입내역이 없다면 회원가입을 시키고 이메일이랑 닉네임만 세션에 바로 담아버리면 될듯했는데 seq때문에 또 빼와야하네
 			memberService.kakaoSignup(kakaoLoginEmail, kakaoLoginNick, kakaoLoginId);
 			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginId);
@@ -378,6 +396,30 @@ public class MemberController {
 	@RequestMapping(value = "reactionRemove", produces = "application/text;charset=utf-8")
 	public void reactionRemove() {
 		memberService.reactionRemove((int) session.getAttribute("loginSeq"));
+	}
+	
+	// myPlan
+	@RequestMapping("myplan")
+	public String myPlan(Model model, int page) {
+		int loginSeq = (int)session.getAttribute("loginSeq");
+		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
+		String filePath = "\\images" + "\\" + dto.getPhoto();
+		dto.setPhoto(filePath); // 프로필 사진 설정
+		
+		List<Integer> paging = pServe.listCount(loginSeq,page);
+		List<PlanDTO> list = pServe.listing(loginSeq,page);
+		model.addAttribute("paging",paging);
+		if(paging.size()>0) {
+			model.addAttribute("firstNum",paging.get(0));
+			model.addAttribute("lastNum",paging.get(paging.size()-1));
+		}else {
+			model.addAttribute("firstNum",0);					
+			model.addAttribute("lastNum",0);
+		}
+		model.addAttribute("page",page);
+		model.addAttribute("list",list);
+		model.addAttribute("loginInfo", dto);
+		return "/mypage/myplan";
 	}
 
 	// 에러는 여기로

@@ -40,7 +40,7 @@
         <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="sidebar-brand-icon rotate-n-15">
                 	<i class="fas fa-map-marked-alt"></i>
                 </div>
@@ -118,86 +118,144 @@
                         <a id="refresh" href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-sync-alt fa-sm text-white-100"></i>&nbspRefresh</a>
                     </div>
 
-                    <!-- 그래프 : 방문자수-일자별(그래프), 방문자수-주간별(그래프) -->
-                    <div class="row">   
-						<div class="col-xl-6">
-                            <div class="card border-bottom-primary shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Number of Visitors(Daily)</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div>
-  									<%-- <canvas id="visitors_daily"></canvas> --%>
-								</div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-xl-6">
-                            <div class="card border-bottom-primary shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Number of Visitors(Monthly)</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div>
-  									<%-- <canvas id="visitors_monthly"></canvas> --%>
-								</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!--  신규회원(일간)  신규회원(월간) 회원 성별-->
+                    <!-- 방문자수 카운트 -->
                     <div class="row">
-						<div class="col-xl-4">
-                            <div class="card border-bottom-info shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">New Member(Daily)</h6>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-4 col-md-4 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                MEMBER (DAILY)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            	<span id="cntMember"></span>
+                                            	
+                                            	<span style="color:red">
+                                            	<c:if test="${withdrawal > 0 }">
+                                            		+ ${withdrawal }
+                                            	</c:if>
+                                            	<c:if test="${withdrawal < 0 }">
+                                            		- ${withdrawal }
+                                            	</c:if>
+                                            	<c:if test="${withdrawal == 0 }">
+                                            		 ${withdrawal }
+                                            	</c:if>
+                                            	</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                        	<i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- Card Body -->
-                                <div>
-  									<canvas id="line-chart"></canvas>
-								</div>
                             </div>
                         </div>
-                        
-                        <div class="col-xl-4">
-                            <div class="card border-bottom-info shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">New Member(Monthly)</h6>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-4 col-md-4 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Posts
+                                            </div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                    	<span id="totalPost"></span>
+                                                   		<span style="color:red">
+                                            			<c:if test="${plmaPost > 0 }">
+                                            				+ ${plmaPost }
+                                            			</c:if>
+                                            			<c:if test="${plmaPost < 0 }">
+                                            				- ${plmaPost }
+                                            			</c:if>
+                                            			<c:if test="${plmaPost == 0 }">
+                                            		 		${plmaPost }
+                                            			</c:if>
+                                            			</span> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- Card Body -->
-                                <div>
-  									<%-- <canvas id="newmem_monthly" style="display: block; height: 350px;" ></canvas> --%>
-								</div>
                             </div>
                         </div>
-                        	
-                        <div class="col-xl-4">
-                            <div class="card  border-bottom-info  shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Member Gender</h6>
+
+                        <!-- Pending Requests Card Example -->
+                        <div class="col-xl-4 col-md-4 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                VISITORS</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            	<span id="visitCnt"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                        	<i class="far fa-eye fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
                     
+                    <div class="row">
+
+                        <!-- Area Chart -->
+                        <div class="col-xl-6">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Number of Visitors(Daily)</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="line-chart5"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Area Chart -->
+                        <div class="col-xl-6">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">New Member(Daily)</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="line-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                        
+                   	
                     <!-- 여행, 동행, 계획 글 수 -->
                     <div class="row">
-						<div class="col-xl-4">
-                            <div class="card border-bottom-warning shadow mb-4">
+						<div class="col-xl-6">
+                            <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Tour board Post Count(Daily)</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Tour board Post Count(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div>
@@ -206,12 +264,12 @@
                             </div>
                         </div>
                         
-                        <div class="col-xl-4">
-                            <div class="card border-bottom-warning shadow mb-4">
+                        <div class="col-xl-6">
+                            <div class="card  shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Accompany board Post Count(Daily)</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Accompany board Post Count(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div>
@@ -219,12 +277,14 @@
 								</div>
                             </div>
                         </div>
-                        	
-                        <div class="col-xl-4">
-                            <div class="card  border-bottom-warning  shadow mb-4">
+                    </div>
+                    
+                    <div class="row">
+						<div class="col-xl-6">
+                            <div class="card   shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Plan Post Count(Daily)</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Plan Post Count(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div>
@@ -232,9 +292,9 @@
 								</div>
                             </div>
                         </div>
-                    </div>
                         
-
+                        
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -273,20 +333,45 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
     
     
     <!--  refresh 버튼 누를 때 dashboard db셋팅 -->
-    <!--  또다른 방법은 그냥 페이지 새로고침 할때마다 하도록 해도됨! -->
     <script>
     	$("#refresh").on("click", function(){
-    		location.href="/dashboard/insertTable";
+    		/* location.href="/dashboard/insertTable"; */
     	})
+    </script>
+    
+    <script>
+     	$(document).ready(function() {
+			getCnt();
+		});
+    	
+    	function getCnt() {
+    		$.ajax({
+					url : '/dashboard/ajax1',
+					type : 'POST',
+					success : function(data){
+						$("#cntMember").html(data.cntMember);
+						$("#totalPost").html(data.totalPost);
+						$("#visitCnt").html(data.visitCnt);
+					}
+				}); 
+    		}
+    </script>
+    
+    
+<!--   
+    <script>
+      	$(document).ready(function() {
+    		location.href="/dashboard/insertTable";
+		});  
+    </script> -->
+    
+    <script>
+/*     	$(window).on("load", function(){
+    		location.href="/dashboard/insertTable";
+    	}); */
     </script>
     
 
@@ -312,8 +397,7 @@
 						timeList.push(data[i].stan_date);
 						posList.push(data[i].user_n);
 				}
-				console.log(timeList);
-				console.log(posList);  	
+
 				// 그래프
 				new Chart(
 						document.getElementById("line-chart"),
@@ -324,7 +408,7 @@
 								datasets : [ {
 										data : posList, // 값
 										label : "new member",
-										borderColor : "green",
+										borderColor : "rgb(27, 245, 118)",
 										fill : false
 										} ]
 								},
@@ -366,8 +450,7 @@
 						timeList.push(data[i].stan_date);
 						posList.push(data[i].tour_board);
 				}
-				console.log(timeList);
-				console.log(posList);  	
+ 	
 				// 그래프
 				new Chart(
 						document.getElementById("line-chart2"),
@@ -378,7 +461,7 @@
 								datasets : [ {
 										data : posList, // 값
 										label : "new tour board post",
-										borderColor : "green",
+										borderColor : "rgb(27, 245, 118)",
 										fill : false
 										} ]
 								},
@@ -420,8 +503,7 @@
 						timeList.push(data[i].stan_date);
 						posList.push(data[i].com_board);
 				}
-				console.log(timeList);
-				console.log(posList);  	
+	
 				// 그래프
 				new Chart(
 						document.getElementById("line-chart3"),
@@ -432,7 +514,7 @@
 								datasets : [ {
 										data : posList, // 값
 										label : "new accompany board post",
-										borderColor : "green",
+										borderColor : "rgb(27, 245, 118)",
 										fill : false
 										} ]
 								},
@@ -474,8 +556,7 @@
 						timeList.push(data[i].stan_date);
 						posList.push(data[i].plan);
 				}
-				console.log(timeList);
-				console.log(posList);  	
+ 	
 				// 그래프
 				new Chart(
 						document.getElementById("line-chart4"),
@@ -486,7 +567,7 @@
 								datasets : [ {
 										data : posList, // 값
 										label : "new plan post",
-										borderColor : "green",
+										borderColor : "rgb(27, 245, 118)",
 										fill : false
 										} ]
 								},
@@ -494,6 +575,59 @@
 								title : {
 										display : true,
 										text : '여행계획 글 수'
+									}
+								}
+						}); //그래프
+				},
+				error : function() {
+						alert("실패");
+				}
+
+			})
+		}
+	</script>
+	
+	<!-- chart : 방문자 수 -->
+     <script>
+
+		$(document).ready(function() {
+			getGraph5();
+		});
+
+		function getGraph5() {
+			let timeList = [];
+			let posList = [];
+			
+			$.ajax({
+				url : '/dashboard/visitDaily',
+				type : 'POST',
+				dataType : 'json',
+				success : function(data) {
+				// console.log(data[0].pos_count);
+				// 그래프로 나타낼 자료 리스트에 담기
+				for (let i = 0; i < data.length; i++) {
+						timeList.push(data[i].stan_date);
+						posList.push(data[i].visitor);
+				}
+ 	
+				// 그래프
+				new Chart(
+						document.getElementById("line-chart5"),
+				{
+						type : 'line',
+						data : {
+								labels : timeList, // X축 
+								datasets : [ {
+										data : posList, // 값
+										label : "daily visitors",
+										borderColor : "rgb(27, 245, 118)",
+										fill : false
+										} ]
+								},
+						options : {
+								title : {
+										display : true,
+										text : '방문자수'
 									}
 								}
 						}); //그래프
