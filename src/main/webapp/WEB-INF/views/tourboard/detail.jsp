@@ -470,7 +470,8 @@ a:active {
 		$('#modalCloseBtn').on("click",function(){
 			$("#myModal").modal("toggle");
 		})
-	</script>	
+	})
+	</script>
 	
 	<script>
 		$(".re_del_btn").on("click", function(){

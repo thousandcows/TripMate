@@ -398,7 +398,7 @@ public class MemberController {
 		memberService.reactionRemove((int) session.getAttribute("loginSeq"));
 	}
 	
-	// myPlan
+	// 내 여행계획
 	@RequestMapping("myplan")
 	public String myPlan(Model model, int page) {
 		int loginSeq = (int)session.getAttribute("loginSeq");
