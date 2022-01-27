@@ -8,6 +8,8 @@ public class Statics {
 	public static int RECORD_COUNT_PER_PAGE = 10;
 	public static int NAVI_COUNT_PER_PAGE = 10;
 	
+	public static int RECORD_PLAN = 12;
+	
 	public static int SAVE_LIST_START = 1;
 	public static int SAVE_LIST_END = 7;
 	public static int SAVE_LIST_MORE = 6;
