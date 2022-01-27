@@ -775,8 +775,8 @@ a:active {
                 var heart = data.heart;
                 
                 if(heart==1) {
-										wsObj.reaction = 'like';
-										ws.send(JSON.stringify(wsObj));
+					wsObj.reaction = 'like';
+					ws.send(JSON.stringify(wsObj));
                     $('#heart').prop("src","/images/like.png");
                     $("#rec_count").html(" " + data.likeCount);
                 }

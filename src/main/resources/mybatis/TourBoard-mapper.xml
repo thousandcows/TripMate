@@ -78,7 +78,7 @@
      </delete>
 	 
 	 <insert id="createBoardLike"> 
-        insert into tb_heart values (tb_heart_seq.nextval, #{par_seq}, #{mem_seq})
+        insert into tb_heart values (tb_heart_seq.nextval, #{par_seq}, #{mem_seq}, #{like_check})
      </insert>
 
      <delete id="deleteBoardLike">
@@ -100,7 +100,7 @@
  	</select>
  		
     <select id="totalBoardLike" resultType="int">
-     	select count(*) from tb_heart where par_seq = #{value}
+     	select count(seq) from tb_heart where par_seq = #{value}
      </select>
 
 </mapper>

@@ -237,12 +237,13 @@ public class TourBoardController {
     public HashMap<String, Integer> heart(HttpServletRequest httpRequest) throws Exception {
 
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
-			
+		
         int heart = Integer.parseInt(httpRequest.getParameter("heart"));
         int loginSeq = (int) session.getAttribute("loginSeq");     
         int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));  
         TourBoardLikeDTO dto = new TourBoardLikeDTO();
-	        
+        
+        System.out.println(heart);
         dto.setPar_seq(boardId);
         dto.setMem_seq(loginSeq);
 	        
