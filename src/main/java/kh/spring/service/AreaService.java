@@ -478,33 +478,21 @@ public class AreaService {
 	}
 
 	public List<Integer> paging(int total, int page) {
-		if(page%10==0) {
-			page--;
-		}
+		if(page%10==0) {page--;}
 		int target = page/10*10+1;
-
 		List<Integer> result = new ArrayList<>();
-		if(target != 1) {
-			result.add(-1);
-		}
-
+		if(target != 1) {result.add(-1);}
 		if(total>target+10) {
 			for(int i = 0;i<10;i++) {
 				result.add(target++);
-				if(i==9 && target<total) {
-					result.add(-2);
-				}
+				if(i==9 && target<total) {result.add(-2);}
 			}
 		}else {
 			for(;target<total;target++) {
 				result.add(target);
 			}
 		}
-
-		if(result.size()==0) {
-			result.add(1);
-		}
-
+		if(result.size()==0) {result.add(1);}
 		return result;
 	}
 	
@@ -568,6 +556,7 @@ public class AreaService {
 		return dao.findPhoto(seq);
 	}
 	
+	//사진 업로드
 	public String uploadPhoto(MultipartFile picture,HttpSession session) throws IllegalStateException, IOException {
 		String result = "";
 		if(!picture.isEmpty()) {
@@ -585,6 +574,7 @@ public class AreaService {
 		return result;
 	}
 	
+	//사진 변경
 	public String updatePhoto(MultipartFile picture,HttpSession session,int seq) throws IllegalStateException, IOException {
 		String result = "";
 		if(!picture.isEmpty()) {
@@ -606,8 +596,8 @@ public class AreaService {
 		return result;
 	}
 	
+	//DB 삽입
 	public void checkDB(String[] check) {
-		
 		for(int i = 0; i<check.length;i++) {
 			String[] arr = check[i].split("&");
 			int seq = Integer.parseInt(arr[0]);

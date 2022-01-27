@@ -103,4 +103,17 @@
 		WHERE rn BETWEEN #{start} and #{end}
 		ORDER BY writen_date desc
 	</select>
+	
+	<insert id="insertReaction">
+		insert into reactions values(#{seq}, #{mem_seq}, #{loginSeq}, #{title}, #{nick}, #{board_num}, #{reaction}, #{reactioner}, default)
+	</insert>
+	
+	<select id="selectReactions" resultType="kh.spring.dto.ReactionsDTO">
+		select * from (select reactions.*, row_number() over(order by time desc)rn from reactions where mem_seq = #{value}) where rn between 1 and 7
+	</select>
+	
+	<delete id="reactionRemove">
+		delete from reactions where mem_seq = #{value}
+	</delete>
+	
 </mapper>
