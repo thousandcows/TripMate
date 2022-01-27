@@ -122,14 +122,24 @@
                     <div class="row">
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-4 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 MEMBER (DAILY)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${cntMember}</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${cntMember}&nbsp<span style="color:red">(
+                                            	<c:if test="${withdrawal > 0 }">
+                                            		+ ${withdrawal }
+                                            	</c:if>
+                                            	<c:if test="${withdrawal < 0 }">
+                                            		- ${withdrawal }
+                                            	</c:if>
+                                            	<c:if test="${withdrawal == 0 }">
+                                            		 ${withdrawal }
+                                            	</c:if>
+                                            )</span></div>
                                         </div>
                                         <div class="col-auto">
                                         	<i class="fas fa-user-alt fa-2x text-gray-300"></i>
@@ -140,25 +150,7 @@
                         </div>
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                WITHDRAWAL (DAILY)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">??</div>
-                                        </div>
-                                        <div class="col-auto">
-                                        	<i class="fas fa-user-alt-slash fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-4 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -167,7 +159,18 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">??</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${totalPost}&nbsp<span style="color:red">(
+                                            			<c:if test="${plmaPost > 0 }">
+                                            				+ ${plmaPost }
+                                            			</c:if>
+                                            			<c:if test="${plmaPost < 0 }">
+                                            				- ${plmaPost }
+                                            			</c:if>
+                                            			<c:if test="${plmaPost == 0 }">
+                                            		 		${plmaPost }
+                                            			</c:if>
+                                            			)</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -180,14 +183,14 @@
                         </div>
 
                         <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-4 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 VISITORS</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">??</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${visitCnt}</div>
                                         </div>
                                         <div class="col-auto">
                                         	<i class="far fa-eye fa-2x text-gray-300"></i>
@@ -211,7 +214,7 @@
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                                        <canvas id="line-chart5"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -322,12 +325,6 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
     
     
     <!--  refresh 버튼 누를 때 dashboard db셋팅 -->
@@ -337,11 +334,35 @@
     	})
     </script>
     
-    <!--  또다른 방법은 그냥 페이지 새로고침 할때마다 하도록 해도됨! -->
     <script>
-/*      	$(document).ready(function() {
+     	$(document).ready(function() {
+			getCnt();
+		});
+    	
+    	function getCnt() {
+    		$.ajax({
+					url : '/dashboard/ajax1',
+					type : 'POST',
+					success : function(data){
+						
+						console.log("포스트수 : " + data.totalPost );
+					}
+				}); 
+    		}
+    </script>
+    
+    
+<!--   
+    <script>
+      	$(document).ready(function() {
     		location.href="/dashboard/insertTable";
-		});  */
+		});  
+    </script> -->
+    
+    <script>
+/*     	$(window).on("load", function(){
+    		location.href="/dashboard/insertTable";
+    	}); */
     </script>
     
 
@@ -367,8 +388,7 @@
 						timeList.push(data[i].stan_date);
 						posList.push(data[i].user_n);
 				}
-				console.log(timeList);
-				console.log(posList);  	
+
 				// 그래프
 				new Chart(
 						document.getElementById("line-chart"),
@@ -379,7 +399,7 @@
 								datasets : [ {
 										data : posList, // 값
 										label : "new member",
-										borderColor : "green",
+										borderColor : "rgb(27, 245, 118)",
 										fill : false
 										} ]
 								},
@@ -421,8 +441,7 @@
 						timeList.push(data[i].stan_date);
 						posList.push(data[i].tour_board);
 				}
-				console.log(timeList);
-				console.log(posList);  	
+ 	
 				// 그래프
 				new Chart(
 						document.getElementById("line-chart2"),
@@ -433,7 +452,7 @@
 								datasets : [ {
 										data : posList, // 값
 										label : "new tour board post",
-										borderColor : "green",
+										borderColor : "rgb(27, 245, 118)",
 										fill : false
 										} ]
 								},
@@ -475,8 +494,7 @@
 						timeList.push(data[i].stan_date);
 						posList.push(data[i].com_board);
 				}
-				console.log(timeList);
-				console.log(posList);  	
+	
 				// 그래프
 				new Chart(
 						document.getElementById("line-chart3"),
@@ -487,7 +505,7 @@
 								datasets : [ {
 										data : posList, // 값
 										label : "new accompany board post",
-										borderColor : "green",
+										borderColor : "rgb(27, 245, 118)",
 										fill : false
 										} ]
 								},
@@ -529,8 +547,7 @@
 						timeList.push(data[i].stan_date);
 						posList.push(data[i].plan);
 				}
-				console.log(timeList);
-				console.log(posList);  	
+ 	
 				// 그래프
 				new Chart(
 						document.getElementById("line-chart4"),
@@ -541,7 +558,7 @@
 								datasets : [ {
 										data : posList, // 값
 										label : "new plan post",
-										borderColor : "green",
+										borderColor : "rgb(27, 245, 118)",
 										fill : false
 										} ]
 								},
@@ -549,6 +566,59 @@
 								title : {
 										display : true,
 										text : '여행계획 글 수'
+									}
+								}
+						}); //그래프
+				},
+				error : function() {
+						alert("실패");
+				}
+
+			})
+		}
+	</script>
+	
+	<!-- chart : 방문자 수 -->
+     <script>
+
+		$(document).ready(function() {
+			getGraph5();
+		});
+
+		function getGraph5() {
+			let timeList = [];
+			let posList = [];
+			
+			$.ajax({
+				url : '/dashboard/visitDaily',
+				type : 'POST',
+				dataType : 'json',
+				success : function(data) {
+				// console.log(data[0].pos_count);
+				// 그래프로 나타낼 자료 리스트에 담기
+				for (let i = 0; i < data.length; i++) {
+						timeList.push(data[i].stan_date);
+						posList.push(data[i].visitor);
+				}
+ 	
+				// 그래프
+				new Chart(
+						document.getElementById("line-chart5"),
+				{
+						type : 'line',
+						data : {
+								labels : timeList, // X축 
+								datasets : [ {
+										data : posList, // 값
+										label : "daily visitors",
+										borderColor : "rgb(27, 245, 118)",
+										fill : false
+										} ]
+								},
+						options : {
+								title : {
+										display : true,
+										text : '방문자수'
 									}
 								}
 						}); //그래프

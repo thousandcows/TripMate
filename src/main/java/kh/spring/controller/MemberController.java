@@ -39,6 +39,7 @@ import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MyPostDTO;
 import kh.spring.dto.MyPostDelListDTO;
 import kh.spring.service.AreaService;
+import kh.spring.service.DashboardService;
 import kh.spring.service.MemberService;
 import kh.spring.statics.Statics;
 
@@ -51,9 +52,13 @@ public class MemberController {
 
 	@Autowired
 	public AreaService areaService;
+	
+	@Autowired
+	private DashboardService ds;
 
 	@Autowired
 	private HttpSession session;
+	
 
 	// 이메일 체크
 	@ResponseBody
@@ -101,6 +106,10 @@ public class MemberController {
 			session.setAttribute("loginEmailID", dto.getEmailID());
 			session.setAttribute("loginNick", dto.getNick());
 			session.setAttribute("loginGender", dto.getGender());
+			
+			// 방문자 통계용 코드
+			ds.setVisitTotalCount();
+			
 			return "1";
 		}
 	}
@@ -220,6 +229,11 @@ public class MemberController {
 			session.setAttribute("loginEmailID", kakaoDto.getEmailID());
 			session.setAttribute("loginNick", kakaoDto.getNick());
 			session.setAttribute("loginKakaoID", kakaoDto.getSns_division());
+			
+			// 방문자 통계용 코드
+			ds.setVisitTotalCount();
+						
+						
 		} else { // 가입내역이 없다면 회원가입을 시키고 이메일이랑 닉네임만 세션에 바로 담아버리면 될듯했는데 seq때문에 또 빼와야하네
 			memberService.kakaoSignup(kakaoLoginEmail, kakaoLoginNick, kakaoLoginId);
 			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginId);

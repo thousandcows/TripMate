@@ -28,7 +28,7 @@
                 where to_char(writen_date, 'YYMMDD') <![CDATA[ >= ]]> '220125' and to_char(writen_date, 'YYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYMMDD')
                 group by to_char(writen_date, 'YYMMDD')) c
         	on(u.stan_date = c.stan_date)
-		order by stan_date asc		
+		order by stan_date	
 	</select>
 	
 	<insert id="insertTable">
@@ -36,7 +36,7 @@
 	</insert>
 	
 	<select id="selectAllDash" resultType="kh.spring.dto.DashboardDTO">
-		select * from dashboard
+		select * from dashboard order by stan_date asc
 	</select>
 	
 	<delete id ="deleteTable">
@@ -47,5 +47,69 @@
 	<select id = "cntMember" resultType ="int">
 		select count(*) from member
 	</select>
+	
+	<!-- 전날까지의 가입자 수 -->
+	<select id = "cntPreMem" resultType = "int">
+		select count(*) from member where to_char(signup_date,'YYYYMMDD') <![CDATA[ < ]]> to_char(sysdate,'YYYYMMDD')
+	</select>
+	
+	<!-- 여행계획 글 수  -->
+	<select id = "cntPlan" resultType = "int">
+		select count(*) from plan
+	</select>
+	
+	<!-- 여행게시판 글 수  -->
+	<select id = "cntTour" resultType = "int">
+		select count(*) from tour_board
+	</select>
+	
+	<!-- 여행계획 글 수  -->
+	<select id = "cntCom" resultType = "int">
+		select count(*) from company_board
+	</select>
+	
+	<!-- 전날까지의 여행계획 글 수 -->
+	<select id = "cntPrePlan" resultType = "int">
+		select count(*) from plan where to_char(writen_date,'YYYYMMDD') <![CDATA[ < ]]> to_char(sysdate,'YYYYMMDD')
+	</select>
+	
+	<!-- 전날까지의 여행 글 수 -->
+	<select id = "cntPreTour" resultType = "int">
+		select count(*) from tour_board where to_char(writen_date,'YYYYMMDD') <![CDATA[ < ]]> to_char(sysdate,'YYYYMMDD')
+	</select>
+	
+	<!-- 전날까지의 동행 글 수 -->
+	<select id = "cntPreCom" resultType = "int">
+		select count(*) from company_board where to_char(writen_date,'YYYYMMDD') <![CDATA[ < ]]> to_char(sysdate,'YYYYMMDD')
+	</select>
+	
+	<!-- 멤버테이블 불러오기 -->
+	<select id = "selectAllMem" resultType="kh.spring.dto.DashboardDTO">
+		select * from member
+	</select>
+	
+		<!-- 방문자수 -->
+	<insert id="setVisitTotalCount" >
+ 		INSERT INTO VISIT (V_DATE) VALUES (sysdate)
+ 	</insert>
+ 	
+<!-- 	<update id="updateVisitor" >
+	</update> -->
+	
+ 	
+ 	
+ 	<select id="getVisitTotalCount" resultType = "int">
+ 		select count(*) from visit
+ 	</select>
+ 	
+ 	<select id="getVisitTodayCount" resultType = "int">
+ 		select count(*) from visit where to_char(v_date,'YYYYMMDD') <![CDATA[ = ]]> to_char(sysdate,'YYYYMMDD')
+ 	</select>
+ 	
+ 	<insert id="insertVisitor">
+ 		insert into dashboard (visitor) values (#{value}) where stan_date <![CDATA[ = ]]> to_char(sysdate,'YYMMDD')
+ 	</insert>
  		
+	
+
   </mapper>
