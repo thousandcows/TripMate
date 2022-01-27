@@ -129,7 +129,10 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 MEMBER (DAILY)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${cntMember}&nbsp<span style="color:red">(
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            	<span id="cntMember"></span>
+                                            	
+                                            	<span style="color:red">
                                             	<c:if test="${withdrawal > 0 }">
                                             		+ ${withdrawal }
                                             	</c:if>
@@ -139,7 +142,8 @@
                                             	<c:if test="${withdrawal == 0 }">
                                             		 ${withdrawal }
                                             	</c:if>
-                                            )</span></div>
+                                            	</span>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                         	<i class="fas fa-user-alt fa-2x text-gray-300"></i>
@@ -159,7 +163,9 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${totalPost}&nbsp<span style="color:red">(
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                    	<span id="totalPost"></span>
+                                                   		<span style="color:red">
                                             			<c:if test="${plmaPost > 0 }">
                                             				+ ${plmaPost }
                                             			</c:if>
@@ -169,7 +175,7 @@
                                             			<c:if test="${plmaPost == 0 }">
                                             		 		${plmaPost }
                                             			</c:if>
-                                            			)</span>
+                                            			</span> 
                                                     </div>
                                                 </div>
                                             </div>
@@ -190,7 +196,9 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 VISITORS</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${visitCnt}</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            	<span id="visitCnt"></span>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                         	<i class="far fa-eye fa-2x text-gray-300"></i>
@@ -330,7 +338,7 @@
     <!--  refresh 버튼 누를 때 dashboard db셋팅 -->
     <script>
     	$("#refresh").on("click", function(){
-    		location.href="/dashboard/insertTable";
+    		/* location.href="/dashboard/insertTable"; */
     	})
     </script>
     
@@ -344,8 +352,9 @@
 					url : '/dashboard/ajax1',
 					type : 'POST',
 					success : function(data){
-						
-						console.log("포스트수 : " + data.totalPost );
+						$("#cntMember").html(data.cntMember);
+						$("#totalPost").html(data.totalPost);
+						$("#visitCnt").html(data.visitCnt);
 					}
 				}); 
     		}

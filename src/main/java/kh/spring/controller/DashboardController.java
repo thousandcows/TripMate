@@ -145,6 +145,8 @@ public class DashboardController {
 		  
 		  int plmaPost = totalPost - prePost;
 		  map.put("plmaPost", plmaPost);
+		  
+		  System.out.println("증감량" + plmaPost);
 
 		return map;
 	}
