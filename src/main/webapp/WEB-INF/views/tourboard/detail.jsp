@@ -757,12 +757,12 @@ a:active {
             $("#heart").prop("src", "/images/like.png");
             $(".heart").prop('name',heartval)
         }
+        
         else {
         	 //console.log("else "+heartval + " : " + ${heart});
             $("#heart").prop("src", "/images/dislike.png");
             $(".heart").prop('name',heartval)
-        }
-        
+        }        
     });
     
     $(".heart").on("click", function () {
@@ -781,12 +781,12 @@ a:active {
                 var heart = data.heart;
                 
                 if(heart==1) {
-										wsObj.reaction = 'like';
-										ws.send(JSON.stringify(wsObj));
-										$.ajax({
-										url: "/member/reactionInserter",
-										data: {reaction: JSON.stringify(wsObj)}
-										});
+					wsObj.reaction = 'like';
+					ws.send(JSON.stringify(wsObj));
+					$.ajax({
+					url: "/member/reactionInserter",
+					data: {reaction: JSON.stringify(wsObj)}
+					});
                     $('#heart').prop("src","/images/like.png");
                     $("#rec_count").html(" " + data.likeCount);
                 }

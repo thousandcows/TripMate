@@ -945,23 +945,24 @@
 
         var that = $(".heart");
 
-        var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name')};
+        var sendData = {'boardId' : '${dto.seq}','heart': that.prop('name')};
         
         $.ajax({
             url :'/companyboard/heart',
             type :'POST',
             data : sendData,
             success : function(data){
-                that.prop('name',data.heart);
+                that.prop('name',data.heart);   
+                
                 var heart = data.heart;
                 
                 if(heart==1) {
-										wsObj.reaction = 'like';
-										ws.send(JSON.stringify(wsObj));
-										$.ajax({
-											url: "/member/reactionInserter",
-											data: {reaction: JSON.stringify(wsObj)}
-										});
+					wsObj.reaction = 'like';
+					ws.send(JSON.stringify(wsObj));
+					$.ajax({
+					url: "/member/reactionInserter",
+					data: {reaction: JSON.stringify(wsObj)}
+					});
                     $('#heart').prop("src","/images/like.png");
                     $("#rec_count").html(" " + data.likeCount);
                 }
