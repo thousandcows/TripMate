@@ -44,7 +44,6 @@ public class NoticeEndpoint {
 		ReactionDTO dto = gson.fromJson(message, ReactionDTO.class);
 		int ReactionTarget = dto.getMem_seq();
 		int Reactioner = dto.getLoginSeq();
-		System.out.println("현재 로그인중인 사용자 수 : " + this.map.size());
 		synchronized (map) { // 동기화 (포문 도는 중간에 한명이 나가버리면 예외발생해서 그걸 막음)
 			for (Map.Entry<Integer, Session> entry : map.entrySet()) {
 				Integer loginSeq = entry.getKey();
