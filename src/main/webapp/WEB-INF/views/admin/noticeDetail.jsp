@@ -156,6 +156,9 @@
                 <!-- End of Topbar -->
                 
                 <!-- Begin Page Content -->
+                <div class="container-fluid">
+                <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">공지사항 작성</h1>
 				<form action="noticeModify" method="post" id="frmDetail" enctype="multipart/form-data">
 				<br><br>
   				<div class="container">

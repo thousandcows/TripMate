@@ -226,17 +226,13 @@ ul{
               </div>
               </div>
               
-              
-              
-              
               <div class='top-btn'>
               <a href="#"><img src="/images/up1.png"/>
               </a></div>
               </div>
               </div>
               </div>
-            
-              
+                            
               </section>
               
               </main>
