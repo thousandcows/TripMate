@@ -175,7 +175,7 @@
         <div class="root">
             <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
-            <div class="community" href="">커뮤니티</div>
+            <div class="community" href="/tourboard/list?cpage=1">커뮤니티</div>
             <div> > </div>
             <div class="tourboard"><a href="/tourboard/list?cpage=1">여행지 게시판</a></div>
         </div>

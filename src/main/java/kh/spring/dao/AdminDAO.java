@@ -95,4 +95,9 @@ public class AdminDAO {
 		map.put("seq", String.valueOf(seq));
 		return mybatis.update("Admin.noticeModify", map);
 	}
+	
+	public int addViewCount(int seq) {
+		
+		return mybatis.update("Admin.addViewCount", seq);
+	}
 }

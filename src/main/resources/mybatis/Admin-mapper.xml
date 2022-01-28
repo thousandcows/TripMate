@@ -58,10 +58,14 @@
 	</insert>
 	
 	<select id="selectBySeq" resultType="kh.spring.dto.NoticeDTO">
-		select * from notice where seq=#{seq}
+		select * from notice  where seq=#{seq}
 	</select>
 	
 	<update id="noticeModify">
 		update notice set title=#{title}, contents=#{contents} where seq = #{seq}
+	</update>
+	
+	<update id="addViewCount">
+		update notice set view_count = view_count + 1 where seq = #{seq}
 	</update>
 </mapper>
