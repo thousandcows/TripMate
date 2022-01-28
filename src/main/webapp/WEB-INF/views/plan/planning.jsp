@@ -574,6 +574,9 @@ li.drag-sort-active {
 				$("#planList").html(result);
 				//지도관련
 				// 주소로 좌표를 검색합니다
+				if(data[0]!=null){
+					
+				
 				geocoder.addressSearch(data[0].location, function(result, status) {
 
 				    // 정상적으로 검색이 완료됐으면 
@@ -582,7 +585,8 @@ li.drag-sort-active {
 				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 				        map.setCenter(coords);
 				    } 
-				});    
+				});
+				}
 			}
 		})
 	})
@@ -637,33 +641,39 @@ li.drag-sort-active {
         
        
         //드래그앤 드랍 순서변경 임시 보류
-        /*$(function() {
+        $(function() {            
+   		let id = 0; 
+        $(document).on("mouseup",".ui-widget-content",function(){
+   			 id = this.id;
+   		 })
+        
    	 		$("#planList").sortable({
-   	  			stop: function(event, ui) { 
-   	         	let target = [];
-   	         	setTimeout(function(){
+   	 			stop: function(event, ui) { 
+   	 			let target = [];
+   	 			setTimeout(function(){
    	             	for(let i = 1; i<=$("#planList").children().length;i++){
    	             		target.push(($("#planList li:nth-child("+i+")").attr("id"))*1)
    	             	}
-   	             	console.log(target);
    	             		$.ajax({
    	             			url:"/plan/planSort",
    	              			async:false,
-   	             			data:{"target":target}
+   	             			data:{"target":target,
+   	             				"seq":id}
    	             		})   	         		
    	         	},200)
    	   			}
-			})
-        })*/
-    $(function(){
+            });
+        })
+/*   $(function(){
     	$("#planList").sortable({
     		
     	})
-    })
+    }) */
         
-    //일정 수정    
+    //일정 수정
     $( function() {
 	    // There's the gallery and the trash
+
 	    var $planList = $( "#planList" ),
 	      $day = $( "#day" );
 	 

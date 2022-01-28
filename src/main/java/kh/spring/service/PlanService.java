@@ -127,11 +127,50 @@ public class PlanService {
 		System.out.println();
 		for(int i = 0; i<target.length;i++) {
 			if(tmp[i] != target[i]) {
-				int t = dao.sortZero(tmp[i]);
-				dao.sortPlan(tmp[i],target[i]);
-				dao.sortPlan(target[i],t);
+				int t = dao.sortZero(tmp[i]); // 152 번이 -435 로 변경
+				System.out.println("tmp[i] : " + tmp[i]);
+				System.out.println("target[i] : " + target[i]);
+				System.out.println("t : " + t);
+				
+				dao.sortPlan(tmp[i],target[i]); // 153번 항목을 152로 변경 
+				dao.sortPlan(target[i],t); // -435 를 153 으로 변경
 			}
 		}
+	}
+	
+	public void sortDate(int[] target,int seq) {
+		int[] tmp = target.clone();
+		Arrays.sort(tmp);
+
+		int nowN=0;
+		int changeN=0;
+		for(int i=0; i<target.length;i++) {
+			if(tmp[i] == seq) {
+				nowN = i;
+			}
+			if(target[i] == seq) {
+				changeN = i;
+			}
+		}
+		System.out.println(nowN+ " : " + target.length + " : "+ tmp.length);
+		for(int i = 0; i<target.length;i++) {
+			if(tmp[i] != target[i]) {
+				if(nowN>changeN) {
+					if(nowN == i) {
+						break;
+					}
+					dao.sortDate(target[nowN],target[i]);
+					
+				}else if(nowN<changeN) {
+					if(changeN == i) {
+						break;
+					}
+					dao.sortDate(target[i], target[i+1]);
+				}
+				
+			}
+		}
+
 	}
 	
 	public void sortDatePlan(int seq, String day) {

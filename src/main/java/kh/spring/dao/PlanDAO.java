@@ -76,7 +76,15 @@ public class PlanDAO {
 		Map<String,Integer> map = new HashMap<>();
 		map.put("firstSeq", firstSeq);
 		map.put("secondSeq", secondSeq);
+		System.out.println(firstSeq + " : " + secondSeq);
 		mybatis.update("Plan.sortPlan",map);
+	}
+	
+	public void sortDate(int firstSeq, int secondSeq) {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("firstSeq", firstSeq);
+		map.put("secondSeq",secondSeq);
+		mybatis.update("Plan.sortDate",map);
 	}
 	
 	public void sortDatePlan(int seq, String day) {
@@ -100,4 +108,5 @@ public class PlanDAO {
 	public void deletePlan(int seq) {
 		mybatis.delete("Plan.deletePlan",seq);
 	}
+	
 }

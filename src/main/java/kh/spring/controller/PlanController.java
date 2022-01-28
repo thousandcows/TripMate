@@ -169,8 +169,10 @@ public class PlanController {
 	
 	@ResponseBody
 	@RequestMapping(value="planSort", produces = "application/text;charset=utf-8")
-	public String planSort(@RequestParam(value="target[]")int[] target) throws Exception{
-		pServe.sortPlan(target);
+	public String planSort(@RequestParam(value="target[]")int[] target,@RequestParam(value="seq")int seq) throws Exception{
+//		pServe.sortPlan(target);
+		System.out.println(seq);
+		pServe.sortDate(target,seq);
 		return "OK";
 	}
 	

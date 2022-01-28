@@ -53,7 +53,25 @@
 		<div class="row border mt-4 d-flex justify-content-center">
 				<c:set var="now" value="<%=new java.util.Date()%>" />
 				<c:forEach var="i" items="${list }">
-						<div class="card p-2 m-2" style="width: 18rem;">
+						<div class="card p-2 m-2" style="width: 18rem;
+						<c:choose>
+							<c:when test="${i.theme eq '힐링 여행'}">
+								background-color: #FF8C94;
+							</c:when>
+							<c:when test="${i.theme eq '먹거리 투어'}">
+								background-color: #FFAAA6;		
+							</c:when>
+							<c:when test="${i.theme eq '관광지 투어'}">
+								background-color: #FFD3B5;
+							</c:when>
+							<c:when test="${i.theme eq '액티비티'}">
+								background-color: #DCEDC2;
+							</c:when>
+							<c:when test="${i.theme eq '기분따라'}">
+								background-color: #A8E6EC;
+							</c:when>
+						</c:choose>
+						">
 							<a href="/plan/detail?seq=${i.seq }">
 						
 								  <div class="card-body">
