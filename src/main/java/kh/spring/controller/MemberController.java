@@ -12,6 +12,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,9 +145,9 @@ public class MemberController {
 		MimeMessage message = new MimeMessage(mailSession);
 		message.setFrom(new InternetAddress(Statics.FIND_PW_CALLER_EMAIL));
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(findPwTargetEmail));
-		message.setSubject("TripMate PW찾기 인증번호입니다.");
+		message.setSubject("TripMate PW찾기 인증번호입니다.", "UTF-8");
 		int verificationCode = (int) (Math.random() * (9999 - 1000)) + 1000; // 얘때문에 애매하네
-		message.setText("TripMate PW찾기 인증번호는 : " + verificationCode + " 입니다.");
+		message.setText("TripMate PW찾기 인증번호는 : " + verificationCode + " 입니다.", "UTF-8");
 
 		Transport.send(message);
 		return String.valueOf(verificationCode);

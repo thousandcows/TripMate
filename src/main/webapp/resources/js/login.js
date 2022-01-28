@@ -267,7 +267,7 @@ if (eventCheck != null) {
       } else if(res == 1) {
         location.reload();
       } else if(res == 2){
-        location.href="/dashsboard/admin/dashboard";
+        location.href="/admin/dashboard";
       }
     });
   });

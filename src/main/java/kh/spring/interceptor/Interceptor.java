@@ -38,7 +38,7 @@ public class Interceptor implements HandlerInterceptor{
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		
+//		System.out.println(request.getRequestURI()); 들어오는 URL
 		if(session.getAttribute("loginNick") != null) {
 			int loginSeq = (int) session.getAttribute("loginSeq");
 			List<ReactionsDTO> reactions = memberService.selectReactions(loginSeq);
