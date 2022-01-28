@@ -345,7 +345,7 @@ a:active {
         	<c:if test="${!empty loginNick}">
                 <div id=like_icon>
                		<a class="heart">
-           				<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
+           				<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count" style="color:black;"> ${likeCount}</span>
        				</a>
           		</div>
           	</c:if>
@@ -388,12 +388,12 @@ a:active {
 						</div>
 						<div class="rp_btns">
 							<c:if test="${!empty loginNick }">
-							<button type=button class="rp_reply_btn" id="rp_reply_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none; background-color: rgb(56, 181, 174);">답글 달기</button>
+							<button type=button class="rp_reply_btn btn btn-primary btn-sm" id="rp_reply_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none; background-color: rgb(56, 181, 174);">답글 달기</button>
 								<c:if test="${rp.nick == loginNick}">
-							<button type=button class="rp_del_btn" id="rp_del_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">댓글 삭제</button>
-							<button type=button class="rp_mod_btn" id="rp_mod_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">댓글 수정</button>
-							<button type=submit class="rp_modOk_btn" id="rp_modOk_btn${rp.seq }" style="display: none; border: none;background-color: rgb(56, 181, 174);" formaction="/tourreply/modify" class="btn btn-primary btn-sm">수정 완료</button>
-							<button type=button class="rp_cancle_btn" id="rp_cancle_btn${rp.seq }" style="display: none; border: none;background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm">수정 취소</button>
+							<button type=button class="rp_del_btn btn btn-primary btn-sm" id="rp_del_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">댓글 삭제</button>
+							<button type=button class="rp_mod_btn btn btn-primary btn-sm" id="rp_mod_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">댓글 수정</button>
+							<button type=submit class="rp_modOk_btn btn btn-primary btn-sm" id="rp_modOk_btn${rp.seq }" style="display: none; border: none;background-color: rgb(56, 181, 174);" formaction="/tourreply/modify" class="btn btn-primary btn-sm">수정 완료</button>
+							<button type=button class="rp_cancle_btn btn btn-primary btn-sm" id="rp_cancle_btn${rp.seq }" style="display: none; border: none;background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm">수정 취소</button>
 								</c:if>
 							</c:if>
 						</div>
@@ -414,10 +414,10 @@ a:active {
                             		<div class="re_rp_btns" style="text-align:right">
                                 		<c:if test="${!empty loginNick }">
                                 			<c:if test="${re.nick == loginNick}">
-                                				<button type=button class="re_del_btn" id="re_del_btn${re.seq }" class="btn btn-primary btn-sm" style="border: none; background-color: rgb(56, 181, 174);">댓글 삭제</button>
-                             					<button type=button class="re_mod_btn" id="re_mod_btn${re.seq }" rpseq=${rp.seq } class="btn btn-primary btn-sm" style="border: none; background-color: rgb(56, 181, 174);">댓글 수정</button>
-                                				<button type=button class="re_modOk_btn" id="re_modOk_btn${re.seq }" rpseq=${rp.seq } style="display: none; border: none; background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm">수정 완료</button>
-                                				<button type=button class="re_cancle_btn" id="re_cancle_btn${re.seq }" style="display: none; border: none; background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm">수정 취소</button>
+                                				<button type=button class="re_del_btn btn btn-primary btn-sm" id="re_del_btn${re.seq }" class="btn btn-primary btn-sm" style="border: none; background-color: rgb(56, 181, 174);">댓글 삭제</button>
+                             					<button type=button class="re_mod_btn btn btn-primary btn-sm" id="re_mod_btn${re.seq }" rpseq=${rp.seq } class="btn btn-primary btn-sm" style="border: none; background-color: rgb(56, 181, 174);">댓글 수정</button>
+                                				<button type=button class="re_modOk_btn btn btn-primary btn-sm" id="re_modOk_btn${re.seq }" rpseq=${rp.seq } style="display: none; border: none; background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm">수정 완료</button>
+                                				<button type=button class="re_cancle_btn btn btn-primary btn-sm" id="re_cancle_btn${re.seq }" style="display: none; border: none; background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm">수정 취소</button>
                                 			</c:if>
                                 		</c:if>
                                 	</div>
@@ -433,8 +433,8 @@ a:active {
                             	<input type=text placeholder="댓글을 입력하세요" name=recontents>
                             </div>
                             <div class="re_reply_input_btn">
-                                <button type=submit formaction="/tourreply/rereply">작성 완료</button>
-                                <button type=button class="rp_reply_cancle_btn" id="rp_reply_cancle_btn${rp.seq }">작성 취소</button>
+                                <button type=submit formaction="/tourreply/rereply" class="btn btn-primary btn-sm">작성 완료</button>
+                                <button type=button class="rp_reply_cancle_btn btn btn-primary btn-sm" id="rp_reply_cancle_btn${rp.seq }">작성 취소</button>
                             </div>
                         </div>
 					</div>
@@ -679,8 +679,12 @@ a:active {
 			$("#modcategory").css("display", "inline");
 			$("#modcategory").val(""+categoryValue+"");
 			
-			$('.summernote').summernote({
-				airMode : false
+// 			$('.summernote').summernote({
+// 				airMode : false
+// 			});
+			
+			$('#summernote').summernote({
+				airMode: true			
 			});
 			
 			// 서머노트 쓰기 활성화
@@ -805,20 +809,15 @@ a:active {
     });
     
     $(".heart").on("click", function () {
-
         var that = $(".heart");
-
-        var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name')};
-        
+        var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name')};        
         $.ajax({
             url :'/tourboard/heart',
             type :'POST',
             data : sendData,
             success : function(data){
-                that.prop('name',data.heart);   
-                
-                var heart = data.heart;
-                
+                that.prop('name',data.heart);                
+                var heart = data.heart;                
                 if(heart==1) {
 					wsObj.reaction = 'like';
 					ws.send(JSON.stringify(wsObj));
