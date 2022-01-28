@@ -262,22 +262,13 @@ a:active {
 			<div>></div>
 			<div class="tourboard"><a href="/tourboard/list?cpage=1">여행지 게시판</a></div>
 		</div>
-		<form action="/tourboard/modify" method="post" id="frmDetail" enctype="multipart/form-data">
+		<form action="/tourboard/toModify" method="post" id="frmDetail" enctype="multipart/form-data">
 			<div class="board">
 				<div class="catetitle">
 					<!-- <div class="category"> -->
 					<span style="width: 20%;">
-						<input type=hidden value="${dto.category }" id="categoryValue">
+						<input type=hidden name=category value="${dto.category }" id="categoryValue">
                         <h3 style="color: rgb(56, 181, 174); font-weight: bold; display: inline; padding: 5px;" id="categoryValue_txt">${dto.category }</h3> 
-                    	<span style="width: 20%; display: none" id="modcategory_span">
-                    		<select style="display: none; float:left;" ; id="modcategory" name="category">
-								<option value="">말머리</option>
-								<option value="명소">명소</option>
-								<option value="문화">문화</option>
-								<option value="생태">생태</option>
-								<option value="체험">체험</option>
-							</select>
-						</span>
                         <h3 style="display: inline; color: rgb(153, 153, 153); padding: 5px;">|</h3>
                     </span> 
                     <span style="width: 80%;">
@@ -286,7 +277,7 @@ a:active {
                     </span>
 				</div>
 				<div class="writer_con">
-                    <div style="line-height: 50px; padding-left: 100px; padding-top: 10px;"> ${dto.nick}</div>
+                    <div style="line-height: 50px; padding-left: 100px; padding-top: 10px;"><input type=text id=nick name=nick readonly value="${dto.nick}" style="border:none;"></div>
                 </div>
                 <div class="view_con">
                     <div style="line-height: 30px; padding-left: 100px;">조회수 ${dto.view_count}</div>
@@ -295,17 +286,15 @@ a:active {
 				<hr style="margin:20px 0px 30px 0px;">
 				
 				<div class="contents" style="margin-left: 80px;">
-					<textarea class="summernote" id="summernote" rows="50" name="explanation" style="height: 300px;">${dto.contents }</textarea>
+					<textarea class="summernote" id="summernote" name="explanation" readonly>${dto.contents }</textarea>
 				</div>
 				
 			<div class="button">
 				<a href="/tourboard/list?cpage=1"><button type=button class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button></a>
 				<c:if test="${!empty loginNick }">
 					<c:if test="${dto.nick == loginNick}">
-				<button type=button id=mod class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">수정</span></button>
-				<button type=button id=del class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">삭제</span></button>
-				<button type=button id=modOk style="display: none;border: none;background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm"  ><span style="font-size: small;">완료</span></button>
-				<button type=button id=modCancel style="display: none;border: none;background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm"><span style="font-size: small;">취소</span></button>
+						<button type=submit id=mod class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">수정</span></button>
+						<button type=button id=del class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">삭제</span></button>
 					</c:if>
 				</c:if>
 			</div>
@@ -598,12 +587,12 @@ a:active {
 	          }else{ 
 	        	  var answer = confirm("댓글을 작성하시겠습니까?");
 	        	  if(answer){
-									wsObj.reaction = 'comment';
-									ws.send(JSON.stringify(wsObj));
-									$.ajax({
-										url: "/member/reactionInserter",
-										data: {reaction: JSON.stringify(wsObj)}
-									});
+						wsObj.reaction = 'comment';
+						ws.send(JSON.stringify(wsObj));
+						$.ajax({
+							url: "/member/reactionInserter",
+							data: {reaction: JSON.stringify(wsObj)}
+						});
 	                $("#frmReply").submit();
 	        	  }else{
 	                $("#rep_con").val() = "";
@@ -632,35 +621,6 @@ a:active {
 		$("#list_btn").on("click", function() {
 			history.back();
 		})
-	</script>
-
-	<script>
-		let bkTitle = "";
-		let bkContents = "";
-		let categoryValue = "";
-		$("#mod").on("click", function() {
-
-			bkTitle = $("#title").val();
-			bkContents = $("#summernote").val();
-
-			console.log("bkTitle : " + bkTitle + "bkContents : " + bkContents);
-
-			$("#title").removeAttr("readonly");
-			$("#contents").removeAttr("readonly");
-			$("#mod").css("display", "none");
-			$("#del").css("display", "none");
-			$("#modOk").css("display", "inline");
-			$("#modCancel").css("display", "inline");
-			$("#discategory").css("display", "none");
-			categoryValue = $("#categoryValue").val();
-			$("#modcategory").css("display", "inline");
-			$("#modcategory").val(""+categoryValue+"");
-			$("#categoryValue_txt").css("display", "none");
-			$("#modcategory_span").css("display", "inline");
-			
-			// 서머노트 쓰기 활성화
-			$('#summernote').summernote('enable');
-		});
 	</script>	
 
 	<script>
@@ -705,9 +665,10 @@ a:active {
 				height : 300, // 에디터 높이
 				minHeight : 300, // 최소 높이
 				maxHeight : null, // 최대 높이
-				focus : true, // 에디터 로딩후 포커스를 맞출지 여부
+				focus : false, // 에디터 로딩후 포커스를 맞출지 여부
 				lang : "ko-KR", // 한글 설정
-				
+				airMode : true,
+				disableDragAndDrop: true,
 				toolbar: [
 				    // [groupName, [list of button]]
 				    ['fontname', ['fontname']],
@@ -728,10 +689,9 @@ a:active {
 						onImageUpload : function(files) {
 							sendFile(files[0],this);
 						}
-					}
-				
+					}			
 			});
-			$('#summernote').summernote('disable');
+			$('#summernote').summernote('enable');
 		});
 		
 		/**
