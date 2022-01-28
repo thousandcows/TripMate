@@ -441,7 +441,7 @@
                 	<form method="post" id="frmRpMod" enctype="multipart/form-data">
                 		<div class="rep_list">
                     		<div class="each_rep">
-                        		<div class="rep_top">
+                        		<div class="rep_top"><!-- reply_title -->
                         			<input type=hidden value="${repl.seq}" name=seq>
             						<input type=hidden value="${repl.par_seq}" name=par_seq>
                             		<span class="rep_writer" value="${repl.mem_seq }">

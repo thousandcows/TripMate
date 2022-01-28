@@ -50,7 +50,6 @@
         }
 
         .container{
-            border:1px solid red;
         }
 
         .container>.root{
@@ -59,14 +58,12 @@
         }
 
         .root>div{
-            border:1px solid red;
             float:left;
             margin: 40px 0px 40px 0px;
             padding-right: 10px;
         }
 
         .writeForm{
-            border: 1px solid red;
         }
         
         .catetitle{
@@ -75,13 +72,11 @@
         }
         
         .category{
-        	border: 1px solid red;
         	width:10%;
         	float:left;
         }
         
         .title{
-        	border: 1px solid red;
         	width:90%;
         	float:left;
         }
@@ -91,19 +86,27 @@
         }        
         
          .writeForm>div{ 
-             border: 1px solid red; 
          } 
         
         .contents{
         	padding-right:80px;
         }
         
+        /* 버튼 */
+        .ft_btn {
+            /* border: 1px solid red; */
+            text-align: right;
+            padding: 20px 5px 0px 0px;
+        }
+        .ft_btn> button{
+        	margin: 2px;
+        }/* 
+        
         .ft_btn{
-            border: 1px solid red;
             width: 100%;
             text-align: right;
             padding: 0px 80px 0px 80px;            
-        }
+        } */
         
         /* 링크 속성 지우기 */
         a { text-decoration:none  } 
@@ -156,8 +159,8 @@
 
         </div>
         <div class="ft_btn">
-        	<input type=button id="list_btn" value="목록으로">
-            <input type=submit id="write_btn" value="작성하기">
+        	<button type=button id="list_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
+            <button id="write_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성완료</span></button>
         </div>
     </div>    
     </form>

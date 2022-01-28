@@ -22,6 +22,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 <!-- Custom fonts for this template -->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -158,6 +159,9 @@
                 <!-- End of Topbar -->
                 
                 <!-- Begin Page Content -->
+                <div class="container-fluid">
+                	 <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">공지사항 작성</h1>
 				<form action="noticeEnroll" method="post" id="frmWrite" enctype="multipart/form-data">
 				<br><br>
   				<div class="container">
@@ -178,7 +182,18 @@
   			      		</div>
   			  		</div>    
   			 	</form>
+  			 	</div>
     		</div>
+    		
+    		<!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
     	</div>
     </div>
     <script>
