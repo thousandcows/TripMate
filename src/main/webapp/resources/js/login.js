@@ -374,9 +374,9 @@ ws.onmessage = function(e) {
   let board_num = notice.board_num;
   let reaction = notice.reaction;
   if(reaction == 'comment' && board_num == 1){
-    line = `<div id='noticeProc${noticeProcNum}' class='websocTest'><a href='/tourboard/detail?seq=${seq}' class='websocLine'>여행게시판 ${title} 글에 댓글이 달렸습니다.</a></div>`;
+    line = `<div id='noticeProc${noticeProcNum}' class='websocTest'><a href='/tourboard/detail?seq=${seq}#rep_write' class='websocLine'>여행게시판 ${title} 글에 댓글이 달렸습니다.</a></div>`;
   } else if(reaction == 'comment' && board_num == 2) {
-    line = `<div id='noticeProc${noticeProcNum}' class='websocTest'><a href='/companyboard/detail?seq=${seq}' class='websocLine'>동행게시판 ${title} 글에 댓글이 달렸습니다.</a></div>`;
+    line = `<div id='noticeProc${noticeProcNum}' class='websocTest'><a href='/companyboard/detail?seq=${seq}#rep_write' class='websocLine'>동행게시판 ${title} 글에 댓글이 달렸습니다.</a></div>`;
   }
 
   if(reaction == 'like' && board_num == 1){

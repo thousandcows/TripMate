@@ -54,7 +54,7 @@
 		<selectKey keyProperty="tar" resultType="int" order="BEFORE">
 			select sort_seq.nextval from dual  
 		</selectKey>
-		update detail_plan set seq = ${tar} where seq = #{value}
+		update detail_plan set seq = #{tar} where seq = #{value}
 	</update>
 	
 	<update id="sortPlan">
@@ -64,7 +64,9 @@
 	<update id="sortDatePlan">
 		update detail_plan set plan_date = #{day} where seq = #{seq}
 	</update>
-	
+	<update id="sortDate">
+		update detail_plan set seq = decode(seq,#{firstSeq},#{secondSeq},#{secondSeq},#{firstSeq}) where seq in (#{firstSeq},#{secondSeq})
+	</update>
 	<delete id="deleteDatePlan">
 		delete from detail_plan where seq = #{seq}
 	</delete>
