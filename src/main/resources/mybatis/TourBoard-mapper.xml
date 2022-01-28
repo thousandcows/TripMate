@@ -78,7 +78,7 @@
      </delete>
 	 
 	 <insert id="createBoardLike"> 
-        insert into tb_heart values (tb_heart_seq.nextval, #{par_seq}, #{mem_seq}, #{like_check})
+        insert into tb_heart values (tb_heart_seq.nextval, #{par_seq}, #{mem_seq})
      </insert>
 
      <delete id="deleteBoardLike">
@@ -87,11 +87,7 @@
      </delete>
 
      <select id="updateBoardLike"> 
-        update tour_board
-        set
-        rec_count = (select count(*)
-        from tb_heart
-        where par_seq = #{value})
+        update tour_board set rec_count = (select count(*) from tb_heart where par_seq = #{value})
         where seq = #{value}
      </select>
 

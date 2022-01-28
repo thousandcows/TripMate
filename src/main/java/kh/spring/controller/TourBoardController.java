@@ -23,6 +23,7 @@ import kh.spring.dto.TourBoardDTO;
 import kh.spring.dto.TourBoardLikeDTO;
 import kh.spring.dto.TourReplyDTO;
 import kh.spring.dto.TourReplyReplyDTO;
+import kh.spring.service.AdminService;
 import kh.spring.service.TourBoardService;
 import kh.spring.service.TourReplyService;
 import kh.spring.statics.Statics;
@@ -42,6 +43,9 @@ public class TourBoardController {
 	
 	@Autowired
 	public TourReplyService rservice;
+	
+	@Autowired
+	public AdminService aservice;
 	
 	@Autowired
 	private HttpSession session;
@@ -243,7 +247,6 @@ public class TourBoardController {
         int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));  
         TourBoardLikeDTO dto = new TourBoardLikeDTO();
         
-        System.out.println(heart);
         dto.setPar_seq(boardId);
         dto.setMem_seq(loginSeq);
 	        
@@ -272,6 +275,7 @@ public class TourBoardController {
 	public String noticeDetail(int seq, Model model) {
 
 		NoticeDTO ndto = bservice.selectByNtSeq(seq);
+        aservice.addViewCount(seq);
 		
 		model.addAttribute("dto", ndto);
 		
