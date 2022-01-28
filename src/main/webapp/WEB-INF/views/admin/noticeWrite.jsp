@@ -173,8 +173,8 @@
  							</div>
    			     		</div><br>
    			     		<div class="ft_btn">
-        					<input type=button id="list_btn" class="btn btn-success" value="목록">
             				<input type=submit id="write_btn" class="btn btn-success" value="작성">
+        					<input type=button id="list_btn" class="btn btn-success" value="취소">
   			      		</div>
   			  		</div>    
   			 	</form>
