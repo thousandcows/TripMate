@@ -114,24 +114,40 @@ public class PlanService {
 		return dao.getDetail(seq);
 	}
 	
-	public void sortPlan(int[] target) {
+	
+	public void sortDate(int[] target,int seq) {
 		int[] tmp = target.clone();
 		Arrays.sort(tmp);
-		for(int a : target) {
-			System.out.print(a+ " ");
-		}
-		System.out.println();
-		for(int b : tmp) {
-			System.out.print(b+ " ");
-		}
-		System.out.println();
-		for(int i = 0; i<target.length;i++) {
-			if(tmp[i] != target[i]) {
-				int t = dao.sortZero(tmp[i]);
-				dao.sortPlan(tmp[i],target[i]);
-				dao.sortPlan(target[i],t);
+
+		int nowN=0;
+		int changeN=0;
+		for(int i=0; i<target.length;i++) {
+			if(tmp[i] == seq) {
+				nowN = i;
+			}
+			if(target[i] == seq) {
+				changeN = i;
 			}
 		}
+		System.out.println(nowN+ " : " + target.length + " : "+ tmp.length);
+		for(int i = 0; i<target.length;i++) {
+			if(tmp[i] != target[i]) {
+				if(nowN>changeN) {
+					if(nowN == i) {
+						break;
+					}
+					dao.sortDate(target[nowN],target[i]);
+					
+				}else if(nowN<changeN) {
+					if(changeN == i) {
+						break;
+					}
+					dao.sortDate(target[i], target[i+1]);
+				}
+				
+			}
+		}
+
 	}
 	
 	public void sortDatePlan(int seq, String day) {
