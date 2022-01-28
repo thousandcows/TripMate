@@ -122,13 +122,13 @@ ul{
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="국내여행1.jpg" class="d-block w-100" alt="...">
+            <img src="/images/국내여행1.jpg" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img src="국내여행2.jpg" class="d-block w-100" alt="...">
+            <img src="/images/국내여행2.jpg" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img src="국내여행4.jpg" class="d-block w-100" alt="...">
+            <img src="/images/국내여행4.jpg" class="d-block w-100" alt="...">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -147,7 +147,7 @@ ul{
         
         <div class='intro-box-wrapper row'>
         <div class='intro-box col-xs-4' style="text-align: center;">
-        <img src="여행지리스트.png" style="width: 93px; height: 96px;">
+        <img src="/images/여행지리스트.png" style="width: 93px; height: 96px;">
         <br>
         <h5>국내 다양한 여행지</h5>
         <hr style="width:100%;height:10px;">
@@ -156,7 +156,7 @@ ul{
         </h6>
         </div>
         <div class='intro-box col-xs-4'  style="text-align: center;">
-        <img src="여행일정.png" style="width: 93px; height: 96px;">
+        <img src="/images/여행일정.png" style="width: 93px; height: 96px;">
         <h5>여행 일정 플래너</h5>
         <hr style="width:100%;height:10px;">
         <h6>
@@ -168,7 +168,7 @@ ul{
         </h6>
         </div>
         <div class='intro-box col-xs-4'  style="text-align: center;">
-        <img src="게시판.png" style="width: 93px; height: 96px;">
+        <img src="/images/게시판.png" style="width: 93px; height: 96px;">
         <h5>게시판</h5>
         <hr style="width:100%;height:10px;">
         <h6>
@@ -218,9 +218,9 @@ ul{
               </div>
 
               <div class='main-banner col-4'>
-              <a href="/faqs"><img src="tel.png" />
+              <a href="/faqs"><img src="/images/tel.png" />
               </a>
-              <a href="/boards/35"><img src="faq.png" class="mt-4"/>
+              <a href="/boards/35"><img src="/images/faq.png" class="mt-4"/>
               </a>
             </div>
               </div>
@@ -230,7 +230,7 @@ ul{
               
               
               <div class='top-btn'>
-              <a href="#"><img src="up1.png"/>
+              <a href="#"><img src="/images/up1.png"/>
               </a></div>
               </div>
               </div>
@@ -244,8 +244,8 @@ ul{
               <div class='footer-menu'>
               <div class='container cleafix'>
               <div class='footer-sns pull-right'>
-              <a target ="_blank" href="https://ko-kr.facebook.com/Earthtory/"><img src="페북.png" />
-              </a><a target="_blank" href="" style="width: 32px; height: 32px;"><img src="인스타1-1.png" />
+              <a target ="_blank" href="https://ko-kr.facebook.com/Earthtory/"><img src="/images/페북.png" />
+              </a><a target="_blank" href="" style="width: 32px; height: 32px;"><img src="/images/인스타1-1.png" />
              
               </a></div>
               </div>
@@ -258,7 +258,7 @@ ul{
               <div class='container'>
               <div class='row'>
               <div class='col-xs-2'>
-              <img class="web" src= "footer.png"/>
+              <img class="web" src= "/images/footer.png"/>
               <img class="mobile" src="" />
               </div>
               <div class='col-xs-10'>
