@@ -760,20 +760,15 @@ a:active {
     });
     
     $(".heart").on("click", function () {
-
         var that = $(".heart");
-
-        var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name')};
-        
+        var sendData = {'boardId' : '${dto.seq}','heart' : that.prop('name')};        
         $.ajax({
             url :'/tourboard/heart',
             type :'POST',
             data : sendData,
             success : function(data){
-                that.prop('name',data.heart);   
-                
-                var heart = data.heart;
-                
+                that.prop('name',data.heart);                
+                var heart = data.heart;                
                 if(heart==1) {
 					wsObj.reaction = 'like';
 					ws.send(JSON.stringify(wsObj));

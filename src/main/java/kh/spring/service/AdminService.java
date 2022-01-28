@@ -62,4 +62,9 @@ public class AdminService {
 		
 		return adao.noticeModify(seq, title, contents);
 	}
+	
+	public int addViewCount(int seq) {
+		
+		return adao.addViewCount(seq);
+	}
 }
