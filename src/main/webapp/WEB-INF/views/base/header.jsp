@@ -273,22 +273,22 @@
                             <c:choose>
                               <c:when test="${reactions.reaction eq 'comment'}">
                                 <c:if test="${reactions.board_num eq 1}">
-                                  <div class="noticeList"><a href="/tourboard/detail?seq=${reactions.seq}" class="noticeLista">여행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
+                                  <div class="noticeList"><a href="/tourboard/detail?seq=${reactions.seq}" class="noticeLista">${reactions.time} 여행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
                                 </c:if>
                                 <c:if test="${reactions.board_num eq 2}">
-                                  <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}" class="noticeLista">동행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
+                                  <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}" class="noticeLista">${reactions.time} 동행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
                                 </c:if>
                               </c:when>
                               <c:when test="${reactions.reaction eq 'like'}">
                                 <c:if test="${reactions.board_num eq 1}">
-                                  <div class="noticeList"><a href="/tourboard/detail?seq=${reactions.seq}" class="noticeLista">여행게시판 ${reactions.title} 글에 좋아요 반응이 있습니다.</a></div>
+                                  <div class="noticeList"><a href="/tourboard/detail?seq=${reactions.seq}" class="noticeLista">${reactions.time} 여행게시판 ${reactions.title} 글에 좋아요 반응이 있습니다.</a></div>
                                 </c:if>
                                 <c:if test="${reactions.board_num eq 2}">
-                                  <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}" class="noticeLista">동행게시판 ${reactions.title} 글에 좋아요 반응이 있습니다.</a></div>
+                                  <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}" class="noticeLista">${reactions.time} 동행게시판 ${reactions.title} 글에 좋아요 반응이 있습니다.</a></div>
                                 </c:if>
                               </c:when>
                               <c:when test="${reactions.reaction eq 'joinTrip'}">
-                                <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}" class="noticeLista">동행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 동행을 요청하였습니다.</a></div>
+                                <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}" class="noticeLista">${reactions.time} 동행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 동행을 요청하였습니다.</a></div>
                               </c:when>
                             </c:choose>
                           </c:forEach>

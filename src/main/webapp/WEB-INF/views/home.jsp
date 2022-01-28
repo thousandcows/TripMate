@@ -108,6 +108,7 @@ ul{
     </style>
     
 <body>
+
  
    
   <div id="tirp list" class="triplist">
@@ -277,8 +278,13 @@ ul{
 
 
          
-</body>
-</html>
+
+
+
+<script>
+let us = new WebSocket("ws://localhost/user"); // 웹소켓
+</script>
+
 </body>
 
     </html>

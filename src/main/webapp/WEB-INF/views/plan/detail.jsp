@@ -13,17 +13,24 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">
 
 <jsp:include page="../base/header.jsp"></jsp:include>
+<style>
+	@media(max-width:992px){
+		.map{
+			height:400px;
+		}
+	}
+</style>
 </head>
 <body>
-	<div class="container">
+	<div class="container mt-4">
 		<div class="row">
 			<div class="col-12 text-center">
 				<h2>${dto.title }</h2>
 			</div>
-			<div class="col-2">
+			<div class="col-4">
 				여행 컨셉 : ${dto.theme }
 			</div>
-			<div class="col-10 text-end">
+			<div class="col-8 text-end">
 				여행 시작일 ${dto.startDate } ~ 여행 종료일 ${dto.endDate }
 			</div>
 			
@@ -34,7 +41,7 @@
 						<div class="col-12">
 							<span>${k }일차</span>				
 						</div>
-						<div class="col-6">
+						<div class="col-12 col-lg-6">
 							<div class="row mt-2 border">
 						
 							<c:forEach var="j" items="${i }">
@@ -42,7 +49,7 @@
 									<div class="col-3 mt-1" style=" border-radius:3px; border:1px solid black;">
 										<img src="${j.photo }" class="w-100" style="height:80px;"><br>
 										<span>${j.name }</span><br>
-										<input type="hidden" value="${j.location }" id=${l}>
+										<input type="hidden" value="${j.location }" id="${l}" txt="${j.name }">
 										<!-- <span>${j.location }</span>-->
 										
 									</div>
@@ -54,7 +61,7 @@
 							</c:forEach>						
 							</div>
 						</div>
-						<div class="col-6 border" id="map${k }">
+						<div class="col-12 col-lg-6 border map" id="map${k }">
 							
 						</div>
 					</div>	
@@ -80,17 +87,19 @@
 			location.href= "/plan/delete?seq=${dto.seq}";
 		}
 	})
+	
+	
+	
 	let loca=1;
 	let list= new Array();
 	<c:forEach items="${list}" var="item">
 		list.push("${item}");
 	</c:forEach>
-	console.log(list);
-	console.log(list[0]);
 	var map = [];
+	
+	
 	for(let i = 1; i<="${list.size()}";i++){
 		let size = list[i-1].length;
-		console.log((list[i-1].match(/,/g) || []).length+1);
 		if(size>2){
 			let tmp = 1;
 		    //지도
@@ -117,56 +126,45 @@
 			
 			// 주소-좌표 변환 객체를 생성합니다
 			var geocoder = new kakao.maps.services.Geocoder();	
-			
 			for(let j = 0; j<=(list[i-1].match(/,/g) || []).length;j++){
-				if($("#"+loca) && tmp<2 && $("#"+loca).val() !=null){
-					console.log($("#"+loca).val());
+				if($("#"+loca).val() !=null){
+					let title = $("#"+loca).attr("txt");
+
 					geocoder.addressSearch($("#"+loca).val(), function(result, status) {
-						   // 정상적으로 검색이 완료됐으면 
-					     if (status === kakao.maps.services.Status.OK) {
 
+						// 정상적으로 검색이 완료됐으면 
+						   if (status === kakao.maps.services.Status.OK) {
 					        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
 					        // 결과값으로 받은 위치를 마커로 표시합니다
 					        var marker = new kakao.maps.Marker({
 					            map: map[i],
 					            position: coords
+					        });	        
+					        var infowindow = new kakao.maps.InfoWindow({
+					            content: title
 					        });
+					        infowindow.open(map[i], marker);
+					      
 					    } 
 					});    
-					
-					geocoder.addressSearch($("#"+loca).val(), function(result, status) {
+					if($("#"+loca) && tmp<2){
+						geocoder.addressSearch($("#"+loca).val(), function(result, status) {
 
-					    // 정상적으로 검색이 완료됐으면 
-					     if (status === kakao.maps.services.Status.OK) {
-					        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-					        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-					        map[i].setCenter(coords);
-					    } 
-					});    
-						tmp++;
-				}else if($("#"+loca) && $("#"+loca).val() !=null){
-					geocoder.addressSearch($("#"+loca).val(), function(result, status) {
-						   // 정상적으로 검색이 완료됐으면 
-					     if (status === kakao.maps.services.Status.OK) {
-
-					        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-					        // 결과값으로 받은 위치를 마커로 표시합니다
-					        var marker = new kakao.maps.Marker({
-					            map: map[i],
-					            position: coords
-					        });
-					    } 
-					});    
-				}
+						    // 정상적으로 검색이 완료됐으면 
+						     if (status === kakao.maps.services.Status.OK) {
+						        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+						        map[i].setCenter(coords);
+						    } 
+						});    
+							tmp++;
+					}
 				loca++;
 
-			}			
+				}			
+			}
 		}
-
 	}
-		
 	
 
 </script>

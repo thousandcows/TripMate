@@ -70,7 +70,7 @@ public class PlanController {
 		model.addAttribute("loginSeq",loginSeq);
 		return "/plan/detail";
 	}
-	
+	 
 	@RequestMapping("newPlan")
 	public String newPlan() {
 		return "/plan/planning";
