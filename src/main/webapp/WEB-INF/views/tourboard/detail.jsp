@@ -14,6 +14,7 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
 <jsp:include page="../base/header.jsp"></jsp:include>
 
 <style>
@@ -266,7 +267,7 @@ a:active {
 				</div>
 				<br>
 				<div class="contents" style="margin-left: 80px;">
-					<textarea class="summernote" id="summernote" rows="5" name="explanation" style="height: 300px;">${dto.contents }</textarea>
+					<textarea class="summernote" id="summernote" rows="50" name="explanation" style="height: 300px;">${dto.contents }</textarea>
 				</div>
 			</div><br><br>
 			<div class="ft_btn">
@@ -624,14 +625,6 @@ a:active {
 			$("#modcategory").css("display", "inline");
 			$("#modcategory").val(""+categoryValue+"");
 			
-// 			$('.summernote').summernote({
-// 				airMode : false
-// 			});
-			
-			$('#summernote').summernote({
-				airMode: true			
-			});
-			
 			// 서머노트 쓰기 활성화
 			$('#summernote').summernote('enable');
 		});
@@ -681,7 +674,6 @@ a:active {
 				maxHeight : null, // 최대 높이
 				focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 				lang : "ko-KR", // 한글 설정
-				airMode: false,
 				
 				toolbar: [
 				    // [groupName, [list of button]]
@@ -725,8 +717,6 @@ a:active {
 	            processData : false,
 	            success : function(sysName) {
 	                console.log(sysName + "b")
-	                console.log("detail에 왔습니다.")
-
 	                $(editor).summernote('insertImage', sysName);
 	            }
 	        });

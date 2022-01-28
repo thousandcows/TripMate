@@ -14,7 +14,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- include libraries(jQuery, bootstrap) -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- include summernote css/js -->
@@ -78,7 +78,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
@@ -164,17 +164,17 @@
     			    <div class="writeForm">
     			    	<div class="catetitle">
     			            <div class="title">
-      			            	<input type=text placeholder="제목을 입력하세요" name="title" id="title">
+      			            	<input type=text placeholder="제목을 입력하세요" name="title" id="title" >
     			            </div>
       			      	</div><br>
     		 			   	<div class="contents" style="margin-left:80px;">
 	 							<textarea id="summernote" rows="5" name="contents" style="width:100%; height:250px;"></textarea>
  								<input type=hidden>
  							</div>
-   			     		</div>
+   			     		</div><br>
    			     		<div class="ft_btn">
-        					<input type=button id="list_btn" value="목록으로">
-            				<input type=submit id="write_btn" value="작성하기">
+        					<input type=button id="list_btn" class="btn btn-success" value="목록">
+            				<input type=submit id="write_btn" class="btn btn-success" value="작성">
   			      		</div>
   			  		</div>    
   			 	</form>

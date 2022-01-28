@@ -49,39 +49,28 @@
             padding-left: 100px;
         }
 
-        .container{
-            border:1px solid red;
-        }
-
         .container>.root{
             padding-left: 80px;
             overflow: auto;
         }
 
         .root>div{
-            border:1px solid red;
             float:left;
             margin: 40px 0px 40px 0px;
             padding-right: 10px;
         }
 
-        .writeForm{
-            border: 1px solid red;
-        }
-        
         .catetitle{
         	overflow: auto;
         	padding: 0px 80px 0px 80px;
         }
         
         .category{
-        	border: 1px solid red;
         	width:10%;
         	float:left;
         }
         
         .title{
-        	border: 1px solid red;
         	width:90%;
         	float:left;
         }
@@ -90,16 +79,11 @@
         	width:100%;
         }        
         
-         .writeForm>div{ 
-             border: 1px solid red; 
-         } 
-        
         .contents{
         	padding-right:80px;
         }
         
         .ft_btn{
-            border: 1px solid red;
             width: 100%;
             text-align: right;
             padding: 0px 80px 0px 80px;            
@@ -156,8 +140,8 @@
 
         </div>
         <div class="ft_btn">
-        	<input type=button id="list_btn" value="목록으로">
-            <input type=submit id="write_btn" value="작성하기">
+        	<input type=button id="list_btn" class="btn btn-primary btn-sm" value="목록">
+            <input type=submit id="write_btn" class="btn btn-primary btn-sm" value="작성">
         </div>
     </div>    
     </form>
