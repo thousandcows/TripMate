@@ -15,6 +15,10 @@
     </head>
     
 <body>
+
+<script>
+let us = new WebSocket("ws://localhost/user"); // 웹소켓
+</script>
 </body>
 
     </html>
