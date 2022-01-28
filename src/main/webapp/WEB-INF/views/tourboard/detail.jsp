@@ -26,6 +26,12 @@ body {
 	margin: 0; /* 임시로 body margin 0px */
 }
 
+/* input style */
+input:focus {outline:none;}
+        
+input{autocomplete="off" ;}
+        
+
 /* div{border:1px solid black} */
 .banner {
 	background-color: rgb(56, 181, 174);
@@ -50,6 +56,12 @@ body {
 	padding-left: 100px;
 }
 
+/* 컨테이너 */
+.container {
+/* border: 1px solid red; */
+    padding-bottom :30px;
+}
+        
 .container>.root {
 	padding-left: 80px;
 	overflow: auto;
@@ -61,8 +73,14 @@ body {
 	padding-right: 10px;
 }
 
+/* 제목, 글 */
+.board {
+     /* border: 1px solid red; */
+     width: 100%;
+     padding: 20px 80px 0px 80px;
+}
+
 .catetitle {
-	overflow: auto;
 	padding: 0px 80px 0px 80px;
 }
 
@@ -72,24 +90,64 @@ body {
 }
 
 .title {
-	width: 90%;
-	float: left;
-}
-
-.title>input {
-	width: 100%;
+ 	width: 100%;
+    padding: 5px;
 }
 
 .contents {
 	padding-right: 80px;
 }
 
-.ft_btn {
-	width: 100%;
-	text-align: right;
-	padding: 0px 80px 0px 80px;
+.write_con>textarea {
+     width: 100%;
+     height: 500px;
+     resize: none;
 }
 
+/* 버튼 */
+
+.button {
+      /* border: 1px solid red; */
+     text-align: right;
+     padding: 20px 5px 0px 0px;
+}
+        
+ .button> button{
+     margin: 2px;
+}
+
+ /* 작성자/조회수칸 */
+.writer_con{
+   	width: 100%;
+    height: 50px;
+}
+
+.view_con{
+    width: 100%;
+    height: 30px;
+    color: gray;
+}
+
+/* 댓글쓰기창 */
+.rep_con{
+    width: 100%;
+    height: 70px;
+    padding: 10px;
+}
+
+.rep_con > textarea{
+    width: 100%;
+    height: 50px;
+    resize: none;
+}
+
+.button2 {
+    text-align: right;
+    padding: 5px 5px 0px 0px;
+    height: 50px;
+}
+
+/* 댓글 */
 
 
 .reply {
@@ -205,8 +263,6 @@ a:active {
         	width: 100%;
         	height: 30px;
         	text-align: right;
-        	
-        	padding-left: 80px;
         }
         
         .like_n_rep>div{
@@ -233,55 +289,59 @@ a:active {
 	
 	<div class="container">
 		<div class="root">
-			<div class="home">
-				<a href="/"><i class="fas fa-home"></i></a>
-			</div>
+			<div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
 			<div>></div>
-			<div class="community" href="">커뮤니티</div>
+			<div class="community" href="/tourboard/list?cpage=1">커뮤니티</div>
 			<div>></div>
-			<div class="tourboard">
-				<a href="/tourboard/list?cpage=1">여행지 게시판</a>
-			</div>
+			<div class="tourboard"><a href="/tourboard/list?cpage=1">여행지 게시판</a></div>
 		</div>
-		<form action="/tourboard/modify" method="post" id="frmDetail"
-			enctype="multipart/form-data">
-			<div class="writeForm">
+		<form action="/tourboard/modify" method="post" id="frmDetail" enctype="multipart/form-data">
+			<div class="board">
 				<div class="catetitle">
-					<div class="category">
-						<input type=text value="[${dto.category }]" id="discategory" style="border: 0px; text-align: center; width: 100%;" readonly>
+					<!-- <div class="category"> -->
+					<span style="width: 20%;">
 						<input type=hidden value="${dto.category }" id="categoryValue">
-						<select style="display: none" ; id="modcategory" name="category">
+                        <h3 style="color: rgb(56, 181, 174); font-weight: bold; display: inline; padding: 5px;">${dto.category }</h3> 
+                        <h3 style="display: inline; color: rgb(153, 153, 153); padding: 5px;">|</h3>
+                        <select style="display: none" ; id="modcategory" name="category">
 							<option value="">말머리</option>
 							<option value="명소">명소</option>
 							<option value="문화">문화</option>
 							<option value="생태">생태</option>
 							<option value="체험">체험</option>
 						</select>
-					</div>
-					<div class="title">
-						<input type=hidden value="${dto.seq}" name=seq> <input
-							type=text placeholder="제목을 입력하세요" id="title" name="title"
-							value="${dto.title }" readonly>
-					</div>
+                    </span> 
+                    <span style="width: 80%;">
+                    	<input type=hidden value="${dto.seq}" name=seq>
+                        <input type=text placeholder="제목을 입력하세요" id=title name=title readonly value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; border: none; width: 90%;">
+                    </span>
 				</div>
-				<br>
+				<div class="writer_con">
+                    <div style="line-height: 50px; padding-left: 100px; padding-top: 10px;"> ${dto.nick}</div>
+                </div>
+                <div class="view_con">
+                    <div style="line-height: 30px; padding-left: 100px;">조회수 ${dto.view_count}</div>
+                </div>
+				
+				<hr style="margin:20px 0px 30px 0px;">
+				
 				<div class="contents" style="margin-left: 80px;">
-					<textarea class="summernote" id="summernote" rows="5" name="explanation" style="height: 300px;">${dto.contents }</textarea>
+					<textarea class="summernote" id="summernote" name="explanation" >${dto.contents }</textarea>
 				</div>
-			</div><br><br>
-			<div class="ft_btn">
+				
+			<div class="button">
 				<a href="/tourboard/list?cpage=1"><button type=button class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">목록</button></a>
 				<c:if test="${!empty loginNick }">
 					<c:if test="${dto.nick == loginNick}">
 				<button type=button id=mod class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">수정</button>
 				<button type=button id=del class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">삭제</button>
-				<button type=button id=modOk style="display: none;" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">완료</button>
-				<button type=button id=modCancel style="display: none;" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">취소</button>
+				<button type=button id=modOk style="display: none;border: none;background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm"  >완료</button>
+				<button type=button id=modCancel style="display: none;border: none;background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm">취소</button>
 					</c:if>
 				</c:if>
 			</div>
-		</form>		
-		<div class="like_n_rep">
+			
+			<div class="like_n_rep">
         	<c:if test="${!empty loginNick}">
                 <div id=like_icon>
                		<a class="heart">
@@ -299,24 +359,19 @@ a:active {
             <div id=rep_icon>
                 <i class="far fa-comment-dots" style="color: black"></i><span id="rep_count" name="rep_count"> ${dto.rep_count}</span>
             </div>
-       </div>
-               
-		<br>
-		<form action="/tourreply/reply" method="post" id="frmReply"	enctype="multipart/form-data">		
-			<div class="reply">
-				<input type=hidden value="${dto.seq}" name=rseq>
-				<div class="rp_input">
-					<c:if test="${!empty loginNick }">
-						<textarea type=text placeholder="댓글을 입력하세요" style="width: 100%; height: 30px;" id="rep_con" name="reply"></textarea>
-					</c:if>
-				</div>
-				<br>
-				<div class="rp_write" style="text-align: right;">
-					<c:if test="${!empty loginNick }">
-						<button type=submit id="write_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);">댓글 작성</button>
-					</c:if>
-				</div>
+       		</div>
 			</div>
+		</form>		
+		<form action="/tourreply/reply" method="post" id="frmReply"	enctype="multipart/form-data">
+				<input type=hidden value="${dto.seq}" name=rseq>
+				<c:if test="${!empty loginNick }">
+					<div class="rep_con">
+                   		<textarea type=text id="rep_con" name="reply" placeholder=" 댓글을 입력해주세요" ></textarea>
+               		</div>
+               		<div class="button2">
+                   		<button type="submit"  id="write_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 작성</span></button>
+               		</div>
+				</c:if>
 		</form>
 		<br><br>
 		<div class="reply_list">

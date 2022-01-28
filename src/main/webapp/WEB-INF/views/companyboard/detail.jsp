@@ -40,30 +40,7 @@
             /* 임시로 body margin 0px */
         }
 
-        /* 링크 속성 지우기 */
-        a {
-            text-decoration: none
-        }
 
-        a:hover {
-            text-decoration: none;
-            color: black;
-        }
-
-        a:link {
-            text-decoration: none;
-            color: black;
-        }
-
-        a:visited {
-            text-decoration: none;
-            color: black;
-        }
-
-        a:active {
-            text-decoration: none;
-            color: black;
-        }
 
         /* 헤더----------------------------------------------------- */
         .banner {
@@ -293,10 +270,10 @@
             <div class="partyboard"><a href="/companyboard/list?cpage=1">동행게시판</a></div>
         </div>
     
-        <form  action="/companyboard/modify" method="post" id="frmDetail">
+        <form  action="/companyboard/modify" method="post" id="frmDetail" enctype="multipart/form-data">
             <div class="board">
             	<input type=hidden value="${dto.seq}" name=seq > <!-- 글 번호에 맞춰 불러오기 위한 꼼수 -->
-            	<div class="title">
+            	<div class="title"> <!-- catetitle -->
                     <span style="width: 20%;">
                         <h3 style="color: rgb(56, 181, 174); font-weight: bold; display: inline; padding: 5px;">${dto.tour}</h3> 
                         <h3 style="display: inline; color: rgb(153, 153, 153); padding: 5px;">|</h3>
@@ -446,6 +423,7 @@
                 			</c:forEach>
                 	</div>
                 </c:if>
+               	</div>
          	</form> 
                	<form action="/comreply/reply" method="post" id="frmReply" enctype="multipart/form-data">
 					<input type=hidden value="${dto.seq}" name=rseq>
@@ -453,7 +431,6 @@
 						<div class="rep_con">
                     		<textarea id=rep_con name=reply placeholder=" 댓글을 입력해주세요" ></textarea>
                 		</div>
-                	
                 		<div class="button2">
                     		<button type="submit"  id="rep_write" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 작성</span></button>
                 		</div>
@@ -541,7 +518,7 @@
                 		</div>
                 	</form>
                	</c:forEach>
-    	</div>
+    		</div>
     	
     	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
