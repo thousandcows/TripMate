@@ -172,5 +172,9 @@ public class MemberDAO {
 	public int reactionRemove(int loginSeq) {
 		return mybatis.delete("Member.reactionRemove", loginSeq);
 	}
+	
+	public String TestLookUp(int i) {
+		return "룩업 성공";
+	}
 
 }

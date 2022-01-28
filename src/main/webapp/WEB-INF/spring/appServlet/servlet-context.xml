@@ -49,8 +49,9 @@
 			<exclude-mapping path="/"/>
 			<exclude-mapping path="/member/join"/>
 			<exclude-mapping path="/member/login"/>
-			<exclude-mapping path="/images/**"/>
 			-->
+			<exclude-mapping path="/images/**"/>
+			<exclude-mapping path="/js/**"/>
 			<beans:bean class="kh.spring.interceptor.Interceptor"/>
 		</interceptor>
 	</interceptors>
