@@ -255,9 +255,7 @@ public class MemberController {
 	// 로그아웃
 	@RequestMapping("normalLogout")
 	public String normalLogout() {
-//		session.invalidate(); // 이게 맞을 것 같은데 웹소켓 에러때문에 일단 보류
-		session.removeAttribute("loginSeq");
-		session.removeAttribute("loginNick");
+		session.invalidate();
 		return "redirect:/";
 		// 나중에 현재페이지 로그인&로그아웃으로 변경할것
 	}

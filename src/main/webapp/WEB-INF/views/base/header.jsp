@@ -47,12 +47,13 @@
         position:fixed;
         bottom:80px;
         right:100px;
+        z-index:9999;
       }
       .websocLine{
         color:black;
         font-size:14px;
         text-decoration:none;
-        z-index:999999;
+        z-index:9999;
       }
       .websocTest{
         width:fit-content;
@@ -60,7 +61,7 @@
         border-radius:3px;
         padding:3px;
         margin:2px;
-        z-index:999999;
+        z-index:9999;
       }
 
       /* 헤더 알림글씨 */
@@ -72,10 +73,12 @@
         top:50px;
         background-color:white;
         right:200px;
+        z-index:9999;
       }
       .noticeListBoxIn{
         height: 270px;
         overflow: auto;
+        z-index:9999;
       }
       .noticeLista{
         color:black;
@@ -273,10 +276,10 @@
                             <c:choose>
                               <c:when test="${reactions.reaction eq 'comment'}">
                                 <c:if test="${reactions.board_num eq 1}">
-                                  <div class="noticeList"><a href="/tourboard/detail?seq=${reactions.seq}" class="noticeLista">${reactions.time} 여행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
+                                  <div class="noticeList"><a href="/tourboard/detail?seq=${reactions.seq}#rep_write" class="noticeLista">${reactions.time} 여행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
                                 </c:if>
                                 <c:if test="${reactions.board_num eq 2}">
-                                  <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}" class="noticeLista">${reactions.time} 동행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
+                                  <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}#rep_write" class="noticeLista">${reactions.time} 동행게시판 ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
                                 </c:if>
                               </c:when>
                               <c:when test="${reactions.reaction eq 'like'}">
