@@ -49,8 +49,6 @@
             padding-left: 100px;
         }
 
-        .container{
-        }
 
         .container>.root{
             padding-left: 80px;
@@ -63,9 +61,7 @@
             padding-right: 10px;
         }
 
-        .writeForm{
-        }
-        
+
         .catetitle{
         	overflow: auto;
         	padding: 0px 80px 0px 80px;
@@ -85,9 +81,7 @@
         	width:100%;
         }        
         
-         .writeForm>div{ 
-         } 
-        
+
         .contents{
         	padding-right:80px;
         }

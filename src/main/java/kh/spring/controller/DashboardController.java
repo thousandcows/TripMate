@@ -47,24 +47,17 @@ public class DashboardController {
 		  
 		for (int i = 0; i < dlist.size(); i++) {
 			ds.insertTable(dlist.get(i));
-			/* System.out.println(dlist.get(i).getStan_date()); */
 		}
-		 
-			/* ds.insertVisitor(visitcnt); */
 		  
-		// 일간 가입자수 : 현재 가입자
-		
+		// 일간 가입자수 : 현재 가입자		
 		  int cntMember = ds.cntMember(); 
-		  model.addAttribute("cntMember", cntMember);
-//		  map.put("cntMember", cntMember);
-		 
+		  model.addAttribute("cntMember", cntMember);		 
 		
 		// 증감량 
 		  int cntPreMem = ds.cntPreMem();
 		  int withdrawal = cntMember-cntPreMem;
 		  model.addAttribute("withdrawal", withdrawal);
-//		  map.put("withdrawal", withdrawal);
-		
+		  
 		// 총 게시글 수(계획 + 여행지 + 동행)
 		  int cntPlan = ds.cntPlan();
 		  int cntTour = ds.cntTour();
@@ -72,7 +65,6 @@ public class DashboardController {
 		  
 		  int totalPost = cntPlan + cntTour + cntCom;
 		  model.addAttribute("totalPost", totalPost);
-//		  map.put("totalPost", totalPost);
 		  
 		// 증감량
 		  int cntPrePlan = ds.cntPrePlan();
@@ -82,9 +74,6 @@ public class DashboardController {
 		  
 		  int plmaPost = totalPost - prePost;
 		  model.addAttribute("plmaPost", plmaPost);
-//		  map.put("plmaPost", plmaPost);
-		
-
 		
 		return "admin/dashboard";
 	}
@@ -95,34 +84,25 @@ public class DashboardController {
 	public HashMap<String, Integer> ajax1() throws Exception {
 
 		String loginNick = (String) session.getAttribute("loginNick");
-		
 	
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 
 		List<DashboardDTO> dlist = ds.joinTable();
 		
-		System.out.println("여기도착했나요????");
-		
 		ds.deleteTable();
 		
 		// 방문자수 : 오늘 방문자수
 		  int visitcnt = ds.getVisitTodayCount();
-		  System.out.println("방문자수" + visitcnt);
 		  dlist.get(dlist.size()-1).setVisitor(visitcnt); 
 		  map.put("visitCnt", visitcnt);
 		  
 		for (int i = 0; i < dlist.size(); i++) {
 			ds.insertTable(dlist.get(i));
-			/* System.out.println(dlist.get(i).getStan_date()); */
 		}
 		 
-			/* ds.insertVisitor(visitcnt); */
-		  
-		// 일간 가입자수 : 현재 가입자
-		
+		// 일간 가입자수 : 현재 가입자		
 		  int cntMember = ds.cntMember(); 
-		  map.put("cntMember", cntMember);
-		 
+		  map.put("cntMember", cntMember);		 
 		
 		// 증감량 
 		  int cntPreMem = ds.cntPreMem();
@@ -145,8 +125,6 @@ public class DashboardController {
 		  
 		  int plmaPost = totalPost - prePost;
 		  map.put("plmaPost", plmaPost);
-		  
-		  System.out.println("증감량" + plmaPost);
 
 		return map;
 	}
