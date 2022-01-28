@@ -23,6 +23,7 @@ import kh.spring.dto.ComReplyReplyDTO;
 import kh.spring.dto.CompanyBoardDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.NoticeDTO;
+import kh.spring.service.AdminService;
 import kh.spring.service.ComReplyService;
 import kh.spring.service.CompanyBoardService;
 import kh.spring.service.TourBoardService;
@@ -40,6 +41,9 @@ public class CompanyBoardController {
 	
 	@Autowired
 	private TourBoardService bservice;
+	
+	@Autowired
+	private AdminService aservice;
 	
 	@Autowired
 	public ComReplyService crs;
@@ -199,6 +203,13 @@ public class CompanyBoardController {
 		return "redirect:/companyboard/detail?seq="+dto.getSeq();
 	}
 	
+	@RequestMapping("toModify")
+	public String modifyPage(CompanyBoardDTO dto, Model model) {
+		
+		model.addAttribute("dto", dto);
+		return "companyboard/modifyPage";
+	}
+	
 	//삭제 버튼 클릭 시 db에서 삭제
 	@RequestMapping("deleteProc")
 	public String deleteProc(int seq) throws Exception{
@@ -218,13 +229,10 @@ public class CompanyBoardController {
         int heart = Integer.parseInt(httpRequest.getParameter("heart"));
         int loginSeq = (int) session.getAttribute("loginSeq");     
         int boardId = Integer.parseInt(httpRequest.getParameter("boardId"));  
-
         ComBoardLikeDTO dto = new ComBoardLikeDTO();
         
         dto.setPar_seq(boardId);
-        dto.setMem_seq(loginSeq);
-        
-        
+        dto.setMem_seq(loginSeq);       
 		 
         if(heart >= 1) {
             cbs.deleteBoardLike(dto);
@@ -244,9 +252,7 @@ public class CompanyBoardController {
         
         int likeCount = cbs.totalBoardLike(boardId);
         map.put("likeCount", likeCount);
-
         return map;
-
     }
 	
 	
@@ -338,7 +344,8 @@ public class CompanyBoardController {
 	public String noticeDetail(int seq, Model model) {
 
 		NoticeDTO ndto = bservice.selectByNtSeq(seq);
-		
+        aservice.addViewCount(seq);
+        
 		model.addAttribute("dto", ndto);
 		
 		return "companyboard/noticeDetail";

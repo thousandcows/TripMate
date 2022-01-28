@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,14 +14,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- include libraries(jQuery, bootstrap) -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <!-- Custom fonts for this template -->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -78,7 +76,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
@@ -165,21 +163,21 @@
     			    	<div class="catetitle">
     			            <div class="title">
     			            	<input type=hidden value="${ndto.seq}" name=seq>
-      				            	<input type=text placeholder="제목을 입력하세요" name="title" id="title" value="${ndto.title }" readonly>
+      				            	<input type=text placeholder="제목을 입력하세요" name="title" id="title" value="${ndto.title }" style="border:none; background-color: rgba(255, 255, 255, 0);" readonly>
     			            </div>
       			      	</div><br>
     		 			   	<div class="contents" style="margin-left:80px;">
 	 							<textarea id="summernote" rows="5" name="contents" style="width:100%; height:250px;" readonly>${ndto.contents }</textarea>
  							</div>
-   			     		</div>
+   			     		</div><br>
    			     		<div class="ft_btn">
-   				     		<a href="/admin/notice"><button type=button>목록으로</button></a>
-							<button type=button id=mod>수정하기</button>
-							<button type=button id=del>삭제하기</button>
-							<button type=submit id=modOk style="display: none;">수정완료</button>
-							<button type=button id=modCancel style="display: none;">취소</button>
+   				     		<a href="/admin/notice"><button type=button class="btn btn-success">목록</button></a>
+							<button type=button class="btn btn-success" id=mod>수정</button>
+							<button type=button class="btn btn-success" id=del>삭제</button>
+							<button type=submit class="btn btn-success" id=modOk style="display: none;">확인</button>
+							<button type=button class="btn btn-success" id=modCancel style="display: none;">취소</button>
   			      		</div>
-  			  		</div>    
+  			  		</div>
   			 	</form>
     		</div>
     	</div>

@@ -289,64 +289,10 @@
     <!-- 목록으로 / 삭제하기 -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
-		var $j360 = jQuery.noConflict();
-	
+		var $j360 = jQuery.noConflict();	
 	
 		$j360("#back").on("click", function(){
-			location.href="/companyboard/list?cpage=1";
-		})
-		
-		$j360("#delete").on("click", function(){
-			if(confirm("정말 삭제하시겠습니까?")){
-				location.href="/companyboard/deleteProc?seq=${dto.seq}"; 
-			}
-		})
-	</script>
-	
-	<!-- 수정하기, 버튼 클릭시 -->
-	<script>
-		let backupTour="";
-		let backupRecruit="";
-		let backupStartDate="";
-		let backupEndDate="";
-		let backupGender="";
-		let backupTitle = "";
-		let backupContents = "";
-		
-		$("#modify").on("click", function(){
-			
-			// 기존 데이터 담기
-			backupTitle = $("#title").val();
-			backupContents = $("#summernote").val();		
-
-			// 폼 형태 바꾸기 및 읽기 전용 해제
-			$("#title").removeAttr("readonly");
-			$("#title").css("border", "1px solid gray");
-			$("#contents").removeAttr("readonly");
-		
-			//버튼 형태 바꾸기
-			$("#modify").css("display", "none");
-			$("#delete").css("display", "none");
-			$("#recruitEnd").css("display", "none");
-			$("#modOk").css("display", "inline");
-			$("#modCancel").css("display", "inline");	
-			
-			$('#summernote').summernote('enable');
-		})
-		
-		$("#modOk").on("click",function(){
-			if(confirm("이대로 수정하시겠습니까?")){
-				$("#frmDetail").submit(); // 수정완료시 submit
-			}
-		})
-		
-		$("#modCancel").on("click", function(){
-			if(confirm("정말 취소하시겠습니까?")){
-				location.reload();
-			}
-	
-			// 썸머노트 쓰기 비활성화
-			$('#summernote').summernote('disable');
+			history.back();
 		})
 	</script>
 	
