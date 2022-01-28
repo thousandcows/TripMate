@@ -5,9 +5,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Poor+Story&display=swap"
-        rel="stylesheet">
       <link rel="stylesheet" href="/css/login.css" type="text/css">
       <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
       <script defer src="/js/login.js"></script>
@@ -28,7 +25,7 @@
       header li {
         display: inline;
         padding-left: 50px;
-        font-family: 'Poor Story', cursive;
+        font-family: 'paybooc-Bold';
         font-size: 25px;
       }
 
@@ -102,6 +99,13 @@
         border-radius:4px;
         margin:5px;
       }
+      
+      @font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
     </style>
 
     <body>
