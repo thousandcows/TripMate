@@ -15,9 +15,9 @@ public class Statics {
 	public static int SAVE_LIST_MORE = 6;
 	public static int IS_MY_SAVE_LIST_MORE = 8;
 	public static String FIND_PW_CALLER_EMAIL = "wlsrb2611@naver.com";
-	public static String FIND_PW_CALLER_PW = "xmflqapdlxm";
+	public static String FIND_PW_CALLER_PW = "";
 	public static String KAKAO_CLIENT_ID = "b7b0a7f6722957ddef971b2ff4061bd7";
-	public static String KAKAO_REDIRECT_URL = "http://3.38.78.110/member/kakaoLogin"; // 추후 AWS아이피로 변경
+	public static String KAKAO_REDIRECT_URL = "http://localhost/member/kakaoLogin"; // 추후 AWS아이피로 변경
 	
 	public static int TOTAL_CON = 0; // 전체 방문자수
 }

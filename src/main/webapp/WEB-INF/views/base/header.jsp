@@ -47,12 +47,13 @@
         position:fixed;
         bottom:80px;
         right:100px;
+        z-index:9999;
       }
       .websocLine{
         color:black;
         font-size:14px;
         text-decoration:none;
-        z-index:999999;
+        z-index:9999;
       }
       .websocTest{
         width:fit-content;
@@ -60,7 +61,7 @@
         border-radius:3px;
         padding:3px;
         margin:2px;
-        z-index:999999;
+        z-index:9999;
       }
 
       /* 헤더 알림글씨 */

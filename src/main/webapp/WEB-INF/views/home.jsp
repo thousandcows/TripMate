@@ -288,7 +288,7 @@ ul{
 
 
 <script>
-let us = new WebSocket("ws://3.38.78.110/user"); // 웹소켓
+let us = new WebSocket("ws://localhost/user"); // 웹소켓
 </script>
 
 </body>
