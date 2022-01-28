@@ -168,7 +168,7 @@
 <body>
     <!-- .banner에 이미지 추가해야한다.-->
     <div class="banner">
-        <div class="banner_title" href="">여행지 게시판</div>
+        <div class="banner_title">여행지 게시판</div>
         <div class="banner_content">각 지역의 여행 후기를 남겨보세요</div>
     </div>
     <div class="container">
