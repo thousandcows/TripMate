@@ -49,6 +49,7 @@
             padding-left: 100px;
         }
 
+
         .container>.root{
             padding-left: 80px;
             overflow: auto;
@@ -59,6 +60,7 @@
             margin: 40px 0px 40px 0px;
             padding-right: 10px;
         }
+
 
         .catetitle{
         	overflow: auto;
@@ -79,15 +81,26 @@
         	width:100%;
         }        
         
+
         .contents{
         	padding-right:80px;
         }
+        
+        /* 버튼 */
+        .ft_btn {
+            /* border: 1px solid red; */
+            text-align: right;
+            padding: 20px 5px 0px 0px;
+        }
+        .ft_btn> button{
+        	margin: 2px;
+        }/* 
         
         .ft_btn{
             width: 100%;
             text-align: right;
             padding: 0px 80px 0px 80px;            
-        }
+        } */
         
         /* 링크 속성 지우기 */
         a { text-decoration:none  } 
@@ -140,8 +153,8 @@
 
         </div>
         <div class="ft_btn">
-        	<input type=button id="list_btn" class="btn btn-primary btn-sm" value="목록">
-            <input type=submit id="write_btn" class="btn btn-primary btn-sm" value="작성">
+        	<button type=button id="list_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
+            <button id="write_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성완료</span></button>
         </div>
     </div>    
     </form>
