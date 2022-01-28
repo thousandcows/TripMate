@@ -16,20 +16,17 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Poor+Story&display=swap"
-	rel="stylesheet">
+
 <jsp:include page="../base/header.jsp"></jsp:include>
 
 </head>
 <style>
 * {
-	font-family: 'Poor Story', cursive;
+	 font-family: 'paybooc-Bold';
 }
 
 body {
-	font-family: 'Poor Story', cursive;
+	 font-family: 'paybooc-Bold';
 }
 
 .btn-toolbar {
@@ -39,6 +36,13 @@ body {
 
 .triplist {
 	cursor: pointer;
+}
+
+@font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 </style>
 
