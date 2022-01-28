@@ -115,7 +115,6 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
                         <h1 class="h1 mb-0 text-gray-900 font-weight-bold">Dashboard</h1>
-                        <a id="refresh" href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-sync-alt fa-sm text-white-100"></i>&nbspRefresh</a>
                     </div>
 
                     <!-- 방문자수 카운트 -->
