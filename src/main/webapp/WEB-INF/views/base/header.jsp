@@ -72,10 +72,12 @@
         top:50px;
         background-color:white;
         right:200px;
+        z-index:9999;
       }
       .noticeListBoxIn{
         height: 270px;
         overflow: auto;
+        z-index:9999;
       }
       .noticeLista{
         color:black;

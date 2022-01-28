@@ -96,6 +96,12 @@ ul{
 .notice-list>li:hover{
     background-color: #F0F0F0;
 }
+.carousel{
+  z-index: 10;
+}
+.carousel-indicators{
+  z-index: 10;
+}
 
 @font-face {
     font-family: 'paybooc-Bold';
@@ -282,7 +288,7 @@ ul{
 
 
 <script>
-let us = new WebSocket("ws://localhost/user"); // 웹소켓
+let us = new WebSocket("ws://3.38.78.110/user"); // 웹소켓
 </script>
 
 </body>

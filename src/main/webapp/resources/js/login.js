@@ -6,7 +6,7 @@ let nickNameSubmitCheck = false;
 let phoneSubmitCheck = false;
 let pwSubmitCheck = false;
 let pwReSubmitCheck = false;
-let ws = new WebSocket("ws://localhost/notice"); // 웹소켓
+let ws = new WebSocket("ws://3.38.78.110/notice"); // 웹소켓
 // 이메일 중복확인
 let eventCheck = document.querySelector("#signupEmailCheckBtn");
 if (eventCheck != null) {
