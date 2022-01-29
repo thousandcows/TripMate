@@ -53,7 +53,7 @@
                     <button type="button" class="myInfoNickCheck" id="myInfoNickCheck">중복확인</button>
                     <div class="myInfoCheckTxt myInfoNickConfirm">&nbsp;</div>
                     <c:if test="${loginInfo.sns_division == 0}">
-                      <button type="button" class="btn btn-primary changePwBtn" data-bs-toggle="modal"
+                      <button type="button" class="changePwBtn2" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                         비밀번호 변경
                       </button>

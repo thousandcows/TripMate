@@ -248,8 +248,8 @@
   }
 
   /* 비밀번호 수정 폼 */
-  .changePwBtn {
-    width: 120px;
+  .changePwBtn2 {
+    width: 160px;
     height: 40px;
     background-color: white;
     color: rgb(65, 65, 65);
@@ -257,7 +257,7 @@
     font-size: 14px;
   }
 
-  .changePwBtn:hover {
+  .changePwBtn2:hover {
     background-color: white;
     color: rgb(65, 65, 65);
   }
@@ -308,8 +308,7 @@
     /* 사이드바 시작 */
   .sideBar {
     width: 100px;
-    height:800px;
-    background-color: #198c8c;
+    background-color: white;
   }
 
   /* 초상화 공간 */
@@ -321,12 +320,20 @@
     position: relative;
   }
 
+  .savedTitle a{
+    font-size:14px;
+  }
+
+  .savedLocation{
+    font-size:14px;
+  }
+
   .sideMyNick {
     height: 40px;
     line-height: 40px;
     text-align: center;
     font-size:12px;
-    color:white;
+    color:black;
   }
 
   /* 사이드바 메뉴 */
@@ -351,16 +358,19 @@
     color: rgb(75, 75, 75);
     box-shadow: 1px 1px 2px 1px rgb(224, 224, 224);
   }
+  .sideBarMenuBox li:first-child a{
+    color:white;
+  }
 
   .sideBarMenuBox li a:hover {
     opacity: 1;
     box-shadow: 1px 1px 2px 1px rgb(211, 211, 211);
   }
-
-  .sideBarMenuBox li:first-child a {
-    background-color: rgb(110, 224, 154);
-    box-shadow: none;
-    color:rgb(0, 0, 0);
+  .portraitPhoto {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    position: absolute;
   }
 
   /* 사이드바 끝 */
@@ -543,7 +553,7 @@
   }
 
   /* 비밀번호 수정 폼 */
-  .changePwBtn {
+  .changePwBtn2 {
     width: 100px;
     height: 30px;
     background-color: white;
