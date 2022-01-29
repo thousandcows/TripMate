@@ -203,6 +203,13 @@ public class CompanyBoardController {
 		return "redirect:/companyboard/detail?seq="+dto.getSeq();
 	}
 	
+	@RequestMapping("toModify")
+	public String modifyPage(CompanyBoardDTO dto, Model model) {
+		
+		model.addAttribute("dto", dto);
+		return "companyboard/modifyPage";
+	}
+	
 	//삭제 버튼 클릭 시 db에서 삭제
 	@RequestMapping("deleteProc")
 	public String deleteProc(int seq) throws Exception{

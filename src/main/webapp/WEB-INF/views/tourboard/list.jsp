@@ -97,7 +97,7 @@
             /* border: 1px solid red; */
             width: 100%;
             padding : 20px 80px 0px 80px;
-            text-align: center;
+/*             text-align: center; */
         }
 
         .board_header{
@@ -140,11 +140,6 @@
             border-bottom: solid 1px rgb(207, 207, 207);  
             height:auto;
         }
-        
-        
-       /*  .board_enroll>div : hover{
-            background-color : rgb(228, 228, 228);
-        } */
 
         /* 작성 버튼 및 페이지네이션  */
         .writebtn{
@@ -168,7 +163,7 @@
 <body>
     <!-- .banner에 이미지 추가해야한다.-->
     <div class="banner">
-        <div class="banner_title" href="">여행지 게시판</div>
+        <div class="banner_title">여행지 게시판</div>
         <div class="banner_content">각 지역의 여행 후기를 남겨보세요</div>
     </div>
     <div class="container">
@@ -198,9 +193,9 @@
         </form>
         <div class="board">
             <div class="board_header">
-                <div class="seq" style="width: 10%;">번호</div>
+                <div class="seq" style="width: 10%;">No</div>
                 <div class="category" style="width: 10%;">머리말</div>
-                <div class="title" style="width: 30%;">제목</div>
+                <div class="title" style="width: 30%; text-align:center;">제목</div>
                 <div class="mem_seq" style="width: 10%;">작성자</div>
                 <div class="writen_time" style="width: 20%;">작성일</div>
                 <div class="view_count" style="width: 10%;">조회수</div>

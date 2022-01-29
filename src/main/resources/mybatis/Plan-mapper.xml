@@ -14,11 +14,11 @@
 		<selectKey keyProperty="seq" resultType="int" order="BEFORE">
 			select plan_seq.nextval from dual  
 		</selectKey>
-		insert into plan values (#{seq}, #{mem_seq}, #{title},#{startDate},#{endDate},#{theme},0,'',default)
+		insert into plan values (#{seq}, #{mem_seq}, #{title},to_date(#{startDate},'YYYY/MM/DD'),to_date(#{endDate},'YYYY/MM/DD'),#{theme},0,'',default)
 	</insert>
 	
 	<update id="changeTheme">
-		update plan set title = #{title},startDate=#{startDate},endDate=#{endDate},theme=#{theme} where seq = #{seq}
+		update plan set title = #{title},startDate=to_date(#{startDate},'YYYY/MM/DD'),endDate=TO_DATE(#{endDate},YYYY/MM/DD),theme=#{theme} where seq = #{seq}
 	</update>
 	
 	<insert id="saveList">
@@ -50,19 +50,12 @@
 		select * from plan where seq=#{value}
 	</select>
 	
-	<update id="sortZero">
-		<selectKey keyProperty="tar" resultType="int" order="BEFORE">
-			select sort_seq.nextval from dual  
-		</selectKey>
-		update detail_plan set seq = ${tar} where seq = #{value}
-	</update>
-	
-	<update id="sortPlan">
-		update detail_plan set seq = #{firstSeq} where seq = #{secondSeq}
-	</update>
-	
 	<update id="sortDatePlan">
-		update detail_plan set plan_date = #{day} where seq = #{seq}
+		update detail_plan set plan_date = TO_DATE(#{day},'YYYY/MM/DD) where seq = #{seq}
+	</update>
+	
+	<update id="sortDate">
+		update detail_plan set seq = decode(seq,#{firstSeq},#{secondSeq},#{secondSeq},#{firstSeq}) where seq in (#{firstSeq},#{secondSeq})
 	</update>
 	
 	<delete id="deleteDatePlan">

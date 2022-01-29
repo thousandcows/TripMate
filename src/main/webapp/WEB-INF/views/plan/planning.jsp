@@ -177,12 +177,12 @@ li.drag-sort-active {
 						
 						<form action="/plan/saveList" method="post">
 						<div class="row mt-4 mb-4">
-							<div class="col-12">
-								<input type="submit" class="btn btn-primary" value="저장하기">
-								
-							</div>
+
 							<div class="row" id="searchResult">
 								검색 결과가 없습니다.
+							</div>
+							<div class="col-12">
+								<input type="submit" class="btn btn-primary saveBtn" value="저장하기">
 							</div>
 						</div>
 						<div class="row">
@@ -199,7 +199,7 @@ li.drag-sort-active {
 					<div class="col-10">
 						<div class="row justify-content-center mt-4">
 							<div class="col-12">
-							<input type="submit"  class="btn btn-primary" value="저장하기">
+							<input type="submit"  class="btn btn-primary saveBtn" value="저장하기">
 							<input type="hidden" name="seq" value="${seq }">
 							</div>
 							
@@ -213,8 +213,8 @@ li.drag-sort-active {
 				                    </div>
 				                    <div class="col-8">
 				                      <div class="row">
-				                        <div class="col-10"><a href="/area/detail?num=${mySaveListSeq[status.index]}">${cnt.name}</a>
-				                   <input type="checkbox" name="check" class="check" value="${mySaveListSeq[status.index]}&${cnt.name }&${cnt.lo_detail}&${cnt.photo }">
+				                        <div class="col-10"><label for="${mySaveListSeq[status.index]}&${cnt.name }&${cnt.lo_detail}&${cnt.photo }">${cnt.name}</label>
+				                   <input type="checkbox" name="check" class="check saveCheck" id="${mySaveListSeq[status.index]}&${cnt.name }&${cnt.lo_detail}&${cnt.photo }" value="${mySaveListSeq[status.index]}&${cnt.name }&${cnt.lo_detail}&${cnt.photo }">
 				                        
 				                        </div>
 				                      </div>
@@ -447,7 +447,7 @@ li.drag-sort-active {
             	let value = "";
                 for(let i = 0; i<data.response.body.items.item.length;i++){
 			    	let sData = data.response.body.items.item[i];
-			    	value += '<div class="col-6 border ml-1 mr-1"><div> <input type="checkbox" name="check" class="check" value="'+sData.contentid+'&'+sData.title+'&'+sData.addr1+'&'+sData.firstimage+'">저장하기</div> <div class="mt-2">'+sData.title+'</div><br> <div>'+sData.addr1+'</div><br><div> <img src="'+sData.firstimage+'" style="width:150px;height:100px;"></div> </div></div>';
+			    	value += '<div class="col-6 border ml-1 mr-1"><div> <input type="checkbox" name="check" class="check saveCheck" value="'+sData.contentid+'&'+sData.title+'&'+sData.addr1+'&'+sData.firstimage+'" id='+sData.contentid+'><label for='+sData.contentid+'>저장하기<label></div> <div class="mt-2">'+sData.title+'</div><br> <div>'+sData.addr1+'</div><br><div> <img src="'+sData.firstimage+'" style="width:150px;height:100px;"></div> </div></div>';
 	            }
                 value +='   <div class="btn-toolbar" role="toolbar" aria-label="Pagination"> <div class="btn-group me-2 mb-2" role="group" aria-label="First group">';
 				let totalPage = data.response.body.totalCount/data.response.body.numOfRows;
@@ -574,6 +574,9 @@ li.drag-sort-active {
 				$("#planList").html(result);
 				//지도관련
 				// 주소로 좌표를 검색합니다
+				if(data[0]!=null){
+					
+				
 				geocoder.addressSearch(data[0].location, function(result, status) {
 
 				    // 정상적으로 검색이 완료됐으면 
@@ -582,7 +585,8 @@ li.drag-sort-active {
 				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 				        map.setCenter(coords);
 				    } 
-				});    
+				});
+				}
 			}
 		})
 	})
@@ -636,38 +640,43 @@ li.drag-sort-active {
         });
         
        
-        //드래그앤 드랍 순서변경 임시 보류
-        /*$(function() {
+        //드래그앤 드랍 순서변경
+        $(function() {            
+   		let id = 0; 
+        $(document).on("mouseup",".ui-widget-content",function(){
+   			 id = this.id;
+   		 })
+        
    	 		$("#planList").sortable({
-   	  			stop: function(event, ui) { 
-   	         	let target = [];
-   	         	setTimeout(function(){
+   	 			stop: function(event, ui) { 
+   	 			let target = [];
+   	 			let result = '';
    	             	for(let i = 1; i<=$("#planList").children().length;i++){
    	             		target.push(($("#planList li:nth-child("+i+")").attr("id"))*1)
    	             	}
-   	             	console.log(target);
    	             		$.ajax({
    	             			url:"/plan/planSort",
    	              			async:false,
-   	             			data:{"target":target}
+   	             			data:{"target":target,"seq":id},
+   	             			datatype:"json",
+   	             			success:function(data){   				
+   	 	            			target.sort(function(a,b){
+   	 	            				return a-b;
+   	 	            			});	
+   	             				for(let i = 0; i<target.length;i++){
+   	   		             			$("#planList li:nth-child("+(i+1)+")").attr("id",target[i])
+   	   		             			console.log(target[i]);
+	   	             			}
+   	             			}
    	             		})   	         		
-   	         	},200)
    	   			}
-			})
-        })*/
-    $(function(){
-    	$("#planList").sortable({
-    		
-    	})
-    })
+            });
+        })
         
-    //일정 수정    
+    //일정 수정
     $( function() {
-	    // There's the gallery and the trash
 	    var $planList = $( "#planList" ),
 	      $day = $( "#day" );
-	 
-	    // Let the trash be droppable, accepting the gallery items
 	    $("#day>li").droppable({
 	      accept: "#planList > li",
 	      drop: function( event, ui ) {
@@ -681,8 +690,6 @@ li.drag-sort-active {
 		        deleteDate( ui.draggable );
 		      }
 		});
-	    
-	    // Image deletion function
 	    function changeDate( $item, $id ) {
 	      $item.fadeOut(function() {
 	    	  $.ajax({
@@ -710,6 +717,26 @@ li.drag-sort-active {
 	  		}
 	        
 	});
+        
+        $(document).on("click",".saveBtn",function(){
+            let checkBoxLength = document.querySelectorAll("input[name='check']").length;
+            let delList = new Array();
+            for (let i = 0; i < checkBoxLength; i++) {
+              if (document.querySelectorAll("input[name='check']")[i].checked == true) {
+                let beforeSplit = document.querySelectorAll("input[name='check']")[i].value;
+                let afterSplit = beforeSplit.split(",");
+                let list = new Object();
+                list.board_num = afterSplit[0];
+                list.seq = afterSplit[1];
+                delList.push(list);
+              }
+            }
+            if (delList.length == 0) {
+              alert("삭제할 게시글을 선택해주세요.");
+              return false;
+            }
+          });
+
 </script>
 </body>
 </html>

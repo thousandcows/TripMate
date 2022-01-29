@@ -12,7 +12,6 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,16 +52,15 @@ public class MemberController {
 
 	@Autowired
 	public AreaService areaService;
-	
+
 	@Autowired
-	public PlanService pServe;
-	
+	public PlanService planService;
+
 	@Autowired
-	private DashboardService ds;
+	private DashboardService dashService;
 
 	@Autowired
 	private HttpSession session;
-	
 
 	// 이메일 체크
 	@ResponseBody
@@ -106,23 +104,23 @@ public class MemberController {
 			return "0";
 		} else {
 			MemberDTO dto = memberService.normalLoginSelectAll(emailID, pw);
-			if(dto.getSeq() == -1) {
+			if (dto.getSeq() == -1) {
 				return "2";
 			}
 			session.setAttribute("loginSeq", dto.getSeq());
 			session.setAttribute("loginEmailID", dto.getEmailID());
 			session.setAttribute("loginNick", dto.getNick());
 			session.setAttribute("loginGender", dto.getGender());
-			
+
 			// 방문자 통계용 코드
-			ds.setVisitTotalCount();
-			
+			dashService.setVisitTotalCount();
+
 			return "1";
 		}
 	}
 
 	// PW 찾기
-	String findPwTargetEmail = ""; // 찾을 email을 기억
+	String findPwTargetEmail = ""; // 찾을 email을 기억후 재설정에서 바로 쓰임
 
 	@ResponseBody
 	@RequestMapping(value = "findPw", produces = "application/text;charset=utf-8")
@@ -145,7 +143,7 @@ public class MemberController {
 		MimeMessage message = new MimeMessage(mailSession);
 		message.setFrom(new InternetAddress(Statics.FIND_PW_CALLER_EMAIL));
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(findPwTargetEmail));
-		message.setSubject("TripMate PW찾기 인증번호입니다.", "UTF-8");
+		message.setSubject("TripMate PW찾기 인증번호입니다.", "UTF-8"); // AWS 로캘설정에 UTF-8체크하면 여기선 안해줘도 됨
 		int verificationCode = (int) (Math.random() * (9999 - 1000)) + 1000; // 얘때문에 애매하네
 		message.setText("TripMate PW찾기 인증번호는 : " + verificationCode + " 입니다.", "UTF-8");
 
@@ -175,7 +173,7 @@ public class MemberController {
 		if (error != null) { // 에러코드가 있다면 사용자가 무언가 취소를 한것.(null이 아닐때 전부 메인으로 보내버리면될수도)
 			return "redirect:/";
 //			if(error.equals("")) {
-//				// 에러코드마다 다른 대비책을 세워야 한다면 필요
+//				에러코드마다 다른 대비책을 세워야 한다면 필요
 //			}
 		}
 
@@ -201,7 +199,7 @@ public class MemberController {
 		ResponseEntity<String> response = rt.exchange("https://kauth.kakao.com/oauth/token", HttpMethod.POST,
 				kakaoTokenRequest, String.class);
 
-		// json객체를 자바객체로 변환
+		// json객체를 자바객체로 변환(역직렬화?)
 		KakaoToken data = gson.fromJson(response.getBody(), KakaoToken.class);
 
 		// 액세스토큰을 이용해 유저정보 받기
@@ -220,7 +218,7 @@ public class MemberController {
 				kakaoTokenRequest2, String.class);
 		// 유저 정보 빼오기
 		// jsonpojo로 바꾸면 카멜케이스때문에 에러나는데 일일히 바꿔줬음. 근데 한번에 바꾸는거 있을듯.
-		// 카카오 프로필정보 빼오는 코드(사용자가 동의 안해도 다빼옴;)
+		// 카카오 프로필정보 빼오는 코드
 		KakaoProfile kProfile = gson.fromJson(response2.getBody(), KakaoProfile.class);
 		// 이제 세션에 담아야됨 해당 이메일로 디비 조회 해보고, 등록된 사용자가 있다면 그걸 꺼내서 세션에 담고, 없다면
 		// 회원가입처리시켜버리면되겠다.
@@ -236,11 +234,10 @@ public class MemberController {
 			session.setAttribute("loginEmailID", kakaoDto.getEmailID());
 			session.setAttribute("loginNick", kakaoDto.getNick());
 			session.setAttribute("loginKakaoID", kakaoDto.getSns_division());
-			
+
 			// 방문자 통계용 코드
-			ds.setVisitTotalCount();
-						
-						
+			dashService.setVisitTotalCount();
+
 		} else { // 가입내역이 없다면 회원가입을 시키고 이메일이랑 닉네임만 세션에 바로 담아버리면 될듯했는데 seq때문에 또 빼와야하네
 			memberService.kakaoSignup(kakaoLoginEmail, kakaoLoginNick, kakaoLoginId);
 			MemberDTO kakaoDto = memberService.kakaoLoginSelectAll(kakaoLoginId);
@@ -255,9 +252,7 @@ public class MemberController {
 	// 로그아웃
 	@RequestMapping("normalLogout")
 	public String normalLogout() {
-//		session.invalidate(); // 이게 맞을 것 같은데 웹소켓 에러때문에 일단 보류
-		session.removeAttribute("loginSeq");
-		session.removeAttribute("loginNick");
+		session.invalidate();
 		return "redirect:/";
 		// 나중에 현재페이지 로그인&로그아웃으로 변경할것
 	}
@@ -267,8 +262,6 @@ public class MemberController {
 	public String mypageGo(Model model) {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
-		String filePath = "\\images" + "\\" + dto.getPhoto(); // \image를 안붙여주면 경로가 c에서부터 찾음
-		dto.setPhoto(filePath);
 		model.addAttribute("loginInfo", dto);
 		return "mypage/myInfo";
 	}
@@ -278,8 +271,7 @@ public class MemberController {
 	public String myInfoChangeOk(MemberDTO dto, MultipartFile file) throws IllegalStateException, IOException {
 		dto.setSeq((int) session.getAttribute("loginSeq"));
 		String realPath = session.getServletContext().getRealPath("") + "\\resources\\images";
-		System.out.println("리얼패스 : " + realPath);
-		if(dto.getPh_Open() == null) {
+		if (dto.getPh_Open() == null) {
 			dto.setPh_Open("off");
 		}
 		memberService.myInfoChangeOk(dto, file, realPath);
@@ -291,7 +283,8 @@ public class MemberController {
 	// 비밀번호 수정
 	@RequestMapping("myInfoPwChange")
 	public String myInfoPwChange(String pw) {
-		memberService.myInfoPwChange(pw);
+		int loginSeq = (int) session.getAttribute("loginSeq");
+		memberService.myInfoPwChange(pw, loginSeq);
 		return "redirect:/member/mypageGo";
 	}
 
@@ -324,8 +317,6 @@ public class MemberController {
 	public String saveList(Model model) throws Exception {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
-		String filePath = "\\images" + "\\" + dto.getPhoto();
-		dto.setPhoto(filePath); // 프로필 사진 설정
 		// 찜목록 조회 갯수
 		List<AreaDTO> adto = new ArrayList<>();
 		List<Integer> mySaveListSeq = memberService.mySaveListSeq(loginSeq, Statics.SAVE_LIST_START,
@@ -359,9 +350,7 @@ public class MemberController {
 	public String writenList(Model model, Integer currentPage, String searchTitle) {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
-		String filePath = "\\images" + "\\" + dto.getPhoto();
-		dto.setPhoto(filePath); // 프로필 사진 설정
-		
+
 		int cpage = memberService.myPostPageDefender(loginSeq, currentPage, searchTitle);
 		int start = cpage * Statics.RECORD_COUNT_PER_PAGE - (Statics.RECORD_COUNT_PER_PAGE - 1);
 		int end = cpage * Statics.RECORD_COUNT_PER_PAGE;
@@ -379,14 +368,14 @@ public class MemberController {
 		model.addAttribute("loginInfo", dto);
 		return "mypage/writenList";
 	}
-	
+
 	// 선택한 게시글 삭제
 	@ResponseBody
 	@RequestMapping(value = "myPostDelList", produces = "application/text;charset=utf-8")
 	public String myPostDelList(String list) {
 		return memberService.isMyPostDel(list);
 	}
-	
+
 	// 리액션 insert용
 	@ResponseBody
 	@RequestMapping(value = "reactionInserter", produces = "application/text;charset=utf-8")
@@ -394,34 +383,32 @@ public class MemberController {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		memberService.insertReaction(reaction, loginSeq);
 	}
-	
+
 	// 알림 삭제
 	@ResponseBody
 	@RequestMapping(value = "reactionRemove", produces = "application/text;charset=utf-8")
 	public void reactionRemove() {
 		memberService.reactionRemove((int) session.getAttribute("loginSeq"));
 	}
-	
+
 	// 내 여행계획
 	@RequestMapping("myplan")
 	public String myPlan(Model model, int page) {
-		int loginSeq = (int)session.getAttribute("loginSeq");
+		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
-		String filePath = "\\images" + "\\" + dto.getPhoto();
-		dto.setPhoto(filePath); // 프로필 사진 설정
-		
-		List<Integer> paging = pServe.listCount(loginSeq,page);
-		List<PlanDTO> list = pServe.listing(loginSeq,page);
-		model.addAttribute("paging",paging);
-		if(paging.size()>0) {
-			model.addAttribute("firstNum",paging.get(0));
-			model.addAttribute("lastNum",paging.get(paging.size()-1));
-		}else {
-			model.addAttribute("firstNum",0);					
-			model.addAttribute("lastNum",0);
+
+		List<Integer> paging = planService.listCount(loginSeq, page);
+		List<PlanDTO> list = planService.listing(loginSeq, page);
+		model.addAttribute("paging", paging);
+		if (paging.size() > 0) {
+			model.addAttribute("firstNum", paging.get(0));
+			model.addAttribute("lastNum", paging.get(paging.size() - 1));
+		} else {
+			model.addAttribute("firstNum", 0);
+			model.addAttribute("lastNum", 0);
 		}
-		model.addAttribute("page",page);
-		model.addAttribute("list",list);
+		model.addAttribute("page", page);
+		model.addAttribute("list", list);
 		model.addAttribute("loginInfo", dto);
 		return "/mypage/myplan";
 	}

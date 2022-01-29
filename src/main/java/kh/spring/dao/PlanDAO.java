@@ -64,19 +64,11 @@ public class PlanDAO {
 		return mybatis.selectOne("Plan.getDetail",seq);
 	}
 	
-	public int sortZero(int seq) {
-		Map<String,Integer> map = new HashMap<>();
-		map.put("seq",seq);
-		map.put("tar", 0);
-		mybatis.update("Plan.sortZero",map);
-		return map.get("tar");
-	}
-	
-	public void sortPlan(int firstSeq, int secondSeq) {
+	public void sortDate(int firstSeq, int secondSeq) {
 		Map<String,Integer> map = new HashMap<>();
 		map.put("firstSeq", firstSeq);
-		map.put("secondSeq", secondSeq);
-		mybatis.update("Plan.sortPlan",map);
+		map.put("secondSeq",secondSeq);
+		mybatis.update("Plan.sortDate",map);
 	}
 	
 	public void sortDatePlan(int seq, String day) {
@@ -100,4 +92,5 @@ public class PlanDAO {
 	public void deletePlan(int seq) {
 		mybatis.delete("Plan.deletePlan",seq);
 	}
+	
 }

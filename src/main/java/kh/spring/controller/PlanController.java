@@ -38,24 +38,25 @@ public class PlanController {
 	public MemberService mServe;
 	
 	@RequestMapping("main")
-	public String main(int page, Model model) {
+	public String main(int page, Model model) { //여행계획 메인jsp 연결
 		int loginSeq = (int)session.getAttribute("loginSeq");
 		List<Integer> paging = pServe.listCount(loginSeq,page);
 		List<PlanDTO> list = pServe.listing(loginSeq,page);
-		model.addAttribute("paging",paging);
+		int firstNum = 0;
+		int lastNum = 0;
 		if(paging.size()>0) {
-			model.addAttribute("firstNum",paging.get(0));
-			model.addAttribute("lastNum",paging.get(paging.size()-1));
-		}else {
-			model.addAttribute("firstNum",0);					
-			model.addAttribute("lastNum",0);
+			firstNum = paging.get(0);
+			lastNum = paging.get(paging.size()-1);
 		}
+		model.addAttribute("paging",paging);
+		model.addAttribute("firstNum",firstNum);					
+		model.addAttribute("lastNum",lastNum);
 		model.addAttribute("page",page);
 		model.addAttribute("list",list);
 		return "/plan/main";
 	}
 	
-	@RequestMapping("detail")
+	@RequestMapping("detail") //여행계획 디테일페이지
 	public String detail(int seq,Model model) throws Exception {
 		PlanDTO dto = pServe.getDetail(seq);
 		List<String> date = pServe.calDate(dto.getStartDate(),dto.getEndDate());
@@ -71,17 +72,17 @@ public class PlanController {
 		return "/plan/detail";
 	}
 	 
-	@RequestMapping("newPlan")
+	@RequestMapping("newPlan") //계획 생성페이지 이동
 	public String newPlan() {
 		return "/plan/planning";
 	}
 	
-	@RequestMapping("modify")
+	@RequestMapping("modify") //계획 수정 페이지 이동
 	public String modify(int seq, Model model) throws Exception{
 		PlanDTO dto = pServe.callPlan(seq);
 		int loginSeq = (int) session.getAttribute("loginSeq");
-		//공유 기능 추가시 제거, 공유기능 추가시 DB 별도테이블 생성
-		if(dto.getMem_seq() != loginSeq) {
+
+		if(dto.getMem_seq() != loginSeq) { //로그인계정 비일치시 홈으로 이동
 			return "/";
 		}
 		
@@ -106,30 +107,29 @@ public class PlanController {
 		return "/plan/planning";
 	}
 	
-	@RequestMapping("delete")
+	@RequestMapping("delete") //삭제, 후 메인페이지로 이동
 	public String delete(int seq) {
 		pServe.delete(seq);
 		return "redirect:/plan/main?page=1";
 	}
 	
-	// 찜목록 더보기
 	@ResponseBody
-	@RequestMapping(value = "moreSaving", produces = "application/text;charset=utf-8")
+	@RequestMapping(value = "moreSaving", produces = "application/text;charset=utf-8")	// 찜목록 더보기
 	public String moreSaving(int btn) throws Exception {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		return mServe.moreSaving(loginSeq, btn);
 	}
 	
-	@RequestMapping("chooseTheme")
+	@RequestMapping("chooseTheme") //카테고리 선택 후 생성
 	public String chooseTheme(PlanDTO dto, RedirectAttributes re) {
 		int loginSeq = (int)session.getAttribute("loginSeq");
-		dto.setMem_seq(loginSeq);
 		int seq = pServe.chooseTheme(dto);
+		dto.setMem_seq(loginSeq);
 		re.addAttribute("seq",seq);
 		return "redirect:/plan/modify";
 	}
 	
-	@RequestMapping("changeTheme")
+	@RequestMapping("changeTheme") //카테고리 변경
 	public String changeTheme(PlanDTO dto,RedirectAttributes re) {
 		pServe.changeTheme(dto);
 		re.addAttribute("seq",dto.getSeq());
@@ -143,7 +143,7 @@ public class PlanController {
 		return list;		
 	}
 	
-	@RequestMapping("saveList")
+	@RequestMapping("saveList") //DB에 AREA관련 데이터 저장용.
 	public String saveList(String[] check,int seq, RedirectAttributes re) {
 		aService.checkDB(check);
 		pServe.saveList(check, seq);
@@ -151,7 +151,7 @@ public class PlanController {
 		return "redirect:/plan/modify";
 	}
 	
-	@RequestMapping("insertMemo")
+	@RequestMapping("insertMemo") //메모 생성
 	public String insertMemo(int seq, String memo,RedirectAttributes re) {
 		pServe.insertMemo(seq,memo);
 		re.addAttribute("seq",seq);
@@ -160,7 +160,7 @@ public class PlanController {
 		
 	
 	@ResponseBody
-	@RequestMapping(value="detailPlanList", produces = "application/text;charset=utf-8")
+	@RequestMapping(value="detailPlanList", produces = "application/text;charset=utf-8") //여행계획 리스트 출력
 	public String detailPlanList(int seq,String date) {
 		List<AreaDTO> list = pServe.detailPlanList(seq, date);
 		String result = pServe.detailToAjax(list);
@@ -168,21 +168,21 @@ public class PlanController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="planSort", produces = "application/text;charset=utf-8")
-	public String planSort(@RequestParam(value="target[]")int[] target) throws Exception{
-		pServe.sortPlan(target);
+	@RequestMapping(value="planSort", produces = "application/text;charset=utf-8") //계획 정렬
+	public String planSort(@RequestParam(value="target[]")int[] target,@RequestParam(value="seq")int seq) throws Exception{
+		pServe.sortDate(target,seq);
 		return "OK";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="planDateSort", produces = "application/text;charset=utf-8")
+	@RequestMapping(value="planDateSort", produces = "application/text;charset=utf-8") //날짜 변경
 	public String planDateSort(@RequestParam(value="seq")int seq,@RequestParam(value="day") String day) throws Exception{
 		pServe.sortDatePlan(seq,day);
 		return "OK";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="planDateDelete", produces = "application/text;charset=utf-8")
+	@RequestMapping(value="planDateDelete", produces = "application/text;charset=utf-8") //계획 삭제
 	public String planDateDelete(@RequestParam(value="seq")int seq) {
 		pServe.deleteDatePlan(seq);
 		return "OK";

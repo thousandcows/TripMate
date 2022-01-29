@@ -228,6 +228,14 @@ public class TourBoardController {
 		return "redirect:/tourboard/detail?seq="+seq;
 	}
 
+	@RequestMapping("toModify")
+	public String modifyPage(TourBoardDTO dto, String explanation, Model model) {
+		
+		dto.setContents(explanation);
+		model.addAttribute("dto", dto);
+		return "tourboard/modifyPage";
+	}
+	
 	@RequestMapping("delete")
 	public String delete(int seq) throws Exception{
 
