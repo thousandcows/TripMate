@@ -77,15 +77,17 @@
                     value="${list.board_num},${list.seq}"></li>
               </ul>
             </c:forEach>
+            <div class="notPost">
             <c:if test="${fn:length(list) == 0}">
               작성한 게시글이 없습니다.
             </c:if>
             검색된 게시글 수 : ${postCount}
-            <div class="row mypostBottoms">
-              <div class="col-4 myPostSearchBox"><input type="text" id="myPostSearchInput" class="myPostSearchInput" placeholder="글 제목을 입력해주세요."><button type="button"
+          </div>
+            <div class="mypostBottoms">
+              <div class="myPostSearchBox"><input type="text" id="myPostSearchInput" class="myPostSearchInput" placeholder="검색 제목.."><button type="button"
                   id="myPostSearchBtn" class="myPostSearchBtn">검색</button></div>
-              <div class="col-4 myPostNaviBox">${navi}</div>
-              <div class="col-4 delBtnBox"><button type="button" id="delBtn" class="delBtn">삭제</button></div>
+              <div class="myPostNaviBox">${navi}</div>
+              <div class="delBtnBox"><button type="button" id="delBtn" class="delBtn">삭제</button></div>
             </div>
           </div>
         </div>
