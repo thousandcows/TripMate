@@ -327,7 +327,7 @@ ul>li{
 	$(document).on("click",".reply_id",function(){
 		let mem_seq = $(this).attr("value");
 		$.ajax({
-			url:"/tmp/showMember?mem_seq="+mem_seq,
+			url:"/member/showMember?mem_seq="+mem_seq,
     		dataType:"json",
     		success:function(result){
     			$('#myModal').modal("toggle");

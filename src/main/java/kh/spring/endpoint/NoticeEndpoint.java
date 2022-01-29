@@ -23,12 +23,11 @@ public class NoticeEndpoint {
 
 	private HttpSession session;
 	// static으로 해야 여러명이 접속해도 같은 List를 공유할 수 있다.(마찬가지로 동기화 처리해야함)
-//	private static List<Session> clients = Collections.synchronizedList(new ArrayList<>());
 	private static Map<Integer, Session> map = Collections.synchronizedMap(new HashMap<>());
-	int logSeq = 0; // 어차피 한명 들어오면 새로 생성되니까 이걸로 리셋시킴 이방법아니면 에러남
+	int logSeq = 0; // 어차피 한명 들어오면 엔드포인드가 새로 생성되니까 이걸로 리셋시킴
+
 	@OnOpen
 	public void onConnect(Session session, EndpointConfig config) { // 핸드쉐이크한 config 받아옴
-//		clients.add(session);
 		// Config에서 넣은 세션을 가져옴
 		this.session = (HttpSession) config.getUserProperties().get("hSession");
 		String loginNick = (String) this.session.getAttribute("loginNick");
@@ -61,7 +60,6 @@ public class NoticeEndpoint {
 
 	@OnClose
 	public void onClose(Session session) {
-//		clients.remove(session);
 		map.remove(this.logSeq, session);
 	}
 }

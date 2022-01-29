@@ -37,61 +37,60 @@ public class AreaService {
 	@Autowired
 	public AreaDAO dao;
 
-	public String categorySort(String cat) {
+	public String categorySort(String cat) { //카테고리 출력용
 		String result = "";
 		switch(cat){
-		case "A01": result = "자연"; break;
-		case "A02": result = "인문"; break;
-		case "A03": result = "레포츠"; break;
-		case "A04": result = "쇼핑"; break;
-		case "A05": result = "음식"; break;
-		case "B02": result = "숙박"; break;
-		case "C01": result = "추천코스"; break;
+			case "A01": result = "자연"; break;
+			case "A02": result = "인문"; break;
+			case "A03": result = "레포츠"; break;
+			case "A04": result = "쇼핑"; break;
+			case "A05": result = "음식"; break;
+			case "B02": result = "숙박"; break;
+			case "C01": result = "추천코스"; break;
 		}
 		return result;
 	}
 
-	public String contentID(int contenttypeID) {
+	public String contentID(int contenttypeID) { //분류 출력
 		String result = "";
 		switch(contenttypeID) {
-		case 12 : result = "관광지"; break;
-		case 14 : result = "문화시설"; break;
-		case 15 : result = "행사/공연/축제"; break;
-		case 25 : result = "여행코스"; break;
-		case 28 : result = "레포츠"; break;
-		case 32 : result = "숙박"; break;
-		case 38 : result = "쇼핑"; break;
-		case 39 : result = "음식점"; break;
+			case 12 : result = "관광지"; break;
+			case 14 : result = "문화시설"; break;
+			case 15 : result = "행사/공연/축제"; break;
+			case 25 : result = "여행코스"; break;
+			case 28 : result = "레포츠"; break;
+			case 32 : result = "숙박"; break;
+			case 38 : result = "쇼핑"; break;
+			case 39 : result = "음식점"; break;
 		}
 		return result;
 	}
 
-	public int areaCode(String area) {
+	public int areaCode(String area) { //지역코드 출력용, 비이용
 		int result = 0;
 		switch(area) {
-		case "서울": result = 1; break;
-		case "인천": result = 2; break;
-		case "대전": result = 3; break;
-		case "대구": result = 4; break;
-		case "광주": result = 5; break;
-		case "부산": result = 6; break;
-		case "울산": result = 7; break;
-		case "세종": result = 8; break;
-		case "경기": result = 31; break;
-		case "강원": result = 32; break;
-		case "충북": result = 33; break;
-		case "충남": result = 34; break;
-		case "경북": result = 35; break;
-		case "경남": result = 36; break;
-		case "전북": result = 37; break;
-		case "전남": result = 38; break;
-		case "제주": result = 39; break;
+			case "서울": result = 1; break;
+			case "인천": result = 2; break;
+			case "대전": result = 3; break;
+			case "대구": result = 4; break;
+			case "광주": result = 5; break;
+			case "부산": result = 6; break;
+			case "울산": result = 7; break;
+			case "세종": result = 8; break;
+			case "경기": result = 31; break;
+			case "강원": result = 32; break;
+			case "충북": result = 33; break;
+			case "충남": result = 34; break;
+			case "경북": result = 35; break;
+			case "경남": result = 36; break;
+			case "전북": result = 37; break;
+			case "전남": result = 38; break;
+			case "제주": result = 39; break;
 		}
 		return result;
-
 	}
 	
-	public String post(URL url) throws Exception{
+	public String post(URL url) throws Exception{ //API 연결
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Content-type", "application/json");
@@ -112,7 +111,7 @@ public class AreaService {
 		return sb.toString();
 	}
 
-	public AreaDTO detailBuild(int target) throws Exception {
+	public AreaDTO detailBuild(int target) throws Exception { //상세정보 출력 url
 		StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=tASWrdaQeX%2FNZMpo1onkA8VC1ELXLdVsWav03zKKEk57adnScsDWhRK1lfKHkfQq3l7g7pRBmaB7UMa2EsWj4A%3D%3D");
 		urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰),AND(안드로이드),WIN(원도우폰),ETC*/
@@ -125,12 +124,11 @@ public class AreaService {
 		urlBuilder.append("&" + URLEncoder.encode("addrinfoYN","UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); /*주소, 상세주소 조회여부*/
 		urlBuilder.append("&" + URLEncoder.encode("overviewYN","UTF-8") + "=" + URLEncoder.encode("Y", "UTF-8")); /*콘텐츠 개요 조회여부*/
 		urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*Json*/
-		
 		String result= post(new URL(urlBuilder.toString()));
 		return detail(result);
 	}
 	
-	public AreaDTO detail(String target) throws Exception{
+	public AreaDTO detail(String target) throws Exception{ //상세정보 to json
 		Gson gson = new Gson();
 		gson.fromJson(target, JsonObject.class);
 		JsonObject j = (JsonObject) JsonParser.parseString(target);
@@ -148,7 +146,7 @@ public class AreaService {
 		cat2 = cat2.substring(1,cat2.length()-1);
 		String location = "";
 		if(item.has("areacode")) {
-			location = item.get("areacode").toString(); //지역코드		
+			location = item.get("areacode").toString(); //지역코드	
 		}
 		String lo_detail = "";
 		if(item.has("addr1")) {
@@ -156,10 +154,8 @@ public class AreaService {
 			lo_detail = lo_detail.substring(1,lo_detail.length()-1);			
 		}
 		String tel = "null";
-		if(item.has("tel")) {
-			tel = item.get("tel").toString().replace("\"", "");		
-		}
-		String detail = item.get("overview").toString().replace("\"", ""); //상세설명
+		if(item.has("tel")) {tel = item.get("tel").toString().replace("\"", "");}
+		String detail = item.get("overview").toString().replace("\"", ""); //상세설명 형식 수정
 		detail = detail.replace("\\", "<br>");
 		detail = detail.replace("n", "");
 		detail = detail.replace("\"", "");
@@ -200,15 +196,13 @@ public class AreaService {
 		JsonObject body = (JsonObject) JsonParser.parseString(response.get("body").toString());
 		if(body.get("items").isJsonObject()) {
 			JsonObject items = (JsonObject) JsonParser.parseString(body.get("items").toString());
-			if(JsonParser.parseString(items.get("item").toString()).isJsonArray()){
+			if(JsonParser.parseString(items.get("item").toString()).isJsonArray()){ //단일
 				JsonArray item = (JsonArray)JsonParser.parseString(items.get("item").toString());
-
 				for(int i = 0; i< item.size();i++) {
 					JsonObject tmp = (JsonObject) item.get(i);
 					String contentid = tmp.get("contentid").toString();
 					String title = tmp.get("title").toString();
 					title = title.substring(1,title.length()-1);
-					
 					String firstimage = "";
 					if(tmp.has("firstimage")){
 						firstimage = tmp.get("firstimage2").toString();
@@ -219,7 +213,7 @@ public class AreaService {
 					AreaRcmdDTO dto = new AreaRcmdDTO(title,firstimage,contentid);
 					list.add(dto);
 				}
-			}else {
+			}else { //2개 이상
 				JsonObject item = (JsonObject)JsonParser.parseString(items.get("item").toString());
 				String contentid = item.get("contentid").toString();
 				String title = item.get("title").toString();
@@ -235,7 +229,6 @@ public class AreaService {
 				list.add(dto);
 			}
 		}
-
 		return list;
 	}
 	
@@ -268,7 +261,6 @@ public class AreaService {
 		JsonObject body = (JsonObject) JsonParser.parseString(response.get("body").toString());
 		JsonObject items = (JsonObject) JsonParser.parseString(body.get("items").toString());
 		JsonArray item = (JsonArray)JsonParser.parseString(items.get("item").toString());
-
 		for(int i = 0; i< item.size();i++) {
 			JsonObject tmp = (JsonObject) item.get(i);
 			String contentid = tmp.get("contentid").toString();
@@ -279,8 +271,8 @@ public class AreaService {
 			String addr1 = "null";
 			if(tmp.has("addr1")) {
 				addr1=	tmp.get("addr1").toString();
+				addr1 = addr1.substring(1,addr1.length()-1);
 			}
-			addr1 = addr1.substring(1,addr1.length()-1);
 			String cat1 = tmp.get("cat1").toString();
 			cat1 = categorySort(cat1.substring(1,cat1.length()-1));
 			int areacode = 0;
@@ -349,7 +341,6 @@ public class AreaService {
 			System.out.println(items.toString());
 			if(JsonParser.parseString(items.get("item").toString()).isJsonArray()){
 				JsonArray item = (JsonArray)JsonParser.parseString(items.get("item").toString());
-
 				for(int i = 0; i< item.size();i++) {
 					JsonObject tmp = (JsonObject) item.get(i);
 					String contentid = tmp.get("contentid").toString();
@@ -561,13 +552,10 @@ public class AreaService {
 		String result = "";
 		if(!picture.isEmpty()) {
 			String realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
-			System.out.println(realPath);
 			File realPathFile = new File(realPath);
 			if(!realPathFile.exists()) {realPathFile.mkdir();}
-			
 			String oriName= picture.getOriginalFilename(); //사용자가 업로드한 파일의 원본 이름
 			String sysName = UUID.randomUUID()+"_"+oriName; //서버쪽에 저장할파일 이름
-			//서버에 업로드 되어 메모리에 적재된 파일의 내용을 어디에 저장할 지 결정하는 부분
 			picture.transferTo(new File(realPath+"/"+sysName));	
 			result = sysName;
 		}
@@ -581,13 +569,11 @@ public class AreaService {
 			String realPath = session.getServletContext().getRealPath("")+"\\resources\\images";
 			File realPathFile = new File(realPath);
 			if(!realPathFile.exists()) {realPathFile.mkdir();}
-			
 			String oriName= picture.getOriginalFilename(); //사용자가 업로드한 파일의 원본 이름
 			String sysName = UUID.randomUUID()+"_"+oriName; //서버쪽에 저장할파일 이름
-			//서버에 업로드 되어 메모리에 적재된 파일의 내용을 어디에 저장할 지 결정하는 부분
 			picture.transferTo(new File(realPath+"/"+sysName));	
 			result = sysName;
-		}else {
+		}else { //업로드 없을 시
 			result = findPhoto(seq);
 			if(result==null) {
 				result="";

@@ -64,22 +64,6 @@ public class PlanDAO {
 		return mybatis.selectOne("Plan.getDetail",seq);
 	}
 	
-	public int sortZero(int seq) {
-		Map<String,Integer> map = new HashMap<>();
-		map.put("seq",seq);
-		map.put("tar", 0);
-		mybatis.update("Plan.sortZero",map);
-		return map.get("tar");
-	}
-	
-	public void sortPlan(int firstSeq, int secondSeq) {
-		Map<String,Integer> map = new HashMap<>();
-		map.put("firstSeq", firstSeq);
-		map.put("secondSeq", secondSeq);
-		System.out.println(firstSeq + " : " + secondSeq);
-		mybatis.update("Plan.sortPlan",map);
-	}
-	
 	public void sortDate(int firstSeq, int secondSeq) {
 		Map<String,Integer> map = new HashMap<>();
 		map.put("firstSeq", firstSeq);
