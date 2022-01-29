@@ -283,7 +283,8 @@ public class MemberController {
 	// 비밀번호 수정
 	@RequestMapping("myInfoPwChange")
 	public String myInfoPwChange(String pw) {
-		memberService.myInfoPwChange(pw);
+		int loginSeq = (int) session.getAttribute("loginSeq");
+		memberService.myInfoPwChange(pw, loginSeq);
 		return "redirect:/member/mypageGo";
 	}
 

@@ -125,7 +125,7 @@
               <div class="loginInputBox">
                 <input type="text" id="normalLoginID" class="loginInput" placeholder="이메일 주소" required>
                 <div class="signupInputConfirm normalLoginConfirm"></div>
-                <input type="password" id="normalLoginPW" class="loginInput" placeholder="비밀번호" required>
+                <input type="password" id="normalLoginPW" class="loginInput" placeholder="비밀번호" onkeydown="enterLog()" required>
               </div>
               <div class="loginBtns">
                 <button id="normalLoginBtn">로그인</button>
@@ -346,6 +346,30 @@
         $("#triplist").on("click", function () {
           location.href = "/area/main?area=0&contentType=0&page=1";
         })
+
+        function enterLog(){
+          if(window.event.keyCode == 13){
+            let emailID = document.querySelector("#normalLoginID").value
+            let pw = document.querySelector("#normalLoginPW").value
+            $.ajax({
+              type: "post",
+              url: "/member/normalLogin",
+              data: {
+                "emailID": emailID,
+                "pw": pw
+              }
+            }).done(function (res) {
+              if (res == 0) {
+                document.querySelector(".normalLoginConfirm").style.color = "red";
+                document.querySelector(".normalLoginConfirm").innerHTML = "계정과 패스워드를 확인해주세요.";
+              } else if(res == 1) {
+                location.reload();
+              } else if(res == 2){
+                location.href="/admin/dashboard";
+              }
+            });
+          }
+        }
       </script>
     </body>
 </html>

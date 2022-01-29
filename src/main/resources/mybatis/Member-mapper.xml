@@ -18,7 +18,7 @@
 	</select>
 	
 	<insert id="normalSignup">
-		insert into member (seq, emailid, pw, nick, phone, gender, violation, photo, signup_date) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, #{gender}, 0, 'default_profileqwerkjhgdiute.jpg', default)
+		insert into member (seq, emailid, pw, nick, phone, gender, violation, photo, signup_date) values (mem_seq.nextval, #{emailID}, #{encryptPw}, #{nick}, #{phone}, #{gender}, 0, '\images\default_profileqwerkjhgdiute.jpg', default)
 	</insert>
 	
 	<select id="normalLoginCheck" resultType="int">
@@ -60,7 +60,7 @@
 	</update>
 	
 	<update id="myInfoPwChange">
-		update member set pw = #{value}
+		update member set pw = #{encryptPw} where seq = #{loginSeq}
 	</update>
 	
 	<delete id='deleteAccount'>
