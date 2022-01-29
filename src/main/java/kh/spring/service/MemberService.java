@@ -254,7 +254,7 @@ public class MemberService {
 				if (cpage == i) {
 					pageNavi += "<a href='/member/writenList?currentPage=" + i + "' class='nowPage'>" + i + "</a> ";
 				} else {
-					pageNavi += "<a href='/member/writenList?currentPage=" + i + "'>" + i + "</a> ";
+					pageNavi += "<a href='/member/writenList?currentPage=" + i + "' class='diffPage'>" + i + "</a> ";
 				}
 			}
 			if (needNext) {
@@ -270,7 +270,7 @@ public class MemberService {
 					pageNavi += "<a href='/member/writenList?currentPage=" + i + "&searchTitle=" + searchTitle
 							+ "' class='nowPage'>" + i + "</a> ";
 				} else {
-					pageNavi += "<a href='/member/writenList?currentPage=" + i + "&searchTitle=" + searchTitle + "'>"
+					pageNavi += "<a href='/member/writenList?currentPage=" + i + "&searchTitle=" + searchTitle + "' class='diffPage'>"
 							+ i + "</a> ";
 				}
 			}

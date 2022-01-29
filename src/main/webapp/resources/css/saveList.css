@@ -1,0 +1,322 @@
+@charset "utf-8";
+  /* 간단세팅 나중에 css파일 따로 뺄거*/
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  /* 전체영역 크기 조절 */
+  .myPageContainer {
+    width: 1200px;
+    display: flex;
+    margin: auto;
+  }
+
+  /* 사이드바 시작 */
+  .sideBar {
+    width: 200px;
+  }
+
+  /* 초상화 공간 */
+  .sideMyPortrait {
+    width: 150px;
+    height: 150px;
+    margin-left: 25px;
+    margin-top: 50px;
+    position: relative;
+  }
+
+  .portraitPhoto{
+    width:150px;
+    height:150px;
+  }
+
+  .sideMyNick {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+  }
+
+  /* 사이드바 메뉴 */
+  .sideBarMenuBox {
+    margin-top: 50px;
+  }
+
+  .sideBarMenuBox li {
+    margin-top: 20px;
+  }
+
+  .sideBarMenuBox li a {
+    width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #198c8c;
+    display: block;
+    color: white;
+    box-shadow: 1px 1px 2px 1px rgb(224, 224, 224);
+  }
+
+  .sideBarMenuBox li a:hover {
+    opacity: 0.9;
+    box-shadow: 1px 1px 2px 1px rgb(211, 211, 211);
+  }
+
+  .sideBarMenuBox li:nth-child(3) a {
+    background-color: #005757;
+  }
+
+  /* 사이드바 끝 */
+
+  /* 정보수정 시작 */
+  .contentsBox {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contentsTop {
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 20px;
+  }
+  .contentsBoxIn{
+    width:1000px;
+  }
+  .star {
+    float: right;
+  }
+
+  .star>li {
+    float: left;
+  }
+
+  /* 정보수정 끝 */
+  /* 좋아요관련 */
+  .delParent{
+    margin:auto;
+    display: flex;
+    width:800px;
+    height:220px;
+    margin-bottom:20px;
+    box-shadow: 1px 1px 1px 2px rgb(230, 230, 230);
+    border-radius: 3px;
+  }
+  .left-img{
+    margin-right:12px;
+    float:left;
+    width:250px;
+    height:220px;
+  }
+  .contPic{
+    width:250px;
+    height:220px;
+  }
+  .right-content{
+    width: 650px;
+  }
+
+  .savedTitle{
+    float:left;
+  }
+
+  .detailEllipsis {
+    height: 120px;
+    width:520px;
+    border: 1px solid rgb(243, 243, 243);
+    border-radius: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* 라인수 */
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    padding-left: 10px;
+    float:left;
+  }
+  .savedPhone{
+    float: left;
+  }
+  .starBox{
+    margin-right: 20px;
+  }
+
+  .delSeq {
+    display: none;
+  }
+
+  .myHeart {
+    cursor: pointer;
+  }
+
+  footer {
+    width: 100%;
+    height: 100px;
+    background-color: aliceblue;
+  }
+
+  @media (max-width: 480px) {
+    .myPageContainer {
+      width: 100%;
+    }
+    /* 사이드바 시작 */
+  .sideBar {
+    width: 100px;
+  }
+
+  /* 초상화 공간 */
+  .sideMyPortrait {
+    width: 80px;
+    height: 80px;
+    margin-left: 10px;
+    margin-top: 50px;
+    position: relative;
+  }
+
+  .savedTitle a{
+    font-size:14px;
+  }
+
+  .savedLocation{
+    font-size:14px;
+  }
+
+  .sideMyNick {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size:12px;
+    color:black;
+  }
+
+  /* 사이드바 메뉴 */
+  .sideBarMenuBox {
+    margin-top: 20px;
+    padding-left:10px;
+  }
+
+  .sideBarMenuBox li {
+    margin-top: 20px;
+  }
+
+  .sideBarMenuBox li a {
+    width: 80px;
+    height: 34px;
+    border-radius: 4px;
+    font-size:13px;
+    line-height: 34px;
+    text-align: center;
+    background-color: #ffffff;
+    display: block;
+    color: rgb(75, 75, 75);
+    box-shadow: 1px 1px 2px 1px rgb(224, 224, 224);
+  }
+
+  .sideBarMenuBox li a:hover {
+    opacity: 1;
+    box-shadow: 1px 1px 2px 1px rgb(211, 211, 211);
+  }
+
+  .sideBarMenuBox li:nth-child(3) a {
+    background-color: rgb(110, 224, 154);
+    box-shadow: none;
+    color:rgb(0, 0, 0);
+  }
+  .portraitPhoto {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    position: absolute;
+  }
+
+  /* 사이드바 끝 */
+  .contentsBox {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contentsTop {
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 20px;
+  }
+  .contentsBoxIn{
+    width:340px;
+    padding-left: 10px;
+  }
+  .star {
+    float: right;
+    font-size:13px;
+  }
+
+  .star>li {
+    float: left;
+  }
+  /* 좋아요관련 */
+  .delParent{
+    margin:auto;
+    display: flex;
+    width:320px;
+    height:110px;
+    margin-bottom:20px;
+    box-shadow: 1px 1px 1px 2px rgb(230, 230, 230);
+    border-radius: 3px;
+  }
+  .left-img{
+    margin-right:12px;
+    float:left;
+    width:100px;
+    height:100px;
+  }
+  .contPic{
+    width:100px;
+    height:100px;
+  }
+  .right-content{
+    width: 210px;
+  }
+
+  .savedTitle{
+    float:left;
+  }
+
+  .detailEllipsis {
+    display: none;
+    font-size:13px;
+  }
+  .savedPhone{
+    float: left;
+    font-size:13px;
+  }
+  .starBox{
+    margin-right: 20px;
+  }
+
+  .delSeq {
+    display: none;
+  }
+
+  .btn-success{
+    width:70px;
+    height:30px;
+    padding:0;
+    font-size:13px;
+  }
+
+  .myHeart {
+    cursor: pointer;
+  }
+}
