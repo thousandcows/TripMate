@@ -5,6 +5,8 @@
 
     <head>
       <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Mypage</title>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -13,308 +15,8 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
       <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+      <link rel="stylesheet" href="/css/myInfo.css" type="text/css">
       <jsp:include page="../base/header.jsp"></jsp:include>
-      <style>
-        /* 간단세팅 나중에 css파일 따로 뺄거*/
-        * {
-          box-sizing: border-box;
-          padding: 0;
-          margin: 0;
-          list-style: none;
-        }
-
-        a {
-          text-decoration: none;
-        }
-
-        /* 전체영역 크기 조절 */
-        .myPageContainer {
-          width: 1200px;
-          display: flex;
-          margin: auto;
-        }
-
-        /* 사이드바 시작 */
-        .sideBar {
-          width: 200px;
-          height: 1000px;
-          background-color: rgb(240, 240, 240);
-        }
-
-        /* 초상화 공간 */
-        .sideMyPortrait {
-          width: 150px;
-          height: 150px;
-          margin-left: 25px;
-          margin-top: 50px;
-          position: relative;
-        }
-
-        .sideMyNick {
-          width: 100%;
-          height: 40px;
-          line-height: 40px;
-          text-align: center;
-          /* background-color: aqua; */
-        }
-
-        /* 사이드바 메뉴 */
-        .sideBarMenuBox {
-          margin-top: 50px;
-        }
-
-        .sideBarMenuBox li {
-          margin-top: 20px;
-        }
-
-        .sideBarMenuBox li a {
-          width: 140px;
-          height: 40px;
-          border-radius: 20px;
-          line-height: 40px;
-          text-align: center;
-          background-color: antiquewhite;
-          display: block;
-          color: black;
-          box-shadow: 1px 1px 2px 1px rgb(224, 224, 224);
-        }
-
-        .sideBarMenuBox li a:hover {
-          box-shadow: 1px 1px 2px 1px rgb(211, 211, 211);
-        }
-
-        .sideBarMenuBox li:first-child a {
-          background-color: rgb(255, 223, 181);
-        }
-
-        /* 사이드바 끝 */
-
-        /* 정보수정 시작 */
-        .contentsBox {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .contentsTop {
-          width: 1000px;
-          background-color: bisque;
-          height: 200px;
-          line-height: 200px;
-          text-align: center;
-          font-size: 26px;
-        }
-
-        .contentsMiddle {
-          width: 100%;
-          /* background-color: rgb(153, 204, 245); */
-        }
-
-        .contentsMiddleIn {
-          width: 600px;
-          margin: auto;
-          height: 800px;
-        }
-
-        .myInfoForm {
-          margin-top: 10px;
-        }
-
-        .myInfoForm th {
-          width: 200px;
-          height: 70px;
-          color: rgb(94, 94, 94);
-        }
-
-        /* input들 */
-        .longInput {
-          width: 230px;
-          height: 40px;
-          border-radius: 5px;
-          border: 1px solid rgb(173, 173, 173);
-          padding-left: 10px;
-        }
-
-        .ageInput {
-          width: 70px;
-          height: 40px;
-          padding-left: 10px;
-        }
-
-        .genderInput {
-          width: 16px;
-          height: 16px;
-        }
-
-        .preferenceInput {
-          width: 320px;
-          height: 40px;
-        }
-
-        .txtInput {
-          margin-top: 30px;
-          padding: 5px;
-        }
-
-        .phOpenTxt {
-          padding-left: 2px;
-          margin-bottom: 5px;
-          font-size: 14px;
-          color: rgb(77, 77, 77);
-        }
-
-        .phOpen {
-          margin-left: 15px;
-          width: 15px;
-          height: 15px;
-        }
-
-        /* 탈퇴&수정버튼들 */
-        .deleteAccountBtn {
-          color: gray;
-          border: none;
-          background-color: white;
-          font-size: 14px;
-          margin-right: 15px;
-        }
-
-        .deleteAccountBtn:hover {
-          cursor: pointer;
-          color: lightslategray;
-          border-bottom: 1px solid gray;
-        }
-
-        .changeSubmitBtn {
-          width: 200px;
-          height: 40px;
-          margin: auto;
-          border: none;
-          border-radius: 5px;
-          border: 1px solid rgb(184, 184, 184);
-          color: #108b85;
-          background-color: white;
-        }
-
-        .changeSubmitBtn:hover {
-          box-shadow: 1px 1px 2px 1px rgb(233, 233, 233);
-        }
-
-        /* 사진 수정 */
-        .portraitInput {
-          width: 150px;
-          height: 150px;
-          position: absolute;
-          opacity: 0;
-        }
-
-        .portraitPhoto {
-          width: 150px;
-          height: 150px;
-          border-radius: 10px;
-          position: absolute;
-        }
-
-        .submitBtnss {
-          margin-top: 50px;
-          width: 100%;
-          height: 70px;
-          text-align: center;
-        }
-
-        .submitBtns {
-          margin-top: 20px;
-          text-align: right;
-        }
-
-        .contentsTop {
-          width: 1000px;
-          background-color: bisque;
-          height: 50px;
-          line-height: 50px;
-          text-align: center;
-          font-size: 26px;
-        }
-
-        /* 확인텍스트 */
-        .myInfoCheckTxt {
-          color: black;
-          font-size: 12px;
-        }
-
-        .myInfoNickBox {
-          width: 400px;
-        }
-
-        /* 닉네임 체크 버튼 */
-        .myInfoNickCheck,
-        .myInfoPhoneCheck {
-          display: inline;
-          width: 70px;
-          height: 30px;
-          border-radius: 5px;
-          border: 1px solid rgb(194, 194, 194);
-          background-color: rgb(255, 255, 255);
-          font-size: 14px;
-        }
-
-        .myInfoNickCheck:hover,
-        .myInfoPhoneCheck:hover {
-          background-color: rgb(247, 247, 247);
-        }
-
-        /* 비밀번호 수정 폼 */
-        .changePwBtn {
-          width: 150px;
-          height: 40px;
-          background-color: white;
-          color: rgb(65, 65, 65);
-          border: 1px solid rgb(160, 160, 160);
-          font-size: 14px;
-        }
-
-        .changePwBtn:hover {
-          background-color: white;
-          color: rgb(65, 65, 65);
-        }
-
-        .myInfoPwChangeForm {
-          margin: auto;
-          width: 250px;
-        }
-
-        .myInfoPwChangeInput {
-          width: 250px;
-          height: 40px;
-          border-radius: 5px;
-          border: 1px solid gray;
-          margin: auto;
-          padding-left: 10px;
-        }
-
-        .myInfoPwChangeBtn {
-          width: 100px;
-          height: 40px;
-          border: 1px solid gray;
-          background-color: white;
-          border-radius: 3px;
-          margin-top: 10px;
-        }
-
-        /* 회원탈퇴용 폼 */
-        #deleteAccountForm {
-          display: none;
-        }
-
-        .deleteAccountInput {
-          display: none;
-        }
-
-        /* 정보수정 끝 */
-        footer {
-          width: 100%;
-          height: 300px;
-          background-color: aliceblue;
-        }
-      </style>
     </head>
 
     <body>
@@ -338,20 +40,20 @@
           <div class="contentsMiddle">
             <div class="contentsMiddleIn">
               <form action="/member/myInfoChangeOk" method="post" enctype="multipart/form-data" id="myInfoChangeForm">
-                <div class=" row mt-4">
-                  <div class="col-6 sideMyPortrait">
+                <div class="nickAndPhotoBox">
+                  <div class="sideMyPortrait MyPortrait">
                     <img src="${loginInfo.photo}" class="portraitPhoto" id="portraitPhoto" onchange="">
                     <input type="file" class="portraitInput" id="portraitInput" name="file"
                       accept="image/gif, image/jpeg, image/png">
                   </div>
-                  <div class="col-6 mt-4 mx-auto myInfoNickBox">
+                  <div class="myInfoNickBox">
                     <label for="nickname">닉네임</label><br>
                     <input type="text" value=${loginInfo.nick} class="longInput myInfoNickInput" name="nick"
                       id="myInfoNickInput">
                     <button type="button" class="myInfoNickCheck" id="myInfoNickCheck">중복확인</button>
                     <div class="myInfoCheckTxt myInfoNickConfirm">&nbsp;</div>
                     <c:if test="${loginInfo.sns_division == 0}">
-                      <button type="button" class="btn btn-primary changePwBtn" data-bs-toggle="modal"
+                      <button type="button" class="changePwBtn2" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                         비밀번호 변경
                       </button>
@@ -406,11 +108,16 @@
                     <th class="text-center">여행 선호방식</th>
                     <td><select class="preferenceInput" name="preference" value=${loginInfo.preference}>
                         <option value="0" <c:if test="${loginInfo.preference == '0'}">selected</c:if>>선택해주세요.</option>
-                        <option value="힐링 여행" <c:if test="${loginInfo.preference == '힐링 여행'}">selected</c:if>>힐링여행</option>
-                        <option value="먹거리 여행" <c:if test="${loginInfo.preference == '먹거리 여행'}">selected</c:if>>먹거리 여행</option>
-                        <option value="관광지 투어" <c:if test="${loginInfo.preference == '관광지 투어'}">selected</c:if>>관광지 투어</option>
-                        <option value="액티비티" <c:if test="${loginInfo.preference == '액티비티'}">selected</c:if>>액티비티</option>
-                        <option value="기분따라" <c:if test="${loginInfo.preference == '기분따라'}">selected</c:if>>기분따라</option>
+                        <option value="힐링 여행" <c:if test="${loginInfo.preference == '힐링 여행'}">selected</c:if>>힐링여행
+                        </option>
+                        <option value="먹거리 여행" <c:if test="${loginInfo.preference == '먹거리 여행'}">selected</c:if>>먹거리 여행
+                        </option>
+                        <option value="관광지 투어" <c:if test="${loginInfo.preference == '관광지 투어'}">selected</c:if>>관광지 투어
+                        </option>
+                        <option value="액티비티" <c:if test="${loginInfo.preference == '액티비티'}">selected</c:if>>액티비티
+                        </option>
+                        <option value="기분따라" <c:if test="${loginInfo.preference == '기분따라'}">selected</c:if>>기분따라
+                        </option>
                       </select></td>
                   </tr>
                   <tr>
