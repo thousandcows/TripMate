@@ -43,7 +43,7 @@
 	</select>
 	
 	<insert id="kakaoSignup">
-		insert into member (seq, emailid, nick, violation, sns_division, photo, signup_date) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0, #{kakaoId}, 'default_profileqwerkjhgdiute.jpg', default)
+		insert into member (seq, emailid, nick, violation, sns_division, photo, signup_date) values (mem_seq.nextval, #{kakaoEmail}, #{kakaoNick}, 0, #{kakaoId}, '\images\default_profileqwerkjhgdiute.jpg', default)
 	</insert>
 	
 	<!-- 마이페이지 -->
