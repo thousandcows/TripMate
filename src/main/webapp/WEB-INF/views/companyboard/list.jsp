@@ -226,8 +226,9 @@
        		    </div>
             </c:forEach>
             
+            <c:forEach var="l" items="${list }">
             <div class="board_enroll">
-            	<c:forEach var="l" items="${list }">
+            	
             		<div class="seq" style="width: 5%;">${l.seq }</div>
                 	<div class="tour" style="width: 7%; color: rgb(56, 181, 174); font-weight: bold">${l.tour }</div>
                 	<div class="title" style="width: 44%; text-align:left; padding-left:10px"><a href="/companyboard/detail?seq=${l.seq}">${l.title }&nbsp</a>
@@ -237,8 +238,9 @@
                 	<div class="writen_date" style="width: 10%;">${l.writen_date }</div>
                 	<div class="view_count" style="width: 7%;">${l.view_count}</div>
                 	<div class="expired" style="width: 8%;">${l.expired }</div>
-            	</c:forEach> 
+            	
             </div>
+            </c:forEach> 
         </div>
 
 		<c:if test="${!empty loginNick}">
