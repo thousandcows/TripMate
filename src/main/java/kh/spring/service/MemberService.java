@@ -38,7 +38,7 @@ public class MemberService {
 	TourBoardService tourBoardService;
 
 	@Autowired
-	AreaService aService;
+	AreaService areaService;
 
 	Gson gson = new Gson();
 
@@ -123,7 +123,8 @@ public class MemberService {
 			if (!file.isEmpty()) {
 				String existingPhotoStr = memberDao.existingPhotoStr(dto.getSeq());
 				if (!existingPhotoStr.contains("default_profileqwerkjhgdiute.jpg")) {
-					File deleteFile = new File(realPath + "\\" + existingPhotoStr);
+					File deleteFile = new File(realPath + "\\" + existingPhotoStr.substring(8));
+					System.out.println(existingPhotoStr);
 					deleteFile.delete(); // 기존 파일삭제
 				}
 				File realPathFile = new File(realPath);
@@ -133,7 +134,7 @@ public class MemberService {
 				String oriName = file.getOriginalFilename();
 				String sysName = UUID.randomUUID() + "_" + oriName;
 				file.transferTo(new File(realPath + "/" + sysName));
-				dto.setPhoto(sysName);
+				dto.setPhoto("\\images\\" + sysName); // 가져올때의 편안함을 위해
 			}
 			return memberDao.myInfoChangeOk(dto);
 		}
@@ -172,7 +173,7 @@ public class MemberService {
 	public String savedAreaGrade(int seq) {
 		return memberDao.savedAreaGrade(seq);
 	}
-	
+
 	// 찜목록 더보기
 	public String moreSaving(int loginSeq, int btn) throws Exception {
 		int start = btn;
@@ -189,7 +190,7 @@ public class MemberService {
 			} else {
 				adto.setSavedListRate(rate);
 			}
-			tdto = aService.detailBuild(saveSeq);
+			tdto = areaService.detailBuild(saveSeq);
 			adto.setSeq(saveSeq);
 			adto.setName(tdto.getName());
 			adto.setPhoto(tdto.getPhoto());
@@ -233,63 +234,51 @@ public class MemberService {
 		int pageTotalCount = getMyPostPageTotalCount(loginSeq, searchTitle);
 		int startNavi = (cpage - 1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
 		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;
-
 		if (endNavi > pageTotalCount) {
 			endNavi = pageTotalCount;
 		}
-
 		boolean needPrev = true;
 		boolean needNext = true;
-
 		if (startNavi == 1) {
 			needPrev = false;
 		}
-
 		if (endNavi == pageTotalCount) {
 			needNext = false;
 		}
-		
 		String pageNavi = "";
-		if(isSearch == 0) {
-
+		if (isSearch == 0) {
 			if (needPrev) {
 				pageNavi += "<a href='/member/writenList?currentPage=" + (startNavi - 1) + "'><</a> ";
 			}
-
 			for (int i = startNavi; i <= endNavi; i++) {
-				if(cpage == i) {
+				if (cpage == i) {
 					pageNavi += "<a href='/member/writenList?currentPage=" + i + "' class='nowPage'>" + i + "</a> ";
 				} else {
 					pageNavi += "<a href='/member/writenList?currentPage=" + i + "'>" + i + "</a> ";
 				}
 			}
-
 			if (needNext) {
 				pageNavi += "<a href='/member/writenList?currentPage=" + (endNavi + 1) + "'>></a>";
 			}
 		} else {
-
 			if (needPrev) {
 				pageNavi += "<a href='/member/writenList?currentPage=" + (startNavi - 1) + "&searchTitle=" + searchTitle
 						+ "'><</a> ";
 			}
-
 			for (int i = startNavi; i <= endNavi; i++) {
-				if(cpage == i) {
-					pageNavi += "<a href='/member/writenList?currentPage=" + i + "&searchTitle=" + searchTitle + "' class='nowPage'>" + i
-							+ "</a> ";
+				if (cpage == i) {
+					pageNavi += "<a href='/member/writenList?currentPage=" + i + "&searchTitle=" + searchTitle
+							+ "' class='nowPage'>" + i + "</a> ";
 				} else {
-					pageNavi += "<a href='/member/writenList?currentPage=" + i + "&searchTitle=" + searchTitle + "'>" + i
-							+ "</a> ";
+					pageNavi += "<a href='/member/writenList?currentPage=" + i + "&searchTitle=" + searchTitle + "'>"
+							+ i + "</a> ";
 				}
 			}
-
 			if (needNext) {
 				pageNavi += "<a href='/member/writenList?currentPage=" + (endNavi + 1) + "&searchTitle=" + searchTitle
 						+ "'>></a>";
 			}
 		}
-		
 		return pageNavi;
 	}
 
@@ -328,21 +317,21 @@ public class MemberService {
 		}
 		return "1";
 	}
-	
+
 	// 알림 저장
 	public int insertReaction(String reaction, int loginSeq) {
 		ReactionDTO dto = gson.fromJson(reaction, ReactionDTO.class);
-		if(loginSeq != dto.getMem_seq()) {
+		if (loginSeq != dto.getMem_seq()) {
 			return memberDao.insertReaction(dto);
 		}
 		return 2;
 	}
-	
+
 	// 알림 가져오기
-	public List<ReactionsDTO> selectReactions(int loginSeq){
+	public List<ReactionsDTO> selectReactions(int loginSeq) {
 		return memberDao.selectReactions(loginSeq);
 	}
-	
+
 	// 알림 삭제
 	public int reactionRemove(int loginSeq) {
 		return memberDao.reactionRemove(loginSeq);
