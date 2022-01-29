@@ -62,7 +62,7 @@ public class AreaController {
 	
 	@RequestMapping("detail") //상세페이지
 	public String detail(int num,Model model) throws Exception{
-		AreaDTO dto = aService.detailBuild(num); //조건 설
+		AreaDTO dto = aService.detailBuild(num); 
 		int loginSeq = 0;
 		if(session.getAttribute("loginSeq") != null) { //로그인 여부 확인, seq 주입
 			loginSeq = (int)session.getAttribute("loginSeq");			
@@ -73,7 +73,6 @@ public class AreaController {
 		if(Statics.areaReviewNo<replyCount) {printNum = Statics.areaReviewNo;}
 		else { printNum = replyCount;}
 		List<AreaReplyDTO> reply = aService.replyPrint(1, printNum, num); //댓글 출력
-
 		if(replyCount>0) {//댓글 1개이상 존재시, 평점 출력
 			double rate = aService.countRate(num);
 			model.addAttribute("score",rate);			
@@ -101,8 +100,7 @@ public class AreaController {
 		}else {
 			reply = aService.replyPrint(printNum+1, replyCount, area_seq);
 		}
-		String result = aService.replyToJson(reply); //Json String처리
-		return result;
+		return aService.replyToJson(reply);
 	}
 	
 	@ResponseBody

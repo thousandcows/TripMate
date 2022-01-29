@@ -34,9 +34,6 @@ body {
 	top: 50px;
 }
 
-.triplist {
-	cursor: pointer;
-}
 
 @font-face {
     font-family: 'paybooc-Bold';
@@ -48,7 +45,7 @@ body {
 
 <body>
 		<div class="triplist">
-				<img src="/images/trip-1.jpg" class="d-block w-100" alt="…">
+				<img src="/images/trip-1.jpg" class="d-block w-100" style="height:400px;" alt="…">
 		</div>
 			<div class="container">
 				<div class="row">
@@ -58,31 +55,31 @@ body {
 								<input type="hidden" value=1 name="page"> 
 								<input type="hidden" value="${contentType }" name="contentType"> 
 								<input type="hidden" value="${areaCode }" name="area"> 
-								<input type="submit" style="background-color: #f5e3b9; border-radius: 10px; width: 60px;">
+								<input type="submit" value="검색" style="background-color: #f5e3b9; border-radius: 10px; width: 60px;">
 						</form>
 					</div>
 					<div class="col-3 d-flex justify-content-end">
 						<form action="/area/main" style="float: left; margin-top: 20px; position: relative;  top: 30px;">
 								<select id=area name="area" style="width: 100px; height: 40px;">
-									<option value="1">서울</option>
-									<option value="2">인천</option>
-									<option value="3">대전</option>
-									<option value="4">대구</option>
-									<option value="5">광주</option>
-									<option value="6">부산</option>
-									<option value="7">울산</option>
-									<option value="8">세종</option>
-									<option value="31">경기도</option>
-									<option value="32">강원도</option>
-									<option value="33">충청북도</option>
-									<option value="34">충청남도</option>
-									<option value="35">경상북도</option>
-									<option value="36">경상남도</option>
-									<option value="37">전라북도</option>
-									<option value="38">전라남도</option>
-									<option value="39">제주도</option>
+									<option value="1" <c:if test="${areaCode eq 1}">selected</c:if>>서울</option>
+									<option value="2" <c:if test="${areaCode eq 2}">selected</c:if>>인천</option>
+									<option value="3" <c:if test="${areaCode eq 3}">selected</c:if>>대전</option>
+									<option value="4" <c:if test="${areaCode eq 4}">selected</c:if>>대구</option>
+									<option value="5" <c:if test="${areaCode eq 5}">selected</c:if>>광주</option>
+									<option value="6" <c:if test="${areaCode eq 6}">selected</c:if>>부산</option>
+									<option value="7" <c:if test="${areaCode eq 7}">selected</c:if>>울산</option>
+									<option value="8" <c:if test="${areaCode eq 8}">selected</c:if>>세종</option>
+									<option value="31"<c:if test="${areaCode eq 31}">selected</c:if>>경기도</option>
+									<option value="32" <c:if test="${areaCode eq 32}">selected</c:if>>강원도</option>
+									<option value="33" <c:if test="${areaCode eq 33}">selected</c:if>>충청북도</option>
+									<option value="34" <c:if test="${areaCode eq 34}">selected</c:if>>충청남도</option>
+									<option value="35" <c:if test="${areaCode eq 35}">selected</c:if>>경상북도</option>
+									<option value="36" <c:if test="${areaCode eq 36}">selected</c:if>>경상남도</option>
+									<option value="37" <c:if test="${areaCode eq 37}">selected</c:if>>전라북도</option>
+									<option value="38" <c:if test="${areaCode eq 38}">selected</c:if>>전라남도</option>
+									<option value="39" <c:if test="${areaCode eq 39}">selected</c:if>>제주도</option>
 								</select> 
-								<input type=submit style="width: 50px; background-color: #f5e3b9; border-radius: 10px; width: 60px;">
+								<input type=submit value="검색" style="width: 50px; background-color: #f5e3b9; border-radius: 10px; width: 60px;">
 								<input type="hidden" value=1 name="page"> 
 								<input type="hidden" value="${contentType }" name="contentType">
 								<c:if test="${target ne null}">
@@ -93,20 +90,20 @@ body {
 					<div class="col-3 d-flex justify-content-end">
 						<form action="/area/main" style="float: left; margin-top: 20px; position: relative; top: 30px;">
 							<select id=contentType name=contentType style="width: 100px; height: 40px;">
-								<option value=12>관광지</option>
-								<option value=14>문화시설</option>
-								<option value=15>행사/공연/축제</option>
-								<option value=28>레포츠</option>
-								<option value=32>숙박</option>
-								<option value=38>쇼핑</option>
-								<option value=39>음식점</option>
+								<option value=12 <c:if test="${contentType eq 12}">selected</c:if>>관광지</option>
+								<option value=14 <c:if test="${contentType eq 14}">selected</c:if>>문화시설</option>
+								<option value=15 <c:if test="${contentType eq 15}">selected</c:if>>행사/공연/축제</option>
+								<option value=28 <c:if test="${contentType eq 28}">selected</c:if>>레포츠</option>
+								<option value=32 <c:if test="${contentType eq 32}">selected</c:if>>숙박</option>
+								<option value=38 <c:if test="${contentType eq 38}">selected</c:if>>쇼핑</option>
+								<option value=39 <c:if test="${contentType eq 39}">selected</c:if>>음식점</option>
 							</select> 
 							<input type="hidden" value=1 name="page"> 
 							<input type="hidden" value="${areaCode }" name="area">
 							<c:if test="${target ne null}">
 							<input type="hidden" value="${target }" name="target">
 							</c:if>
-							<input type=submit style="width: 50px; background-color: #f5e3b9; border-radius: 10px; width: 60px;">
+							<input type=submit value="검색" style="width: 50px; background-color: #f5e3b9; border-radius: 10px; width: 60px;">
 						</form>
 					</div>
 				</div>

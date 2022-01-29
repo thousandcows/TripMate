@@ -24,18 +24,17 @@ public class PlanService {
 	@Autowired
 	public PlanDAO dao;
 
-	public PlanDTO callPlan(int seq) {
+	public PlanDTO callPlan(int seq) { // 수정 활용
 		return dao.callPlan(seq);
 	}
 	
-	public List<Integer> listCount(int mem_seq,int page) {
+	public List<Integer> listCount(int mem_seq,int page) { //메인페이지 리스팅
 		int total = dao.listCount(mem_seq);
 		int totalPage = 0;
 		if(total%Statics.RECORD_PLAN==0) {totalPage = (total/Statics.RECORD_PLAN);
 		}else {totalPage = (total/Statics.RECORD_PLAN)+1;}
 		int startNavi = (page-1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
 		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;         
-
 		boolean needPrev = true; 
 		boolean needNext = true; 
 		if(startNavi == 1) {needPrev = false;}
@@ -52,23 +51,23 @@ public class PlanService {
 
 	}
 	
-	public List<PlanDTO> listing(int seq,int page){
+	public List<PlanDTO> listing(int seq,int page){ //시작,끝 번호 확인 리스팅
 		int startNum = (page*Statics.RECORD_PLAN)-(Statics.RECORD_PLAN-1);
 		int endNum = page*Statics.RECORD_PLAN;
 		return dao.listing(seq,startNum,endNum);
 	}
 	
 
-	public int chooseTheme(PlanDTO dto) {
+	public int chooseTheme(PlanDTO dto) { //계획 신규 생성
 		int result = dao.createTheme(dto);
 		return result;
 	}
 	
-	public void changeTheme(PlanDTO dto) {
+	public void changeTheme(PlanDTO dto) { //계획일 변경
 		dao.changeTheme(dto);
 	}
 	
-	public void saveList(String[] check,int seq) {
+	public void saveList(String[] check,int seq) { //DB Area에 저장
 		for(int i =0;i<check.length;i++) {
 			String[] split = check[i].split("&");
 			int target = Integer.parseInt(split[0]);
@@ -76,7 +75,7 @@ public class PlanService {
 		}
 	}
 	
-	public List<AreaDTO> detailPlanList(int seq,String date){
+	public List<AreaDTO> detailPlanList(int seq,String date){ //일자별 계획 출력
 		List<DetailPlanDTO> areaCode = dao.detailPlanSort(seq,date);
 		List<AreaDTO> list = new ArrayList<>(); 
 		for(int i = 0; i<areaCode.size();i++) {
@@ -87,19 +86,18 @@ public class PlanService {
 		return list;
 	}
 	
-	public String detailToAjax(List<AreaDTO> list) {
+	public String detailToAjax(List<AreaDTO> list) { //Ajax 변경
 		Gson gson = new Gson();
 		String result = gson.toJson(list);
 		return result;		
 	}
 	
-	public List<String> calDate(String start,String end) throws Exception{
+	public List<String> calDate(String start,String end) throws Exception{ //날짜 계산
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		Date startDate = sdf.parse(start);
 		Date endDate = sdf.parse(end);
 		List<String> list = new ArrayList<>();
 		Date currentDate = startDate;
-		//시작날짜와 끝 날짜를 비교해, 시작날짜가 작거나 같은 경우 출력
 		Calendar c = Calendar.getInstance();
 		while (currentDate.compareTo(endDate) <= 0) {
 			list.add(sdf.format(currentDate));
@@ -110,44 +108,31 @@ public class PlanService {
 		return list;
 	}
 	
-	public PlanDTO getDetail(int seq) {
+	public PlanDTO getDetail(int seq) { //상세페이지 접근
 		return dao.getDetail(seq);
 	}
 	
 	
-	public void sortDate(int[] target,int seq) {
+	public void sortDate(int[] target,int seq) { //정렬
 		int[] tmp = target.clone();
 		Arrays.sort(tmp);
-
 		int nowN=0;
 		int changeN=0;
 		for(int i=0; i<target.length;i++) {
-			if(tmp[i] == seq) {
-				nowN = i;
-			}
-			if(target[i] == seq) {
-				changeN = i;
-			}
+			if(tmp[i] == seq) {nowN = i;}
+			if(target[i] == seq) {changeN = i;}
 		}
-		System.out.println(nowN+ " : " + target.length + " : "+ tmp.length);
 		for(int i = 0; i<target.length;i++) {
 			if(tmp[i] != target[i]) {
 				if(nowN>changeN) {
-					if(nowN == i) {
-						break;
-					}
+					if(nowN == i) {break;}
 					dao.sortDate(target[nowN],target[i]);
-					
 				}else if(nowN<changeN) {
-					if(changeN == i) {
-						break;
-					}
+					if(changeN == i) {break;}
 					dao.sortDate(target[i], target[i+1]);
 				}
-				
 			}
 		}
-
 	}
 	
 	public void sortDatePlan(int seq, String day) {
