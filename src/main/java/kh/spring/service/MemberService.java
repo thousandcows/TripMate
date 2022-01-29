@@ -146,9 +146,9 @@ public class MemberService {
 	}
 
 	// 마이페이지 비밀번호 수정
-	public int myInfoPwChange(String pw) {
+	public int myInfoPwChange(String pw, int loginSeq) {
 		String encryptPw = EncryptUtils.getSHA512(pw);
-		return memberDao.myInfoPwChange(encryptPw);
+		return memberDao.myInfoPwChange(encryptPw, loginSeq);
 	}
 
 	// 회원탈퇴

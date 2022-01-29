@@ -109,8 +109,11 @@ public class MemberDAO {
 	}
 
 	// 일반 비밀번호 변경
-	public int myInfoPwChange(String encryptPw) {
-		return mybatis.update("Member.myInfoPwChange", encryptPw);
+	public int myInfoPwChange(String encryptPw, int loginSeq) {
+		Map <String, String> map = new HashMap<>();
+		map.put("encryptPw", encryptPw);
+		map.put("loginSeq", String.valueOf(loginSeq));
+		return mybatis.update("Member.myInfoPwChange", map);
 	}
 
 	// 회원탈퇴
