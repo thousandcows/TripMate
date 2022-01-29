@@ -448,7 +448,7 @@ a:active {
 		let mem_seq = $(this).attr("value");
 		console.log(mem_seq);
 		$.ajax({
-			url:"/tmp/showMember?mem_seq="+mem_seq,
+			url:"/member/showMember?mem_seq="+mem_seq,
     		dataType:"json",
     		success:function(result){
     			$('#myModal').modal('toggle');

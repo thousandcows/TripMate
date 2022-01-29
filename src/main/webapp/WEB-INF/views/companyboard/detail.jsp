@@ -559,7 +559,7 @@
 		let mem_seq = $(this).attr("value");
 		console.log("대댓글 멤버 시퀀스 값 : " + mem_seq);
 		$.ajax({
-			url:"/tmp/showMember?mem_seq="+mem_seq,
+			url:"/member/showMember?mem_seq="+mem_seq,
    		dataType:"json",
    		success:function(result){
    			$('#myModal').modal('toggle');
