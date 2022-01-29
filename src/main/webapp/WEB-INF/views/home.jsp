@@ -96,6 +96,12 @@ ul{
 .notice-list>li:hover{
     background-color: #F0F0F0;
 }
+.carousel{
+  z-index: 10;
+}
+.carousel-indicators{
+  z-index: 10;
+}
 
 @font-face {
     font-family: 'paybooc-Bold';
@@ -226,17 +232,13 @@ ul{
               </div>
               </div>
               
-              
-              
-              
               <div class='top-btn'>
               <a href="#"><img src="/images/up1.png"/>
               </a></div>
               </div>
               </div>
               </div>
-            
-              
+                            
               </section>
               
               </main>
