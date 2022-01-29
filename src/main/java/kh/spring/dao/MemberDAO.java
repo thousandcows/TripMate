@@ -131,10 +131,10 @@ public class MemberDAO {
 	public String savedAreaGrade(int seq) {
 		return mybatis.selectOne("Member.savedAreaGrade", seq);
 	}
-	
+
 	// 내 게시글 갯수
 	public int getMyPostCount(int loginSeq, String searchTitle) {
-		if(searchTitle == null) {
+		if (searchTitle == null) {
 			searchTitle = "";
 		}
 		Map<String, String> map = new HashMap<>();
@@ -144,10 +144,10 @@ public class MemberDAO {
 		int tBoardCount = mybatis.selectOne("Member.getMyPostCountT", map);
 		return cBoardCount + tBoardCount;
 	}
-	
+
 	// 내 게시글 리스트
-	public List<MyPostDTO> getMyPostList(int loginSeq, int start, int end, String searchTitle){
-		if(searchTitle == null) {
+	public List<MyPostDTO> getMyPostList(int loginSeq, int start, int end, String searchTitle) {
+		if (searchTitle == null) {
 			searchTitle = "";
 		}
 		Map<String, String> map = new HashMap<>();
@@ -157,22 +157,22 @@ public class MemberDAO {
 		map.put("searchTitle", searchTitle);
 		return mybatis.selectList("Member.getMyPostList", map);
 	}
-	
+
 	// 알림 저장
 	public int insertReaction(ReactionDTO dto) {
 		return mybatis.insert("Member.insertReaction", dto);
 	}
-	
+
 	// 알림 꺼내오기
-	public List<ReactionsDTO> selectReactions(int loginSeq){
+	public List<ReactionsDTO> selectReactions(int loginSeq) {
 		return mybatis.selectList("Member.selectReactions", loginSeq);
 	}
-	
+
 	// 알림 삭제
 	public int reactionRemove(int loginSeq) {
 		return mybatis.delete("Member.reactionRemove", loginSeq);
 	}
-	
+
 	public String TestLookUp(int i) {
 		return "룩업 성공";
 	}
