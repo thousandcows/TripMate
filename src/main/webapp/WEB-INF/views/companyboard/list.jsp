@@ -80,11 +80,6 @@
                 height: 30px;
             }
             
-            .searchbar > button{
-                height: 30px;
-                border: none;
-            }
-            
             .searchbar > select{
                 height: 30px;
             }
@@ -92,6 +87,7 @@
             .searchbar>span{
                 position: relative;
             }
+            
             .fa-search{
                 line-height: 30px;
                 position: absolute;
@@ -146,7 +142,6 @@
             }
 
             .page{
-                /* border: 1px solid red; */
                 text-align: center;
                 padding: 20px 0px 0px 0px;
                 line-height: 20px;
