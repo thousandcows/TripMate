@@ -5,11 +5,15 @@
 <!DOCTYPE html>
 <html>
     <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="/css/login.css" type="text/css">
       <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
       <script defer src="/js/login.js"></script>
     </head>
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
       * {
         box-sizing: border-box;
         margin: 0;
@@ -25,7 +29,7 @@
       header li {
         display: inline;
         padding-left: 50px;
-        font-family: 'paybooc-Bold';
+        font-family: 'Noto Sans KR', sans-serif;
         font-size: 25px;
       }
 
@@ -34,11 +38,24 @@
         text-decoration: none;
         padding: 15px;
         transition: .3s ease;
-
       }
-
       header li a:hover {
         color: #000000;
+      }
+
+      .modal-header{
+        background-color:#2cd4c6;
+      }
+      .modal-title{
+        color:white;
+      }
+
+      #loginBtn{
+        width:70px;
+        height:30px;
+        font-size:16px;
+        line-height:30px;
+        text-align:center;
       }
 
       #noticeGround{
@@ -102,12 +119,6 @@
         border-radius:4px;
         margin:5px;
       }
-      
-      @font-face {
-    font-family: 'paybooc-Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
 }
     </style>
 
@@ -118,7 +129,7 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalToggleLabel">TripMate(로고가 올듯)</h5>
+              <h5 class="modal-title" id="exampleModalToggleLabel"><img width="180" src="/images/trip2.png"></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body modal-first-body">
