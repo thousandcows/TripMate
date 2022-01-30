@@ -64,7 +64,6 @@
             }
     
             .root>div{
-               /*  border:1px solid red; */
                 float:left;
                 margin: 40px 0px 40px 0px;
                 padding-right: 10px;
@@ -76,7 +75,6 @@
 
             /* 검색창 */
             .searchbar{
-                /* border: 1px solid red; */
                 text-align: right;
                 padding-right: 150px;
                 height: 30px;

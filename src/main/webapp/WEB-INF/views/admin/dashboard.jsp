@@ -209,23 +209,6 @@
                     </div>
                     
                     <div class="row">
-
-                        <!-- Area Chart -->
-                        <div class="col-xl-6">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Number of Visitors(Daily)</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="line-chart5"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         
                         <!-- Area Chart -->
                         <div class="col-xl-6">
@@ -359,20 +342,6 @@
     		}
     </script>
     
-    
-<!--   
-    <script>
-      	$(document).ready(function() {
-    		location.href="/dashboard/insertTable";
-		});  
-    </script> -->
-    
-    <script>
-/*     	$(window).on("load", function(){
-    		location.href="/dashboard/insertTable";
-    	}); */
-    </script>
-    
 
      <!-- chart : 일간 가입자수 -->
      <script>
@@ -386,7 +355,7 @@
 			let posList = [];
 			
 			$.ajax({
-				url : '/dashboard/newMemDaily',
+				url : '/dashboard/chart',
 				type : 'POST',
 				dataType : 'json',
 				success : function(data) {
@@ -439,7 +408,7 @@
 			let posList = [];
 			
 			$.ajax({
-				url : '/dashboard/tourDaily',
+				url : '/dashboard/chart',
 				type : 'POST',
 				dataType : 'json',
 				success : function(data) {
@@ -492,7 +461,7 @@
 			let posList = [];
 			
 			$.ajax({
-				url : '/dashboard/comDaily',
+				url : '/dashboard/chart',
 				type : 'POST',
 				dataType : 'json',
 				success : function(data) {
@@ -545,7 +514,7 @@
 			let posList = [];
 			
 			$.ajax({
-				url : '/dashboard/planDaily',
+				url : '/dashboard/chart',
 				type : 'POST',
 				dataType : 'json',
 				success : function(data) {
@@ -586,58 +555,7 @@
 		}
 	</script>
 	
-	<!-- chart : 방문자 수 -->
-     <script>
 
-		$(document).ready(function() {
-			getGraph5();
-		});
-
-		function getGraph5() {
-			let timeList = [];
-			let posList = [];
-			
-			$.ajax({
-				url : '/dashboard/visitDaily',
-				type : 'POST',
-				dataType : 'json',
-				success : function(data) {
-				// console.log(data[0].pos_count);
-				// 그래프로 나타낼 자료 리스트에 담기
-				for (let i = 0; i < data.length; i++) {
-						timeList.push(data[i].stan_date);
-						posList.push(data[i].visitor);
-				}
- 	
-				// 그래프
-				new Chart(
-						document.getElementById("line-chart5"),
-				{
-						type : 'line',
-						data : {
-								labels : timeList, // X축 
-								datasets : [ {
-										data : posList, // 값
-										label : "daily visitors",
-										borderColor : "rgb(27, 245, 118)",
-										fill : false
-										} ]
-								},
-						options : {
-								title : {
-										display : true,
-										text : '방문자수'
-									}
-								}
-						}); //그래프
-				},
-				error : function() {
-						alert("실패");
-				}
-
-			})
-		}
-	</script>
     
    
 		

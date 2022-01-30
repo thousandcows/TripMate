@@ -14,18 +14,18 @@
     		nvl(t.tour_board,0) as tour_board,
     		nvl(c.com_board,0) as com_board
 		from (select to_char(signup_date, 'YYMMDD') as stan_date, count(*) as user_n from member 
-            	where to_char(signup_date, 'YYMMDD') <![CDATA[ >= ]]> '220125' and to_char(signup_date, 'YYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYMMDD')
+            	where to_char(signup_date, 'YYMMDD') <![CDATA[ >= ]]> '220129' and to_char(signup_date, 'YYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYMMDD')
             	group by to_char(signup_date, 'YYMMDD')) u 
     	full outer join(select to_char(writen_date, 'YYMMDD') as stan_date, count(*) as plan from plan
-                where to_char(writen_date, 'YYMMDD') <![CDATA[ >= ]]> '220125' and to_char(writen_date, 'YYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYMMDD')
+                where to_char(writen_date, 'YYMMDD') <![CDATA[ >= ]]> '220129' and to_char(writen_date, 'YYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYMMDD')
                 group by to_char(writen_date, 'YYMMDD')) p
         	on(u.stan_date = p.stan_date)
     	full outer join  (select to_char(writen_date, 'YYMMDD') as stan_date, count(*) as tour_board from tour_board
-                where to_char(writen_date, 'YYMMDD') <![CDATA[ >= ]]> '220125' and to_char(writen_date, 'YYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYMMDD')
+                where to_char(writen_date, 'YYMMDD') <![CDATA[ >= ]]> '220129' and to_char(writen_date, 'YYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYMMDD')
                 group by to_char(writen_date, 'YYMMDD')) t
         	on(u.stan_date = t.stan_date)
     	full outer join (select to_char(writen_date, 'YYMMDD') as stan_date, count(*) as com_board from company_board
-                where to_char(writen_date, 'YYMMDD') <![CDATA[ >= ]]> '220125' and to_char(writen_date, 'YYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYMMDD')
+                where to_char(writen_date, 'YYMMDD') <![CDATA[ >= ]]> '220129' and to_char(writen_date, 'YYMMDD') <![CDATA[ <= ]]> to_char(sysdate, 'YYMMDD')
                 group by to_char(writen_date, 'YYMMDD')) c
         	on(u.stan_date = c.stan_date)
 		order by stan_date	
