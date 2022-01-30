@@ -58,7 +58,7 @@
 
             /* 미니 사이트맵 루트 */
             .root{
-                padding-left: 200px;
+                padding-left: 150px;
                 overflow: auto;
                 text-align: center;
             }

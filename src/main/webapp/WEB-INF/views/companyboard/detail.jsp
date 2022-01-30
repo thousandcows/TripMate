@@ -67,13 +67,13 @@
         }
 
         /* 컨테이너 ----------------------------------------------------- */
-        .container {
+        .container_c {
             /* border: 1px solid red; */
             padding-bottom :30px;
         }
 
         /* 미니 사이트맵 루트 */
-        .container>.root {
+        .container_c>.root {
             padding-left: 80px;
             overflow: auto;
         }
@@ -261,7 +261,7 @@
         <div class="banner_content"> 함께 여행갈 친구들을 만들어 보세요 </div>
     </div>
     
-    <div class="container">
+    <div class="container_c">
         <div class="root">
             <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
