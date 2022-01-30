@@ -1,17 +1,6 @@
 @charset "utf-8";
 
   /* 로그인&회원가입 시작*/
-  /* 로그인 버튼 */
-  #loginBtn{
-    background-color: white;
-    color:black;
-    border:none;
-    width:50px;
-    padding:0;
-  }
-  #loginBtn:hover{
-    opacity: 0.9;
-  }
   /* 열리는 로그인 모달창 중앙정렬 */
   .modal-first-body {
     text-align: center;
