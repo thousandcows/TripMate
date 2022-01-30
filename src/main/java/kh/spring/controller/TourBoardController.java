@@ -223,6 +223,7 @@ public class TourBoardController {
 	@RequestMapping("modify")
 	public String modify(int seq, String title, String category, String explanation) throws Exception{
 
+		System.out.println("카테고리 : " + category);
 		String contents = explanation;
 		int result = bservice.modify(seq, title, contents, category);
 		return "redirect:/tourboard/detail?seq="+seq;

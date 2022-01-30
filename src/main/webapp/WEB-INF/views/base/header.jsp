@@ -27,7 +27,6 @@
         body {
           position: relative;
         }
-
         /* 헤더 */
         header li {
           display: inline;
@@ -63,10 +62,11 @@
           width: 70px;
           display: inline-block;
           height: 30px;
+          margin-top:10px;
           font-size: 16px;
           border-radius: 3px;
           text-align: center;
-          border: 1px solid gray;
+          border: none;
           background-color: #2cd4c6;
           color: white;
         }
@@ -116,9 +116,11 @@
         .noticeListBox {
           width: 350px;
           height: 320px;
-          border: 1px solid black;
+          border: 1px solid gray;
+          border-radius:4px;
           position: absolute;
           top: 50px;
+          opacity:0.95;
           background-color: white;
           right: 200px;
           z-index: 9999;
@@ -131,25 +133,17 @@
         }
 
         .noticeLista {
-          color: black;
+          color: #5B5B5B;
           font-size: 13px;
         }
 
         .noticeLista:hover {
-          color: gray;
+          color: #2cd4c6;
         }
 
         .noticeList {
           margin-left: 5px;
           margin-top: 15px;
-        }
-
-        .noticeTripBor {
-          color: rgb(12, 102, 64);
-        }
-
-        .noticeComBor {
-          color: rgb(133, 121, 19);
         }
 
         .noticeListBoxClose {
@@ -165,7 +159,14 @@
           border-radius: 4px;
           margin: 5px;
         }
-        
+        @media (max-width: 480px) {
+          .noticeListBox {
+            right: 50px;
+          }
+          #noticeGround {
+            right: 50px;
+          }
+        }
       </style>
 
       <body>
@@ -298,6 +299,21 @@
               <img width="142" src="/images/trip2.png" alt="TripMate" />
             </a>
 
+            <!-- Toolbar -->
+          <div class="navbar-toolbar d-flex align-items-center order-lg-3">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-tool" href="#">
+              <div class="navbar-tool-icon-box"></div>
+            </a>
+            <a class="navbar-tool ms-1 me-n1" href="#">
+              <div class="navbar-tool-icon-box">
+                <i class="navbar-tool-icon ci-user"></i>
+              </div>
+            </a>
+          </div>
+
             <!-- Collapsible menu -->
             <div class="collapse navbar-collapse me-auto order-lg-2" id="navbarCollapse">
               <hr class="d-lg-none my-3">
@@ -319,31 +335,31 @@
                                 <c:when test="${reactions.reaction eq 'comment'}">
                                   <c:if test="${reactions.board_num eq 1}">
                                     <div class="noticeList"><a href="/tourboard/detail?seq=${reactions.seq}#rep_write"
-                                        class="noticeLista">${reactions.time} <span class="noticeTripBor">여행게시판</span>
+                                        class="noticeLista">${reactions.time} 여행게시판
                                         ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
                                   </c:if>
                                   <c:if test="${reactions.board_num eq 2}">
                                     <div class="noticeList"><a
                                         href="/companyboard/detail?seq=${reactions.seq}#rep_write"
-                                        class="noticeLista">${reactions.time} <span clss="noticeComBor">동행게시판</span>
+                                        class="noticeLista">${reactions.time} 동행게시판
                                         ${reactions.title} 글에 ${reactions.reactioner} 님이 댓글을 달았습니다.</a></div>
                                   </c:if>
                                 </c:when>
                                 <c:when test="${reactions.reaction eq 'like'}">
                                   <c:if test="${reactions.board_num eq 1}">
                                     <div class="noticeList"><a href="/tourboard/detail?seq=${reactions.seq}"
-                                        class="noticeLista">${reactions.time} <span class="noticeTripBor">여행게시판</span>
+                                        class="noticeLista">${reactions.time} 여행게시판
                                         ${reactions.title} 글에 좋아요 반응이 있습니다.</a></div>
                                   </c:if>
                                   <c:if test="${reactions.board_num eq 2}">
                                     <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}"
-                                        class="noticeLista">${reactions.time} <span clss="noticeComBor">동행게시판</span>
+                                        class="noticeLista">${reactions.time} 동행게시판
                                         ${reactions.title} 글에 좋아요 반응이 있습니다.</a></div>
                                   </c:if>
                                 </c:when>
                                 <c:when test="${reactions.reaction eq 'joinTrip'}">
                                   <div class="noticeList"><a href="/companyboard/detail?seq=${reactions.seq}"
-                                      class="noticeLista">${reactions.time} <span clss="noticeComBor">동행게시판</span>
+                                      class="noticeLista">${reactions.time} 동행게시판
                                       ${reactions.title} 글에 ${reactions.reactioner} 님이 동행을 요청하였습니다.</a></div>
                                 </c:when>
                               </c:choose>

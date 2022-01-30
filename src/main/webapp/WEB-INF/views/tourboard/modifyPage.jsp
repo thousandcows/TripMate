@@ -15,8 +15,6 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
-<jsp:include page="../base/header.jsp"></jsp:include>
-
 <style>
 
 * {
@@ -88,6 +86,7 @@ input{autocomplete="off" ;}
 .category {
 	width: 10%;
 	float: left;
+	padding: 0px 80px 0px 80px;
 }
 
 .title {
@@ -248,6 +247,10 @@ a:active {
 
 <body>
 
+	<div class="header">		
+		<jsp:include page="../base/header.jsp"></jsp:include>
+	</div>
+	
 	<!-- .banner에 이미지 추가해야한다.-->
 	<div class="banner">
 		<div class="banner_title" href=""> 여행지 게시판 </div>
@@ -267,7 +270,6 @@ a:active {
 				<div class="catetitle">
 					<!-- <div class="category"> -->
 					<span style="width: 20%;">
-						<input type=hidden name=category value="${dto.category }" id="categoryValue">
                         <h3 style="color: rgb(56, 181, 174); font-weight: bold; display: inline; padding: 5px;" id="categoryValue_txt">${dto.category }</h3> 
                         <h3 style="display: inline; color: rgb(153, 153, 153); padding: 5px;">|</h3>
                     </span> 
@@ -285,6 +287,16 @@ a:active {
 				
 				<hr style="margin:20px 0px 30px 0px;">
 				
+				
+				<div class="category">
+                    <select name="category" id="category" >
+                        <option value="">말머리</option>
+                        <option value="명소">명소</option>
+                        <option value="문화">문화</option>
+                        <option value="생태">생태</option>
+                        <option value="체험">체험</option>
+                    </select>
+                </div><br><br>
 				<div class="contents" style="margin-left: 80px;">
 					<textarea class="summernote" id="summernote" name="explanation">${dto.contents }</textarea>
 				</div>
@@ -297,7 +309,16 @@ a:active {
 			</div>
 		</form>
 	</div>	
+	
+	<div class="footer">
+    	<jsp:include page="../base/footer.jsp"></jsp:include>
+    </div>
 
+
+	<script>
+		$("#category").val("${dto.category}");
+	</script>
+	
 	<script>
 		$("#del").on("click", function() {
 			if (confirm("정말 삭제하시겠습니까?")) {
@@ -316,16 +337,16 @@ a:active {
 	</script>
 
 	<script>
-		$("#modOk").on("click", function() {
-			if ($("#modcategory").val() == "") {
-
-				alert("말머리를 선택해주세요");
-				return false;
-			}
+		$("#modOk").on("click", function() {			
 
 			if ($("#title").val() == "") {
 
 				alert("제목을 입력해주세요");
+				return false;
+			}
+			if ($("#category").val() == "") {
+
+				alert("말머리를 선택해주세요");
 				return false;
 			}
 
@@ -334,7 +355,6 @@ a:active {
 				alert("내용을 입력해주세요");
 				return false;
 			}
-
 			if (confirm("이대로 작성하시겠습니까?")) {
 				$("#frmDetail").submit();
 			}

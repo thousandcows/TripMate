@@ -10,13 +10,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<jsp:include page="../base/header.jsp"></jsp:include>
+<!-- fontawesome cdn -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
-
-    <!-- fontawesome cdn -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-
-    <style>
+<style>
         *{
                 box-sizing: border-box;
             }
@@ -58,13 +55,12 @@
 
             /* 미니 사이트맵 루트 */
             .root{
-                padding-left: 200px;
+                padding-left: 150px;
                 overflow: auto;
                 text-align: center;
             }
     
             .root>div{
-               /*  border:1px solid red; */
                 float:left;
                 margin: 40px 0px 40px 0px;
                 padding-right: 10px;
@@ -76,7 +72,6 @@
 
             /* 검색창 */
             .searchbar{
-                /* border: 1px solid red; */
                 text-align: right;
                 padding-right: 150px;
                 height: 30px;
@@ -315,7 +310,6 @@
                 
                 .notice_enroll{
                     overflow: auto;
-                    border-top: solid 1px rgb(207, 207, 207);
                     border-bottom: solid 1px rgb(207, 207, 207);  
                 }
 
@@ -373,14 +367,17 @@
             
             }     
 
-    </style>
+</style>
     
-    <style type="text/css">
-			li {list-style: none; float: left; padding: 6px;}
-	</style>
+<style type="text/css">
+	li {list-style: none; float: left; padding: 6px;}
+</style>
 
 </head>
 <body>
+	<div class="header">		
+		<jsp:include page="../base/header.jsp"></jsp:include>
+	</div>
 	<div class = "banner">  <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
         <div class="banner_title"> 동행 게시판 </div>
         <div class="banner_content"> 함께 여행갈 친구들을 만들어 보세요 </div>
@@ -411,24 +408,24 @@
             <div class="board_header">
                 <div class="seq" style="width: 5%;">No</div>
                 <div class="tour" style="width: 7%;">여행지</div>
-                <div class="title" style="width: 44%;">제목</div>
+                <div class="title" style="width: 42%;">제목</div>
                 <div class="recruit" style="width: 9%;">모집 인원</div>
                 <div class="mem_seq" style="width: 10%;">작성자</div>
                 <div class="write_date" style="width: 10%;">작성일</div>
                 <div class="view_count" style="width: 7%;">조회수</div>
-                <div class="expired" style="width: 8%;">마감 여부</div>
+                <div class="expired" style="width: 10%;">마감 여부</div>
             </div>
             
             <c:forEach var="n" items="${nt_list }">
     	  		<div class="notice_enroll">
        		        <div class="nt_seq" style="width: 5%;"><i class="fas fa-bullhorn"></i></div>
        		        <div class="nt_tour" style="width: 7%;">공지</div>
-       		        <div class="nt_title" style="width: 44%; text-align:left; padding-left:10px;"><a href="/companyboard/noticeDetail?seq=${n.seq}">${n.title }</a></div>
+       		        <div class="nt_title" style="width: 42%; text-align:left; padding-left:10px;"><a href="/companyboard/noticeDetail?seq=${n.seq}">${n.title }</a></div>
        		        <div class="nt_recruit" style="width: 9%;">-</div>
        		        <div class="nt_nick" style="width: 10%;">${n.nick }</div>
        		        <div class="nt_writen_time" style="width: 10%;">${n.writen_date }</div>
        		        <div class="nt_view_count" style="width: 7%;">${n.view_count }</div>
-       		        <div class="nt_rec_count" style="width: 8%;">-</div>
+       		        <div class="nt_rec_count" style="width: 10%;">-</div>
        		        <div class="hide_nt_con">${n.nick } &nbsp/&nbsp <i class="far fa-clock"></i> ${n.writen_date } &nbsp/&nbsp <i class="far fa-eye"></i> ${n.view_count }</div>
        		    </div>
             </c:forEach>
@@ -437,13 +434,13 @@
             <div class="board_enroll">
             		<div class="seq" style="width: 5%;">${l.seq }</div>
                 	<div class="tour" style="width: 7%; color: rgb(56, 181, 174); font-weight: bold">${l.tour }</div>
-                	<div class="title" style="width: 44%; text-align:left; padding-left:10px"><a href="/companyboard/detail?seq=${l.seq}">${l.title }&nbsp</a>
+                	<div class="title" style="width: 42%; text-align:left; padding-left:10px"><a href="/companyboard/detail?seq=${l.seq}">${l.title }&nbsp</a>
                 		<i class="far fa-comment-dots" style="color: rgb(161, 161, 161)"></i><span id="rep_count" name="rep_count" style="color: red"> [${l.rep_count}] </span></div>
                 	<div class="recruit" style="width: 9%;">${l.recruit }</div>
                 	<div class="mem_seq" style="width: 10%;">${l.nick}</div>
                 	<div class="writen_date" style="width: 10%;">${l.writen_date }</div>
                 	<div class="view_count" style="width: 7%;">${l.view_count}</div>
-                	<div class="expired" style="width: 8%;">
+                	<div class="expired" style="width: 10%;">
                 		<c:if test="${l.expired == '마감'}">
                 			<span class="badge bg-danger">${l.expired }</span>
                 		</c:if>
@@ -451,7 +448,7 @@
                 			<span class="badge bg-primary">${l.expired }</span>
                 		</c:if>
                 	</div>
-                	<div class="hide_nt_con">${l.nick} &nbsp/&nbsp <i class="far fa-clock"></i> ${l.writen_date } &nbsp/&nbsp <i class="far fa-eye"></i> ${l.view_count} &nbsp/&nbsp <i class="far fa-user"></i> 10 &nbsp/&nbsp
+                	<div class="hide_nt_con">${l.nick} &nbsp/&nbsp <i class="far fa-clock"></i> ${l.writen_date } &nbsp/&nbsp <i class="far fa-eye"></i> ${l.view_count} &nbsp/&nbsp <i class="far fa-user"></i> ${l.recruit } &nbsp/&nbsp
                 		<c:if test="${l.expired == '마감'}">
                 			<span class="badge bg-danger">${l.expired }</span>
                 		</c:if>
@@ -474,6 +471,10 @@
                <div>${navi  }</div>
             </div>
 		</div>
+    </div>
+    
+    <div class="footer">
+    	<jsp:include page="../base/footer.jsp"></jsp:include>
     </div>
     
     <script>

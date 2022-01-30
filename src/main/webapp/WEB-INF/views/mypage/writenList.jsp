@@ -91,6 +91,9 @@
             </div>
           </div>
         </div>
+        <footer>
+    	    <jsp:include page="../base/footer.jsp"></jsp:include>
+        </footer>
 
         <script>
           'use strict'
