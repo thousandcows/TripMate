@@ -361,6 +361,7 @@
 		$("#tourSelect").val("${dto.tour}");
 		$("#recruitSelect").val("${dto.recruit}");
 	</script>
+	
 	<script>
 		let wsObj = new Object();
 		wsObj.seq = "${dto.seq}";

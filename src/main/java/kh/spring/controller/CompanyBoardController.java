@@ -206,6 +206,7 @@ public class CompanyBoardController {
 	@RequestMapping("toModify")
 	public String modifyPage(CompanyBoardDTO dto, Model model) {
 
+		System.out.println("성별 : " + dto.getGender());
 		model.addAttribute("dto", dto);
 		return "companyboard/modifyPage";
 	}
