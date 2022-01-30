@@ -6,25 +6,29 @@
 
       <head>
         <meta charset="UTF-8">
-        <title>Insert title here</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MyPage</title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
           crossorigin="anonymous"></script>
+        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
         <jsp:include page="../base/header.jsp"></jsp:include>
         <style>
-          /* 간단세팅 나중에 css파일 따로 뺄거*/
           * {
             box-sizing: border-box;
             padding: 0;
             margin: 0;
             list-style: none;
+            font-family: 'Noto Sans KR', sans-serif;
           }
 
           a {
             text-decoration: none;
+            color:#5B5B5B;
           }
 
           /* 전체영역 크기 조절 */
@@ -38,7 +42,6 @@
           .sideBar {
             width: 200px;
             height: 1000px;
-            background-color: rgb(240, 240, 240);
           }
 
           /* 초상화 공간 */
@@ -55,7 +58,6 @@
             height: 40px;
             line-height: 40px;
             text-align: center;
-            /* background-color: aqua; */
           }
 
           /* 사이드바 메뉴 */
@@ -70,24 +72,35 @@
           .sideBarMenuBox li a {
             width: 140px;
             height: 40px;
-            border-radius: 20px;
+            border-radius: 10px;
             line-height: 40px;
             text-align: center;
-            background-color: antiquewhite;
+            background-color: #198c8c;
             display: block;
-            color: black;
+            color: white;
             box-shadow: 1px 1px 2px 1px rgb(224, 224, 224);
           }
 
           .sideBarMenuBox li a:hover {
+            opacity: 0.9;
             box-shadow: 1px 1px 2px 1px rgb(211, 211, 211);
           }
 
           .sideBarMenuBox li:nth-child(2) a {
-            background-color: rgb(255, 223, 181);
+            background-color: #005757;
+          }
+
+          .portraitPhoto {
+            width: 150px;
+            height: 150px;
+            position: absolute;
           }
 
           /* 사이드바 끝 */
+          .topTxt{
+            font-size:20px;
+            color:#5B5B5B;
+          }
         </style>
 
       </head>
@@ -107,80 +120,46 @@
               <li><a href="/member/writenList">게시글 관리</a></li>
             </ul>
           </div>
-          <div class="container">
+          <div class="container mt-4">
             <div class="row">
-              <div class="col">
-                <div class="row">
-                  <div class="col-6">
-                    제목
-                  </div>
-                  <div class="col-2">
-                    여행 시작일
-                  </div>
-                  <div class="col-2">
-                    여행 종료일
-                  </div>
-                  <div class="col-2">
-                    진행 상황
-                  </div>
-                </div>
-                <c:set var="now" value="<%=new java.util.Date()%>" />
-                <c:forEach var="i" items="${list }">
-                  <div class="row">
-                    <div class="col-6">
-                      <a href="/plan/detail?seq=${i.seq }">${i.title }</a>
-                    </div>
-                    <div class="col-2">
-                      ${i.startDate }
-                    </div>
-                    <div class="col-2">
-                      ${i.endDate }
-                    </div>
-                    <div class="col-2">
-                      <fmt:parseDate value="${i.startDate }" var="startDate" pattern="yyyy.MM.dd" />
-                      <fmt:parseDate value="${i.endDate }" var="endDate" pattern="yyyy.MM.dd" />
-                      <fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="start" />
-                      <fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="end" />
-                      <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowD" />
-                      <c:if test="${start-nowD > 0 }">
-                        <div>예정</div>
-                      </c:if>
-                      <c:if test="${start-nowD < 0 and end-nowD >= 0}">
-                        <div>진행중</div>
-                      </c:if>
-                      <c:if test="${end-nowD < 0}">
-                        <div>완료</div>
-                      </c:if>
-
-                    </div>
-                  </div>
-                </c:forEach>
-              </div>
+              <div class="col-12 topTxt text-center">최근 12개의 여행계획입니다.</div>
             </div>
-            <div class="row">
-              <div class="col">
-                <c:forEach var="i" items="${paging }">
-                  <button type="button btn paging btn-primary">
-                    <a href="/plan/main?page=${i }">
-                      <c:choose>
-                        <c:when test="${i eq firstNum and (i%10) eq 0 }">
-                          < </c:when>
-                            <c:when test="${i eq lastNum and (i%10) eq 1 }">
-                              >
-                            </c:when>
-                            <c:when test="${i eq page }">
-                              ${i }
-                            </c:when>
-                            <c:otherwise>
-                              ${i }
-                            </c:otherwise>
-                      </c:choose>
-                  </button>
+            <div class="row mt-4 d-flex justify-content-center">
+              <c:set var="now" value="<%=new java.util.Date()%>" />
+              <c:forEach var="i" items="${list }">
+                <div class="card p-2 m-2" style="width: 18rem;
+						<c:choose>
+							<c:when test=" ${i.theme eq '힐링 여행' }">
+                  background-color: #FF8C94;
+                  </c:when>
+                  <c:when test="${i.theme eq '먹거리 투어'}">
+                    background-color: #FFAAA6;
+                  </c:when>
+                  <c:when test="${i.theme eq '관광지 투어'}">
+                    background-color: #FFD3B5;
+                  </c:when>
+                  <c:when test="${i.theme eq '액티비티'}">
+                    background-color: #DCEDC2;
+                  </c:when>
+                  <c:when test="${i.theme eq '기분따라'}">
+                    background-color: #A8E6EC;
+                  </c:when>
+                  </c:choose>
+                  ">
+                  <a href="/plan/detail?seq=${i.seq }">
+
+                    <div class="card-body">
+                      <h5 class="card-title">${i.title }</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">${i.theme }</h6>
+                      <p class="card-text">
+                        <span>시작일 : ${i.startDate }</span><br>
+                        <span>종료일 : ${i.endDate }</span>
+                      </p>
+                    </div>
                   </a>
+                </div>
 
-                </c:forEach>
-
-              </div>
+              </c:forEach>
             </div>
           </div>
       </body>

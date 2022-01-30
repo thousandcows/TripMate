@@ -81,11 +81,9 @@ public class PlanController {
 	public String modify(int seq, Model model) throws Exception{
 		PlanDTO dto = pServe.callPlan(seq);
 		int loginSeq = (int) session.getAttribute("loginSeq");
-
 		if(dto.getMem_seq() != loginSeq) { //로그인계정 비일치시 홈으로 이동
-			return "/";
+			return "redirect:/";
 		}
-		
 		// 찜목록 조회 갯수
 		List<AreaDTO> adto = new ArrayList<>();
 		List<Integer> mySaveListSeq = mServe.mySaveListSeq(loginSeq, Statics.SAVE_LIST_START,Statics.SAVE_LIST_END);
@@ -123,8 +121,8 @@ public class PlanController {
 	@RequestMapping("chooseTheme") //카테고리 선택 후 생성
 	public String chooseTheme(PlanDTO dto, RedirectAttributes re) {
 		int loginSeq = (int)session.getAttribute("loginSeq");
-		int seq = pServe.chooseTheme(dto);
 		dto.setMem_seq(loginSeq);
+		int seq = pServe.chooseTheme(dto);
 		re.addAttribute("seq",seq);
 		return "redirect:/plan/modify";
 	}
@@ -132,6 +130,7 @@ public class PlanController {
 	@RequestMapping("changeTheme") //카테고리 변경
 	public String changeTheme(PlanDTO dto,RedirectAttributes re) {
 		pServe.changeTheme(dto);
+		System.out.println("OK");
 		re.addAttribute("seq",dto.getSeq());
 		return "redirect:/plan/modify";
 	}

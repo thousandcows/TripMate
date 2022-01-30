@@ -26,7 +26,7 @@
 	</select>
 	
 	<select id="replyPrint" resultType="kh.spring.dto.AreaReplyDTO">
-		select * from (select area_reply.* , row_number() over(order by seq desc) rn from area_reply)where rn between #{start} and #{end}
+		select * from (select area_reply.* , row_number() over(order by seq desc) rn from area_reply where area_seq = #{area_seq})where rn between #{start} and #{end}
 	</select>
 	
 	<select id="replyDelete">

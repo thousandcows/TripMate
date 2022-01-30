@@ -1,0 +1,506 @@
+@charset "utf-8";
+  /* 간단세팅 나중에 css파일 따로 뺄거*/
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  /* 전체영역 크기 조절 */
+  .myPageContainer {
+    width: 1200px;
+    display: flex;
+    margin: auto;
+  }
+
+  /* 사이드바 시작 */
+  .sideBar {
+    width: 200px;
+    height: 1000px;
+    background-color: rgb(250, 250, 250);
+  }
+
+  /* 초상화 공간 */
+  .sideMyPortrait {
+    width: 150px;
+    height: 150px;
+    margin-left: 25px;
+    margin-top: 50px;
+    position: relative;
+  }
+
+  .sideMyNick {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+  }
+
+  /* 사이드바 메뉴 */
+  .sideBarMenuBox {
+    margin-top: 50px;
+  }
+
+  .sideBarMenuBox li {
+    margin-top: 20px;
+  }
+
+  .sideBarMenuBox li a {
+    width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 40px;
+    background-color: #198c8c;
+    display: block;
+    color: white;
+    box-shadow: 1px 1px 2px 1px rgb(224, 224, 224);
+  }
+
+  .sideBarMenuBox li a:hover {
+    opacity: 0.9;
+    box-shadow: 1px 1px 2px 1px rgb(211, 211, 211);
+  }
+
+  .sideBarMenuBox li:last-child a {
+    background-color: #005757;
+  }
+
+  .portraitPhoto{
+    width:150px;
+    height:150px;
+  }
+
+  /* 사이드바 끝 */
+  .postList {
+    width: 900px;
+    height: 650px;
+    margin-left: 20px;
+    margin-top: 100px;
+  }
+
+  .postHeader {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid black;
+  }
+
+  .postHeader li {
+    height:50px;
+    line-height:50px;
+    font-size: 17px;
+    float: left;
+  }
+
+  .postHeader li:nth-child(1) {
+    width: 17%;
+  }
+
+  .postHeader li:nth-child(2) {
+    width: 17%;
+  }
+
+  .postHeader li:nth-child(3) {
+    width: 40%;
+  }
+
+  .postHeader li:nth-child(4) {
+    width: 8%;
+  }
+
+  .postHeader li:nth-child(5) {
+    width: 8%;
+  }
+
+  .postHeader li:nth-child(6) {
+    width: 10%;
+  }
+
+  .postContents {
+    margin-bottom:5px;
+    width: 100%;
+    height: 35px;
+    border-bottom: 1px solid #198c8c;
+  }
+
+  .postContents li {
+    float: left;
+    width: 180px;
+  }
+
+  .postContents li:nth-child(1) {
+    width: 17%;
+  }
+
+  .postContents li:nth-child(2) {
+    width: 17%;
+  }
+
+  .postContents li:nth-child(3) {
+    width: 40%;
+  }
+  .postContents li:nth-child(3) a{
+    color:black;
+  }
+
+  .postContents li:nth-child(4) {
+    width: 8%;
+    text-align: center;
+  }
+
+  .postContents li:nth-child(5) {
+    width: 8%;
+    text-align: center;
+  }
+
+  .postContents li:nth-child(6) {
+    width: 10%;
+    text-align: center;
+  }
+
+  /* 임시 색상 지정 */
+  .tBoardHeader {
+    color: rgb(12, 102, 64);
+    font-weight: bold;
+  }
+
+  .cBoardHeader {
+    color: rgb(133, 121, 19);
+    font-weight: bold;
+  }
+  .fa-comment-dots{
+    margin-left:5px;
+    margin-right:3px;
+  }
+  .mypostBottoms{
+    margin-top:5px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .myPostSearchBox{
+    text-align: left;
+  }
+  .myPostNaviBox{
+    text-align: center;
+  }
+  .myPostSearchInput{
+    width:200px;
+    height:30px;
+    border:1px solid gray;
+    font-size:14px;
+    padding-left:5px;
+    margin-right:10px;
+  }
+  .myPostSearchBtn{
+    width:40px;
+    height:30px;
+    border:none;
+    background-color: #1b8383;
+    border-radius: 3px;
+    color:white;
+    box-shadow: 1px 1px 1px 2px rgb(241, 241, 241);
+  }
+  .myPostSearchBtn:hover{
+    opacity: 0.9;
+  }
+  /* 삭제버튼 */
+  .delBtnBox {
+    text-align: right;
+  }
+  .delBtn{
+    width:40px;
+    height:30px;
+    border-radius: 3px;
+    border:1px solid gray;
+    background-color: white;
+  }
+  .diffPage{
+    display: inline-block;
+    width:25px;
+    height:25px;
+    border:1px solid gray;
+    border-radius:2px;
+    margin-right:2px;
+    color:black;
+  }
+  .diffPage:hover{
+    box-shadow: 1px 1px 1px 1px rgb(245, 245, 245);
+  }
+  .nowPage{
+    display: inline-block;
+    background-color: #198c8c;
+    color:white;
+    width:25px;
+    height:25px;
+    font-size:17px;
+    border-radius: 3px;
+    margin-right:2px;
+    box-shadow: 1px 1px 1px 1px rgb(245, 245, 245);
+  }
+  .nowPage:hover{
+    color:white;
+    cursor:default;
+  }
+
+  @media (max-width: 480px) {
+    .myPageContainer {
+      width: 100%;
+    }
+    /* 사이드바 시작 */
+  .sideBar {
+    width: 100px;
+    background-color: white;
+  }
+
+  /* 초상화 공간 */
+  .sideMyPortrait {
+    width: 80px;
+    height: 80px;
+    margin-left: 10px;
+    margin-top: 50px;
+    position: relative;
+  }
+
+  .savedTitle a{
+    font-size:14px;
+  }
+
+  .savedLocation{
+    font-size:14px;
+  }
+
+  .sideMyNick {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size:12px;
+    color:black;
+  }
+
+  /* 사이드바 메뉴 */
+  .sideBarMenuBox {
+    margin-top: 20px;
+    padding-left:10px;
+  }
+
+  .sideBarMenuBox li {
+    margin-top: 20px;
+  }
+
+  .sideBarMenuBox li a {
+    width: 80px;
+    height: 34px;
+    border-radius: 4px;
+    font-size:13px;
+    line-height: 34px;
+    text-align: center;
+    background-color: #ffffff;
+    display: block;
+    color: rgb(75, 75, 75);
+    box-shadow: 1px 1px 2px 1px rgb(224, 224, 224);
+  }
+  .sideBarMenuBox li:last-child a{
+    color:white;
+  }
+
+  .sideBarMenuBox li a:hover {
+    opacity: 1;
+    box-shadow: 1px 1px 2px 1px rgb(211, 211, 211);
+  }
+  .portraitPhoto {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    position: absolute;
+  }
+
+  /* 사이드바 끝 */
+
+
+  .postList {
+    width: 100%;
+    height: 650px;
+    margin-left: 20px;
+    margin-top: 100px;
+  }
+
+  .postHeader {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid black;
+  }
+
+  .postHeader li {
+    height:50px;
+    line-height:50px;
+    font-size:12px;
+    float: left;
+  }
+
+  .postHeader li:nth-child(1) {
+    width: 1%;
+    display:none;
+  }
+
+  .postHeader li:nth-child(2) {
+    width: 34px;
+    display: none;
+  }
+
+  .postHeader li:nth-child(3) {
+    width: 150px;
+    text-align: center;
+  }
+
+  .postHeader li:nth-child(4) {
+    width: 50px;
+  }
+
+  .postHeader li:nth-child(5) {
+    width: 40px;
+  }
+
+  .postHeader li:nth-child(6) {
+    width: 70px;
+  }
+
+  .postContents {
+    margin-bottom:5px;
+    width: 100%;
+    height: 35px;
+    border-bottom: 1px solid #198c8c;
+  }
+
+  .postContents li {
+    float: left;
+    width: 180px;
+    font-size:12px;
+  }
+
+  .postContents li:nth-child(1) {
+    width: 1%;
+    display:none;
+  }
+
+  .postContents li:nth-child(2) {
+    width: 34px;
+    display: none;
+  }
+
+  .postContents li:nth-child(3) {
+    width: 150px;
+  }
+  .postContents li:nth-child(3) a{
+    color:black;
+  }
+
+  .postContents li:nth-child(4) {
+    width: 50px;
+  }
+
+  .postContents li:nth-child(5) {
+    width: 40px;
+  }
+
+  .postContents li:nth-child(6) {
+    width: 50px;
+    text-align: center;
+  }
+
+  /* 임시 색상 지정 */
+  .tBoardHeader {
+    color: rgb(12, 102, 64);
+    font-weight: bold;
+  }
+
+  .cBoardHeader {
+    color: rgb(133, 121, 19);
+    font-weight: bold;
+  }
+  .fa-comment-dots{
+    margin-left:5px;
+    margin-right:3px;
+  }
+  .mypostBottoms{
+    margin-top:5px;
+  }
+  .myPostSearchBox{
+    text-align: left;
+  }
+  .myPostNaviBox{
+    text-align: center;
+  }
+  .myPostSearchInput{
+    width:100px;
+    height:30px;
+    border:1px solid gray;
+    font-size:10px;
+    padding-left:5px;
+    margin-right:10px;
+  }
+  .myPostSearchBtn{
+    width:32px;
+    height:24px;
+    font-size:10px;
+    border:none;
+    background-color: #1b8383;
+    border-radius: 3px;
+    color:white;
+    box-shadow: 1px 1px 1px 2px rgb(241, 241, 241);
+  }
+  .myPostSearchBtn:hover{
+    opacity: 0.9;
+  }
+  .notPost{
+    font-size:12px;
+  }
+  /* 삭제버튼 */
+  .delBtnBox {
+    text-align: right;
+  }
+  .delBtn{
+    width:30px;
+    height:20px;
+    font-size:12px;
+    border-radius: 3px;
+    border:1px solid gray;
+    background-color: white;
+  }
+  .diffPage{
+    display: inline-block;
+    width:20px;
+    height:20px;
+    font-size:11px;
+    border:1px solid gray;
+    border-radius:2px;
+    margin-right:2px;
+    color:black;
+  }
+  .diffPage:hover{
+    box-shadow: 1px 1px 1px 1px rgb(245, 245, 245);
+  }
+  .nowPage{
+    display: inline-block;
+    background-color: #198c8c;
+    color:white;
+    width:20px;
+    height:20px;
+    font-size:11px;
+    border-radius: 3px;
+    margin-right:2px;
+    box-shadow: 1px 1px 1px 1px rgb(245, 245, 245);
+  }
+  .nowPage:hover{
+    color:white;
+    cursor:default;
+  }
+
+  }

@@ -16,7 +16,13 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
-
+<c:if test="${pageNo ne 1 }">
+<script>
+window.onload = function(){
+	window.scrollTo({left:0,top:500,behavior:'auto'});
+};
+</script>
+</c:if>
 <jsp:include page="../base/header.jsp"></jsp:include>
 
 </head>
@@ -41,26 +47,24 @@ body {
     font-weight: normal;
     font-style: normal;
 }
+
+.detail:hover{
+	cursor:pointer;
+}
 </style>
 
 <body>
 		<div class="triplist">
 				<img src="/images/trip-1.jpg" class="d-block w-100" style="height:400px;" alt="…">
 		</div>
-			<div class="container">
+			<div class="container" id="container">
 				<div class="row">
-					<div class="col-6 d-flex align-items-start">
-						<form action="/area/main" style="float: right; margin-top: 20px; position: relative; top: 30px; margin-bottom: 40px;">
-								<input type="text" name="target"> 
-								<input type="hidden" value=1 name="page"> 
-								<input type="hidden" value="${contentType }" name="contentType"> 
-								<input type="hidden" value="${areaCode }" name="area"> 
-								<input type="submit" value="검색" style="background-color: #f5e3b9; border-radius: 10px; width: 60px;">
-						</form>
-					</div>
-					<div class="col-3 d-flex justify-content-end">
+
+					<div class="col-4 d-flex justify-content-start">
+						<div class="me-2">
 						<form action="/area/main" style="float: left; margin-top: 20px; position: relative;  top: 30px;">
-								<select id=area name="area" style="width: 100px; height: 40px;">
+								<select id=area name="area" onchange="this.form.submit()" style="width: 100px; height: 40px;">								
+									<option value="0" <c:if test="${areaCode eq 0}">selected</c:if>>전지역</option>
 									<option value="1" <c:if test="${areaCode eq 1}">selected</c:if>>서울</option>
 									<option value="2" <c:if test="${areaCode eq 2}">selected</c:if>>인천</option>
 									<option value="3" <c:if test="${areaCode eq 3}">selected</c:if>>대전</option>
@@ -79,17 +83,17 @@ body {
 									<option value="38" <c:if test="${areaCode eq 38}">selected</c:if>>전라남도</option>
 									<option value="39" <c:if test="${areaCode eq 39}">selected</c:if>>제주도</option>
 								</select> 
-								<input type=submit value="검색" style="width: 50px; background-color: #f5e3b9; border-radius: 10px; width: 60px;">
 								<input type="hidden" value=1 name="page"> 
 								<input type="hidden" value="${contentType }" name="contentType">
 								<c:if test="${target ne null}">
 									<input type="hidden" value="${target }" name="target">
 								</c:if>
 						</form>
-					</div>
-					<div class="col-3 d-flex justify-content-end">
+						</div>
+						<div>
 						<form action="/area/main" style="float: left; margin-top: 20px; position: relative; top: 30px;">
-							<select id=contentType name=contentType style="width: 100px; height: 40px;">
+							<select id=contentType name=contentType style="width: 100px; height: 40px;" onchange="this.form.submit()">
+								<option value=0 <c:if test="${contentType eq 0}">selected</c:if>>카테고리</option>
 								<option value=12 <c:if test="${contentType eq 12}">selected</c:if>>관광지</option>
 								<option value=14 <c:if test="${contentType eq 14}">selected</c:if>>문화시설</option>
 								<option value=15 <c:if test="${contentType eq 15}">selected</c:if>>행사/공연/축제</option>
@@ -103,18 +107,37 @@ body {
 							<c:if test="${target ne null}">
 							<input type="hidden" value="${target }" name="target">
 							</c:if>
-							<input type=submit value="검색" style="width: 50px; background-color: #f5e3b9; border-radius: 10px; width: 60px;">
+						</form>
+						</div>
+					</div>
+					<div class="col-8 d-flex justify-content-end">
+						<form action="/area/main" style="float: right; margin-top: 20px; position: relative; top: 30px; margin-bottom: 40px;">
+								<input type="text" name="target" required placeholder="장소명을 입력해 주세요."> 
+								<input type="hidden" value=1 name="page"> 
+								<input type="hidden" value="${contentType }" name="contentType"> 
+								<input type="hidden" value="${areaCode }" name="area"> 
+								<input type="submit" value="검색" style="background-color: #f5e3b9; border-radius: 10px; width: 60px;">
 						</form>
 					</div>
 				</div>
 				<br>
+				<c:if test="${empty list }">
+					<div class="text-center mt-4">
+					<span>검색 결과가 없습니다.</span>
+					</div>
+				</c:if>
 				<c:if test="${list.size() > 0}">
 					<div class="row">
+
 						<c:forEach var="item" items="${list }">
 							<div id="${item.contentid }" class="detail col-6 col-md-4 col-lg-3 align-items-center justify-content-center text-center">
-								<c:if test="${item.firstimage ne null }">
+								<c:if test="${item.firstimage ne 'null' }">
 									<img src="${item.firstimage}" style="width: 200px; height: 200px;">
 								</c:if>
+								<c:if test="${item.firstimage eq 'null' }">
+									<img src="/images/noPhoto.png" style="width:200px;height: 200px;">
+								</c:if>
+
 								<br>${item.title }
 								<br>${item.contenttypeid }
 								<br>${item.addr1 }
@@ -124,7 +147,7 @@ body {
 					</div>
 					<c:if test="${pageView.size()>0 }">
 
-						<div class="btn-toolbar  d-flex justify-content-center" role="toolbar" aria-label="Pagination">
+						<div class="btn-toolbar  d-flex justify-content-center mb-5" role="toolbar" aria-label="Pagination">
 							<div class="btn-group me-2 mb-2" role="group" aria-label="First group">
 								<c:forEach var="i" items="${pageView }">
 									<c:choose>
@@ -152,7 +175,7 @@ body {
 					</c:if>
 				</c:if>
 			</div>
-				
+    	  <jsp:include page="../base/footer.jsp"></jsp:include>
 				<script>
 					$(".detail").on("click", function() {
 						location.href = "/area/detail?num=" + this.id;
