@@ -596,7 +596,6 @@ a:active {
 						});
 	                $("#frmReply").submit();
 	        	  }else{
-	                $("#rep_con").val() = "";
 	                return false;
 	        	  }	             
 	          }

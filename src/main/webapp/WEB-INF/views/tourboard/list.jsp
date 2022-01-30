@@ -94,10 +94,8 @@
 
         /* 게시글 올라오는 목록 부분 */
         .board{
-            /* border: 1px solid red; */
             width: 100%;
             padding : 20px 80px 0px 80px;
-/*             text-align: center; */
         }
 
         .board_header{
