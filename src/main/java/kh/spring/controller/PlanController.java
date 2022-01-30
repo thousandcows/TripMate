@@ -43,10 +43,12 @@ public class PlanController {
 		List<Integer> paging = pServe.listCount(loginSeq,page);
 		List<PlanDTO> list = pServe.listing(loginSeq,page);
 		int firstNum = 0;
-		int lastNum = 0;
+		int lastNum = 11;
 		if(paging.size()>0) {
 			firstNum = paging.get(0);
-			lastNum = paging.get(paging.size()-1);
+		}
+		if(paging.size()>10) {
+			lastNum = paging.get(paging.size()-1);			
 		}
 		model.addAttribute("paging",paging);
 		model.addAttribute("firstNum",firstNum);					

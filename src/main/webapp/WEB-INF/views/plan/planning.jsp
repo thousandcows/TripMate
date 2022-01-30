@@ -78,7 +78,7 @@ li.drag-sort-active {
 		</div>
 
 		<!-- 날짜/제목 생성 -->
-		<div class="row justify-content-center" id="firstForm">
+		<div class="row justify-content-center" id="firstForm" <c:if test="${!empty seq}">style="display:none;"</c:if>>
 			<div class="col-8 ">
 			<c:if test="${!empty seq }">
 				<form action="/plan/changeTheme" method="post">
@@ -154,7 +154,7 @@ li.drag-sort-active {
 		
 		
 		<!-- 여행지 생성 -->
-		<div class="row justify-content-center" id="secondForm" style="display:none;">
+		<div class="row justify-content-center" id="secondForm" <c:if test="${empty seq }">style="display:none;"</c:if>>
 			<div class="col-8 border">
 				<div class="row mt-2">
 					<div class="col">
@@ -310,11 +310,16 @@ li.drag-sort-active {
 
 	<script type="text/javascript">
 		$(function() {
+			let today = new Date;
+			today.setHours(0,0,0,0);
 			$('#datetimepicker1').datetimepicker({
-				format : 'YYYY/MM/DD'
+				format : 'YYYY/MM/DD',
+				minDate:today,
+				defaultDate:today
 			});
 			$('#datetimepicker2').datetimepicker({
 				format : 'YYYY/MM/DD',
+				minDate: today,
 				useCurrent : false
 			});
 			$("#datetimepicker1").on("change.datetimepicker", function(e) {
@@ -432,7 +437,7 @@ li.drag-sort-active {
 				$("#saved").hide();
 			}
 		})		
-		
+				
 		
 	function searching() {
         var formData = $('#searchForm').serialize() // serialize 사용
@@ -528,6 +533,7 @@ li.drag-sort-active {
 			}
 		})
 	})
+	
 	
 	$(".datePick").on("click",function(){
 		let id = this.id;
@@ -732,9 +738,10 @@ li.drag-sort-active {
               }
             }
             if (delList.length == 0) {
-              alert("삭제할 게시글을 선택해주세요.");
+              alert("저장할 여행지를 선택해주세요.");
               return false;
             }
+            alert("성공적으로 저장되었습니다.");
           });
 
 </script>
