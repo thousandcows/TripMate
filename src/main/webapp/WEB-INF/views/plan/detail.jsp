@@ -81,6 +81,8 @@
 		</div>
 		
 	</div>
+	    	  <jsp:include page="../base/footer.jsp"></jsp:include>
+	
 <script>
 	$("#deleteBtn").on("click",function(){
 		if(confirm("삭제하시겠습니까?")){

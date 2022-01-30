@@ -306,6 +306,7 @@ li.drag-sort-active {
 			</div>
 		</div>
 	</div>	
+	<jsp:include page="../base/footer.jsp"></jsp:include>
 					
 
 	<script type="text/javascript">
