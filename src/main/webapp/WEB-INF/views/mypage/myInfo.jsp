@@ -167,7 +167,7 @@
       </div>
 
       <footer>
-        푸우터
+    	  <jsp:include page="../base/footer.jsp"></jsp:include>
       </footer>
 
       <script>
