@@ -74,7 +74,12 @@ ul>li{
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
-			<img class="img-fluid" id="mainImg" src="${dto.photo}"><br>
+			<c:if test="${dto.photo ne 'null' }">
+				<img class="img-fluid" id="mainImg" src="${dto.photo}"><br>
+			</c:if>
+			<c:if test="${dto.photo eq 'null' }">
+				<img class="img fluid" id="mainImg" src="/images/noPhoto.png"><br>
+			</c:if>
 		</div>
 		</div>
 
@@ -137,9 +142,15 @@ ul>li{
 				<div class="row">
 					<div class="co">
 						분류 : ${dto.category }<br>
-						주소 : ${dto.lo_detail }<br>
-						연락처 : ${dto.phone }<br>
-						홈페이지 : ${dto.homepage }<br>
+						<c:if test="${dto.lo_detail ne '' }">
+							주소 : ${dto.lo_detail }<br>
+						</c:if>
+						<c:if test="${dto.phone ne 'null' }">
+							연락처 : ${dto.phone }<br>
+						</c:if>
+						<c:if test="${dto.homepage ne 'null' }">
+							홈페이지 : ${dto.homepage }<br>
+						</c:if>
 						<div>
 							<button type="button" class="btn btn-primary"
 								data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -321,6 +332,7 @@ ul>li{
 			    </div>
 			  </div>
 			</div>
+    	  <jsp:include page="../base/footer.jsp"></jsp:include>
 
 	<script>
 	
