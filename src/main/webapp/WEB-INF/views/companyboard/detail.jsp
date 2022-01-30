@@ -10,8 +10,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<jsp:include page="../base/header.jsp"></jsp:include>
- 
 <!-- fontawesome cdn -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
     integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
@@ -255,6 +253,9 @@
 </head>
            
 <body>
+	<div class="header">		
+		<jsp:include page="../base/header.jsp"></jsp:include>
+	</div>
 	<div class="banner">
         <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
         <div class="banner_title"> 동행 게시판 </div>
@@ -270,7 +271,7 @@
             <div class="partyboard"><a href="/companyboard/list?cpage=1">동행게시판</a></div>
         </div>
     
-        <form  action="/companyboard/modify" method="post" id="frmDetail" enctype="multipart/form-data">
+        <form  action="/companyboard/toModify" method="post" id="frmDetail" enctype="multipart/form-data">
             <div class="board">
             	<input type=hidden value="${dto.seq}" name=seq > <!-- 글 번호에 맞춰 불러오기 위한 꼼수 -->
             	<div class="title"> <!-- catetitle -->
@@ -283,6 +284,7 @@
                     </span>
                 </div>
                 <div class="writer_con">
+               		<input type=hidden value="${dto.nick}" name=nick >
                     <div style="line-height: 50px; padding-left: 100px; padding-top: 10px;"> ${dto.nick}</div>
                 </div>
                 <div class="view_con">
@@ -292,38 +294,11 @@
             	<hr style="margin:20px 0px 30px 0px;">
  
                 <div class="select_tour"><span style="font-weight: bold;">여행지 : </span>
-                    <input type=text id=tourInput readonly value="${dto.tour }" style="border:none;">
-               		<select id="tourSelect" name="tour" style="display:none">
-                        <option value="서울">서울</option>
-                        <option value="인천">인천</option>
-                        <option value="경기">경기</option>
-                        <option value="강원">강원</option>
-                        <option value="대전">대전</option>
-                        <option value="충남">충남</option>
-                        <option value="충북">충북</option>
-                        <option value="세종">세종</option>
-                        <option value="경북">경북</option>
-                        <option value="경남">경남</option>
-                        <option value="부산">부산</option>
-                        <option value="대구">대구</option>
-                        <option value="울산">울산</option>
-                        <option value="전북">전북</option>
-                        <option value="전남">전남</option>
-                        <option value="광주">광주</option>
-                        <option value="제주">제주</option>
-                    </select>              
+                    <input type=text id=tourInput readonly name="tour" value="${dto.tour }" style="border:none;">               		         
                 </div>
     
                 <div class="select_recruit" ><span style="font-weight: bold;">모집 인원 : </span>
                     <input type=text id=recruitInput readonly value="${dto.recruit }" style="border:none;">
-                	<select id="recruitSelect" name="recruit" style="display:none">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
                 </div>
     
                 <div class="select_date">
@@ -336,8 +311,6 @@
     
                 <div class="select_gender"><span style="font-weight: bold;">성별 : </span>
                     <input type=text id=genderInput readonly value="${dto.gender }" style="border:none;">
-                	<input type="radio" id="manRadio" name="gender" value="남자" style="display:none"><p style="display:none" id="mantxt">남자</p>
-                    <input type="radio" id="womanRadio" name="gender" value="여자" style="display:none"><p style="display:none" id="womantxt">여자</p>
                 </div>
     
                 <div class="write_con">
@@ -348,7 +321,7 @@
     				<c:if test="${!empty loginNick }">
                 		<button type=button id=back class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
                 	<c:if test="${dto.nick == loginNick}">
-                		<button type=button id=modify class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">수정</span></button>
+                		<button type=submit id=modify class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">수정</span></button>
                 		<button type=button id=delete class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">삭제</span></button>
                 		<c:if test="${dto.expired == '진행'}">
                 			<button type=button id=recruitEnd class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">모집마감</span></button>
@@ -356,8 +329,6 @@
                 		<c:if test="${dto.expired == '마감'}">
                 			<button type=button id=recruitEndCancel class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">마감취소</span></button>
                 		</c:if>
-                		<button type=submit id=modOk class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정완료</span></button>
-                		<button type=button id=modCancel class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">취소</span></button>
                 	</c:if>
                 	
                 	<c:if test="${dto.nick != loginNick}">

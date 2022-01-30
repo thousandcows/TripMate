@@ -205,7 +205,7 @@ public class CompanyBoardController {
 	
 	@RequestMapping("toModify")
 	public String modifyPage(CompanyBoardDTO dto, Model model) {
-		
+
 		model.addAttribute("dto", dto);
 		return "companyboard/modifyPage";
 	}
@@ -218,7 +218,7 @@ public class CompanyBoardController {
 		
 		return "redirect:/companyboard/list?cpage=1";
 	}	
-	
+
 	// 좋아요
 	@ResponseBody
     @RequestMapping(value = "heart", method = RequestMethod.POST, produces = "application/json")
