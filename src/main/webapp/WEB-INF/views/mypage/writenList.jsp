@@ -6,6 +6,8 @@
 
       <head>
         <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mypage</title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -16,196 +18,8 @@
         <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
           integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-        <jsp:include page="../base/header.jsp"></jsp:include>
-        <style>
-          /* 간단세팅 나중에 css파일 따로 뺄거*/
-          * {
-            box-sizing: border-box;
-            padding: 0;
-            margin: 0;
-            list-style: none;
-          }
-
-          /* 링크 속성 지우기 */
-          a {
-            text-decoration: none;
-          }
-
-          /* 전체영역 크기 조절 */
-          .myPageContainer {
-            width: 1200px;
-            margin: auto;
-          }
-
-          /* 사이드바 시작 */
-          .sideBar {
-            width: 200px;
-            height: 1000px;
-            background-color: rgb(240, 240, 240);
-            float: left;
-          }
-
-          /* 초상화 공간 */
-          .sideMyPortrait {
-            width: 150px;
-            height: 150px;
-            margin-left: 25px;
-            margin-top: 50px;
-            position: relative;
-          }
-
-          .sideMyNick {
-            width: 100%;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-            /* background-color: aqua; */
-          }
-
-          /* 사이드바 메뉴 */
-          .sideBarMenuBox {
-            margin-top: 50px;
-          }
-
-          .sideBarMenuBox li {
-            margin-top: 20px;
-          }
-
-          .sideBarMenuBox li a {
-            width: 140px;
-            height: 40px;
-            border-radius: 20px;
-            line-height: 40px;
-            text-align: center;
-            background-color: antiquewhite;
-            display: block;
-            color: black;
-            box-shadow: 1px 1px 2px 1px rgb(224, 224, 224);
-          }
-
-          .sideBarMenuBox li a:hover {
-            box-shadow: 1px 1px 2px 1px rgb(211, 211, 211);
-          }
-
-          .sideBarMenuBox li:last-child a {
-            background-color: rgb(255, 223, 181);
-          }
-
-          .portraitPhoto {
-            width: 150px;
-            height: 150px;
-            border-radius: 10px;
-          }
-
-          /* 사이드바 끝 */
-          .postList {
-            border: 1px solid hotpink;
-            width: 80%;
-            height: 650px;
-            margin-left: 20px;
-            float: left;
-            display: block;
-            margin-top: 100px;
-          }
-
-          .postHeader {
-            width: 100%;
-            height: 50px;
-            border: 1px solid saddlebrown;
-          }
-
-          .postHeader li {
-            float: left;
-            border: 1px solid gray;
-          }
-
-          .postHeader li:nth-child(1) {
-            width: 15%;
-          }
-
-          .postHeader li:nth-child(2) {
-            width: 15%;
-          }
-
-          .postHeader li:nth-child(3) {
-            width: 40%;
-          }
-
-          .postHeader li:nth-child(4) {
-            width: 8%;
-          }
-
-          .postHeader li:nth-child(5) {
-            width: 8%;
-          }
-
-          .postHeader li:nth-child(6) {
-            width: 10%;
-          }
-
-          .postContents {
-            width: 100%;
-            height: 40px;
-            border: 1px solid yellowgreen;
-          }
-
-          .postContents li {
-            float: left;
-            width: 180px;
-            border: 1px solid gray;
-          }
-
-          .postContents li:nth-child(1) {
-            width: 15%;
-          }
-
-          .postContents li:nth-child(2) {
-            width: 15%;
-          }
-
-          .postContents li:nth-child(3) {
-            width: 40%;
-          }
-
-          .postContents li:nth-child(4) {
-            width: 8%;
-          }
-
-          .postContents li:nth-child(5) {
-            width: 8%;
-          }
-
-          .postContents li:nth-child(6) {
-            width: 10%;
-          }
-
-          /* 임시 색상 지정 */
-          .tBoardHeader {
-            color: rgb(12, 102, 64);
-            font-weight: bold;
-          }
-
-          .cBoardHeader {
-            color: rgb(133, 121, 19);
-            font-weight: bold;
-          }
-
-          .myPostSearchBox{
-            text-align: left;
-          }
-          .myPostNaviBox{
-            text-align: center;
-          }
-          /* 삭제버튼 */
-          .delBtnBox {
-            text-align: right;
-          }
-
-          .nowPage{
-            color:red;
-            font-size:17px;
-          }
-        </style>
+          <link rel="stylesheet" href="/css/writenList.css" type="text/css">
+          <jsp:include page="../base/header.jsp"></jsp:include>
       </head>
 
       <body>
@@ -233,10 +47,6 @@
             </ul>
             <!-- if문으로 board_num에 따라 각자의 detail페이지로 이동하는 a태그 만들어줘야함. -->
             <!-- 체크박스도 if문 써야될듯 -->
-            <c:if test="${fn:length(list) == 0}">
-              작성한 게시글이 없습니다.
-            </c:if>
-            검색된 게시글 수 : ${postCount}
             <c:forEach var="list" items="${list}">
               <ul class="postContents">
                 <li>${list.writen_date}</li>
@@ -267,11 +77,17 @@
                     value="${list.board_num},${list.seq}"></li>
               </ul>
             </c:forEach>
-            <div class="row">
-              <div class="col-4 myPostSearchBox"><input type="text" id="myPostSearchInput"><button type="button"
-                  id="myPostSearchBtn">검색</button></div>
-              <div class="col-4 myPostNaviBox">${navi}</div>
-              <div class="col-4 delBtnBox"><button type="button" id="delBtn">삭제</button></div>
+            <div class="notPost">
+            <c:if test="${fn:length(list) == 0}">
+              작성한 게시글이 없습니다.
+            </c:if>
+            검색된 게시글 수 : ${postCount}
+          </div>
+            <div class="mypostBottoms">
+              <div class="myPostSearchBox"><input type="text" id="myPostSearchInput" class="myPostSearchInput" placeholder="검색 제목.."><button type="button"
+                  id="myPostSearchBtn" class="myPostSearchBtn">검색</button></div>
+              <div class="myPostNaviBox">${navi}</div>
+              <div class="delBtnBox"><button type="button" id="delBtn" class="delBtn">삭제</button></div>
             </div>
           </div>
         </div>
