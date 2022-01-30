@@ -215,7 +215,7 @@
     width: 80px;
     height: 34px;
     border-radius: 4px;
-    font-size:13px;
+    font-size:12px;
     line-height: 34px;
     text-align: center;
     background-color: #ffffff;
@@ -230,9 +230,9 @@
   }
 
   .sideBarMenuBox li:nth-child(3) a {
-    background-color: rgb(110, 224, 154);
+    background-color: #005757;
     box-shadow: none;
-    color:rgb(0, 0, 0);
+    color:white;
   }
   .portraitPhoto {
     width: 80px;

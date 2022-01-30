@@ -28,7 +28,7 @@
 
           a {
             text-decoration: none;
-            color:#5B5B5B;
+            color: #5B5B5B;
           }
 
           /* 전체영역 크기 조절 */
@@ -97,10 +97,87 @@
           }
 
           /* 사이드바 끝 */
-          .topTxt{
-            font-size:20px;
-            color:#5B5B5B;
+          .topTxt {
+            font-size: 20px;
+            color: #5B5B5B;
           }
+
+          @media (max-width: 480px) {
+            .myPageContainer {
+              width: 100%;
+            }
+
+            /* 사이드바 시작 */
+            .sideBar {
+              width: 100px;
+              background-color: white;
+            }
+
+            /* 초상화 공간 */
+            .sideMyPortrait {
+              width: 80px;
+              height: 80px;
+              margin-left: 10px;
+              margin-top: 50px;
+              position: relative;
+            }
+
+            .savedTitle a {
+              font-size: 14px;
+            }
+
+            .savedLocation {
+              font-size: 14px;
+            }
+
+            .sideMyNick {
+              height: 40px;
+              line-height: 40px;
+              text-align: center;
+              font-size: 12px;
+              color: black;
+            }
+
+            /* 사이드바 메뉴 */
+            .sideBarMenuBox {
+              margin-top: 20px;
+              padding-left: 10px;
+            }
+
+            .sideBarMenuBox li {
+              margin-top: 20px;
+            }
+
+            .sideBarMenuBox li a {
+              width: 80px;
+              height: 34px;
+              border-radius: 4px;
+              font-size: 12px;
+              line-height: 34px;
+              text-align: center;
+              background-color: #ffffff;
+              display: block;
+              color: rgb(75, 75, 75);
+              box-shadow: 1px 1px 2px 1px rgb(224, 224, 224);
+            }
+
+            .sideBarMenuBox li:nth-child(2) a {
+              color: white;
+            }
+
+            .sideBarMenuBox li a:hover {
+              opacity: 1;
+              box-shadow: 1px 1px 2px 1px rgb(211, 211, 211);
+            }
+
+            .portraitPhoto {
+              width: 80px;
+              height: 80px;
+              border-radius: 10px;
+              position: absolute;
+            }
+
+            /* 사이드바 끝 */
         </style>
 
       </head>
