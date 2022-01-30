@@ -12,6 +12,7 @@
 
 <jsp:include page="../base/header.jsp"></jsp:include>
 
+
     <!-- fontawesome cdn -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
@@ -428,7 +429,7 @@
        		        <div class="nt_writen_time" style="width: 10%;">${n.writen_date }</div>
        		        <div class="nt_view_count" style="width: 7%;">${n.view_count }</div>
        		        <div class="nt_rec_count" style="width: 8%;">-</div>
-       		        <div class="hide_nt_con">작성자 &nbsp/&nbsp <i class="far fa-clock"></i> 작성시간 &nbsp/&nbsp <i class="far fa-eye"></i> 조회수</div>
+       		        <div class="hide_nt_con">${n.nick } &nbsp/&nbsp <i class="far fa-clock"></i> ${n.writen_date } &nbsp/&nbsp <i class="far fa-eye"></i> ${n.view_count }</div>
        		    </div>
             </c:forEach>
             
@@ -450,7 +451,7 @@
                 			<span class="badge bg-primary">${l.expired }</span>
                 		</c:if>
                 	</div>
-                	<div class="hide_nt_con">작성자 &nbsp/&nbsp <i class="far fa-clock"></i> 작성시간 &nbsp/&nbsp <i class="far fa-eye"></i> 조회수 &nbsp/&nbsp <i class="far fa-user"></i> 10 &nbsp/&nbsp
+                	<div class="hide_nt_con">${l.nick} &nbsp/&nbsp <i class="far fa-clock"></i> ${l.writen_date } &nbsp/&nbsp <i class="far fa-eye"></i> ${l.view_count} &nbsp/&nbsp <i class="far fa-user"></i> 10 &nbsp/&nbsp
                 		<c:if test="${l.expired == '마감'}">
                 			<span class="badge bg-danger">${l.expired }</span>
                 		</c:if>
