@@ -17,155 +17,360 @@
 
     <style>
         *{
-            box-sizing: border-box;
-        }
+                box-sizing: border-box;
+            }
 
-        body{
-            margin: 0;  /* 임시로 body margin 0px */
-        }
+            body{
+                margin: 0;  /* 임시로 body margin 0px */
+            }
 
-        /* 링크 속성 지우기 */
-        a { text-decoration:none  } 
-        a:hover { text-decoration:none; color: black; }
-        a:link {text-decoration: none; color: black; }
-        a:visited {text-decoration: none; color: black; }
-        a:active {text-decoration: none; color: black; }
+            /* 링크 속성 지우기 */
+            a { text-decoration:none  } 
+            a:hover { text-decoration:none; color: black; }
+            a:link {text-decoration: none; color: black; }
+            a:visited {text-decoration: none; color: black; }
+            a:active {text-decoration: none; color: black; }
 
-        /* div{border:1px solid black} */
+            /* 헤더----------------------------------------------------- */
+            .banner{
+                background-image:url("/images/community_banner.png");
+                height:200px;
+            }
 
-        /* 헤더----------------------------------------------------- */
-        .banner{
-            background-color: rgb(56, 181, 174);
-            height:200px;
-        }
+            .banner_title{
+                width: 100%;
+                height: 70%;
+                color: white;
+                font-size: 35px;
+                font-weight: 600;
+                padding: 60px 0px 10px 100px;
+            }
+    
+            .banner_content{
+                width: 100%;
+                height: 30%;
+                color: white;
+                font-size: 15px;
+                font-weight: 500;
+                padding-left: 100px;
+            }
 
-        .banner_title{
-            width: 100%;
-            height: 70%;
-            color: white;
-            font-size: 35px;
-            font-weight: 600;
-            padding: 60px 0px 10px 100px;
-        }
+            /* 미니 사이트맵 루트 */
+            .root{
+                padding-left: 200px;
+                overflow: auto;
+                text-align: center;
+            }
+    
+            .root>div{
+               /*  border:1px solid red; */
+                float:left;
+                margin: 40px 0px 40px 0px;
+                padding-right: 10px;
+            }
+    
+            .fa-home{
+                color: rgb(56, 181, 174);
+            }
 
-        .banner_content{
-            width: 100%;
-            height: 30%;
-            color: white;
-            font-size: 15px;
-            font-weight: 500;
-            padding-left: 100px;
-        }
+            /* 검색창 */
+            .searchbar{
+                /* border: 1px solid red; */
+                text-align: right;
+                padding-right: 150px;
+                height: 30px;
+            }
+            
+            .searchbar > button{
+                height: 30px;
+                border: none;
+            }
+            
+            .searchbar > select{
+                height: 30px;
+            }
+            
+            .searchbar>span{
+                position: relative;
+            }
+            .fa-search{
+                line-height: 30px;
+                position: absolute;
+                right: 8px;
+                color: rgb(153, 153, 153);
+            }
 
-        /* 컨테이너 ----------------------------------------------------- */
-        .container{
-            /* border:1px solid red; */
-            padding-bottom :30px;
-        }
+            a:hover{
+                cursor: pointer;
+            }
 
-        /* 미니 사이트맵 루트 */
-        .container>.root{
-            padding-left: 80px;
-            overflow: auto;
-        }
+            /* 게시글 올라오는 목록 부분 */
+            .board_header{
+                overflow: auto;
+                width:100%;
+            }
 
-        .root>div{
-           /*  border:1px solid red; */
-            float:left;
-            margin: 40px 0px 40px 0px;
-            padding-right: 10px;
-        }
+            .board_header>div{
+                float: left;
+                padding: 8px 0px 8px 0px;
+                border-top: solid 3px rgb(56, 181, 174);
+                border-bottom: solid 1.2px #404040; 
+                background-color :white;
+                width: 100%
+            }
 
-        .fa-home{
-            color: rgb(56, 181, 174);
-        }
+            .notice_enroll{
+                overflow: auto;
+                border-bottom: solid 1px rgb(207, 207, 207);  
+            }
+            
+            .notice_enroll>div{
+                float: left;
+                padding: 8px 0px 8px 0px;
+                /* border-top: solid 1px #404040; */
+                          
+            }
 
-        /* 검색창 */
-        .searchbar{
-            /* border: 1px solid red; */
-            text-align: right;
-            padding-right: 80px;
-            height: 30px;
-        }
-        
-        .searchbar > button{
-        	height: 30px;
-        	border: none;
-        }
-        
-        .searchbar > select{
-        	height: 30px;
-        }
+            .hide_nt_con{
+                padding-left: 20px;
+                display: none;
+            }
 
-        /* 게시글 올라오는 목록 부분 */
-        .board{
-            /* border: 1px solid red; */
-            width: 100%;
-            padding : 20px 80px 0px 80px;
-            text-align: center;
-        }
+            .board_enroll{
+                overflow: auto;
+                border-bottom: solid 1px rgb(207, 207, 207);  
+            }
 
-        .board_header{
-            overflow: auto;
-            width:100%;
-        }
+            .board_enroll>div{
+                    float: left;
+                    padding: 8px 0px 8px 0px;
+            }
 
-        .board_header>div{
-            float: left;
-            padding: 8px 0px 8px 0px;
-            border-top: solid 1.5px #404040;
-            border-bottom: solid 1.5px #404040; 
-            background-color :white;
-            font-weight: 700;
-            width: 100%
-        }
+            .page{
+                /* border: 1px solid red; */
+                text-align: center;
+                padding: 20px 0px 0px 0px;
+                line-height: 20px;
+            }
 
-		.notice_enroll{
-            overflow: auto;
-        }
-        
-        .notice_enroll>div{
-            float: left;
-            padding: 8px 0px 8px 0px;
-            /* border-top: solid 1px #404040; */
-            border-bottom: solid 1px rgb(207, 207, 207);            
-        }
-        
-        .board_enroll{
-            overflow: auto;
-            width:100%;
-            height:auto;
-        }
-        
-        
-        .board_enroll>div{
-            float: left;
-            padding: 8px 0px 8px 0px;
-            /* border-top: solid 1px #404040; */
-            border-bottom: solid 1px rgb(207, 207, 207);  
-            height:auto;
-        }
-        
-        
-       /*  .board_enroll>div : hover{
-            background-color : rgb(228, 228, 228);
-        } */
+            /* 1400px ~  */
+            @media (min-width: 1400px){
+                /* 컨테이너 ----------------------------------------------------- */
+                .container_c{
+                    margin-left: 100px;
+                    margin-right: 100px;
+                    margin-bottom:50px;
+                }
+                
+                .searchbar{
+                	/* border: 1px solid red; */
+                	text-align: right;
+                	padding-right: 150px;
+                	height: 30px;
+            	}
 
-        /* 작성 버튼 및 페이지네이션  */
-        .button{
-            /* border: 1px solid red; */
-            text-align: right;
-            padding: 20px 80px 0px 0px ;
-        }
+                /* 게시글 올라오는 목록 부분 */
+                .board{
+                    width: 100%;
+                    padding : 20px 150px 0px 150px;
+                    text-align: center;
+                }
 
-        .page{
-            /* border: 1px solid red; */
-            text-align: center;
-            padding: 20px 0px 0px 0px;
-            line-height: 20px;
-        }
+                /* 작성 버튼 및 페이지네이션  */
+                .button{
+                    /* border: 1px solid red; */
+                    text-align: right;
+                    padding: 20px 150px 0px 0px ;
+                }
+               
+            }
+            
 
-       
+            /* 800 ~ 1400px */
+            @media (max-width: 1400px) and (min-width: 800px){
+                /* 컨테이너 ----------------------------------------------------- */
+                .container_c{
+                    margin-left: 0px;
+                    margin-right: 0px;
+                    margin-bottom:50px;
+                }
+
+                 /* 미니 사이트맵 루트 */
+                 .root{
+                    padding-left: 50px;
+                    overflow: auto;
+                    text-align: center;
+                }
+
+                /* 검색창 */
+                .searchbar{
+                    /* border: 1px solid red; */
+                    text-align: right;
+                    padding-right: 50px;
+                    height: 30px;
+                }
+
+                /* 게시글 올라오는 목록 부분 */
+                .board{
+                    width: 100%;
+                    padding : 20px 50px 0px 50px;
+                    text-align: center;
+                }	
+
+                .board_header>div{
+                    float: left;
+                    padding: 8px 0px 8px 0px;
+                    border-top: solid 1.5px rgb(56, 181, 174);
+                    border-bottom: solid 1.2px #404040; 
+                    background-color :white;
+                    width: 100%;
+                    font-size: small;
+                }
+
+                .notice_enroll>div{
+                    float: left;
+                    padding: 8px 0px 8px 0px;
+                    font-size: small;       
+                }
+
+                .board_enroll>div{
+                    float: left;
+                    padding: 8px 0px 8px 0px;
+                    font-size: small;
+                }
+
+                /* 작성 버튼 및 페이지네이션  */
+                .button{
+                    /* border: 1px solid red; */
+                    text-align: right;
+                    padding: 20px 50px 0px 0px ;
+                }
+            }
+
+
+            /* ~ 800px */
+            /* 작은 화면일 때 */
+            @media (max-width: 800px){
+            	/* 컨테이너 ----------------------------------------------------- */
+                .container_c{
+                    margin-left: 0px;
+                    margin-right: 0px;
+                    margin-bottom:50px;
+                }
+                
+                /* 헤더 banner contents*/
+                .banner_title{
+                    width: 100%;
+                    height: 70%;
+                    color: white;
+                    font-size: 35px;
+                    font-weight: 600;
+                    padding: 60px 0px 10px 0px;
+                    text-align: center;
+                }
+    
+                .banner_content{
+                    width: 100%;
+                    height: 30%;
+                    color: white;
+                    font-size: 15px;
+                    font-weight: 500;
+                    padding-left: 0px;
+                    text-align: center;
+                }
+
+                 /* 미니 사이트맵 루트 */
+                .root{
+                    padding-left: 0px;
+                    overflow: auto;
+                    text-align: center;
+                    display: none;
+                }
+
+
+                /* 검색창 */
+                .searchbar{
+                    text-align: center; 
+                    height: 30px;
+                    padding: 30px 0px 30px 0px;
+                }
+
+                #searchText{
+                    width: 300px;
+                }
+
+                /* 게시글 올라오는 목록 부분 */
+                .board{
+                    width: 100%;
+                    padding : 20px 15px 0px 15px;
+                    text-align: center;
+                }
+
+                .board_header{
+                    overflow: auto;
+                    width:100%;
+                    display: none;
+                }
+                
+                .notice_enroll{
+                    overflow: auto;
+                    border-top: solid 1px rgb(207, 207, 207);
+                    border-bottom: solid 1px rgb(207, 207, 207);  
+                }
+
+                .notice_enroll>div{
+                    float: left;
+                    padding: 8px 0px 8px 0px;
+                             
+                }
+
+                .nt_seq{
+                    width:8% !important;
+                }
+                .nt_title{
+                    width: 80% !important;
+                }
+
+                .nt_tour, .nt_recruit, .nt_nick, .nt_writen_time, .nt_view_count, .nt_rec_count{
+                    display: none;
+                }  
+
+                .hide_nt_con{
+                    padding-left: 10px !important;
+                    display: block;
+                    font-size: small;
+                    color: rgb(172, 172, 172);
+                }
+
+                .board_enroll{
+                    overflow: auto;
+                    border-bottom: solid 1px rgb(207, 207, 207);  
+                }
+
+                .board_enroll>div{
+                    float: left;
+                    padding: 8px 0px 8px 0px;
+                }
+
+                .seq{
+                    width:8% !important;
+                }
+                .title{
+                    width: 80% !important;
+                }
+
+                .tour, .recruit, .mem_seq, .writen_date, .view_count, .expired{
+                    display: none;
+                }
+
+                /* 작성 버튼 및 페이지네이션  */
+                .button{
+                    /* border: 1px solid red; */
+                    text-align: right;
+                    padding: 20px 15px 0px 0px ;
+                }
+            
+            }     
 
     </style>
     
@@ -180,7 +385,7 @@
         <div class="banner_content"> 함께 여행갈 친구들을 만들어 보세요 </div>
     </div>
 
-    <div class="container">
+    <div class="container_c">
         <div class="root">
             <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
@@ -196,8 +401,8 @@
                 <option name="searchTitle" value="search_title" selected>제목</option>
                 <option name="searchId" value="search_writer">작성자</option>
             </select>
-            <input id="searchText" name="searchText" type="text" placeholder="Search">
-            <button type=submit id=search class="btn btn-primary btn-sm" style="background-color: rgb(56, 181, 174);"><span style="font-size: small;">검색</span></button>
+            <span><input id="searchText" name="searchText" type="text" placeholder="Search"><a class="fas fa-search" onclick="$('#frmSearch').submit()"></a></span>
+            <!-- <button type=submit id=search class="btn btn-primary btn-sm" style="background-color: rgb(56, 181, 174);"><span style="font-size: small;">검색</span></button> -->
         </div>
         </form>
 
@@ -223,11 +428,12 @@
        		        <div class="nt_writen_time" style="width: 10%;">${n.writen_date }</div>
        		        <div class="nt_view_count" style="width: 7%;">${n.view_count }</div>
        		        <div class="nt_rec_count" style="width: 8%;">-</div>
+       		        <div class="hide_nt_con">작성자 &nbsp/&nbsp <i class="far fa-clock"></i> 작성시간 &nbsp/&nbsp <i class="far fa-eye"></i> 조회수</div>
        		    </div>
             </c:forEach>
             
+            <c:forEach var="l" items="${list }">
             <div class="board_enroll">
-            	<c:forEach var="l" items="${list }">
             		<div class="seq" style="width: 5%;">${l.seq }</div>
                 	<div class="tour" style="width: 7%; color: rgb(56, 181, 174); font-weight: bold">${l.tour }</div>
                 	<div class="title" style="width: 44%; text-align:left; padding-left:10px"><a href="/companyboard/detail?seq=${l.seq}">${l.title }&nbsp</a>
@@ -236,9 +442,24 @@
                 	<div class="mem_seq" style="width: 10%;">${l.nick}</div>
                 	<div class="writen_date" style="width: 10%;">${l.writen_date }</div>
                 	<div class="view_count" style="width: 7%;">${l.view_count}</div>
-                	<div class="expired" style="width: 8%;">${l.expired }</div>
-            	</c:forEach> 
+                	<div class="expired" style="width: 8%;">
+                		<c:if test="${l.expired == '마감'}">
+                			<span class="badge bg-danger">${l.expired }</span>
+                		</c:if>
+                		<c:if test="${l.expired == '진행'}">
+                			<span class="badge bg-primary">${l.expired }</span>
+                		</c:if>
+                	</div>
+                	<div class="hide_nt_con">작성자 &nbsp/&nbsp <i class="far fa-clock"></i> 작성시간 &nbsp/&nbsp <i class="far fa-eye"></i> 조회수 &nbsp/&nbsp <i class="far fa-user"></i> 10 &nbsp/&nbsp
+                		<c:if test="${l.expired == '마감'}">
+                			<span class="badge bg-danger">${l.expired }</span>
+                		</c:if>
+                		<c:if test="${l.expired == '진행'}">
+                			<span class="badge bg-primary">${l.expired }</span>
+                		</c:if>
+                	</div>	    	
             </div>
+            </c:forEach> 
         </div>
 
 		<c:if test="${!empty loginNick}">
