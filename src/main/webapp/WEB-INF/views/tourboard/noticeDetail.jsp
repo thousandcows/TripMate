@@ -244,6 +244,9 @@
 </head>
            
 <body>
+	<div class="header">		
+		<jsp:include page="../base/header.jsp"></jsp:include>
+	</div>
 	<div class="banner">
         <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
         <div class="banner_title"> 여행지 게시판 </div>
@@ -283,6 +286,12 @@
     			<div class="button">
                 		<button type=button id=back class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
                 </div>
+           </div>
+      </form>
+      </div>
+      <div class="footer">
+    	<jsp:include page="../base/footer.jsp"></jsp:include>
+ 	  </div>
 
 	    
     
