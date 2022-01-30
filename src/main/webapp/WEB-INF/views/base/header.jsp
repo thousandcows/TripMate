@@ -62,10 +62,11 @@
           width: 70px;
           display: inline-block;
           height: 30px;
+          margin-top:10px;
           font-size: 16px;
           border-radius: 3px;
           text-align: center;
-          border: 1px solid gray;
+          border: none;
           background-color: #2cd4c6;
           color: white;
         }
@@ -158,7 +159,14 @@
           border-radius: 4px;
           margin: 5px;
         }
-        
+        @media (max-width: 480px) {
+          .noticeListBox {
+            right: 50px;
+          }
+          #noticeGround {
+            right: 50px;
+          }
+        }
       </style>
 
       <body>
