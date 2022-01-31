@@ -233,6 +233,35 @@
         
         .rep_btn > button {margin: 2px;}
         
+        /* 링크 속성 지우기 */
+a {
+	text-decoration: none
+}
+
+a:hover {
+	text-decoration: none;
+	color: black;
+}
+
+a:link {
+	text-decoration: none;
+	color: black;
+}
+
+a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+a:active {
+	text-decoration: none;
+	color: black;
+}
+
+.fa-home {
+	color: rgb(56, 181, 174);
+}
+
         /* 참가자리스트 */
         .recruit_list{
             /* border: 1px solid red; */
@@ -319,9 +348,9 @@
                 </div>
     
     			<div class="button">
-    				<c:if test="${!empty loginNick }">
+    				<c:if test="${!empty loginSeq }">
                 		<button type=button id=back class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
-                	<c:if test="${dto.nick == loginNick}">
+                	<c:if test="${dto.mem_seq == loginSeq}">
                 		<button type=submit id=modify class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">수정</span></button>
                 		<button type=button id=delete class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">삭제</span></button>
                 		<c:if test="${dto.expired == '진행'}">
@@ -332,7 +361,7 @@
                 		</c:if>
                 	</c:if>
                 	
-                	<c:if test="${dto.nick != loginNick}">
+                	<c:if test="${dto.mem_seq != loginSeq}">
                 		<c:if test="${dto.expired == '진행'}">
                 		<button type=button id=attend class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">참여신청</span></button>
                 		</c:if>
@@ -341,14 +370,14 @@
                 </div>
                 
                 <div class="like_n_rep">
-              		<c:if test="${!empty loginNick}">
+              		<c:if test="${!empty loginSeq}">
                 		<div id=like_icon>
                 			<a class="heart">
            						<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
        						</a>
                 		</div>
                 	</c:if>
-                	<c:if test="${empty loginNick}">
+                	<c:if test="${empty loginSeq}">
                 		<div id=like_icon>
                 			<a class="heart_nonmem">
            						<img id="heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
@@ -430,7 +459,7 @@
                         		<c:if test="${!empty loginNick}">
                         		<div class="rep_btn">
                         			<button type=button id="re_rep_btn${repl.seq }" class="btn btn-primary btn-sm re_rep_btn" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">답글 달기</span></button>
-                           		 	<c:if test="${repl.nick == loginNick}">
+                           		 	<c:if test="${repl.mem_seq == loginSeq}">
                            		 		<button type=button id="rep_del${repl.seq }" class="btn btn-primary btn-sm rep_del" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 삭제</span></button>
                            	 			<button type=button id="rep_mod${repl.seq }" class="btn btn-primary btn-sm rep_mod" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 수정</span></button>
                         				<button type=submit id="rep_modok${repl.seq }" formaction="/comreply/modify" class="btn btn-primary btn-sm rep_modok" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 완료</span></button>
@@ -471,7 +500,7 @@
                                     						<input type="text" class="rr_con" id="recontent${rerepl.seq }"  name="contents" value="${rerepl.contents}" style="width: 100%; padding:5px 20px 5px 20px; border: none;" readonly>
                                 						</div>
                                 						<c:if test="${!empty loginNick}">
-                                						<c:if test="${rerepl.nick == loginNick}">
+                                						<c:if test="${rerepl.mem_seq == loginSeq}">
                                 						<div class="re_rp_btns" style="text-align: right; margin-top:10px; padding-right:20px;"">
                            		 							<button type=button class="btn btn-primary btn-sm re_rep_del" id="re_rep_del${rerepl.seq }" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 삭제</span></button>
                            	 								<button type=button class="btn btn-primary btn-sm re_rep_mod" id="re_rep_mod${rerepl.seq }" rpseq=${repl.seq } style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 수정</span></button>
@@ -621,6 +650,11 @@
 			$("#re_rep_modok"+id).css("display","inline");
 			$("#re_rep_cancle"+id).css("display","inline");	
 			$("#recontent"+id).removeAttr("readonly");
+			
+			let recontent = $("#recontent"+id).val();
+			$("#recontent"+id).val("");
+			$("#recontent"+id).focus();
+			$("#recontent"+id).val(recontent);
 		})
 		
 		
@@ -669,7 +703,11 @@
 			$("#rep_modok" + id).css("display", "inline");
 			$("#re_rep_btn" + id).css("display", "none");
 			$("#e_rep_con" + id).removeAttr("readonly");
-			$("#e_rep_con" + id).css("border", "1px solid gray");
+			
+			let e_rep_con = $("#e_rep_con" + id).val();
+			$("#e_rep_con" + id).val("");
+			$("#e_rep_con" + id).focus();
+			$("#e_rep_con" + id).val(e_rep_con);
 		})
 	 	
 		$(".rep_modcancel").on("click", function() {

@@ -275,7 +275,7 @@ a:active {
                     </span> 
                     <span style="width: 80%;">
                     	<input type=hidden value="${dto.seq}" name=seq>
-                        <input type=text placeholder="제목을 입력하세요" id=title name=title value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; border: none; width: 90%;">
+                        <input type=text placeholder="제목을 입력하세요" id=title name=title value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; width: 90%;">
                     </span>
 				</div>
 				<div class="writer_con">
@@ -368,7 +368,6 @@ a:active {
 				height : 300, // 에디터 높이
 				minHeight : 300, // 최소 높이
 				maxHeight : null, // 최대 높이
-				focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 				lang : "ko-KR", // 한글 설정
 				
 				toolbar: [
@@ -415,6 +414,11 @@ a:active {
 	            }
 	        });
 	    }
+		
+		let title = $("#title").val();
+		$("#title").val("");
+		$("#title").focus();
+		$("#title").val(title);
 	</script>
 
 </body>
