@@ -54,6 +54,28 @@ ul>li{
 #mainImg{
 	max-height:500px;
 }
+#heart{
+	width:20px;
+	height:20px;
+}
+.rcmdPhoto{
+	height:150px;
+}
+
+#profileImg{
+	width:100px;
+	height:100px;
+}
+.form-control{
+	height: 150px;
+	resize:none;
+}
+#replyText{
+	height:150px;
+}
+.replyImg{
+	height:200px;
+}
 </style>
 	<%@ include file="../base/header.jsp"%>
 
@@ -94,7 +116,7 @@ ul>li{
 					<c:if test="${!empty score }">
 						<ul class="list-group-horizontal p-0">
 						<c:forEach var='cnt' begin='1' end='5'>
-							<li><svg xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;" class="float-start p-0"
+							<li><svg xmlns="http://www.w3.org/2000/svg" id="heart" class="float-start p-0"
 									viewBox="0 0 20 20" fill="currentColor">
 							    <defs>
 							        <linearGradient id="half_grad${cnt }">
@@ -177,7 +199,7 @@ ul>li{
 			<c:forEach var="i" items="${rcmd }">
 			<div class="col-3 rcmd text-center " id="${i.seq }">
 				<div>
-				<img src="${i.photo }" class="w-100" style="height:150px;">
+				<img src="${i.photo }" class="w-100 rcmdPhoto">
 				</div>
 				<div>
 				${i.title }
@@ -202,7 +224,7 @@ ul>li{
 				<div class="col-10">
 					<div class="row">
 						<div class="form-floating col-12 p-0">
-						  <textarea class="form-control p-0" minlength=5 placeholder="댓글작성" id="replyText" name="text" style="height: 100px;resize:none;" required></textarea>
+						  <textarea class="form-control p-0" maxlength="1000" minlength=5 placeholder="댓글작성" id="replyText" name="text" required></textarea>
 						</div>
 					</div>
 					<div class="row mt-1 mb-2">
@@ -233,10 +255,10 @@ ul>li{
 				<label>
 				<div class="img" id="replyPhoto${i.seq }">
 				<c:if test="${i.photo ne null }">
-					<img src="/images/${i.photo }" class="w-100" style="height:200px;">
+					<img src="/images/${i.photo }" class="w-100 replyImg">
 				</c:if>
 				<c:if test="${i.photo eq null }">
-					<img src="/images/noPhoto.png" class="w-100 h-100" style="height:200px;">
+					<img src="/images/noPhoto.png" class="w-100 h-100 replyImg">
 				</c:if>
 				</div>
 				<input accept="image/*" id="img${i.seq }" type="file" class="opacity-0 replyimg" name="picture" style="display:none;" disabled/>
@@ -254,9 +276,9 @@ ul>li{
 				</div>
 				<div class="row">
 					<div class="col">
-						<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt${i.seq }" minlength=5 required>${i.text }</textarea>
+						<textarea class="form-control" placeholder="댓글작성" name="text" readonly id="replyTxt${i.seq }" maxlength="1000" minlength="5" required>${i.text }</textarea>
 						<input type="hidden" value="${i.text }" id="replyHidden${i.seq }">
-					</div>
+					</div> 
 				</div>
 				<c:if test="${i.mem_seq eq loginSeq}">
 				<div class="row mt-2">
@@ -307,7 +329,7 @@ ul>li{
 			          <h4 class="modal-title text-center">프로필 조회</h4>
 			        </div>
 			      <div class="modal-body">
-			      	<img id="profileImg" style="width:100px;height:100px;">
+			      	<img id="profileImg">
 			        <span id="profileNick"></span><br>
 			        <span id="profilePreference"></span><br>
 			        <span id="profileGender"></span><br>
@@ -434,7 +456,7 @@ ul>li{
 							'<label>'+
 							'<div class="img" id="replyPhoto'+result[i].seq+'">'+
 							
-							(result[i].photo != null ? '<img src="/images/'+result[i].photo+'" class="w-100" style="height:200px;">' : '<img src="/images/noPhoto.png" class="w-100 h-100" style="height:200px;">')+
+							(result[i].photo != null ? '<img src="/images/'+result[i].photo+'" class="w-100 replyImg">' : '<img src="/images/noPhoto.png" class="w-100 h-100 replyImg">')+
 						'</div>'+
 						'<input accept="image/*" id="img'+result[i].seq+'" type="file" class="opacity-0 replyimg" name="picture" style="display:none;" disabled/>'+
 						'</label>'+
@@ -448,7 +470,7 @@ ul>li{
 								'</div>'+
 							'</div>'+
 							'<div class="row">'+
-								'<textarea class="form-control" placeholder="댓글작성" name="text" style="height: 150px;resize:none;" readonly id="replyTxt'+result[i].seq+'"  minlength=5 required>'+
+								'<textarea class="form-control" placeholder="댓글작성" name="text" readonly id="replyTxt'+result[i].seq+'"  minlength=5 required>'+
 									result[i].text+
 								'</textarea>'+
 								'<input type="hidden" value="'+result[i].text+'" id="replyHidden'+result[i].seq+'">'+
@@ -492,7 +514,7 @@ ul>li{
 		$("#img").on("change",function(){
 			let file = this.files[0];
 			if (file) {
-			    $("#ph").html("<img class='w-100' style='height:150px;'  src = "+URL.createObjectURL(file)+">");
+			    $("#ph").html("<img class='w-100 replyImg' src="+URL.createObjectURL(file)+">");
 			  }
 			})
 
@@ -501,7 +523,7 @@ ul>li{
 			console.log(id);
 			let file = this.files[0];
 			if (file) {
-			    $("#replyPhoto"+id).html("<img class='w-100'  style='height:200px;' src = "+URL.createObjectURL(file)+">");
+			    $("#replyPhoto"+id).html("<img class='w-100 replyImg' src = "+URL.createObjectURL(file)+">");
 			  }
 		})
 			
