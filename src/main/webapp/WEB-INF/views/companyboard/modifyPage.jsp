@@ -233,6 +233,35 @@
         
         .rep_btn > button {margin: 2px;}
         
+        /* 링크 속성 지우기 */
+a {
+	text-decoration: none
+}
+
+a:hover {
+	text-decoration: none;
+	color: black;
+}
+
+a:link {
+	text-decoration: none;
+	color: black;
+}
+
+a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+a:active {
+	text-decoration: none;
+	color: black;
+}
+
+.fa-home {
+	color: rgb(56, 181, 174);
+}
+
         /* 참가자리스트 */
         .recruit_list{
             /* border: 1px solid red; */
@@ -280,7 +309,7 @@
                         <h3 style="display: inline; color: rgb(153, 153, 153); padding: 5px;">|</h3>
                     </span>
                     <span style="width: 80%;">
-                        <input type=text id=title name=title value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; border: none; width: 90%;">
+                        <input type=text id=title name=title value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; width: 90%;">
                     </span>
                 </div>
                 <div class="writer_con">
@@ -430,7 +459,6 @@
               height:500, // 에디터 높이
     		  minHeight: 500,             // 최소 높이
     		  maxHeight: null,             // 최대 높이
-    		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
     		  lang: "ko-KR",					// 한글 설정
     		  toolbar: [
 				    // [groupName, [list of button]]
@@ -476,6 +504,11 @@
             }
         });
     }
+	
+	let title = $("#title").val();
+	$("#title").val("");
+	$("#title").focus();
+	$("#title").val(title);
     </script> 
 </body>
 </html>

@@ -144,6 +144,9 @@ public class CompanyBoardController {
 		
 		String loginNick = (String) session.getAttribute("loginNick");
 		
+		Integer login_seq = (Integer) session.getAttribute("loginSeq");
+		model.addAttribute("loginSeq", login_seq);
+		
 		// dto, 조회수
 		CompanyBoardDTO dto = cbs.selectBySeq(seq);
 		//dto.setNick(loginNick);
@@ -206,7 +209,6 @@ public class CompanyBoardController {
 	@RequestMapping("toModify")
 	public String modifyPage(CompanyBoardDTO dto, Model model) {
 
-		System.out.println("성별 : " + dto.getGender());
 		model.addAttribute("dto", dto);
 		return "companyboard/modifyPage";
 	}

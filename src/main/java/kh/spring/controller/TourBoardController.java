@@ -181,7 +181,8 @@ public class TourBoardController {
 	@RequestMapping("detail")
 	public String detail(int seq, Model model, HttpServletRequest request) throws Exception {
 		
-		String loginNick = (String)request.getSession().getAttribute("loginNick");	
+		String loginNick = (String)request.getSession().getAttribute("loginNick");
+		Integer login_seq = (Integer) session.getAttribute("loginSeq");
 		
         TourBoardDTO dto = bservice.selectBySeq(seq);
         
@@ -212,6 +213,8 @@ public class TourBoardController {
      	// 좋아요 카운트
      	int likeCount = bservice.totalBoardLike(seq);
      	
+     	
+     	model.addAttribute("loginSeq", login_seq);
      	model.addAttribute("likeCount", likeCount);        
      	model.addAttribute("loginNick", loginNick);
         model.addAttribute("dto", dto);
@@ -223,7 +226,6 @@ public class TourBoardController {
 	@RequestMapping("modify")
 	public String modify(int seq, String title, String category, String explanation) throws Exception{
 
-		System.out.println("카테고리 : " + category);
 		String contents = explanation;
 		int result = bservice.modify(seq, title, contents, category);
 		return "redirect:/tourboard/detail?seq="+seq;
