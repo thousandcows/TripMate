@@ -193,6 +193,6 @@ public class PlanController {
 	public String ExceptionHandler(Exception e) {
 		e.printStackTrace();
 		e.getMessage();
-		return "redirect:/base/error";
+		return "/error";
 	}
 }

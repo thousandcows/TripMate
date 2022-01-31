@@ -49,8 +49,15 @@ window.onload = function(){
 	top: 30px; 
 	margin-bottom: 40px;"
 }
+.triplist{
+	height:200px;
+	overflow:hidden;
+	margin:0 auto;
+}
 .triplist>img{
-	height:400px;
+	width:100%;
+	height:100%;
+	object-fit:cover;
 }
 .select{
 	width: 100px; 
@@ -62,8 +69,18 @@ window.onload = function(){
 	width: 60px;
 }
 .listPhoto{
-	width: 200px; 
-	height: 200px;
+	height: 250px;
+}
+.card{
+	border:none;
+}
+
+.detail:hover>*>*{
+	opacity:1;
+}
+.card-text{
+	background-color:black;
+	opacity:0.6;
 }
 </style>
 
@@ -144,18 +161,19 @@ window.onload = function(){
 					<div class="row">
 
 						<c:forEach var="item" items="${list }">
-							<div id="${item.contentid }" class="detail col-6 col-md-4 col-lg-3 align-items-center justify-content-center text-center">
+							<div id="${item.contentid }" class="detail col-6 col-md-4 col-lg-3 card text-center mt-2">
 								<c:if test="${item.firstimage ne 'null' }">
-									<img src="${item.firstimage}" class="listPhoto">
+									<img src="${item.firstimage}" class="listPhoto card-img pl-1">
 								</c:if>
 								<c:if test="${item.firstimage eq 'null' }">
-									<img src="/images/noPhoto.png" class="listPhoto">
+									<img src="/images/noPhoto.png" class="listPhoto card-img pr-1">
 								</c:if>
-
-								<br>${item.title }
-								<br>${item.contenttypeid }
-								<br>${item.addr1 }
-								<br>${item.cat1 }
+								<div class="card-img-overlay d-flex align-items-end flex-column mt-2 pb-0 pt-1">
+								<p class="card-text text-white w-100 mt-auto ">
+								${item.title }<br>
+								${item.contenttypeid }<br>
+								${item.addr1 }</p>
+								</div>
 							</div>
 						</c:forEach>
 					</div>

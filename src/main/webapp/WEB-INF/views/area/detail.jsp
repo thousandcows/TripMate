@@ -58,8 +58,17 @@ ul>li{
 	width:20px;
 	height:20px;
 }
+#save:hover{
+	cursor:pointer;
+}
 .rcmdPhoto{
 	height:150px;
+}
+.rcmd:hover{
+	cursor:pointer;
+}
+#ph:hover{
+	cursor:pointer;
 }
 
 #profileImg{
@@ -75,6 +84,9 @@ ul>li{
 }
 .replyImg{
 	height:200px;
+}
+.reply_id:hover{
+	cursor:pointer;
 }
 </style>
 	<%@ include file="../base/header.jsp"%>
@@ -536,8 +548,10 @@ ul>li{
 		    		  console.log(resp);
 		    		  if(resp=="saved"){
 		    			  $("#save").text("favorite");
+		    			  alert("찜 목록에 저장되었습니다.")
 		    		  }else if(resp=="removed"){
 		    			  $("#save").text("favorite_border");
+		    			  alert("찜 목록에서 제거했습니다.")
 		    		  }
 		    	  });
 		      }else{
