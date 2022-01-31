@@ -27,25 +27,10 @@ window.onload = function(){
 
 </head>
 <style>
-* {
-	 font-family: 'paybooc-Bold';
-}
-
-body {
-	 font-family: 'paybooc-Bold';
-}
 
 .btn-toolbar {
 	position: relative;
 	top: 50px;
-}
-
-
-@font-face {
-    font-family: 'paybooc-Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
 }
 
 .detail:hover{

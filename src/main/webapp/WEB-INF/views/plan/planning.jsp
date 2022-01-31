@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>일정 생성</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -56,29 +56,74 @@ li.drag-sort-active {
   font-style: normal;
   font-size: 80px;  /* Preferred icon size */
   display: inline-block;
+}
+.material-icons:hover{
+	cursor:pointer;
+}
+
+#day>li:hover{
+	cursor:pointer;
+}
+#day{
+	list-style:none;
+	padding-left:0px;
+}
+
+	html,body{
+		height:100%;
+	}
+	
+	.container{
+		height:auto;
+		min-height:100%;
+	}
+	.con{
+		padding-bottom:250px;
+	}
+	.footer{
+	  transform : translateY(-100%);
+	}
+
+label{
+	font-size:20px;
+}
+label:hover{
+	cursor:cell;
+}
+
+#planList>li:hover{
+	cursor:grab;
+}
+#planList>li:active{
+	cursor:grabbing;
+}
 
 
 </style>
 <script>
 	$(document).ready(function(){
-		$("#thirdForm").hide()
+		$("#thirdForm").fadeOut(200)()
 	})
 </script>
 </head>
 <body>
 
-	<div class="container">
-		<div class="row mb-5 mt-5 d-flex justify-content-center">
-			<div class="col-8 d-flex justify-content-between">
-				<button type="button" class="btn btn-primary" id="firstBtn">일정 생성</button>
-				<button type="button" class="btn btn-primary" id="secondBtn">여행지 선택</button>
-				<button type="button" class="btn btn-primary" id="thirdBtn">일정 순서 지정</button>
-				<button type="button" class="btn btn-primary" id="fourthBtn">메모</button>
+	<div class="container con">
+		<div class="row mb-5 mt-5">
+			<div class="col-12 text-center">
+				<h2>순서에 따라, 일정을 수립하세요.</h2>
+			</div>
+			<div class="col-12 d-flex justify-content-around">
+				<button type="button" class="btn btn-primary mr-2 ml-2" id="firstBtn">일정 생성</button>
+				<button type="button" class="btn btn-primary mr-2 ml-2" id="secondBtn">여행지 선택</button>
+				<button type="button" class="btn btn-primary mr-2 ml-2" id="thirdBtn">일정 순서 지정</button>
+				<button type="button" class="btn btn-primary mr-2 ml-2" id="fourthBtn">메모</button>
+				<button type="button" class="btn btn-primary mr-2 ml-2" id="goMain">리스트로 이동</button>
 			</div>
 		</div>
 
 		<!-- 날짜/제목 생성 -->
-		<div class="row justify-content-center" id="firstForm">
+		<div class="row justify-content-center" id="firstForm" <c:if test="${!empty seq}">style="display:none;"</c:if>>
 			<div class="col-8 ">
 			<c:if test="${!empty seq }">
 				<form action="/plan/changeTheme" method="post">
@@ -88,8 +133,10 @@ li.drag-sort-active {
 				<form action="/plan/chooseTheme" method="post">
 			</c:if>
 				<div class="row border d-flex justify-content-center">
+					<div class="col-12 text-center mt-4">
+						<h3 class="title text-center">여행 계획 입력</h3>
+					</div>
 					<div class="col-10 text-center mt-4">
-						<h5 class="title text-center">여행 계획 입력</h5>
 						<div class="form-group">
 							<input type="text" name="title" class="form-control" id="planTitle" placeholder="제목을 입력하세요." value="${dto.title }" required>
 						</div>
@@ -139,10 +186,10 @@ li.drag-sort-active {
 
 							<div class="col-10 text-end mt-2 mb-2">
 							<c:if test="${empty seq }">
-								<input id="chooseThemeBtn" type="submit" class="btn btn-primary" value="저장"></input>
+								<input id="chooseThemeBtn" type="submit" class="btn btn-primary" value="저장" onclick="editCategory(this)"></input>
 							</c:if>
 							<c:if test="${!empty seq }">
-								<input id="changeThemeBtn" type="submit" class="btn btn-primary" value="수정"></input>
+								<input id="changeThemeBtn" type="submit" class="btn btn-primary" value="수정" onclick="editCategory(this)"></input>
 							</c:if>
 
 							</div>
@@ -150,16 +197,18 @@ li.drag-sort-active {
 					</div>
 					</form>
 			</div>
-		</div>
 		
 		
 		<!-- 여행지 생성 -->
-		<div class="row justify-content-center" id="secondForm" style="display:none;">
+		<div class="row justify-content-center" id="secondForm" <c:if test="${empty seq }">style="display:none;"</c:if>>
 			<div class="col-8 border">
 				<div class="row mt-2">
-					<div class="col">
-						<button type="button" id="searchCallBtn" class="btn btn-primary">검색</button>
-						<button type="button" id="savedCallBtn" class="btn btn-primary">찜 목록</button>
+					<div class="col-12 text-center mt-4">
+						<h3>여행 장소를 검색하거나, 찜목록을 불러와 일정에 추가하세요.</h3>
+					</div>
+					<div class="col d-flex justify-content-center mt-2">
+						<button type="button" id="searchCallBtn" class="btn btn-primary m-2">검색해서 찾기</button>
+						<button type="button" id="savedCallBtn" class="btn btn-primary m-2">찜 목록</button>
 					</div>
 				</div>
 				
@@ -170,7 +219,7 @@ li.drag-sort-active {
 								<form id="searchForm" name="searchForm" method="post">
 									<input type="text" name="target" placeholder="검색어를 입력하세요." id="searchTarget" required> 
 									<input type="hidden" value=1 name="page" id="searchPageNo"> 
-									<input type="submit" class="btn btn-success" onclick="searching(); return false">
+									<input type="submit" class="btn btn-success" value="검색" onclick="searching(); return false">
 								</form>												
 							</div>
 						</div>
@@ -178,10 +227,10 @@ li.drag-sort-active {
 						<form action="/plan/saveList" method="post">
 						<div class="row mt-4 mb-4">
 
-							<div class="row" id="searchResult">
+							<div class="row d-flex justify-content-center" id="searchResult">
 								검색 결과가 없습니다.
 							</div>
-							<div class="col-12">
+							<div class="col-12 text-end">
 								<input type="submit" class="btn btn-primary saveBtn" value="저장하기">
 							</div>
 						</div>
@@ -195,14 +244,9 @@ li.drag-sort-active {
 				</div>
 				
 				<form action="/plan/saveList" method="post">
-				<div class="row" id="saved" style="display:none;">
+				<div class="row justify-content-center" id="saved" style="display:none;">
 					<div class="col-10">
 						<div class="row justify-content-center mt-4">
-							<div class="col-12">
-							<input type="submit"  class="btn btn-primary saveBtn" value="저장하기">
-							<input type="hidden" name="seq" value="${seq }">
-							</div>
-							
 				              <c:forEach var='cnt' items="${saveList}" varStatus="status">
 				                <div class="col-9 align-self-center mt-4 delParent border">
 				                  <div class="row">
@@ -245,6 +289,10 @@ li.drag-sort-active {
             </div>
             </c:if>
 					</div>
+				<div class="col-12 text-end	mb-4">
+					<input type="submit"  class="btn btn-primary saveBtn" value="저장하기">
+					<input type="hidden" name="seq" value="${seq }">
+				</div>
 				</div>
 			</form>
 			
@@ -270,7 +318,7 @@ li.drag-sort-active {
 								</li>
 							</ul>
 						</c:forEach>
-							<div class="w-100" id="deletePlan" style="height:100px;">
+							<div class="w-100 d-flex justify-content-center" id="deletePlan" style="height:100px;">
 								<span class="material-icons">
 									delete
 								</span>
@@ -286,6 +334,9 @@ li.drag-sort-active {
 					</div>
 					<div class="col-6" id=map style="height:600px;">
 					</div>
+					<div class="col-12 text-end">
+						<h5>※드래그해 일정 순서를 조정하고, 일자를 변경하세요.</h5>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -293,12 +344,15 @@ li.drag-sort-active {
 		<div class="row" id="fourthForm" style="display:none;">
 			<div class="col d-flex justify-content-center">
 				<form action="/plan/insertMemo" method="post">
-					<div class="row">
-						<div class="col-12">
+					<div class="row border">
+						<div class="col-12 text-center mt-4">
+							<h3>여행에 필요한 메모를 남기세요.</h3>
+						</div>
+						<div class="col-12 text-center mt-4">
 							<textarea name="memo" cols=100 rows=10 placeholder="메모를 남겨주세요." required>${dto.memo }</textarea>
 							<input type="hidden" name="seq" value="${seq }">
 						</div>
-						<div class="col-12 mt-2">
+						<div class="col-12 mt-2 text-end mt-3 mb-4 mr-4">
 							<input type="submit" class="btn btn-primary" value="저장">
 						</div>
 					</div>	
@@ -306,15 +360,23 @@ li.drag-sort-active {
 			</div>
 		</div>
 	</div>	
+	</div>
+	
+	<jsp:include page="../base/footer.jsp"></jsp:include>
 					
 
 	<script type="text/javascript">
 		$(function() {
+			let today = new Date;
+			today.setHours(0,0,0,0);
 			$('#datetimepicker1').datetimepicker({
-				format : 'YYYY/MM/DD'
+				format : 'YYYY/MM/DD',
+				minDate:today,
+				defaultDate:today
 			});
 			$('#datetimepicker2').datetimepicker({
 				format : 'YYYY/MM/DD',
+				minDate: today,
 				useCurrent : false
 			});
 			$("#datetimepicker1").on("change.datetimepicker", function(e) {
@@ -356,31 +418,31 @@ li.drag-sort-active {
 			let infowindows = [];
 				
 				
-			
+		$("#goMain").on("click",function(){
+			if(confirm("리스트로 이동하시겠습니까? 기록중인 내용은 사라집니다.")){
+				location.href="/plan/main?page=1";
+			}
+		})
 			
 	//화면 숨기기/view 처리
 		$("#firstBtn").on("click",function(){
 			if($("#firstForm").css("display")==='none'){					
-				$("#firstForm").show();
-				$("#secondForm").hide();
-				$("#thirdForm").hide();
-				$("#fourthForm").hide();
-			}else{
-				$("#firstForm").hide();
+				$("#firstForm").fadeIn(200);
+				$("#secondForm").fadeOut(200);
+				$("#thirdForm").fadeOut(200);
+				$("#fourthForm").fadeOut(200);
 			}
 		})
 		
 		$("#secondBtn").on("click",function(){
 			if(${!empty seq}){
 				if($("#secondForm").css("display")==='none'){					
-					$("#secondForm").show();
-					$("#firstForm").hide();
-					$("#thirdForm").hide();
-					$("#fourthForm").hide();
+					$("#secondForm").fadeIn(200);
+					$("#firstForm").fadeOut(200);
+					$("#thirdForm").fadeOut(200);
+					$("#fourthForm").fadeOut(200);
 
-				}else{
-					$("#secondForm").hide();
-				}				
+				}			
 			}else{
 				alert("일정을 먼저 생성해주세요.")
 			}
@@ -388,13 +450,11 @@ li.drag-sort-active {
 		$("#thirdBtn").on("click",function(){
 			if(${!empty seq}){
 				if($("#thirdForm").css("display")==='none'){					
-					$("#thirdForm").show();
-					$("#firstForm").hide();
-					$("#secondForm").hide();
-					$("#fourthForm").hide();
+					$("#thirdForm").fadeIn(200);
+					$("#firstForm").fadeOut(200);
+					$("#secondForm").fadeOut(200);
+					$("#fourthForm").fadeOut(200);
 					
-				}else{
-					$("#thirdForm").hide();
 				}
 			}else{
 				alert("일정을 먼저 생성해주세요.")				
@@ -403,13 +463,11 @@ li.drag-sort-active {
 		$("#fourthBtn").on("click",function(){
 			if(${!empty seq}){
 				if($("#fourthForm").css("display")==='none'){					
-					$("#fourthForm").show();
-					$("#firstForm").hide();
-					$("#secondForm").hide();
-					$("#thirdForm").hide();
-				}else{
-					$("#fourthForm").hide();
-				}	
+					$("#fourthForm").fadeIn(200);
+					$("#firstForm").fadeOut(200);
+					$("#secondForm").fadeOut(200);
+					$("#thirdForm").fadeOut(200);
+				}
 			}else{
 				alert("일정을 먼저 생성해주세요.")				
 			}		
@@ -417,22 +475,19 @@ li.drag-sort-active {
 		
 		$("#searchCallBtn").on("click",function(){
 			if($("#search").css("display")==='none'){					
-				$("#search").show();
-				$("#saved").hide();
-			}else{
-				$("#search").hide();
+				$("#search").fadeIn(200);
+				$("#saved").fadeOut(200);
 			}
+			
 		})
 
 		$("#savedCallBtn").on("click",function(){
 			if($("#saved").css("display")==='none'){					
-				$("#saved").show();
-				$("#search").hide();
-			}else{
-				$("#saved").hide();
+				$("#saved").fadeIn(200);
+				$("#search").fadeOut(200);
 			}
 		})		
-		
+				
 		
 	function searching() {
         var formData = $('#searchForm').serialize() // serialize 사용
@@ -447,18 +502,23 @@ li.drag-sort-active {
             	let value = "";
                 for(let i = 0; i<data.response.body.items.item.length;i++){
 			    	let sData = data.response.body.items.item[i];
-			    	value += '<div class="col-6 border ml-1 mr-1"><div> <input type="checkbox" name="check" class="check saveCheck" value="'+sData.contentid+'&'+sData.title+'&'+sData.addr1+'&'+sData.firstimage+'" id='+sData.contentid+'><label for='+sData.contentid+'>저장하기<label></div> <div class="mt-2">'+sData.title+'</div><br> <div>'+sData.addr1+'</div><br><div> <img src="'+sData.firstimage+'" style="width:150px;height:100px;"></div> </div></div>';
+			    	value += '<div class="col-6 mt-3 ml-1 mr-1"><div class="text-center"> <input type="checkbox" name="check" class="check saveCheck" value="'+sData.contentid+'&'+sData.title+'&'+sData.addr1+'&'+sData.firstimage+'" id='+sData.contentid+'><label for='+sData.contentid+'>'+sData.title+'<label></div><div class="text-center">'+sData.addr1+'</div><div class="text-center"> <img src="';
+					if(sData.firstimage!=undefined){
+				    	value += sData.firstimage;							
+					}else{
+						value +='/images/noPhoto.png';
+					}
+			    	value +='" style="width:200px;height:100px;"></div> </div></div>';
 	            }
-                value +='   <div class="btn-toolbar" role="toolbar" aria-label="Pagination"> <div class="btn-group me-2 mb-2" role="group" aria-label="First group">';
+                value +='   <div class="btn-toolbar justify-content-center mt-4" role="toolbar" aria-label="Pagination"> <div class="btn-group me-2 mb-2" role="group" aria-label="First group">';
 				let totalPage = data.response.body.totalCount/data.response.body.numOfRows;
 				let pageNo = data.response.body.pageNo;
 				//페이징
-				value +='<div class="btn-toolbar" role="toolbar" aria-label="Pagination"> <div class="btn-group me-2 mb-2" role="group" aria-label="First group">';
 				if(pageNo>1){
-					value +='<button type="button" class="btn btn-outline-secondary page" id='+(pageNo-1)+'>이전 페이지</button>';
+					value +='<button type="button" class="btn btn-outline-secondary m-2 page" id='+(pageNo-1)+'>이전 페이지</button>';
 				}
 				if(pageNo<totalPage){
-					value +='<button type="button" class="btn btn-outline-secondary page" id='+(pageNo+1)+'>다음 페이지</button>';					
+					value +='<button type="button" class="btn btn-outline-secondary m-2 page" id='+(pageNo+1)+'>다음 페이지</button>';					
 				}
 	            $("#searchResult").html(value);
             
@@ -528,6 +588,16 @@ li.drag-sort-active {
 			}
 		})
 	})
+	
+	function editCategory(form) {
+	  if (form.checkValidity()) {
+  	 	 alert("여행계획 입력이 완료되었습니다.");
+			return true;
+	  }else{
+		  return false;
+	  }
+	}
+	
 	
 	$(".datePick").on("click",function(){
 		let id = this.id;
@@ -606,14 +676,11 @@ li.drag-sort-active {
                 `<div class="col-9 align-self-center mt-4 delParent border">
                   <div class="row">
                     <div class="col-4">
-                      <a href="/area/detail?num=\${result[i].seq}">
                         <img style="height:170px;" class="w-100" src="\${result[i].photo}">
-                      </a>
                     </div>
                     <div class="col-8">
                       <div class="row">
-                        <div class="col-10"><a
-                            href="/area/detail?num=\${result[i].seq}">\${result[i].name}</a>
+                        <div class="col-10">\${result[i].name}
                             <input type="checkbox" name="check" class="check" value="\${result[i].seq}&\${result[i].name }&\${result[i].lo_datail}&\${result[i].photo }">
                             </div>
                       </div>
@@ -732,9 +799,10 @@ li.drag-sort-active {
               }
             }
             if (delList.length == 0) {
-              alert("삭제할 게시글을 선택해주세요.");
+              alert("저장할 여행지를 선택해주세요.");
               return false;
             }
+            alert("성공적으로 저장되었습니다.");
           });
 
 </script>

@@ -205,7 +205,7 @@ public class AreaService {
 					title = title.substring(1,title.length()-1);
 					String firstimage = "";
 					if(tmp.has("firstimage")){
-						firstimage = tmp.get("firstimage2").toString();
+						firstimage = tmp.get("firstimage").toString();
 						firstimage = firstimage.substring(1,firstimage.length()-1);
 					}else{
 						firstimage ="null";
