@@ -152,6 +152,6 @@ public class AreaController {
 	public String ExceptionHandler(Exception e) {
 		e.printStackTrace();
 		e.getMessage();
-		return "redirect:/";
+		return "/error";
 	}
 }
