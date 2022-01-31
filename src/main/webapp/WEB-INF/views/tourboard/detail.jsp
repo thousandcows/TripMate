@@ -14,6 +14,7 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<jsp:include page="../base/header.jsp"></jsp:include>
 
 <style>
 
@@ -79,13 +80,8 @@ input{autocomplete="off" ;}
      padding: 20px 80px 0px 80px;
 }
 
-.catetitle {
-	padding: 0px 80px 0px 80px;
-}
-
 .category {
 	width: 10%;
-	float: left;
 }
 
 .title {
@@ -245,10 +241,7 @@ a:active {
 </head>
 
 <body>
-
-	<div class="header">		
-		<jsp:include page="../base/header.jsp"></jsp:include>
-	</div>
+	
 	<!-- .banner에 이미지 추가해야한다.-->
 	<div class="banner">
 		<div class="banner_title" href=""> 여행지 게시판 </div>
@@ -276,6 +269,9 @@ a:active {
                     	<input type=hidden value="${dto.seq}" name=seq>
                         <input type=text placeholder="제목을 입력하세요" id=title name=title readonly value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; border: none; width: 90%;">
                     </span>
+				</div>
+				<div>
+					<img src="${loginInfo.photo}" class="portraitPhoto">
 				</div>
 				<div class="writer_con">
                     <div style="line-height: 50px; padding-left: 100px; padding-top: 10px;"><input type=text id=nick name=nick readonly value="${dto.nick}" style="border:none;"></div>
@@ -411,9 +407,10 @@ a:active {
 				</form>
 			</c:forEach> 
 	</div>	
-	<div class="footer">
-    	<jsp:include page="../base/footer.jsp"></jsp:include>
-    </div>
+	
+	<footer>
+    	    <jsp:include page="../base/footer.jsp"></jsp:include>
+    </footer>
 	
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

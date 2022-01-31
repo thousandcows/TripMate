@@ -26,6 +26,7 @@ import kh.spring.dto.NoticeDTO;
 import kh.spring.service.AdminService;
 import kh.spring.service.ComReplyService;
 import kh.spring.service.CompanyBoardService;
+import kh.spring.service.MemberService;
 import kh.spring.service.TourBoardService;
 import kh.spring.statics.Statics;
 
@@ -44,6 +45,9 @@ public class CompanyBoardController {
 	
 	@Autowired
 	private AdminService aservice;
+	
+	@Autowired
+	private MemberService mservice;
 	
 	@Autowired
 	public ComReplyService crs;
@@ -146,6 +150,10 @@ public class CompanyBoardController {
 		
 		Integer login_seq = (Integer) session.getAttribute("loginSeq");
 		model.addAttribute("loginSeq", login_seq);
+		
+		MemberDTO mdto = mservice.myInfoSelectAll(login_seq);
+		model.addAttribute("loginInfo", mdto);
+		
 		
 		// dto, 조회수
 		CompanyBoardDTO dto = cbs.selectBySeq(seq);
