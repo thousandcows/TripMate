@@ -37,6 +37,7 @@
             </ul>
           </div>
           <div class="postList">
+            <div class="mypageTop">나의 게시글 입니다.</div>
             <ul class="postHeader">
               <li>작성일</li>
               <li>게시판</li>
