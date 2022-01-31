@@ -23,6 +23,7 @@
 
 body {
 	margin: 0; /* 임시로 body margin 0px */
+	height: auto;
 }
 
 /* input style */
@@ -56,12 +57,12 @@ input{autocomplete="off" ;}
 }
 
 /* 컨테이너 */
-.container {
+.container_c {
 /* border: 1px solid red; */
     padding-bottom :30px;
 }
         
-.container>.root {
+.container_c>.root {
 	padding-left: 80px;
 	overflow: auto;
 }
@@ -242,6 +243,7 @@ a:active {
         	cursor: pointer;
         }
 </style>
+
 </head>
 
 <body>
@@ -255,7 +257,7 @@ a:active {
 		<div class="banner_content"> 각 지역의 여행 후기를 남겨보세요 </div>
 	</div>
 	
-	<div class="container">
+	<div class="container_c">
 		<div class="root">
 			<div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
 			<div>></div>
@@ -410,7 +412,8 @@ a:active {
 					</div>
 				</form>
 			</c:forEach> 
-	</div>	
+		</div>
+	
 	<div class="footer">
     	<jsp:include page="../base/footer.jsp"></jsp:include>
     </div>
