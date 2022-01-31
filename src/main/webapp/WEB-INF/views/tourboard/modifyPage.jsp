@@ -14,7 +14,7 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
+<jsp:include page="../base/header.jsp"></jsp:include>
 <style>
 
 * {
@@ -247,10 +247,6 @@ a:active {
 
 <body>
 
-	<div class="header">		
-		<jsp:include page="../base/header.jsp"></jsp:include>
-	</div>
-	
 	<!-- .banner에 이미지 추가해야한다.-->
 	<div class="banner">
 		<div class="banner_title" href=""> 여행지 게시판 </div>
@@ -310,9 +306,9 @@ a:active {
 		</form>
 	</div>	
 	
-	<div class="footer">
-    	<jsp:include page="../base/footer.jsp"></jsp:include>
-    </div>
+	<footer>
+    	    <jsp:include page="../base/footer.jsp"></jsp:include>
+    </footer>
 
 
 	<script>

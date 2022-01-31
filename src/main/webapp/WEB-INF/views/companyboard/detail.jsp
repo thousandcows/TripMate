@@ -28,6 +28,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     
+    <jsp:include page="../base/header.jsp"></jsp:include>
     <style>
         * {
             box-sizing: border-box;
@@ -282,9 +283,7 @@ a:active {
 </head>
            
 <body>
-	<div class="header">		
-		<jsp:include page="../base/header.jsp"></jsp:include>
-	</div>
+
 	<div class="banner">
         <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
         <div class="banner_title"> 동행 게시판 </div>
@@ -312,6 +311,9 @@ a:active {
                         <input type=text id=title name=title readonly value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; border: none; width: 90%;">
                     </span>
                 </div>
+                <div>
+					<img src="${loginInfo.photo}" class="portraitPhoto">
+				</div>
                 <div class="writer_con">
                		<input type=hidden value="${dto.nick}" name=nick >
                     <div style="line-height: 50px; padding-left: 100px; padding-top: 10px;"> ${dto.nick}</div>
@@ -544,6 +546,9 @@ a:active {
 	  </div>
 	</div>
 	
+	<footer>
+    	    <jsp:include page="../base/footer.jsp"></jsp:include>
+    </footer>
 	
 	<script>
 		let wsObj = new Object();

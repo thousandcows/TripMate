@@ -30,7 +30,7 @@
             <li><a href="/member/mypageGo">개인정보 수정</a></li>
             <li><a href="/member/myplan?page=1">내 여행계획</a></li>
             <li><a href="/member/saveList">찜 여행 목록</a></li>
-            <li><a href="/member/writenList">게시글 관리</a></li>
+		    <li><a href="/member/writenList">게시글 관리</a></li>
           </ul>
         </div>
         <div class="contentsBox">
