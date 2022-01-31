@@ -26,36 +26,39 @@
 	.container{
 		height:auto;
 		min-height:100%;
-		padding-bottom:300px;
 	}
 	.footer{
 	  transform : translateY(-100%);
 	}
+	.con{
+		padding-bottom:300px;
+	
+	}
 </style>
 </head>
 <body>
-	<div class="container mt-4">
-		<div class="row">
+	<div class="container con mt-4">
+		<div class="row mt-4">
 			<div class="col-12 text-center">
-				<h2>${dto.title }</h2>
+				<h1>${dto.title }</h1>
 			</div>
-			<div class="col-4">
-				여행 컨셉 : ${dto.theme }
+			<div class="col-4 mt-4">
+				<h5>여행 컨셉 : ${dto.theme }</h5>
 			</div>
-			<div class="col-8 text-end">
-				여행 시작일 ${dto.startDate } ~ 여행 종료일 ${dto.endDate }
+			<div class="col-8 text-end mt-4">
+				<h5>여행 시작일 ${dto.startDate } ~ 여행 종료일 ${dto.endDate }</h5>
 			</div>
 			
-			<div class="col">
+			<div class="col mt-2">
 				<c:forEach var="i" items="${list }">
 					<c:set var="k" value="${k+1 }"/>
-					<div class="row border mt-2">
-						<div class="col-12">
-							<span>${k }일차</span>				
+					<div class="row border mt-4">
+						<div class="col-12 text-center mt-2 mb-2">
+							<h4>${k }일차</h4>				
 						</div>
 						<div class="col-12 col-lg-6">
-							<div class="row mt-2 border">
-						
+							<div class="row mt-2">
+							<c:if test="${empty i }"><div class="col-12 mt-1 text-center">등록된 일정이 없습니다.</div></c:if>
 							<c:forEach var="j" items="${i }">
 									<c:set var="l" value="${l+1 }"/>
 									<div class="col-3 mt-1" style=" border-radius:3px; border:1px solid black;">
@@ -73,7 +76,7 @@
 							</c:forEach>						
 							</div>
 						</div>
-						<div class="col-12 col-lg-6 border map" id="map${k }">
+						<div class="col-12 col-lg-6 map" id="map${k }">
 							
 						</div>
 					</div>	
@@ -81,11 +84,11 @@
 
 			</div>
 		</div>
-		<div class=col-12>
-		<span>사용자 메모</span>
+		<div class="col-12 text-center border mt-5">
+		<h3>사용자 메모</h3>
 		<span>${dto.memo }</span>
 		</div>
-		<div class="col-12 d-flex justify-content-center">
+		<div class="col-12 d-flex justify-content-center mt-5">
 			<c:if test="${loginSeq eq dto.mem_seq }">
 				<a href="/plan/modify?seq=${dto.seq }"><button type=button class="btn btn-success m-2" id="modifyBtn">수정</button></a>	
 				<button type=button class="btn btn-success m-2" id="deleteBtn">삭제</button>	
