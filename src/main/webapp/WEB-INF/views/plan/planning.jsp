@@ -56,7 +56,20 @@ li.drag-sort-active {
   font-style: normal;
   font-size: 80px;  /* Preferred icon size */
   display: inline-block;
+}
 
+	html,body{
+		height:100%;
+	}
+	
+	.container{
+		height:auto;
+		min-height:100%;
+		padding-bottom:300px;
+	}
+	.footer{
+	  transform : translateY(-100%);
+	}
 
 </style>
 <script>
@@ -150,7 +163,6 @@ li.drag-sort-active {
 					</div>
 					</form>
 			</div>
-		</div>
 		
 		
 		<!-- 여행지 생성 -->
@@ -306,6 +318,8 @@ li.drag-sort-active {
 			</div>
 		</div>
 	</div>	
+	</div>
+	
 	<jsp:include page="../base/footer.jsp"></jsp:include>
 					
 

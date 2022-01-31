@@ -19,6 +19,18 @@
 			height:400px;
 		}
 	}
+	html,body{
+		height:100%;
+	}
+	
+	.container{
+		height:auto;
+		min-height:100%;
+		padding-bottom:300px;
+	}
+	.footer{
+	  transform : translateY(-100%);
+	}
 </style>
 </head>
 <body>
