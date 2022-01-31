@@ -24,8 +24,6 @@
   /* 사이드바 시작 */
   .sideBar {
     width: 200px;
-    height: 1000px;
-    background-color: rgb(250, 250, 250);
   }
 
   /* 초상화 공간 */
@@ -366,6 +364,7 @@
 
   .postHeader li:nth-child(5) {
     width: 40px;
+    display: none;
   }
 
   .postHeader li:nth-child(6) {
@@ -408,6 +407,7 @@
 
   .postContents li:nth-child(5) {
     width: 40px;
+    display: none;
   }
 
   .postContents li:nth-child(6) {

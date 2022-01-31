@@ -294,7 +294,7 @@ a:active {
 			<div class="button">
 				<a href="/tourboard/list?cpage=1"><button type=button class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button></a>
 				<c:if test="${!empty loginNick }">
-					<c:if test="${dto.nick == loginNick}">
+					<c:if test="${dto.mem_seq == loginSeq}">
 						<button type=submit id=mod class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">수정</span></button>
 						<button type=button id=del class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">삭제</span></button>
 					</c:if>
@@ -329,7 +329,7 @@ a:active {
                    		<textarea type=text id="rep_con" name="reply" placeholder=" 댓글을 입력해주세요" ></textarea>
                		</div>
                		<div class="button2">
-                   		<button type="submit"  id="write_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 작성</span></button>
+                   		<button type="submit" id="write_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 작성</span></button>
                		</div>
 				</c:if>
 		</form>
@@ -351,10 +351,10 @@ a:active {
 						<c:if test="${!empty loginNick }">
 						<div class="rep_btn">
 							<button type=button class="rp_reply_btn btn btn-primary btn-sm" id="rp_reply_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none; background-color: rgb(56, 181, 174);"><span style="font-size: small;">답글 달기</span></button>
-							<c:if test="${rp.nick == loginNick}">
+							<c:if test="${rp.mem_seq == loginSeq}">
 								<button type=button class="rp_del_btn btn btn-primary btn-sm" id="rp_del_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 삭제</span></button>
 								<button type=button class="rp_mod_btn btn btn-primary btn-sm" id="rp_mod_btn${rp.seq }" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 수정</span></button>
-								<button type=submit class="rp_modOk_btn btn btn-primary btn-sm" id="rp_modOk_btn${rp.seq }" style="display: none; border: none;background-color: rgb(56, 181, 174);" formaction="/tourreply/modify" class="btn btn-primary btn-sm"><span style="font-size: small;">수정 완료</span></button>
+								<button type=submit class="rp_modOk_btn btn btn-primary btn-sm" id="rp_modOk_btn${rp.seq }" onclick ="replyConfirm()" style="display: none; border: none;background-color: rgb(56, 181, 174);" formaction="/tourreply/modify" class="btn btn-primary btn-sm"><span style="font-size: small;">수정 완료</span></button>
 								<button type=button class="rp_cancle_btn btn btn-primary btn-sm" id="rp_cancle_btn${rp.seq }" style="display: none; border: none;background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm"><span style="font-size: small;">수정 취소</span></button>
 							</c:if>
 						</div>
@@ -391,7 +391,7 @@ a:active {
                                				<input type=text id="recontent${re.seq }" style="border:none; width:100%;" name="recontent" value="${re.contents}" readonly>
                                			</div>     
                                			<c:if test="${!empty loginNick }">
-                               				<c:if test="${re.nick == loginNick}">
+                               				<c:if test="${re.mem_seq == loginSeq}">
                                					<div class="re_rp_btns" style="text-align: right; margin-top:10px; padding-right:20px;"">
                                					<button type=button class="re_del_btn btn btn-primary btn-sm" id="re_del_btn${re.seq }" class="btn btn-primary btn-sm" style="border: none; background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 삭제</span></button>
                             					<button type=button class="re_mod_btn btn btn-primary btn-sm" id="re_mod_btn${re.seq }" rpseq=${rp.seq } class="btn btn-primary btn-sm" style="border: none; background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 수정</span></button>
@@ -509,10 +509,15 @@ a:active {
 	<script>
 		$(".re_modOk_btn").on("click", function(){
 // 			re_modOk_btn${re.seq}${rp.seq }
-			let id = this.id.substr(12);
+			let id = this.id.substr(12);			
+			let recontent = $("#recontent${re.seq }"+id).val();			
 			
-			let recontent = $("#recontent${re.seq }"+id).val();
-			
+			if(recontent==""){	    		
+	    		alert("내용을 입력해주세요");
+	    		
+	    		return false;
+	    	}
+
 			location.href = "/tourreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;
 		})
 	</script>
@@ -535,10 +540,16 @@ a:active {
 			$("#re_modOk_btn"+id).css("display","inline");
 			$("#re_cancle_btn"+id).css("display","inline");	
 			$("#recontent"+id).removeAttr("readonly");
+			
+			let recontent = $("#recontent"+id).val();
+			$("#recontent"+id).val("");
+			$("#recontent"+id).focus();
+			$("#recontent"+id).val(recontent);
 		})
 		
 	</script>
-	
+		
+		
 	<script>
 		$(".rp_reply_cancle_btn").on("click", function(){
 			let id = this.id.substr(19)
@@ -549,7 +560,8 @@ a:active {
 	<script>
 		$(".rp_reply_btn").on("click", function(){
 			let id = this.id.substr(12);
-			$("#re_reply_input"+id).css("display", "inline");
+			$("#re_reply_input"+id).css("display", "inline");		
+			
 		})
 	</script>
 	
@@ -561,7 +573,7 @@ a:active {
 			}
 		})
 	</script>
-
+	
 	<script>
 		$(".rp_mod_btn").on("click", function() {
 			//${rp.seq }
@@ -573,6 +585,13 @@ a:active {
 			$("#rp_modOk_btn" + id).css("display", "inline");
 			$("#rp_reply_btn" + id).css("display", "none");
 			$("#rp_contents" + id).removeAttr("readonly");
+			
+			let rp_contents = $("#rp_contents" + id).val();	
+			
+			console.log(rp_contents);
+			$("#rp_contents" + id).val("");
+			$("#rp_contents" + id).focus();
+			$("#rp_contents" + id).val(rp_contents);
 		})
 	</script>
 

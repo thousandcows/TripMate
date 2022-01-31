@@ -17,6 +17,7 @@
   /* 전체영역 크기 조절 */
   .myPageContainer {
     width: 1200px;
+    height:870px;
     display: flex;
     margin: auto;
   }
@@ -24,8 +25,6 @@
   /* 사이드바 시작 */
   .sideBar {
     width: 200px;
-    height: 1000px;
-    background-color: rgb(250, 250, 250);
   }
 
   /* 초상화 공간 */
@@ -295,15 +294,11 @@
   }
 
   /* 정보수정 끝 */
-  footer {
-    width: 100%;
-    height: 300px;
-    background-color: aliceblue;
-  }
 
   @media (max-width: 480px) {
     .myPageContainer {
       width: 100%;
+      height:700px;
     }
     /* 사이드바 시작 */
   .sideBar {
@@ -595,9 +590,4 @@
   }
 
   /* 정보수정 끝 */
-  footer {
-    width: 100%;
-    height: 100px;
-    background-color: aliceblue;
-  }
   }

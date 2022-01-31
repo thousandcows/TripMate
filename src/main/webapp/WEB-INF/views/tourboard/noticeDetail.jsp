@@ -9,8 +9,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-<jsp:include page="../base/header.jsp"></jsp:include>
  
 <!-- fontawesome cdn -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
@@ -280,7 +278,7 @@
             	<hr style="margin:20px 0px 30px 0px;">
     
                 <div class="write_con">
-                    <textarea id="summernote"  name="explanation">${dto.contents }</textarea>
+                    ${dto.contents }
                 </div>
     
     			<div class="button">
@@ -305,35 +303,6 @@
 		})
 	</script>
 	
-	<!-- 썸머노트 -->
-	<script>
-	$(document).ready(function() {
-		//여기 아래 부분
-		$('#summernote').summernote({
-              height:500, // 에디터 높이
-    		  minHeight: 500,             // 최소 높이
-    		  maxHeight: null,             // 최대 높이
-    		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-    		  lang: "ko-KR",					// 한글 설정
-    		  toolbar: [
-				    // [groupName, [list of button]]
-				    ['fontname', ['fontname']],
-				    ['fontsize', ['fontsize']],
-				    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-				    ['color', ['forecolor','color']],
-				    ['table', ['table']],
-				    ['para', ['ul', 'ol', 'paragraph']],
-				    ['height', ['height']],
-				    ['insert',['picture','link','video']],
-				    ['view', ['fullscreen', 'help']]],
-			  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-			  fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-    		  placeholder: '최대 2048자까지 쓸 수 있습니다' 	//placeholder 설정
-    		  
-   			
-    	});    	
-		$('#summernote').summernote('disable');
-	}); 
-    </script>
+
 </body>
 </html>

@@ -12,9 +12,7 @@
         crossorigin="anonymous"></script>
       <title>Trip Mate</title>
       <jsp:include page="base/header.jsp"></jsp:include>
-
     </head>
-
     <style>
       h6,
       .h6 {
@@ -45,6 +43,12 @@
         background-color: rgba(163, 216, 230, 0.671);
       }
 
+      .top-btn {
+        position: fixed;
+        right: 100px;
+        bottom: 50px;
+      }
+
       ul {
         list-style-type: none;
       }
@@ -57,48 +61,26 @@
         z-index: 10;
       }
 
-      .carousel-indicators {
+      .carousel-item {
         z-index: 10;
       }
     </style>
 
     <body>
-
-
-
       <div id="tirp list" class="triplist">
-
         <div class="triplist">
-          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
-            </div>
+          <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="/images/국내여행1.jpg" class="d-block w-100" alt="...">
+                <img src="/images/calPic1.jpg" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
-                <img src="/images/국내여행2.jpg" class="d-block w-100" alt="...">
+                <img src="/images/calPic2.jpg" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
-                <img src="/images/국내여행4.jpg" class="d-block w-100" alt="...">
+                <img src="/images/calPic3.jpg" class="d-block w-100" alt="...">
               </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
           </div>
 
           <section class='section-intro'>
@@ -200,11 +182,9 @@
               <a href="#"><img src="/images/up1.png" />
               </a>
             </div>
+          </section>
         </div>
       </div>
-      </div>
-      </section>
-      </main>
       <jsp:include page="base/footer.jsp"></jsp:include>
 
       <script>

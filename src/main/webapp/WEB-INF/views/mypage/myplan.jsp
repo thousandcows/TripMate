@@ -41,7 +41,6 @@
           /* 사이드바 시작 */
           .sideBar {
             width: 200px;
-            height: 1000px;
           }
 
           /* 초상화 공간 */
@@ -239,6 +238,10 @@
               </c:forEach>
             </div>
           </div>
+        </div>
+        <footer>
+          <jsp:include page="../base/footer.jsp"></jsp:include>
+        </footer>
       </body>
 
       </html>

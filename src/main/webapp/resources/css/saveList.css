@@ -161,12 +161,6 @@
     cursor: pointer;
   }
 
-  footer {
-    width: 100%;
-    height: 100px;
-    background-color: aliceblue;
-  }
-
   @media (max-width: 480px) {
     .myPageContainer {
       width: 100%;

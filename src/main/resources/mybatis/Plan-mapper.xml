@@ -18,7 +18,7 @@
 	</insert>
 	
 	<update id="changeTheme">
-		update plan set title = #{title},startDate=to_date(#{startDate},'YYYY/MM/DD'),endDate=TO_DATE(#{endDate},YYYY/MM/DD),theme=#{theme} where seq = #{seq}
+		update plan set title = #{title},startDate=to_date(#{startDate},'YYYY/MM/DD'),endDate=TO_DATE(#{endDate},'YYYY/MM/DD'),theme=#{theme} where seq = #{seq}
 	</update>
 	
 	<insert id="saveList">
@@ -51,7 +51,7 @@
 	</select>
 	
 	<update id="sortDatePlan">
-		update detail_plan set plan_date = TO_DATE(#{day},'YYYY/MM/DD) where seq = #{seq}
+		update detail_plan set plan_date = TO_DATE(#{day},'YYYY/MM/DD') where seq = #{seq}
 	</update>
 	
 	<update id="sortDate">
