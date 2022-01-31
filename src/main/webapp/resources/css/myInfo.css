@@ -17,6 +17,7 @@
   /* 전체영역 크기 조절 */
   .myPageContainer {
     width: 1200px;
+    height:870px;
     display: flex;
     margin: auto;
   }
@@ -297,6 +298,7 @@
   @media (max-width: 480px) {
     .myPageContainer {
       width: 100%;
+      height:700px;
     }
     /* 사이드바 시작 */
   .sideBar {
