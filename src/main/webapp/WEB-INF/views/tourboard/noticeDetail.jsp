@@ -27,7 +27,7 @@
 <!-- include summernote css/js -->
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    
+    <jsp:include page="../base/header.jsp"></jsp:include>
     <style>
         * {
             box-sizing: border-box;
@@ -242,9 +242,7 @@
 </head>
            
 <body>
-	<div class="header">		
-		<jsp:include page="../base/header.jsp"></jsp:include>
-	</div>
+
 	<div class="banner">
         <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
         <div class="banner_title"> 여행지 게시판 </div>
@@ -287,9 +285,10 @@
            </div>
       </form>
       </div>
-      <div class="footer">
-    	<jsp:include page="../base/footer.jsp"></jsp:include>
- 	  </div>
+      
+	<footer>
+    	    <jsp:include page="../base/footer.jsp"></jsp:include>
+    </footer>
 
 	    
     

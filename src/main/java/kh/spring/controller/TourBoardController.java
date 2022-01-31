@@ -18,12 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dao.TourBoardDAO;
 import kh.spring.dao.TourReplyDAO;
+import kh.spring.dto.MemberDTO;
 import kh.spring.dto.NoticeDTO;
 import kh.spring.dto.TourBoardDTO;
 import kh.spring.dto.TourBoardLikeDTO;
 import kh.spring.dto.TourReplyDTO;
 import kh.spring.dto.TourReplyReplyDTO;
 import kh.spring.service.AdminService;
+import kh.spring.service.MemberService;
 import kh.spring.service.TourBoardService;
 import kh.spring.service.TourReplyService;
 import kh.spring.statics.Statics;
@@ -44,6 +46,8 @@ public class TourBoardController {
 	@Autowired
 	public TourReplyService rservice;
 	
+	@Autowired
+	public MemberService mservice;
 	@Autowired
 	public AdminService aservice;
 	
@@ -184,6 +188,8 @@ public class TourBoardController {
 		String loginNick = (String)request.getSession().getAttribute("loginNick");
 		Integer login_seq = (Integer) session.getAttribute("loginSeq");
 		
+		MemberDTO mdto = mservice.myInfoSelectAll(login_seq);
+		
         TourBoardDTO dto = bservice.selectBySeq(seq);
         
         bservice.addViewCount(seq);
@@ -213,7 +219,7 @@ public class TourBoardController {
      	// 좋아요 카운트
      	int likeCount = bservice.totalBoardLike(seq);
      	
-     	
+     	model.addAttribute("loginInfo", mdto);
      	model.addAttribute("loginSeq", login_seq);
      	model.addAttribute("likeCount", likeCount);        
      	model.addAttribute("loginNick", loginNick);

@@ -16,6 +16,7 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<jsp:include page="../base/header.jsp"></jsp:include>
  <style>
         * {box-sizing: border-box;}
 
@@ -115,9 +116,7 @@
 </head>
    
 <body>
-	<div class="header">		
-		<jsp:include page="../base/header.jsp"></jsp:include>
-	</div>
+
 	<form action="/tourboard/writeProc" method="post" id="frmWrite" enctype="multipart/form-data">
     <!-- .banner에 이미지 추가해야한다.-->
     <div class="banner">
@@ -160,9 +159,10 @@
         </div>
     </div>    
     </form>
-    <div class="footer">
-    	<jsp:include page="../base/footer.jsp"></jsp:include>
-    </div>
+    
+	<footer>
+    	    <jsp:include page="../base/footer.jsp"></jsp:include>
+    </footer>
     
     <script>
     $(document).ready(function() {
