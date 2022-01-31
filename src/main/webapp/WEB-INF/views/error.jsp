@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <title>Document</title>
+  <title>404 에러</title>
   <style>
     @import url(https://fonts.googleapis.com/css?family=Ubuntu);
 
@@ -382,11 +383,11 @@
 
     <div class="box__description">
       <div class="box__description-container">
-        <div class="box__description-title">이런!</div>
-        <div class="box__description-text">알 수 없는 에러로 인해 페이지가 중단되었습니다.</div>
+        <div class="box__description-title">문제가 발생했어요!</div>
+        <div class="box__description-text">문제가 지속적으로 발생한다면, 관리자에게 문의주세요.<br>02-1234-5678</div>
       </div>
 
-      <a href="/" class="box__button">Go Home</a>
+      <a href="/" class="box__button">홈으로 이동</a>
 
     </div>
 
