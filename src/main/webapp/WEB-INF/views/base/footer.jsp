@@ -6,13 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <style>
+
 .footer-copy {background-color: #f5e3b9;}
+
+.footer{
+position:relative;
+bottom: 0;
+width:100%;
+margin-top:50px;
+}
 </style>
 </head>
 <body>
-	<footer class='footer mt-4'>
+	<footer class='footer container-fluid'>
 		<div class='footer-copy'>
-			<div class='container'>
 				<div class='row'>
 					<div class='col-xs-2'>
 						<img class="web" src="/images/footer.png" /> <img class="mobile"
@@ -26,7 +33,6 @@
 						<p>Copyrightⓒ 2022 TripMate.Ltd. All rights reserved.</p>
 					</div>
 				</div>
-			</div>
 		</div>
 	</footer>
 
