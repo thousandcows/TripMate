@@ -409,14 +409,14 @@ a:active {
               		<c:if test="${!empty loginSeq}">
                 		<div id=like_icon>
                 			<a class="heart">
-           						<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
+           						<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count" style="color:black;"> ${likeCount}</span>
        						</a>
                 		</div>
                 	</c:if>
                 	<c:if test="${empty loginSeq}">
                 		<div id=like_icon>
                 			<a class="heart_nonmem">
-           						<img id="heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
+           						<img id="heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count" style="color:black;"> ${likeCount}</span>
        						</a>
                 		</div>
                 	</c:if>
@@ -426,14 +426,14 @@ a:active {
                 	<c:if test="${dto.expired == '진행'}">
                 	<div id=recruit_icon>
                 		<a class="recruit_list_see">
-                			<i class="far fa-user" style="color: black"></i><span id="mem_count" name="mem_count"> ${memCount} </span>
+                			<i class="far fa-user" style="color: black"></i><span id="mem_count" name="mem_count" style="color:black;"> ${memCount} </span>
                 		</a>
                 	</div>
                 	</c:if>
                 	<c:if test="${dto.expired == '마감'}">
                 	<div id=recruit_icon>
                 		<a class="recruit_list_see_no">
-                			<i class="far fa-user" style="color: black"></i><span id="mem_count" name="mem_count"> ${memCount} </span>
+                			<i class="far fa-user" style="color: black"></i><span id="mem_count" name="mem_count" style="color:black;"> ${memCount} </span>
                 		</a>
                 	</div>
                 	</c:if>

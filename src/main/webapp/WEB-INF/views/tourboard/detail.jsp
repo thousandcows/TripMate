@@ -375,7 +375,7 @@ a:active {
           	<c:if test="${empty loginNick}">
                 <div id=like_icon>
           			<a class="heart_nonmem">
-   						<img id="heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
+   						<img id="heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count" style="color:black;"> ${likeCount}</span>
     				</a>
                 </div>
             </c:if>
