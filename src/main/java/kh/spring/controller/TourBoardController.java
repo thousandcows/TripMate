@@ -188,7 +188,7 @@ public class TourBoardController {
 		String loginNick = (String)request.getSession().getAttribute("loginNick");
 		Integer login_seq = (Integer) session.getAttribute("loginSeq");
 		
-		MemberDTO mdto = mservice.myInfoSelectAll(login_seq);
+		
 		
         TourBoardDTO dto = bservice.selectBySeq(seq);
         
@@ -218,6 +218,9 @@ public class TourBoardController {
      	
      	// 좋아요 카운트
      	int likeCount = bservice.totalBoardLike(seq);
+     	
+     	int writer_seq = dto.getMem_seq();
+     	MemberDTO mdto = mservice.myInfoSelectAll(writer_seq);
      	
      	model.addAttribute("loginInfo", mdto);
      	model.addAttribute("loginSeq", login_seq);
