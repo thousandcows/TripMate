@@ -88,6 +88,17 @@ ul>li{
 .reply_id:hover{
 	cursor:pointer;
 }
+.btn-success{
+	background-color:#3EB489;
+	border:none;
+}
+.btn-primary{
+	background-color:#1c9f65;
+	border:none;
+}
+.btn-primary:hover{
+	background-color:#14754a;
+}
 </style>
 	<%@ include file="../base/header.jsp"%>
 
@@ -95,7 +106,7 @@ ul>li{
 <body>
 
 	<div class="container">
-		<div class="row">
+		<div class="row mt-2">
 			<div class="col text-center">
 			<c:if test="${dto.photo ne 'null' }">
 				<img class="img-fluid" id="mainImg" src="${dto.photo}"><br>
@@ -123,7 +134,7 @@ ul>li{
 						</span>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row mt-2">
 					<div class="col col-md-9">
 					<c:if test="${!empty score }">
 						<ul class="list-group-horizontal p-0">
@@ -162,20 +173,20 @@ ul>li{
 						</c:if>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row mt-2">
 					<div class="co">
-						분류 : ${dto.category }<br>
+						<p>분류 : ${dto.category }</p>
 						<c:if test="${dto.lo_detail ne '' }">
-							주소 : ${dto.lo_detail }<br>
+							<p>주소 : ${dto.lo_detail }</p>
 						</c:if>
 						<c:if test="${dto.phone ne 'null' }">
-							연락처 : ${dto.phone }<br>
+							<p>연락처 : ${dto.phone }</p>
 						</c:if>
 						<c:if test="${dto.homepage ne 'null' }">
-							홈페이지 : ${dto.homepage }<br>
+							<p>홈페이지 : ${dto.homepage }</p>
 						</c:if>
 						<div>
-							<button type="button" class="btn btn-primary"
+							<button type="button" class="btn btn-primary mt-2 text-center"
 								data-bs-toggle="modal" data-bs-target="#exampleModal"
 								id="showMore">상세정보</button>
 							<!-- Modal -->
@@ -223,6 +234,9 @@ ul>li{
 
 		<form action="/area/replySubmit" method="post" enctype="multipart/form-data">
 			<div class="row border mt-4">
+				<div class="col-12 text-center mb-2 border">
+					<h4>후기 남기기</h4>
+				</div>
 				<div class="col-2">
 				<label class="w-100" style="height:100px;">
 				<div id="ph">
@@ -235,11 +249,11 @@ ul>li{
 				</label>
 				<div class="col-10">
 					<div class="row">
-						<div class="form-floating col-12 p-0">
-						  <textarea class="form-control p-0" maxlength="1000" minlength=5 placeholder="댓글작성" id="replyText" name="text" required></textarea>
+						<div class="form-floating col-12 p-0 mr-2">
+						  <textarea class="form-control p-2" maxlength="1000" minlength=5 placeholder="댓글작성" id="replyText" name="text" required></textarea>
 						</div>
 					</div>
-					<div class="row mt-1 mb-2">
+					<div class="row mt-2 mb-4">
 						<div class="col-6 mt-2" id="starRate">
 						</div>
 

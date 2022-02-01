@@ -82,6 +82,10 @@ window.onload = function(){
 	background-color:black;
 	opacity:0.6;
 }
+.card-img-overlay{
+	padding-right:13px;
+	padding-left:13px;
+}
 </style>
 
 <body>
@@ -163,10 +167,10 @@ window.onload = function(){
 						<c:forEach var="item" items="${list }">
 							<div id="${item.contentid }" class="detail col-6 col-md-4 col-lg-3 card text-center mt-2">
 								<c:if test="${item.firstimage ne 'null' }">
-									<img src="${item.firstimage}" class="listPhoto card-img pl-1">
+									<img src="${item.firstimage}" class="listPhoto card-img ">
 								</c:if>
 								<c:if test="${item.firstimage eq 'null' }">
-									<img src="/images/noPhoto.png" class="listPhoto card-img pr-1">
+									<img src="/images/noPhoto.png" class="listPhoto card-img ">
 								</c:if>
 								<div class="card-img-overlay d-flex align-items-end flex-column mt-2 pb-0 pt-1">
 								<p class="card-text text-white w-100 mt-auto ">
