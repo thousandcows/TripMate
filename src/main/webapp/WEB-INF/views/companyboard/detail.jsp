@@ -498,7 +498,7 @@ a:active {
                            		 	<c:if test="${repl.mem_seq == loginSeq}">
                            		 		<button type=button id="rep_del${repl.seq }" class="btn btn-primary btn-sm rep_del" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 삭제</span></button>
                            	 			<button type=button id="rep_mod${repl.seq }" class="btn btn-primary btn-sm rep_mod" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 수정</span></button>
-                        				<button type=submit id="rep_modok${repl.seq }" formaction="/comreply/modify" class="btn btn-primary btn-sm rep_modok" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 완료</span></button>
+                        				<button type=submit id="rep_modok${repl.seq }" formaction="/comreply/modify" class="btn btn-primary btn-sm rep_modok" style="border: none; background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 완료</span></button>
                             			<button type=button id="rep_modcancel${repl.seq }" class="btn btn-primary btn-sm rep_modcancel" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 취소</span></button>
                         			</c:if>
                         		</div>
@@ -511,10 +511,10 @@ a:active {
                         				<div class="re_reply_content">
                             				<input type=hidden value="${dto.seq}" name=writeseq>
                             				<input type=hidden value="${repl.seq}" name=rpseq>
-                            				<input type=text placeholder="댓글을 입력하세요" name=recontents style="width: 100%; padding: 10px; outline:none;" autocomplete="off">
+                            				<input type=text placeholder="댓글을 입력하세요" id="rereply_contents" name=recontents style="width: 100%; padding: 10px; outline:none;" autocomplete="off">
                             			</div>
                             			<div class="re_rep_input_btn" style="text-align: right; margin-top:10px; padding-right:20px;">
-                            				<button type=submit formaction="/comreply/rereply" class="btn btn-primary btn-sm"style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 완료</span></button>
+                            				<button type=submit formaction="/comreply/rereply" class="re_reply_write btn btn-primary btn-sm"style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 완료</span></button>
                            	 				<button type=button class="btn btn-primary btn-sm re_rep_cancle_btn" id="re_rep_cancle_btn${repl.seq }" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 취소</span></button>
                             			</div>
                         			</div>               		
@@ -660,7 +660,17 @@ a:active {
 			$("#re_rep_input"+id).css("display", "none");
 		})
 	
-		/* 대댓글 관련 */
+		/* 대댓글 관련 */		
+		$(".re_reply_write").on("click", function(){
+		
+			if($("#rereply_contents").val() == ""){
+ 				alert("댓글을 작성해주세요");
+ 				return false;
+ 			}
+ 			
+			$('#frmRpMod').submit();
+		})
+		
    		$(".re_rep_del").on("click", function(){
 			let id = this.id.substr(10);
 			location.href = "/comreply/redelete?idseq="+id+"&writeseq=${dto.seq}";
@@ -671,6 +681,12 @@ a:active {
 			
 			let recontent = $("#recontent${rerepl.seq }"+id).val();
 			console.log(recontent + " : " + $("#recontent${rerepl.seq }").val());
+			
+			if(recontent==""){
+				alert("내용을 입력해주세요");
+				
+				return false;
+			}
 			
 			location.href = "/comreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;
 		})
@@ -752,7 +768,18 @@ a:active {
 		$(".rep_modcancel").on("click", function() {
 			location.reload();
 		})
-	</script>    
+		
+		$(".rep_modok").on("click", function(){
+			let id = this.id.substr(9);
+			
+			if($("#rep_modok"+id).val() == ""){
+				alert("댓글을 입력하세요");
+				return false;
+			}
+			$('#frmRpMod').submit();
+		})
+	
+	</script>
     
     <!-- 목록으로 / 삭제하기 -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
