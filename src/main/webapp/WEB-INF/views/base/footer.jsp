@@ -15,17 +15,23 @@ bottom: 0;
 width:100%;
 margin-top:50px;
 }
+.footer-text{
+	text-indent:30px;
+}
+.footer-logo{
+	margin-left:30px;
+}
 </style>
 </head>
 <body>
-	<footer class='footer container-fluid'>
+	<footer class='footer container-fluid p-0'>
 		<div class='footer-copy'>
 				<div class='row'>
 					<div class='col-xs-2'>
-						<img class="web" src="/images/footer.png" /> <img class="mobile"
+						<img class="web footer-logo" src="/images/footer.png" /> <img class="mobile"
 							src="" />
 					</div>
-					<div class='col-xs-10'>
+					<div class='col-xs-10 footer-text'>
 						<p>Since : 2022 년 01월 12일 Owner : 임도혁 서승희 정혜주 이진호 홍진규 천현우</p>
 						<p>ComPany : 트립메이트, Tel : 02-2022-0112 E-mail :
 							6trip@tripmate.com</p>
