@@ -511,10 +511,10 @@ a:active {
                         				<div class="re_reply_content">
                             				<input type=hidden value="${dto.seq}" name=writeseq>
                             				<input type=hidden value="${repl.seq}" name=rpseq>
-                            				<input type=text placeholder="댓글을 입력하세요" id="rereply_contents" name=recontents style="width: 100%; padding: 10px; outline:none;" autocomplete="off">
+                            				<input type=text placeholder="댓글을 입력하세요" id="rereply_contents${repl.seq }" name=recontents style="width: 100%; padding: 10px; outline:none;" autocomplete="off">
                             			</div>
                             			<div class="re_rep_input_btn" style="text-align: right; margin-top:10px; padding-right:20px;">
-                            				<button type=submit formaction="/comreply/rereply" class="re_reply_write btn btn-primary btn-sm"style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 완료</span></button>
+                            				<button type=submit formaction="/comreply/rereply" class="re_reply_write btn btn-primary btn-sm" id="re_reply_write${repl.seq }" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 완료</span></button>
                            	 				<button type=button class="btn btn-primary btn-sm re_rep_cancle_btn" id="re_rep_cancle_btn${repl.seq }" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 취소</span></button>
                             			</div>
                         			</div>               		
@@ -662,12 +662,12 @@ a:active {
 	
 		/* 대댓글 관련 */		
 		$(".re_reply_write").on("click", function(){
-		
-			if($("#rereply_contents").val() == ""){
- 				alert("댓글을 작성해주세요");
- 				return false;
- 			}
- 			
+			let id = this.id.substr(14);
+			
+			if($("#rereply_contents"+id).val() == ""){
+				alert("댓글을 작성해주세요");
+ 				return false;			
+ 			}			
 			$('#frmRpMod').submit();
 		})
 		
@@ -684,7 +684,7 @@ a:active {
 			
 			if(recontent==""){
 				alert("내용을 입력해주세요");
-				
+				$("#recontent${rerepl.seq }"+id).focus();
 				return false;
 			}
 			
@@ -772,8 +772,9 @@ a:active {
 		$(".rep_modok").on("click", function(){
 			let id = this.id.substr(9);
 			
-			if($("#rep_modok"+id).val() == ""){
+			if($("#e_rep_con"+id).val() == ""){
 				alert("댓글을 입력하세요");
+				$("#e_rep_con"+id).focus();
 				return false;
 			}
 			$('#frmRpMod').submit();
