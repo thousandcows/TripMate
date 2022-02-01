@@ -27,8 +27,8 @@
         /* div{border:1px solid black} */
 
         .banner{
-            background-color: rgb(56, 181, 174);
-            height:200px;
+            background-image:url("/images/community_banner.png");
+           	height:200px;
         }
 
         .banner_title{

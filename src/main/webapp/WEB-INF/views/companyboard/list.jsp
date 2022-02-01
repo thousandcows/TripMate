@@ -77,11 +77,6 @@
                 height: 30px;
             }
             
-            .searchbar > button{
-                height: 30px;
-                border: none;
-            }
-            
             .searchbar > select{
                 height: 30px;
             }
@@ -89,8 +84,13 @@
             .searchbar>span{
                 position: relative;
             }
+            
+            .searchbar>input{
+            	height: 30px;
+            }
+            
             .fa-search{
-                line-height: 30px;
+                line-height:30px;
                 position: absolute;
                 right: 8px;
                 color: rgb(153, 153, 153);
@@ -143,7 +143,6 @@
             }
 
             .page{
-                /* border: 1px solid red; */
                 text-align: center;
                 padding: 20px 0px 0px 0px;
                 line-height: 20px;
@@ -399,7 +398,10 @@
                 <option name="searchTitle" value="search_title" selected>제목</option>
                 <option name="searchId" value="search_writer">작성자</option>
             </select>
-            <span><input id="searchText" name="searchText" type="text" placeholder="Search"><a class="fas fa-search" onclick="$('#frmSearch').submit()"></a></span>
+            <span>
+            	<input id="searchText" name="searchText" type="text" placeholder="Search">
+            	<a class="fas fa-search" onclick="$('#frmSearch').submit()"></a>
+            </span>
             <!-- <button type=submit id=search class="btn btn-primary btn-sm" style="background-color: rgb(56, 181, 174);"><span style="font-size: small;">검색</span></button> -->
         </div>
         </form>

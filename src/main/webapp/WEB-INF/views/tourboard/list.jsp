@@ -53,7 +53,7 @@
         }
 
         /* 미니 사이트맵 루트 */
-        .container_c>.root{
+        .root{
             padding-left: 150px;
             overflow: auto;
             text-align: center;
