@@ -151,19 +151,14 @@ public class CompanyBoardController {
 		Integer login_seq = (Integer) session.getAttribute("loginSeq");
 		model.addAttribute("loginSeq", login_seq);
 		
-		MemberDTO mdto = mservice.myInfoSelectAll(login_seq);
-		model.addAttribute("loginInfo", mdto);
-		
-		
 		// dto, 조회수
 		CompanyBoardDTO dto = cbs.selectBySeq(seq);
-		//dto.setNick(loginNick);
+		int writer_seq = dto.getMem_seq();
+		MemberDTO mdto = mservice.myInfoSelectAll(writer_seq);
 		int result = cbs.addViewCount(seq);
 		model.addAttribute("dto",dto);
-		
-		// 좋아요 반영
-		
-		
+		model.addAttribute("loginInfo", mdto);
+		// 좋아요 반영		
 		if(loginNick != null) {
 			int loginSeq = (int) session.getAttribute("loginSeq");   
 			ComBoardLikeDTO c_dto = new ComBoardLikeDTO();
