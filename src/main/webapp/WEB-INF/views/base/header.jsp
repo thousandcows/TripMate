@@ -26,8 +26,31 @@
 
         body {
           position: relative;
-        }
+        } 
+        
         /* 헤더 */
+        
+        /* 임시 추가 부분*/
+        
+        .navbar{
+        	height: 60px !important;
+        }
+        
+        .navbar-nav > li{
+        	font-size : large;
+        }
+        
+        .navbar-brand{
+        	position: relative;
+        }
+        
+        .navbar-brand>img{
+        	/* position:absolute; */
+        	top:0px;
+        }
+        
+        /* --------------*/
+        
         header li {
           display: inline;
           padding-left: 50px;

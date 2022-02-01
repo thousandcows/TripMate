@@ -81,8 +81,8 @@ a:active {
 
 /* 헤더----------------------------------------------------- */
 .banner {
-	background-color: rgb(56, 181, 174);
-	height: 200px;
+	background-image:url("/images/community_banner.png");
+    height:200px;
 }
 
 .banner_title {
