@@ -43,8 +43,8 @@
 
         /* 헤더----------------------------------------------------- */
         .banner {
-            background-color: rgb(56, 181, 174);
-            height: 200px;
+            background-image:url("/images/community_banner.png");
+                height:200px;
         }
 
         .banner_title {
@@ -69,6 +69,7 @@
         .container_c {
             /* border: 1px solid red; */
             padding-bottom :30px;
+            overflow: auto;
         }
 
         /* 미니 사이트맵 루트 */
@@ -176,14 +177,42 @@
 
              
          /* 작성자/조회수칸 */
-        .writer_con{
-            width: 100%;
-            height: 50px;
+         
+        .writer_info{
+        	float:left;
+        	width:100%;
+        	height:50px;
+        	margin-top:20px;
+        	margin-bottom:20px;	
         }
-
-        .view_con{
+        
+        .writer_photo{
+        	float: left;
+        	width: 70px;
+        	height: 50px;
+        	text-align: center;
+        	line-height: 50px;
+        	padding-left:20px;
+        	
+        }
+        
+        .writer_photo>img{
+        	width: 50px;
+        	height: 50px;
+        }
+        
+        .writer_con{
+        	float: left;
+            width: 70%;
+            height: 100%;
+            padding-left:20px;
+        }
+        
+        .writer_con>div{
+        	float: left;
             width: 100%;
-            height: 30px;
+            height: 50%;
+            line-height:25px;
             color: gray;
         }
         
@@ -311,17 +340,22 @@ a:active {
                         <input type=text id=title name=title readonly value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; border: none; width: 90%;">
                     </span>
                 </div>
-                <div>
-					<img src="${loginInfo.photo}" class="portraitPhoto">
-				</div>
-                <div class="writer_con">
-               		<input type=hidden value="${dto.nick}" name=nick >
-                    <div style="line-height: 50px; padding-left: 100px; padding-top: 10px;"> ${dto.nick}</div>
+                
+                <div class = writer_info>
+                	<div class = writer_photo>
+						<img src="${loginInfo.photo}" class="portraitPhoto">
+					</div>
+					<div class = writer_con>
+						<div class="writer_nick">
+               				<input type=hidden value="${dto.nick}" name=nick >
+                    		<div> ${dto.nick}</div>
+                		</div>
+                		<div class="view_con">
+                    		<div>조회수 ${dto.view_count}</div>
+                		</div>
+					</div>
                 </div>
-                <div class="view_con">
-                    <div style="line-height: 30px; padding-left: 100px;">조회수 ${dto.view_count}</div>
-                </div>
-            	
+                
             	<hr style="margin:20px 0px 30px 0px;">
  
                 <div class="select_tour"><span style="font-weight: bold;">여행지 : </span>
