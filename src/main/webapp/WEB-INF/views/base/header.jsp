@@ -31,11 +31,6 @@
         /* 헤더 */
         
         /* 임시 추가 부분*/
-        
-        .navbar{
-        	height: 60px !important;
-        }
-        
         .navbar-nav > li{
         	font-size : large;
         }
