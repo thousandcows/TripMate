@@ -98,11 +98,33 @@ label:hover{
 	cursor:grabbing;
 }
 
+.btn-primary{
+	background-color:#A4D5EE;
+	border:none;
+
+}
+.btn-primary:hover{
+	background-color:#A1CDEB;
+}
+
+.btn-primary:focus{
+	background-color:#A8D3E9;
+}
+.btn-success{
+	background-color:#22c27b;
+	border:none;
+}
+.btn-success:hover{
+	background-color:#1a9860;
+}
+.btn-success:focus{
+	background-color:#0d4c30;
+}
 
 </style>
 <script>
 	$(document).ready(function(){
-		$("#thirdForm").fadeOut(200)()
+		$("#thirdForm").fadeOut(200)
 	})
 </script>
 </head>
@@ -113,12 +135,17 @@ label:hover{
 			<div class="col-12 text-center">
 				<h2>순서에 따라, 일정을 수립하세요.</h2>
 			</div>
-			<div class="col-12 d-flex justify-content-around">
-				<button type="button" class="btn btn-primary mr-2 ml-2" id="firstBtn">일정 생성</button>
-				<button type="button" class="btn btn-primary mr-2 ml-2" id="secondBtn">여행지 선택</button>
-				<button type="button" class="btn btn-primary mr-2 ml-2" id="thirdBtn">일정 순서 지정</button>
-				<button type="button" class="btn btn-primary mr-2 ml-2" id="fourthBtn">메모</button>
-				<button type="button" class="btn btn-primary mr-2 ml-2" id="goMain">리스트로 이동</button>
+			<div class="col-12 d-flex justify-content-around mt-4">
+				<button type="button" class="btn btn-success mr-2 ml-2" id="firstBtn">일정 생성</button>
+				<button type="button" class="btn btn-success mr-2 ml-2" id="secondBtn">여행지 선택</button>
+				<button type="button" class="btn btn-success mr-2 ml-2" id="thirdBtn">일정 순서 지정</button>
+				<button type="button" class="btn btn-success mr-2 ml-2" id="fourthBtn">메모</button>
+				<c:if test="${empty seq }">
+				<button type="button" class="btn btn-success mr-2 ml-2" id="goMain">리스트로 이동</button>
+				</c:if>
+				<c:if test="${!empty seq }">
+					<button type="button" class="btn btn-success mr-2 ml-2" id="back">내 목록으로</button>
+				</c:if>
 			</div>
 		</div>
 
@@ -126,11 +153,11 @@ label:hover{
 		<div class="row justify-content-center" id="firstForm" <c:if test="${!empty seq}">style="display:none;"</c:if>>
 			<div class="col-8 ">
 			<c:if test="${!empty seq }">
-				<form action="/plan/changeTheme" method="post">
+				<form action="/plan/changeTheme" id="changeThemeForm" method="post">
 				<input type="hidden" name="seq" value=${seq }>
 			</c:if>
 			<c:if test="${empty seq }">
-				<form action="/plan/chooseTheme" method="post">
+				<form action="/plan/chooseTheme" id="chooseThemeForm" method="post">
 			</c:if>
 				<div class="row border d-flex justify-content-center">
 					<div class="col-12 text-center mt-4">
@@ -138,7 +165,7 @@ label:hover{
 					</div>
 					<div class="col-10 text-center mt-4">
 						<div class="form-group">
-							<input type="text" name="title" class="form-control" id="planTitle" placeholder="제목을 입력하세요." value="${dto.title }" required>
+							<input type="text" name="title" class="form-control" id="planTitle" placeholder="제목을 입력하세요." value="${dto.title }" maxlength="33" required>
 						</div>
 					</div>
 					<div class="col-10 mt-2">
@@ -186,10 +213,10 @@ label:hover{
 
 							<div class="col-10 text-end mt-2 mb-2">
 							<c:if test="${empty seq }">
-								<input id="chooseThemeBtn" type="submit" class="btn btn-primary" value="저장" onclick="editCategory(this)"></input>
+								<input id="chooseThemeBtn" type="submit" class="btn btn-primary" value="저장" onclick="editCategory(chooseThemeForm)"></input>
 							</c:if>
 							<c:if test="${!empty seq }">
-								<input id="changeThemeBtn" type="submit" class="btn btn-primary" value="수정" onclick="editCategory(this)"></input>
+								<input id="changeThemeBtn" type="submit" class="btn btn-primary" value="수정" onclick="editCategory(changeThemeForm)"></input>
 							</c:if>
 
 							</div>
@@ -219,7 +246,7 @@ label:hover{
 								<form id="searchForm" name="searchForm" method="post">
 									<input type="text" name="target" placeholder="검색어를 입력하세요." id="searchTarget" required> 
 									<input type="hidden" value=1 name="page" id="searchPageNo"> 
-									<input type="submit" class="btn btn-success" value="검색" onclick="searching(); return false">
+									<input type="submit" class="btn btn-primary" value="검색" onclick="searching(); return false">
 								</form>												
 							</div>
 						</div>
@@ -290,7 +317,7 @@ label:hover{
             </c:if>
 					</div>
 				<div class="col-12 text-end	mb-4">
-					<input type="submit"  class="btn btn-primary saveBtn" value="저장하기">
+					<input type="submit"  class="btn btn-success saveBtn" value="저장하기">
 					<input type="hidden" name="seq" value="${seq }">
 				</div>
 				</div>
@@ -423,6 +450,13 @@ label:hover{
 				location.href="/plan/main?page=1";
 			}
 		})
+		
+		$("#back").on("click",function(){
+			if(confirm("내 일정으로 돌아가시겠습니까? 기록중인 내용은 사라집니다.")){
+				location.href="/plan/detail?seq=${seq }";
+
+			}
+		})
 			
 	//화면 숨기기/view 처리
 		$("#firstBtn").on("click",function(){
@@ -500,6 +534,8 @@ label:hover{
             success: function(data){
             	//리스트 출력
             	let value = "";
+            	if(data.response.body.items.item.length>0){
+            		
                 for(let i = 0; i<data.response.body.items.item.length;i++){
 			    	let sData = data.response.body.items.item[i];
 			    	value += '<div class="col-6 mt-3 ml-1 mr-1"><div class="text-center"> <input type="checkbox" name="check" class="check saveCheck" value="'+sData.contentid+'&'+sData.title+'&'+sData.addr1+'&'+sData.firstimage+'" id='+sData.contentid+'><label for='+sData.contentid+'>'+sData.title+'<label></div><div class="text-center">'+sData.addr1+'</div><div class="text-center"> <img src="';
@@ -511,7 +547,9 @@ label:hover{
 			    	value +='" style="width:200px;height:100px;"></div> </div></div>';
 	            }
                 value +='   <div class="btn-toolbar justify-content-center mt-4" role="toolbar" aria-label="Pagination"> <div class="btn-group me-2 mb-2" role="group" aria-label="First group">';
-				let totalPage = data.response.body.totalCount/data.response.body.numOfRows;
+            	}
+
+                let totalPage = data.response.body.totalCount/data.response.body.numOfRows;
 				let pageNo = data.response.body.pageNo;
 				//페이징
 				if(pageNo>1){
@@ -591,6 +629,7 @@ label:hover{
 	
 	function editCategory(form) {
 	  if (form.checkValidity()) {
+		  console.log(form);
   	 	 alert("여행계획 입력이 완료되었습니다.");
 			return true;
 	  }else{
