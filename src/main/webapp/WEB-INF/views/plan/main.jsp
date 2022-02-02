@@ -42,6 +42,12 @@
             font-weight: 500;
             padding-left: 100px;
         }
+        
+        .banner{
+                background-image:url("/images/banner.png");
+                height:200px;
+            }
+        
 </style>
 </head>
 <body>
@@ -89,7 +95,7 @@
 		</div>
 		<div class="row mt-4">
 			<div class="col text-end">
-				<button type="button" class="btn btn-primary" id="planMakeBtn">신규 일정 생성</button>
+				<button type="button" class="btn btn-light" style="background-color:#f5e3b9;" id="planMakeBtn">신규 일정 생성</button>
 			</div>
 		</div>
 		<div class="row">
@@ -99,7 +105,7 @@
 				
 						<c:forEach var="i" items="${paging }">
 						<a href="/plan/main?page=${i }">
-						<button type="button" class="btn paging btn-primary m-2">
+						<button type="button" class="btn paging btn-light m-2" style="background-color: #f5e3b9;">
 						<c:choose>
 						<c:when test="${i eq firstNum and (i%10) eq 0 }">
 						<
