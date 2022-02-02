@@ -43,13 +43,27 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/**"/>
-			<!--
 			<exclude-mapping path="/"/>
-			<exclude-mapping path="/member/join"/>
-			<exclude-mapping path="/member/login"/>
-			-->
 			<exclude-mapping path="/images/**"/>
+			<exclude-mapping path="/css/**"/>
 			<exclude-mapping path="/js/**"/>
+			<exclude-mapping path="/companyboard/list"/>
+			<exclude-mapping path="/tourboard/list"/>
+			<exclude-mapping path="/companyboard/detail"/>
+			<exclude-mapping path="/tourboard/detail"/>
+			<exclude-mapping path="/companyboard/noticeDetail"/>
+			<exclude-mapping path="/tourboard/noticeDetail"/>
+			<exclude-mapping path="/area/main"/>
+			<exclude-mapping path="/area/detail"/>
+			<exclude-mapping path="/member/getKakaoAuthUrl"/>
+			<exclude-mapping path="/member/kakaoLogin"/>
+			<exclude-mapping path="/member/normalLogin"/>
+			<exclude-mapping path="/member/emailCheck"/>
+			<exclude-mapping path="/member/nickNameCheck"/>
+			<exclude-mapping path="/member/phoneCheck"/>
+			<exclude-mapping path="/member/normalSignup"/>
+			<exclude-mapping path="/member/findPw"/>
+			<exclude-mapping path="/member/findPwChange"/>
 			<beans:bean class="kh.spring.interceptor.Interceptor"/>
 		</interceptor>
 	</interceptors>
