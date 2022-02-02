@@ -59,18 +59,30 @@
 						<div class="col-12 col-lg-7">
 							<div class="row mt-2">
 							<c:if test="${empty i }"><div class="col-12 mt-1 text-center">등록된 일정이 없습니다.</div></c:if>
+							<c:set var="tm" value="1"/>
 							<c:forEach var="j" items="${i }">
+									<c:set var="size" value="${i.size() }"/>
 									<c:set var="l" value="${l+1 }"/>
 									<div class="col-3 mt-1 text-center" style=" border-radius:3px; border:1px solid black;">
+										<c:choose>
+										<c:when test="${j.photo eq 'undefined' }">
+										<img src="/images/noPhoto.png" class="w-100" style="height:100px;"><br>
+										</c:when>
+										<c:otherwise>
 										<img src="${j.photo }" class="w-100" style="height:100px;"><br>
+										</c:otherwise>
+										</c:choose>
 										<span>${j.name }</span><br>
 										<input type="hidden" value="${j.location }" id="${l}" txt="${j.name }">
 										<!-- <span>${j.location }</span>-->
 									</div>
 									<div class="col-1 mt-1 align-self-center">
+									<c:if test="${size ne tm }">
 									<span class="material-icons align-middle">
 										arrow_forward
 									</span>
+									</c:if>
+									<c:set var="tm" value="${tm+1 }"/>
 									</div>
 							</c:forEach>						
 							</div>

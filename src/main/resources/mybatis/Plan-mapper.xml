@@ -37,7 +37,7 @@
 	</select>
 	
 	<select id="detailPlanSort" resultType="kh.spring.dto.DetailPlanDTO">
-		select par_seq,area_seq,to_char(plan_date,'YYYY/MM/DD') as plan_date,seq from detail_plan where par_seq = #{seq} and plan_date = #{date} order by seq
+		select par_seq,area_seq,to_char(plan_date,'YYYY/MM/DD') as plan_date,seq from detail_plan where par_seq = #{seq} and plan_date = to_date(#{date},'YYYY/MM/DD') order by seq
 	</select>
 	
 	<select id="planListPrint" resultType="kh.spring.dto.AreaDTO">

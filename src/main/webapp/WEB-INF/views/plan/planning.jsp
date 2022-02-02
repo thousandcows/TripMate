@@ -33,95 +33,9 @@
 <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" ></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">
+<link rel="stylesheet" href="/css/planning.css">
 <jsp:include page="../base/header.jsp"></jsp:include>
-<style>
-li.drag-sort-active {
-  background: transparent;
-  color: transparent;
-  border: 1px solid #4ca1af;
-  
-}
 
-#planDate{
-	overflow-y:scroll;
-}
-
-#planShow{
-	overflow-y:scroll;
-}
-
-.material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 80px;  /* Preferred icon size */
-  display: inline-block;
-}
-.material-icons:hover{
-	cursor:pointer;
-}
-
-#day>li:hover{
-	cursor:pointer;
-}
-#day{
-	list-style:none;
-	padding-left:0px;
-}
-
-	html,body{
-		height:100%;
-	}
-	
-	.container{
-		height:auto;
-		min-height:100%;
-	}
-	.con{
-		padding-bottom:250px;
-	}
-	.footer{
-	  transform : translateY(-100%);
-	}
-
-label{
-	font-size:20px;
-}
-label:hover{
-	cursor:cell;
-}
-
-#planList>li:hover{
-	cursor:grab;
-}
-#planList>li:active{
-	cursor:grabbing;
-}
-
-.btn-primary{
-	background-color:#A4D5EE;
-	border:none;
-
-}
-.btn-primary:hover{
-	background-color:#A1CDEB;
-}
-
-.btn-primary:focus{
-	background-color:#A8D3E9;
-}
-.btn-success{
-	background-color:#22c27b;
-	border:none;
-}
-.btn-success:hover{
-	background-color:#1a9860;
-}
-.btn-success:focus{
-	background-color:#0d4c30;
-}
-
-</style>
 <script>
 	$(document).ready(function(){
 		$("#thirdForm").fadeOut(200)
@@ -213,7 +127,7 @@ label:hover{
 
 							<div class="col-10 text-end mt-2 mb-2">
 							<c:if test="${empty seq }">
-								<input id="chooseThemeBtn" type="submit" class="btn btn-primary" value="저장" onclick="editCategory(chooseThemeForm)"></input>
+								<input id="chooseThemeBtn" type="submit" class="btn btn-primary" value="저장" onclick="checkCategory(chooseThemeForm)"></input>
 							</c:if>
 							<c:if test="${!empty seq }">
 								<input id="changeThemeBtn" type="submit" class="btn btn-primary" value="수정" onclick="editCategory(changeThemeForm)"></input>
@@ -279,7 +193,12 @@ label:hover{
 				                  <div class="row">
 				                    <div class="col-4">
 				                      <a href="/area/detail?num=${mySaveListSeq[status.index]}">
-				                        <img style="height:170px;" class="w-100" src="${cnt.photo}">
+				                      <c:if test="${cnt.photo ne 'null' }">
+				                        <img  class="w-100 saveImg" src="${cnt.photo}">
+				                      </c:if>
+				                      <c:if test="${cnt.photo eq 'null' }">
+				                        <img class="w-100 saveImg" src="/images/noPhoto.png">
+				                      </c:if>
 				                      </a>
 				                    </div>
 				                    <div class="col-8">
@@ -332,7 +251,7 @@ label:hover{
 		<div class="row justify-content-center" id="thirdForm">
 			<div class="col-10 ">
 				<div class="row">
-					<div class="col-2" id="planDate" style="height:600px;">
+					<div class="col-2" id="planDate">
 						<c:if test="${!empty seq }">
 						<c:forEach var="i" items="${date }">
 							<c:set var="j" value="${j+1 }"/>
@@ -345,7 +264,7 @@ label:hover{
 								</li>
 							</ul>
 						</c:forEach>
-							<div class="w-100 d-flex justify-content-center" id="deletePlan" style="height:100px;">
+							<div class="w-100 d-flex justify-content-center" id="deletePlan">
 								<span class="material-icons">
 									delete
 								</span>
@@ -355,7 +274,7 @@ label:hover{
 					</div>
 					
 						<!-- 리스트 -->
-					<div class="col-4 border" id="planShow" style="height:600px;">
+					<div class="col-4 border" id="planShow">
 					<ul class="drag-sort-enable ui-helper-reset ui-helper-clearfix" id="planList" ondragover="onDragOver(event)">
 					</ul>
 					</div>
@@ -376,7 +295,7 @@ label:hover{
 							<h3>여행에 필요한 메모를 남기세요.</h3>
 						</div>
 						<div class="col-12 text-center mt-4">
-							<textarea name="memo" cols=100 rows=10 placeholder="메모를 남겨주세요." required>${dto.memo }</textarea>
+							<textarea name="memo" cols=100 rows=10 placeholder="메모를 남겨주세요." maxlength=1300 required>${dto.memo }</textarea>
 							<input type="hidden" name="seq" value="${seq }">
 						</div>
 						<div class="col-12 mt-2 text-end mt-3 mb-4 mr-4">
@@ -544,7 +463,7 @@ label:hover{
 					}else{
 						value +='/images/noPhoto.png';
 					}
-			    	value +='" style="width:200px;height:100px;"></div> </div></div>';
+			    	value +='"class="searchImg"></div> </div></div>';
 	            }
                 value +='   <div class="btn-toolbar justify-content-center mt-4" role="toolbar" aria-label="Pagination"> <div class="btn-group me-2 mb-2" role="group" aria-label="First group">';
             	}
@@ -582,7 +501,14 @@ label:hover{
 				let result = "";
 				let positions = [];
 					for(let i = 0; i<data.length;i++){
-						result += '<li class="row border mb-2 ui-widget-content ui-corner-tr" id='+data[i].seq+' dragable="true"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</li>';
+						result += '<li class="row border mb-2 ui-widget-content ui-corner-tr" id='+data[i].seq+' dragable="true"><div class="col-4"><img src="';
+						if(data[i].photo !='undefined'){
+							result += data[i].photo;							
+						}else{
+							result += '/images/noPhoto.png';
+						}
+						
+						result +='"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</li>';
 						
 						//지도 관련
 						// 주소로 좌표를 검색합니다
@@ -627,15 +553,25 @@ label:hover{
 		})
 	})
 	
-	function editCategory(form) {
+	function checkCategory(form) {
 	  if (form.checkValidity()) {
-		  console.log(form);
-  	 	 alert("여행계획 입력이 완료되었습니다.");
-			return true;
+		 alert("여행계획 입력이 완료되었습니다.");
+		return true;
 	  }else{
 		  return false;
 	  }
 	}
+	
+	function editCategory(form) {
+		  if (form.checkValidity()) {
+			 if(confirm("날짜 변경시, 기록한 일정이 사라질 수 있습니다. 계속하시겠습니까?")){
+				("여행계획 입력이 완료되었습니다."); 
+			 }
+				return true;
+		  }else{
+			  return false;
+		  }
+		}
 	
 	
 	$(".datePick").on("click",function(){
@@ -652,7 +588,14 @@ label:hover{
 				let result = "";
 				let positions = [];
 				for(let i = 0; i<data.length;i++){
-					result += '<li class="row border mb-2 ui-widget-content ui-corner-tr" id='+data[i].seq+' dragable="true"><div class="col-4"><img src="'+data[i].photo+'"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</li>'						
+					result += '<li class="row border mb-2 ui-widget-content ui-corner-tr" id='+data[i].seq+' dragable="true"><div class="col-4"><img src="';
+					if(data[i].photo!='undefined'){
+						result +=data[i].photo						
+					}else{
+						result +='/images/noPhoto.png'
+					}
+					
+					result +='"class="w-100" style="height:50px;">'+'</div><div class="col">'+data[i].name+'<br>'+data[i].location+'</div>'+'</li>'						
 					
 					//지도 관련
 					// 주소로 좌표를 검색합니다
@@ -715,7 +658,7 @@ label:hover{
                 `<div class="col-9 align-self-center mt-4 delParent border">
                   <div class="row">
                     <div class="col-4">
-                        <img style="height:170px;" class="w-100" src="\${result[i].photo}">
+                        <img class="w-100 saveImg" src="\${result[i].photo}">
                     </div>
                     <div class="col-8">
                       <div class="row">
