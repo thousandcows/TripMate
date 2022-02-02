@@ -31,11 +31,40 @@ input:focus {
 	outline: none;
 }
 
-input {autocomplete ="off";
+input {
+	autocomplete :"off";
 	
 }
 
-/* div{border:1px solid black} */
+
+/* 링크 속성 지우기 */
+a {
+	text-decoration: none
+}
+
+a:hover {
+	text-decoration: none;
+	color: black;
+}
+
+a:link {
+	text-decoration: none;
+	color: black;
+}
+
+a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+a:active {
+	text-decoration: none;
+	color: black;
+}
+
+
+
+/* 헤더----------------------------------------------------- */
 .banner {
 	background-image:url("/images/community_banner.png");
     height:200px;
@@ -59,14 +88,8 @@ input {autocomplete ="off";
 	padding-left: 100px;
 }
 
-/* 컨테이너 */
-.container_c {
-	/* border: 1px solid red; */
-	padding-bottom: 30px;
-	overflow: auto;
-}
-
-.container_c>.root {
+ /* 미니 사이트맵 루트 */
+ .root {
 	padding-left: 80px;
 	overflow: auto;
 }
@@ -76,6 +99,22 @@ input {autocomplete ="off";
 	margin: 40px 0px 40px 0px;
 	padding-right: 10px;
 }
+
+.fa-home {
+	color: rgb(56, 181, 174);
+}
+
+
+
+/* 컨테이너 */
+.container_c {
+	margin-left: 200px;
+	margin-right: 200px;
+	padding-bottom: 30px;
+	overflow: auto;
+}
+
+
 
 /* 제목, 글 */
 .board {
@@ -94,7 +133,7 @@ input {autocomplete ="off";
 }
 
 .contents {
-	padding-right: 80px;
+	width: 100%;
 }
 
 .write_con>textarea {
@@ -103,11 +142,28 @@ input {autocomplete ="off";
 	resize: none;
 }
 
+#categoryValue_txt{
+	color: rgb(56, 181, 174); 
+	font-weight:500; 
+	display: inline; 
+	font-size: 30px;
+	padding: 5px;
+}
+
+#title{
+	display: inline; 
+	font-size: 30px; 
+	font-weight: 500; 
+	border: none; 
+	width: 80%;
+	padding-left: 10px;
+}
+
 /* 버튼 */
 .button {
 	/* border: 1px solid red; */
 	text-align: right;
-	padding: 20px 5px 0px 0px;
+	padding: 50px 5px 0px 0px;
 }
 
 .button>button {
@@ -116,11 +172,13 @@ input {autocomplete ="off";
 
 /* 작성자/조회수칸 */
 .writer_info {
-	float: left;
+	position: relative;
 	width: 100%;
-	height: 50px;
+	height: 70px;
 	margin-top: 20px;
 	margin-bottom: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid black;
 }
 
 .writer_photo {
@@ -129,7 +187,7 @@ input {autocomplete ="off";
 	height: 50px;
 	text-align: center;
 	line-height: 50px;
-	padding-left: 20px;
+	padding-left: 10px;
 }
 
 .writer_photo>img {
@@ -152,11 +210,32 @@ input {autocomplete ="off";
 	color: gray;
 }
 
+/* 좋아요, 댓글란  */
+.like_n_rep {
+	width: 100%;
+	height: 30px;
+	text-align: right;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.like_n_rep>div {
+	height: 30px;
+	width: 55px;
+	text-align: center;
+	float: left;
+	line-height: 30px;
+}
+
+#heart, #cant_heart {
+	cursor: pointer;
+}
+
 /* 댓글쓰기창 */
 .rep_con {
 	width: 100%;
 	height: 70px;
-	padding: 10px;
+	padding: 20px 80px 10px 80px;
 }
 
 .rep_con>textarea {
@@ -167,8 +246,8 @@ input {autocomplete ="off";
 
 .button2 {
 	text-align: right;
-	padding: 5px 5px 0px 0px;
-	height: 50px;
+	padding: 10px 80px 20px 0px;
+	/* height: 50px; */
 }
 
 /* 댓글 리스트 */
@@ -212,6 +291,7 @@ input {autocomplete ="off";
 	width: 100%;
 	text-align: right;
 	padding-right: 20px;
+	padding-bottom: 20px;
 }
 
 .rep_btn>button {
@@ -224,80 +304,177 @@ input {autocomplete ="off";
 	border: none;
 }
 
-/* 
-.re_reply{
-    width: 100%;
-    float: left;
-    padding: 0px 5px 0px 80px;
-}
-
-.re_reply>.re_rp_title{
-    overflow: auto;
-}
-
-.re_rp_title>div{
-    float: left;
-}
-
-.re_rp_title>.re_rp_id{
-    width: 85%;
-}
-
-.re_rp_title>.re_rp_time{
-    width: 15%;
-}
-
-.re_rp_contents>.re_rp_content{
-    width: 100%;
-}
- */
-/* 링크 속성 지우기 */
-a {
-	text-decoration: none
-}
-
-a:hover {
-	text-decoration: none;
-	color: black;
-}
-
-a:link {
-	text-decoration: none;
-	color: black;
-}
-
-a:visited {
-	text-decoration: none;
-	color: black;
-}
-
-a:active {
-	text-decoration: none;
-	color: black;
-}
-
-.fa-home {
-	color: rgb(56, 181, 174);
-}
-
-/* 좋아요, 댓글란  */
-.like_n_rep {
-	width: 100%;
-	height: 30px;
-	text-align: right;
-}
-
-.like_n_rep>div {
-	height: 30px;
-	width: 55px;
-	text-align: center;
+.re_rp_contents2{
+	width: 95%;
 	float: left;
-	line-height: 30px;
+	padding-bottom: 20px;
 }
 
-#heart, #cant_heart {
-	cursor: pointer;
+.re_rp_contents3{
+	width: 95%; 
+	float: left;
+	padding-bottom: 20px;
 }
+
+.rp_list_con{
+	margin: 0px 80px 0px 80px;
+}
+
+.re_reply{
+	width: 100%; 
+	float: left; 
+	margin-top:20px;	
+}
+
+/* 1400px ~  */
+@media (min-width: 1400px){
+
+}
+
+/* 800 ~ 1400px */
+@media (max-width: 1400px) and (min-width: 800px){
+
+	/* 컨테이너 */
+	.container_c {
+		margin-left: 50px;
+		margin-right: 50px;
+		padding-bottom: 30px;
+		overflow: auto;
+	}
+
+	/* 미니 사이트맵 루트 */
+	.root{
+        padding-left: 5px;
+        overflow: auto;
+        text-align: center;
+    }
+
+	/* 제목 카테고리 */
+	#categoryValue_txt{
+		color: rgb(56, 181, 174); 
+		font-weight:500; 
+		display: inline; 
+		font-size: 25px;
+		padding: 5px;
+	}
+
+	#title{
+		display: inline; 
+		font-size: 25px; 
+		font-weight: 500; 
+		border: none; 
+		width: 80%;
+		padding-left: 10px;
+	}
+
+	/* 제목, 글 */
+	.board {
+		width: 100%;
+		padding: 20px 0px 0px 0px;
+	}
+
+	/* 댓글쓰기창 */
+	.rep_con {
+		width: 100%;
+		height: 70px;
+		padding: 20px 20px 10px 20px;
+	}
+
+	.button2 {
+		text-align: right;
+		padding: 10px 20px 20px 20px;
+		/* height: 50px; */
+	}
+
+	.rp_list_con{
+		margin: 0px 20px 0px 20px;
+	}
+}
+
+/* ~ 800px */
+/* 작은 화면일 때 */
+@media (max-width: 800px){
+
+	/* 컨테이너 */
+	.container_c {
+		margin-left: 10px;
+		margin-right: 10px;
+		padding-bottom: 30px;
+		overflow: auto;
+	}
+
+	/* 헤더 banner contents*/
+	.banner_title{
+        width: 100%;
+        height: 70%;
+        color: white;
+        font-size: 35px;
+        font-weight: 600;
+        padding: 60px 0px 10px 0px;
+        text-align: center;
+    }
+    
+    .banner_content{
+        width: 100%;
+        height: 30%;
+        color: white;
+        font-size: 15px;
+        font-weight: 500;
+        padding-left: 0px;
+        text-align: center;
+    }
+
+	/* 미니 사이트맵 루트 */
+	.root{
+        padding-left: 0px;
+        overflow: auto;
+        text-align: center;
+        display: none;
+    }
+
+	/* 제목 카테고리 */
+	#categoryValue_txt{
+		color: rgb(56, 181, 174); 
+		font-weight:500; 
+		display: inline; 
+		font-size: 25px;
+		padding: 5px;
+	}
+
+	#title{
+		display: inline; 
+		font-size: 25px; 
+		font-weight: 500; 
+		border: none; 
+		width: 80%;
+		padding-left: 10px;
+	}
+
+	/* 제목, 글 */
+	.board {
+		width: 100%;
+		padding: 20px 0px 0px 0px;
+	}
+
+	/* 댓글쓰기창 */
+	.rep_con {
+		width: 100%;
+		height: 70px;
+		padding: 20px 0px 10px 0px;
+	}	
+
+	.button2 {
+		text-align: right;
+		padding: 10px 0px 20px 0px;
+		/* height: 50px; */
+	}
+	
+	.rp_list_con{
+		margin: 0px 0px 0px 0px;
+	}
+}
+
+
 </style>
 
 </head>
@@ -324,12 +501,11 @@ a:active {
 					<!-- <div class="category"> -->
 					<span style="width: 20%;">
 						<input type=hidden name=category value="${dto.category }" id="categoryValue">
-                        <h3 style="color: rgb(56, 181, 174); font-weight: bold; display: inline; padding: 5px;" id="categoryValue_txt">${dto.category }</h3> 
-                        <h3 style="display: inline; color: rgb(153, 153, 153); padding: 5px;">|</h3>
+                        <h3 id="categoryValue_txt">${dto.category }</h3> 
                     </span> 
                     <span style="width: 80%;">
                     	<input type=hidden value="${dto.seq}" name=seq>
-                        <input type=text placeholder="제목을 입력하세요" id=title name=title readonly value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; border: none; width: 90%;">
+                        <input type=text placeholder="제목을 입력하세요" id=title name=title readonly value="${dto.title }" >
                     </span>
 				</div>
 				<div class = writer_info>
@@ -347,9 +523,7 @@ a:active {
 					</div>
                 </div>
 				
-				<hr style="margin:20px 0px 30px 0px;">
-				
-				<div class="contents" style="margin-left: 80px;">
+				<div class="contents" >
 					<textarea class="summernote" id="summernote" name="explanation" style="display:none;">${dto.contents }</textarea>
 					${dto.contents }
 				</div>
@@ -398,6 +572,7 @@ a:active {
 		</form>
 		
 
+		<div class="rp_list_con">
 		<c:forEach var="rp" items="${rp_list }">
 			<form method="post" id="frmRpMod" enctype="multipart/form-data">
 				<div class="rep_list">
@@ -426,7 +601,7 @@ a:active {
 						<!-- 답글 달기 창  -->
 						<div class="re_reply_input" id="re_reply_input${rp.seq }"  style="width: 100%; float: left; margin-top:5px; display:none;">
                             <div style="width: 5%; float: left; text-align: right; padding-right: 10px; color: orange;"><i class="fas fa-reply fa-rotate-180"></i></div>
-                            <div class="re_rp_contents2" style="width: 95%; float: left;">
+                            <div class="re_rp_contents2" >
                             	<div class="re_reply_content">
                             		<input type=hidden value="${dto.seq}" name=writeseq>
                             		<input type=hidden value="${rp.seq}" name=rpseq>
@@ -442,16 +617,16 @@ a:active {
 					<c:forEach var="re" items="${re_list }">
 					<c:choose>
 						<c:when test="${re.par_seq == rp.seq}">
-                    		<div class="re_reply" id="re_reply${rp.seq }" style="width: 100%; float: left; margin-top:5px;"	>
+                    		<div class="re_reply" id="re_reply${rp.seq }" >
                            		<div style="width: 5%; float: left; text-align: right; padding-right: 10px; color: orange;"><i class="fas fa-reply fa-rotate-180"></i></div>
-                            	<div style="width: 95%; float: left;">
+                            	<div class="re_rp_contents3" >
                            			<div class="re_rp_title" style="width: 100%;">
-                               			<div class="re_rp_id" value="${re.mem_seq }" style="font-weight: bolder;width: 50%; display:inline-block; padding-left: 20px ;"> ${re.nick }</div>
+                               			<div class="re_rp_id" value="${re.mem_seq }" style="font-weight: bolder;width: 50%; display:inline-block;"> ${re.nick }</div>
                                			<div class="re_rp_time"  style="color: gray; width:  49%; display:inline-block; text-align: right; padding-right: 20px;">${re.writen_date }</div>
                            			</div>
                            			<div class="re_rp_contents" style="width: 100%;">
 		                        		<div class="re_rp_content">
-                               				<input type=text id="recontent${re.seq }" style="border:none; width:100%;" name="recontent" value="${re.contents}" readonly>
+                               				<input type=text id="recontent${re.seq }" style="border:none; width:100%; overflow: auto;" name="recontent" value="${re.contents}" readonly>
                                			</div>     
                                			<c:if test="${!empty loginNick }">
                                				<c:if test="${re.mem_seq == loginSeq}">
@@ -473,6 +648,7 @@ a:active {
 					</div>
 				</form>
 			</c:forEach> 
+		</div>
 		</div>
 
 	<footer>

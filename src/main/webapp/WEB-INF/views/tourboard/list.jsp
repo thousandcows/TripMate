@@ -80,6 +80,10 @@
         	height: 30px;
         }
         
+        .searchbar>input{
+            height: 30px;
+        }
+            
         .searchbar>span{
             position: relative;
         }

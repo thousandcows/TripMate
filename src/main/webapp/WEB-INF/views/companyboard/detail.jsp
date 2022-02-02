@@ -36,15 +36,44 @@
 
         body {
             margin: 0;
-            /* 임시로 body margin 0px */
         }
 
+		/* input style */
+        input:focus {outline:none;}
+        
+        input{
+        	autocomplete:"off" ;
+        }
 
+		/* 링크 속성 지우기 */
+		a {
+			text-decoration: none
+		}
+
+		a:hover {
+			text-decoration: none;
+			color: black;
+		}
+
+		a:link {
+			text-decoration: none;
+			color: black;
+		}
+
+		a:visited {
+			text-decoration: none;
+			color: black;
+		}
+
+		a:active {
+			text-decoration: none;
+			color: black;
+		}
 
         /* 헤더----------------------------------------------------- */
         .banner {
             background-image:url("/images/community_banner.png");
-                height:200px;
+            height:200px;
         }
 
         .banner_title {
@@ -65,33 +94,34 @@
             padding-left: 100px;
         }
 
-        /* 컨테이너 ----------------------------------------------------- */
-        .container_c {
-            /* border: 1px solid red; */
-            padding-bottom :30px;
-            overflow: auto;
-        }
-
         /* 미니 사이트맵 루트 */
-        .container_c>.root {
+       .root {
             padding-left: 80px;
             overflow: auto;
         }
 
         .root>div {
-            /* border: 1px solid red; */
             float: left;
             margin: 40px 0px 40px 0px;
             padding-right: 10px;
+			font-size: 16px;
         }
 
         .fa-home {
             color: rgb(56, 181, 174);
         }
 
+		/* 컨테이너 ----------------------------------------------------- */
+        .container_c {
+			margin-left: 200px;
+			margin-right: 200px;
+            padding-bottom :30px;
+            overflow: auto;
+        }
+
         /* 제목, 글 */
         .board {
-            /* border: 1px solid red; */
+            
             width: 100%;
             padding: 20px 80px 0px 80px;
         }
@@ -99,31 +129,26 @@
         .select_tour {
             width: 100%;
             padding: 10px;
-           	/* border: 1px solid red; */
         }
 
         .select_recruit {
             width: 100%;
             padding: 10px;
-            /* border: 1px solid red; */
         }
         
         .select_date {
             width: 100%;
             padding: 10px;
-            /* border: 1px solid red; */
         }
 
         .select_gender {
             width: 100%;
             padding: 10px;
-            /* border: 1px solid red; */
         }
 
         .title {
             width: 100%;
             padding: 5px;
-            /* border: 1px solid red; */
         }
 
         #title{
@@ -134,7 +159,7 @@
         .write_con {
             width: 100%;
             padding: 5px;
-            /* border: 1px solid red; */
+            
         }
 
         .write_con>textarea {
@@ -143,48 +168,44 @@
             resize: none;
         }
 
+		#categoryValue_txt{
+			color: rgb(56, 181, 174); 
+			font-weight:500; 
+			display: inline; 
+			font-size: 30px;
+			padding: 5px;
+		}
+
+		#title{
+			display: inline; 
+			font-size: 30px; 
+			font-weight: 500; 
+			border: none; 
+			width: 80%;
+			padding-left: 10px;
+		}
+
         /* 버튼 */
         .button {
-            /* border: 1px solid red; */
+            
             text-align: right;
-            padding: 20px 5px 0px 0px;
+            padding: 50px 5px 0px 0px;
         }
         
         .button> button{
         	margin: 2px;
         }
-        
-        /* 좋아요, 댓글란  */
-        .like_n_rep{
-        	/* border: 1px solid red; */
-        	width: 100%;
-        	height: 30px;
-        	text-align: right;
-        }
-        
-        .like_n_rep>div{
-        	/* border: 1px solid red; */
-        	height:30px;
-        	width: 55px;
-        	text-align:center;
-        	float: left;
-        	line-height:30px;
-        }
-        
-        #heart, #cant_heart, .recruit_list_see{
-        	cursor: pointer;
-        }
 
-             
-         /* 작성자/조회수칸 */
-         
-        .writer_info{
-        	float:left;
-        	width:100%;
-        	height:50px;
-        	margin-top:20px;
-        	margin-bottom:20px;	
-        }
+		 /* 작성자/조회수칸 */
+		.writer_info {
+			position: relative;
+			width: 100%;
+			height: 70px;
+			margin-top: 20px;
+			margin-bottom: 20px;
+			padding-bottom: 20px;
+			border-bottom: 1px solid black;
+		}
         
         .writer_photo{
         	float: left;
@@ -216,11 +237,25 @@
             color: gray;
         }
         
-        /* input style */
-        input:focus {outline:none;}
+        /* 좋아요, 댓글란  */
+        .like_n_rep{
+        	
+        	width: 100%;
+        	height: 30px;
+        	text-align: right;
+        }
         
-        input{
-        	autocomplete="off" ;
+        .like_n_rep>div{
+        	
+        	height:30px;
+        	width: 55px;
+        	text-align:center;
+        	float: left;
+        	line-height:30px;
+        }
+        
+        #heart, #cant_heart, .recruit_list_see{
+        	cursor: pointer;
         }
         
         /* 댓글 쓰기창 */
@@ -228,7 +263,7 @@
             width: 100%;
             height: 70px;
             padding: 10px;
-            /* border: 1px solid red; */
+            padding: 20px 80px 10px 80px;
         }
 
         .rep_con > textarea{
@@ -238,63 +273,33 @@
         }
 
         .button2 {
-           /*  border: 1px solid red; */
             text-align: right;
-            padding: 5px 5px 0px 0px;
-            height: 50px;
+            padding: 10px 80px 20px 0px;
         }
         
         /* 댓글 리스트 */
-        .rep_list{ /* border: 1px solid red; */ padding:10px; margin-top:10px; }
+        .rep_list{padding:10px; margin-top:10px; }
         
-        .each_rep{/*  border: 1px solid red; */ width: 100%; border-bottom: solid 1px rgb(190, 190, 190); padding-bottom:10px; float:left;}
+        .each_rep{width: 100%; border-bottom: solid 1px rgb(190, 190, 190); padding-bottom:10px; float:left;}
         
-        .rep_top{ /* border: 1px solid red; */ width: 100%; padding-top:10px; }
+        .rep_top{width: 100%; padding-top:10px; }
         
-        .rep_txt{ /* border: 1px solid red; */ width: 100%; }
+        .rep_txt{width: 100%; }
         
-        .rep_btn{/*  border: 1px solid red; */ width: 100%; text-align:right; padding-right:20px; }
+        .rep_btn{width: 100%; text-align:right; padding-right:20px; }
         
-        .rep_writer{ font-weight: bolder; /* border: 1px solid red; */ width: 50%; display:inline-block; padding-left: 20px ; }
+        .rep_writer{ font-weight: bolder;width: 50%; display:inline-block; padding-left: 20px ; }
         
-        .rep_date{ /* border: 1px solid red; */ color: gray; width:  49%; display:inline-block; text-align: right; padding-right: 20px; }
+        .rep_date{color: gray; width:  49%; display:inline-block; text-align: right; padding-right: 20px; }
         
         .e_rep_con{ width: 100%; padding: 5px 20px 5px 20px; border: none; }
         
         .rep_btn > button {margin: 2px;}
         
-        /* 링크 속성 지우기 */
-a {
-	text-decoration: none
-}
-
-a:hover {
-	text-decoration: none;
-	color: black;
-}
-
-a:link {
-	text-decoration: none;
-	color: black;
-}
-
-a:visited {
-	text-decoration: none;
-	color: black;
-}
-
-a:active {
-	text-decoration: none;
-	color: black;
-}
-
-.fa-home {
-	color: rgb(56, 181, 174);
-}
+        
 
         /* 참가자리스트 */
         .recruit_list{
-            /* border: 1px solid red; */
             text-align: center;
             width: 100%;
             padding: 10px 300px 10px 300px;
@@ -307,6 +312,148 @@ a:active {
          	padding-bottom : 10px;
             border-bottom: solid 1px rgb(207, 207, 207);
         }
+
+		/* 1400px ~  */
+		@media (min-width: 1400px){
+
+		}
+
+		/* 800 ~ 1400px */
+		@media (max-width: 1400px) and (min-width: 800px){
+			/* 컨테이너 */
+			.container_c {
+				margin-left: 50px;
+				margin-right: 50px;
+				padding-bottom: 30px;
+				overflow: auto;
+			}
+
+			/* 미니 사이트맵 루트 */
+			.root{
+				padding-left: 5px;
+				overflow: auto;
+				text-align: center;
+				font-size: 16px;
+			}
+
+			/* 제목 카테고리 */
+			#categoryValue_txt{
+				color: rgb(56, 181, 174); 
+				font-weight:500; 
+				display: inline; 
+				font-size: 25px;
+				padding: 5px;
+			}
+
+			#title{
+				display: inline; 
+				font-size: 25px; 
+				font-weight: 500; 
+				border: none; 
+				width: 80%;
+				padding-left: 10px;
+			}
+
+			/* 제목, 글 */
+			.board {
+				width: 100%;
+				padding: 20px 0px 0px 0px;
+			}
+
+			/* 댓글쓰기창 */
+			.rep_con {
+				width: 100%;
+				height: 70px;
+				padding: 20px 20px 10px 20px;
+			}
+
+			.button2 {
+				text-align: right;
+				padding: 10px 20px 20px 20px;
+				/* height: 50px; */
+			}
+					
+		}
+
+		/* ~ 800px */
+		/* 작은 화면일 때 */
+		@media (max-width: 800px){
+
+			/* 컨테이너 */
+			.container_c {
+				margin-left: 10px;
+				margin-right: 10px;
+				padding-bottom: 30px;
+				overflow: auto;
+			}
+
+			/* 헤더 banner contents*/
+			.banner_title{
+				width: 100%;
+				height: 70%;
+				color: white;
+				font-size: 35px;
+				font-weight: 600;
+				padding: 60px 0px 10px 0px;
+				text-align: center;
+			}
+			
+			.banner_content{
+				width: 100%;
+				height: 30%;
+				color: white;
+				font-size: 15px;
+				font-weight: 500;
+				padding-left: 0px;
+				text-align: center;
+			}
+
+			/* 미니 사이트맵 루트 */
+			.root{
+				padding-left: 0px;
+				overflow: auto;
+				text-align: center;
+				display: none;
+			}
+
+			/* 제목 카테고리 */
+			#categoryValue_txt{
+				color: rgb(56, 181, 174); 
+				font-weight:500; 
+				display: inline; 
+				font-size: 25px;
+				padding: 5px;
+			}
+
+			#title{
+				display: inline; 
+				font-size: 25px; 
+				font-weight: 500; 
+				border: none; 
+				width: 80%;
+				padding-left: 10px;
+			}
+
+			/* 제목, 글 */
+			.board {
+				width: 100%;
+				padding: 20px 0px 0px 0px;
+			}
+
+			/* 댓글쓰기창 */
+			.rep_con {
+				width: 100%;
+				height: 70px;
+				padding: 20px 0px 10px 0px;
+			}	
+
+			.button2 {
+				text-align: right;
+				padding: 10px 0px 20px 0px;
+				/* height: 50px; */
+			}
+
+		}
     </style>
     
 </head>
@@ -320,24 +467,23 @@ a:active {
     </div>
     
     <div class="container_c">
-        <div class="root">
-            <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
-            <div> > </div>
-            <div class="community"><a href="/companyboard/list?cpage=1">커뮤니티</a></div>
-            <div> > </div>
-            <div class="partyboard"><a href="/companyboard/list?cpage=1">동행게시판</a></div>
-        </div>
+		<div class="root">
+			<div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
+			<div>></div>
+			<div class="community" href="/companyboard/list?cpage=1">커뮤니티</div>
+			<div>></div>
+			<div class="companyboard"><a href="/companyboard/list?cpage=1">동행 게시판</a></div>
+		</div>
     
         <form  action="/companyboard/toModify" method="post" id="frmDetail" enctype="multipart/form-data">
             <div class="board">
             	<input type=hidden value="${dto.seq}" name=seq > <!-- 글 번호에 맞춰 불러오기 위한 꼼수 -->
-            	<div class="title"> <!-- catetitle -->
+            	<div class="catetitle"> <!-- title -->
                     <span style="width: 20%;">
-                        <h3 style="color: rgb(56, 181, 174); font-weight: bold; display: inline; padding: 5px;">${dto.tour}</h3> 
-                        <h3 style="display: inline; color: rgb(153, 153, 153); padding: 5px;">|</h3>
+                        <h3 id="categoryValue_txt" >${dto.tour}</h3> 
                     </span>
                     <span style="width: 80%;">
-                        <input type=text id=title name=title readonly value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; border: none; width: 90%;">
+                        <input type=text id=title name=title readonly value="${dto.title }" >
                     </span>
                 </div>
                 
@@ -355,8 +501,6 @@ a:active {
                 		</div>
 					</div>
                 </div>
-                
-            	<hr style="margin:20px 0px 30px 0px;">
  
                 <div class="select_tour"><span style="font-weight: bold;">여행지 : </span>
                     <input type=text id=tourInput readonly name="tour" value="${dto.tour }" style="border:none;">               		         
