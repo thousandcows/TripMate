@@ -94,6 +94,7 @@
                 position: absolute;
                 right: 8px;
                 color: rgb(153, 153, 153);
+                padding-top: 7px;
             }
 
             a:hover{
