@@ -16,6 +16,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/area_main.css">
 <c:if test="${pageNo ne 1 }">
 <script>
 window.onload = function(){
@@ -26,67 +27,6 @@ window.onload = function(){
 <jsp:include page="../base/header.jsp"></jsp:include>
 
 </head>
-<style>
-
-.btn-toolbar {
-	position: relative;
-	top: 50px;
-}
-
-.detail:hover{
-	cursor:pointer;
-}
-.form{
-	float: left;
-	margin-top: 20px;
-	position: relative; 
-	top: 30px;
-}
-.formSearch{
-	float: right;
-	margin-top: 20px; 
-	position: relative; 
-	top: 30px; 
-	margin-bottom: 40px;"
-}
-.triplist{
-	height:200px;
-	overflow:hidden;
-	margin:0 auto;
-}
-.triplist>img{
-	width:100%;
-	height:100%;
-	object-fit:cover;
-}
-.select{
-	width: 100px; 
-	height: 40px;
-}
-.searchSubmit{
-	background-color: #f5e3b9; 
-	border-radius: 10px; 
-	width: 60px;
-}
-.listPhoto{
-	height: 250px;
-}
-.card{
-	border:none;
-}
-
-.detail:hover>*>*{
-	opacity:1;
-}
-.card-text{
-	background-color:black;
-	opacity:0.6;
-}
-.card-img-overlay{
-	padding-right:13px;
-	padding-left:13px;
-}
-</style>
 
 <body>
 		<div class="triplist">
