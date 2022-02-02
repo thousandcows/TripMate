@@ -38,10 +38,6 @@
 		select * from detail_plan where par_seq = #{seq} and plan_date = #{date} order by seq
 	</select>
 	
-	<select id="detailPlanSeq" resultType="int">
-		select seq from detail_plan where area_seq = par_seq=#{seq}
-	</select>
-	
 	<select id="planListPrint" resultType="kh.spring.dto.AreaDTO">
 		select * from area where seq=#{value}
 	</select>
