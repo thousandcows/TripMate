@@ -56,17 +56,16 @@
 						<div class="col-12 text-center mt-2 mb-2">
 							<h4>${k }일차</h4>				
 						</div>
-						<div class="col-12 col-lg-6">
+						<div class="col-12 col-lg-7">
 							<div class="row mt-2">
 							<c:if test="${empty i }"><div class="col-12 mt-1 text-center">등록된 일정이 없습니다.</div></c:if>
 							<c:forEach var="j" items="${i }">
 									<c:set var="l" value="${l+1 }"/>
-									<div class="col-3 mt-1" style=" border-radius:3px; border:1px solid black;">
-										<img src="${j.photo }" class="w-100" style="height:80px;"><br>
+									<div class="col-3 mt-1 text-center" style=" border-radius:3px; border:1px solid black;">
+										<img src="${j.photo }" class="w-100" style="height:100px;"><br>
 										<span>${j.name }</span><br>
 										<input type="hidden" value="${j.location }" id="${l}" txt="${j.name }">
 										<!-- <span>${j.location }</span>-->
-										
 									</div>
 									<div class="col-1 mt-1 align-self-center">
 									<span class="material-icons align-middle">
@@ -76,7 +75,7 @@
 							</c:forEach>						
 							</div>
 						</div>
-						<div class="col-12 col-lg-6 map" id="map${k }">
+						<div class="col-12 col-lg-5 map" id="map${k }">
 							
 						</div>
 					</div>	
