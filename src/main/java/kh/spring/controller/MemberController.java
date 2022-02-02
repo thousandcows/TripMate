@@ -418,6 +418,6 @@ public class MemberController {
 	public String ExceptionHandler(Exception e) {
 		e.printStackTrace();
 		e.getMessage();
-		return "redirect:error.jsp";
+		return "/error";
 	}
 }

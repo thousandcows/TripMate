@@ -31,11 +31,6 @@
         /* 헤더 */
         
         /* 임시 추가 부분*/
-        
-        .navbar{
-        	height: 60px !important;
-        }
-        
         .navbar-nav > li{
         	font-size : large;
         }
@@ -130,9 +125,10 @@
           width: fit-content;
           background-color: #EEEEEE;
           border-radius: 3px;
-          padding: 3px;
+          padding: 1px 4px 2px 4px;
           margin: 2px;
           z-index: 9999;
+          border:2px solid #003366;
         }
 
         /* 헤더 알림글씨 */

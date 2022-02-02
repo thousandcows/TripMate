@@ -329,11 +329,6 @@
           </div>
         </div>
 
-        <div class="container middleConBox3">
-          이쯤에 배너 하나넣고 푸터
-        </div>
-
-
         <div class='top-btn'>
           <a href="#"><img src="/images/up1.png" />
           </a>

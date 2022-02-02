@@ -35,9 +35,8 @@ public class ComReplyController {
 
 	@RequestMapping("modify")
 	public String modify(ComReplyDTO rdto) {
-
+		
 		int result = crs.modify(rdto);
-
 		int bseq = rdto.getPar_seq();
 		return "redirect:/companyboard/detail?seq=" + bseq;
 	}

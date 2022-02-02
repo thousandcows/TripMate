@@ -549,7 +549,7 @@ a:active {
           	<c:if test="${empty loginNick}">
                 <div id=like_icon>
           			<a class="heart_nonmem">
-   						<img id="heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
+   						<img id="heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count" style="color:black;"> ${likeCount}</span>
     				</a>
                 </div>
             </c:if>
@@ -605,10 +605,10 @@ a:active {
                             	<div class="re_reply_content">
                             		<input type=hidden value="${dto.seq}" name=writeseq>
                             		<input type=hidden value="${rp.seq}" name=rpseq>
-                            		<input type=text placeholder="댓글을 입력하세요" id="rereply_contents" name=recontents style="width: 100%; padding: 10px; outline:none;" autocomplete="off">
+                            		<input type=text placeholder="댓글을 입력하세요" id="rereply_contents${rp.seq }" name=recontents style="width: 100%; padding: 10px; outline:none;" autocomplete="off">
                             	</div>
                            	 	<div class="re_reply_input_btn" style="text-align: right; margin-top:10px; padding-right:20px;">
-                                	<button type=submit formaction="/tourreply/rereply" class="re_reply_write btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 완료</span></button>
+                                	<button type=submit formaction="/tourreply/rereply" class="re_reply_write btn btn-primary btn-sm" id="re_reply_write${rp.seq }" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 완료</span></button>
                                 	<button type=button class="rp_reply_cancle_btn btn btn-primary btn-sm" id="rp_reply_cancle_btn${rp.seq }" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 취소</span></button>
                             	</div>
                             </div>
@@ -680,12 +680,13 @@ a:active {
 	
 	<script>
 		$(".re_reply_write").on("click", function(){
-		
-			if($("#rereply_contents").val() == ""){
- 				alert("댓글을 작성해주세요");
- 				return false;
- 			}
- 			
+			let id = this.id.substr(14);
+
+			console.log(id);			
+			if($("#rereply_contents"+id).val() == ""){
+				alert("댓글을 작성해주세요");
+ 				return false;			
+ 			}			
 			$('#frmRpMod').submit();
 		})
 	</script>

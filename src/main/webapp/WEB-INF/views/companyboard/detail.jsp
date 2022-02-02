@@ -553,14 +553,14 @@
               		<c:if test="${!empty loginSeq}">
                 		<div id=like_icon>
                 			<a class="heart">
-           						<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
+           						<img id="heart" src="" style="width:20px; height:20px;"><span id="rec_count" name="rec_count" style="color:black;"> ${likeCount}</span>
        						</a>
                 		</div>
                 	</c:if>
                 	<c:if test="${empty loginSeq}">
                 		<div id=like_icon>
                 			<a class="heart_nonmem">
-           						<img id="heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count"> ${likeCount}</span>
+           						<img id="heart" src="/images/dislike.png" style="width:20px; height:20px;"><span id="rec_count" name="rec_count" style="color:black;"> ${likeCount}</span>
        						</a>
                 		</div>
                 	</c:if>
@@ -570,14 +570,14 @@
                 	<c:if test="${dto.expired == '진행'}">
                 	<div id=recruit_icon>
                 		<a class="recruit_list_see">
-                			<i class="far fa-user" style="color: black"></i><span id="mem_count" name="mem_count"> ${memCount} </span>
+                			<i class="far fa-user" style="color: black"></i><span id="mem_count" name="mem_count" style="color:black;"> ${memCount} </span>
                 		</a>
                 	</div>
                 	</c:if>
                 	<c:if test="${dto.expired == '마감'}">
                 	<div id=recruit_icon>
                 		<a class="recruit_list_see_no">
-                			<i class="far fa-user" style="color: black"></i><span id="mem_count" name="mem_count"> ${memCount} </span>
+                			<i class="far fa-user" style="color: black"></i><span id="mem_count" name="mem_count" style="color:black;"> ${memCount} </span>
                 		</a>
                 	</div>
                 	</c:if>
@@ -642,7 +642,7 @@
                            		 	<c:if test="${repl.mem_seq == loginSeq}">
                            		 		<button type=button id="rep_del${repl.seq }" class="btn btn-primary btn-sm rep_del" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 삭제</span></button>
                            	 			<button type=button id="rep_mod${repl.seq }" class="btn btn-primary btn-sm rep_mod" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">댓글 수정</span></button>
-                        				<button type=submit id="rep_modok${repl.seq }" formaction="/comreply/modify" class="btn btn-primary btn-sm rep_modok" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 완료</span></button>
+                        				<button type=submit id="rep_modok${repl.seq }" formaction="/comreply/modify" class="btn btn-primary btn-sm rep_modok" style="border: none; background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 완료</span></button>
                             			<button type=button id="rep_modcancel${repl.seq }" class="btn btn-primary btn-sm rep_modcancel" style="border: none;background-color: rgb(56, 181, 174); display: none;"><span style="font-size: small;">수정 취소</span></button>
                         			</c:if>
                         		</div>
@@ -655,10 +655,10 @@
                         				<div class="re_reply_content">
                             				<input type=hidden value="${dto.seq}" name=writeseq>
                             				<input type=hidden value="${repl.seq}" name=rpseq>
-                            				<input type=text placeholder="댓글을 입력하세요" name=recontents style="width: 100%; padding: 10px; outline:none;" autocomplete="off">
+                            				<input type=text placeholder="댓글을 입력하세요" id="rereply_contents${repl.seq }" name=recontents style="width: 100%; padding: 10px; outline:none;" autocomplete="off">
                             			</div>
                             			<div class="re_rep_input_btn" style="text-align: right; margin-top:10px; padding-right:20px;">
-                            				<button type=submit formaction="/comreply/rereply" class="btn btn-primary btn-sm"style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 완료</span></button>
+                            				<button type=submit formaction="/comreply/rereply" class="re_reply_write btn btn-primary btn-sm" id="re_reply_write${repl.seq }" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 완료</span></button>
                            	 				<button type=button class="btn btn-primary btn-sm re_rep_cancle_btn" id="re_rep_cancle_btn${repl.seq }" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">작성 취소</span></button>
                             			</div>
                         			</div>               		
@@ -804,7 +804,17 @@
 			$("#re_rep_input"+id).css("display", "none");
 		})
 	
-		/* 대댓글 관련 */
+		/* 대댓글 관련 */		
+		$(".re_reply_write").on("click", function(){
+			let id = this.id.substr(14);
+			
+			if($("#rereply_contents"+id).val() == ""){
+				alert("댓글을 작성해주세요");
+ 				return false;			
+ 			}			
+			$('#frmRpMod').submit();
+		})
+		
    		$(".re_rep_del").on("click", function(){
 			let id = this.id.substr(10);
 			location.href = "/comreply/redelete?idseq="+id+"&writeseq=${dto.seq}";
@@ -815,6 +825,12 @@
 			
 			let recontent = $("#recontent${rerepl.seq }"+id).val();
 			console.log(recontent + " : " + $("#recontent${rerepl.seq }").val());
+			
+			if(recontent==""){
+				alert("내용을 입력해주세요");
+				$("#recontent${rerepl.seq }"+id).focus();
+				return false;
+			}
 			
 			location.href = "/comreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;
 		})
@@ -896,7 +912,19 @@
 		$(".rep_modcancel").on("click", function() {
 			location.reload();
 		})
-	</script>    
+		
+		$(".rep_modok").on("click", function(){
+			let id = this.id.substr(9);
+			
+			if($("#e_rep_con"+id).val() == ""){
+				alert("댓글을 입력하세요");
+				$("#e_rep_con"+id).focus();
+				return false;
+			}
+			$('#frmRpMod').submit();
+		})
+	
+	</script>
     
     <!-- 목록으로 / 삭제하기 -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
