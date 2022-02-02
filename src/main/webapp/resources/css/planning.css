@@ -96,3 +96,26 @@ label:hover{
 .saveImg{
 	height:170px;
 }
+
+.banner {
+	background-color: rgb(56, 181, 174);
+	height: 200px;
+}
+
+.banner_title {
+	width: 100%;
+	height: 70%;
+	color: white;
+	font-size: 35px;
+	font-weight: 600;
+	padding: 60px 0px 10px 100px;
+}
+
+.banner_content {
+	width: 100%;
+	height: 30%;
+	color: white;
+	font-size: 15px;
+	font-weight: 500;
+	padding-left: 100px;
+}

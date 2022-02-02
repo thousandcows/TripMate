@@ -47,6 +47,21 @@
                 background-image:url("/images/banner.png");
                 height:200px;
             }
+            
+            	html,body{
+		height:100%;
+	}
+	
+	.container{
+		height:auto;
+		min-height:100%;
+	}
+	.con{
+		padding-bottom:250px;
+	}
+	.footer{
+	  transform : translateY(-100%);
+	}
         
 </style>
 </head>
@@ -55,7 +70,7 @@
 		<div class="banner_title">  </div>
 		<div class="banner_content">  </div>
 	</div>
-	<div class="container mt-4">
+	<div class="container con mt-4">
 		<div class="row border mt-4 d-flex justify-content-center">
 				<c:set var="now" value="<%=new java.util.Date()%>" />
 				<c:forEach var="i" items="${list }">
@@ -132,6 +147,7 @@
 
 	</div>	
 
+	    	  <jsp:include page="../base/footer.jsp"></jsp:include>
 
 	<script>
 		$("#planMakeBtn").on("click",function(){

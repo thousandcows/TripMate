@@ -41,9 +41,19 @@
 		$("#thirdForm").fadeOut(200)
 	})
 </script>
+<style>
+
+.banner {
+	background-image: url("/images/banner.png");
+	height: 200px;
+}
+</style>
 </head>
 <body>
-
+	<div class = "banner">
+		<div class="banner_title">  </div>
+		<div class="banner_content">  </div>
+	</div>
 	<div class="container con">
 		<div class="row mb-5 mt-5">
 			<div class="col-12 text-center">

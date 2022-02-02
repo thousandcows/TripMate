@@ -32,11 +32,43 @@
 	}
 	.con{
 		padding-bottom:300px;
-	
 	}
+	
+	      .banner{
+            background-color: rgb(56, 181, 174);
+            height:200px;
+        }
+
+        .banner_title{
+            width: 100%;
+            height: 70%;
+            color: white;
+            font-size: 35px;
+            font-weight: 600;
+            padding: 60px 0px 10px 100px;
+        }
+
+        .banner_content{
+            width: 100%;
+            height: 30%;
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            padding-left: 100px;
+        }
+        
+        .banner{
+                background-image:url("/images/banner.png");
+                height:200px;
+            }
+        
 </style>
 </head>
 <body>
+	<div class = "banner">  <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
+		<div class="banner_title">  </div>
+		<div class="banner_content">  </div>
+	</div>
 	<div class="container con mt-4">
 		<div class="row mt-4">
 			<div class="col-12 text-center">
