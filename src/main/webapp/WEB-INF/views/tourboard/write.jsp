@@ -9,6 +9,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+<jsp:include page="../base/header.jsp"></jsp:include>
+
+
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -16,7 +20,7 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<jsp:include page="../base/header.jsp"></jsp:include>
+
 
  <style>
         * {box-sizing: border-box;}
@@ -25,8 +29,14 @@
             margin: 0;  /* 임시로 body margin 0px */
         }
 
-        /* div{border:1px solid black} */
+       /* 링크 속성 지우기 */
+        a { text-decoration:none  } 
+        a:hover { text-decoration:none; color: black; }
+        a:link {text-decoration: none; color: black; }
+        a:visited {text-decoration: none; color: black; }
+        a:active {text-decoration: none; color: black; }
 
+        /* 헤더----------------------------------------------------- */
         .banner{
             background-image:url("/images/community_banner.png");
            	height:200px;
@@ -50,10 +60,12 @@
             padding-left: 100px;
         }
 
-
-        .container>.root{
-            padding-left: 80px;
+         /* 미니 사이트맵 루트 */
+        .root{
+            padding-left: 150px;
             overflow: auto;
+            text-align: center;
+            font-size: 16px;
         }
 
         .root>div{
@@ -62,57 +74,228 @@
             padding-right: 10px;
         }
 
-
-        .catetitle{
-        	overflow: auto;
-        	padding: 0px 80px 0px 80px;
-        }
-        
-        .category{
-        	width:10%;
-        	float:left;
-        }
-        
-        .title{
-        	width:90%;
-        	float:left;
-        }
-        
-        .title>input{
-        	width:100%;
-        }        
-        
-
-        .contents{
-        	padding-right:80px;
-        }
-        
-        /* 버튼 */
-        .ft_btn {
-            /* border: 1px solid red; */
-            text-align: right;
-            padding: 20px 5px 0px 0px;
-        }
-        .ft_btn> button{
-        	margin: 2px;
-        }/* 
-        
-        .ft_btn{
-            width: 100%;
-            text-align: right;
-            padding: 0px 80px 0px 80px;            
-        } */
-        
-        /* 링크 속성 지우기 */
-        a { text-decoration:none  } 
-        a:hover { text-decoration:none; color: black; }
-        a:link {text-decoration: none; color: black; }
-        a:visited {text-decoration: none; color: black; }
-        a:active {text-decoration: none; color: black; }
-        
         .fa-home{
             color: rgb(56, 181, 174);
         }
+        
+        
+        
+
+         /* 1400px ~  */
+        @media (min-width: 1400px){
+
+            /* 컨테이너 ----------------------------------------------------- */
+            .container_c{
+                margin-left: 100px;
+                margin-right: 100px;
+                margin-bottom:50px;
+            }
+
+            /* 글작성 부분 */
+            .writeForm{
+                padding : 20px 150px 0px 150px;
+                text-align: center;
+            }
+
+            /* 카테고리 */
+            .catetitle{
+                overflow: auto;
+                padding: 0px;
+                text-align: left;
+            }
+            
+            .category{
+                width:7%;
+                float:left;
+            }
+            
+
+            /* 제목 */
+            .title{
+                width:93%;
+                float:left;
+            }
+            
+            .title>input{
+                width:100%;
+            }      
+            
+            .title_800{
+                display: none;   
+            }
+            
+            /* 내용 */
+            .contents{
+                
+            }
+
+            /* 버튼 */
+            .ft_btn {
+                text-align: right;
+                padding: 20px 150px 0px 0px;
+            }
+            .ft_btn> button{
+                margin: 2px;
+            }
+        }
+
+          /* 800 ~ 1400px */
+        @media (max-width: 1400px) and (min-width: 800px){
+
+            /* 컨테이너 ----------------------------------------------------- */
+            .container_c{
+                margin-left: 0px;
+                margin-right: 0px;
+                margin-bottom:50px;
+            }
+
+             /* 미니 사이트맵 루트 */
+            .root{
+                padding-left: 50px;
+                overflow: auto;
+                text-align: center;
+            }
+
+            /* 글작성 부분 */
+            .writeForm{
+                padding : 20px 50px 0px 50px;
+                text-align: center;
+            }
+
+            /* 카테고리 */
+            .catetitle{
+                overflow: auto;
+                padding: 0px;
+                text-align: left;
+            }
+            
+            .category{
+                width:8%;
+                float:left;
+            }
+            
+
+            /* 제목 */
+            .title{
+                width:92%;
+                float:left;
+            }
+            
+            .title>input{
+                width:100%;
+            }   
+            
+            .title_800{
+             display: none;   
+            }
+            
+            /* 내용 */
+            .contents{
+                
+            }
+
+            /* 버튼 */
+            .ft_btn {
+                text-align: right;
+                padding: 20px 50px 0px 0px;
+            }
+            .ft_btn> button{
+                margin: 2px;
+            }
+        }
+
+        /* ~ 800px */
+        /* 작은 화면일 때 */
+        @media (max-width: 800px){
+
+            /* 컨테이너 ----------------------------------------------------- */
+            .container_c{
+                margin-left: 0px;
+                margin-right: 0px;
+                margin-bottom:50px;
+            }
+
+            /* 헤더 banner contents*/
+            .banner_title{
+                width: 100%;
+                height: 70%;
+                color: white;
+                font-size: 35px;
+                font-weight: 600;
+                padding: 60px 0px 10px 0px;
+                text-align: center;
+            }
+    
+            .banner_content{
+                width: 100%;
+                height: 30%;
+                color: white;
+                font-size: 15px;
+                font-weight: 500;
+                padding-left: 0px;
+                text-align: center;
+            }
+
+             /* 미니 사이트맵 루트 */
+             .root{
+                padding-left: 0px;
+                overflow: auto;
+                text-align: center;
+                display: none;
+            }
+
+            /* 글작성 부분 */
+            .writeForm{
+                padding : 20px 15px 0px 15px;
+                text-align: center;
+            }
+
+            /* 카테고리 */
+            .catetitle{
+                overflow: auto;
+                padding: 0px;
+                text-align: left;
+            }
+            
+            .category{
+                width:10%;
+                float:left;
+            }
+            
+
+            /* 제목 */
+            .title{
+                width:90%;
+                float:left;
+                display: none;
+            }
+            
+            .title_800>input{
+                width:100%;
+            }   
+            
+            .title_800{
+                width: 100%;
+                float: left;
+                padding-top: 10px;
+            }
+            
+            /* 내용 */
+            .contents{
+                
+            }
+
+            /* 버튼 */
+            .ft_btn {
+                text-align: right;
+                padding: 20px 15px 0px 0px;
+            }
+            .ft_btn> button{
+                margin: 2px;
+            }
+        }
+
+
 	</style>
 </head>
    
@@ -124,7 +307,7 @@
         <div class="banner_title" href="">여행지 게시판</div>
         <div class="banner_content">각 지역의 여행 후기를 남겨보세요</div>
     </div>
-    <div class="container">
+    <div class="container_c">
         <div class="root">
             <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
@@ -146,8 +329,11 @@
                 <div class="title">
                     <input type=text placeholder="제목을 입력하세요" name="title" id="title">
                 </div>
+                <div class="title_800">
+                    <input type=text placeholder="제목을 입력하세요" name="title" id="title">
+                </div>
             </div><br>
-        	<div class="contents" style="margin-left:80px;">
+        	<div class="contents">
  				<textarea id="summernote" rows="5" name="contents" style="width:100%; height:250px;"></textarea>
  				<input type=hidden>
  			</div>

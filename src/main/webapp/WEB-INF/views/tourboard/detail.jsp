@@ -161,7 +161,6 @@ a:active {
 
 /* 버튼 */
 .button {
-	/* border: 1px solid red; */
 	text-align: right;
 	padding: 50px 5px 0px 0px;
 }

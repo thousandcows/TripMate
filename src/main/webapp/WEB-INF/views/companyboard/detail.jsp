@@ -158,8 +158,7 @@
 
         .write_con {
             width: 100%;
-            padding: 5px;
-            
+			padding: 10px;
         }
 
         .write_con>textarea {
@@ -296,7 +295,28 @@
         
         .rep_btn > button {margin: 2px;}
         
-        
+		.rp_list_con{
+			margin: 0px 80px 0px 80px;
+		}
+
+		.re_rp_contents2{
+			width: 95%;
+			float: left;
+			padding-bottom: 20px;
+		}
+
+		.re_rp_contents3{
+			width: 95%; 
+			float: left;
+			padding-bottom: 20px;
+		}
+
+		.re_reply{
+			width: 100%; 
+			float: left; 
+			margin-top:20px;	
+		}
+				
 
         /* 참가자리스트 */
         .recruit_list{
@@ -371,6 +391,25 @@
 				text-align: right;
 				padding: 10px 20px 20px 20px;
 				/* height: 50px; */
+			}
+
+			.rp_list_con{
+				margin: 0px 20px 0px 20px;
+			}
+
+			/* 참가자리스트 */
+			.recruit_list{
+				text-align: center;
+				width: 100%;
+				padding: 10px 100px 10px 100px;
+				overflow: auto;
+			}
+			
+			.recruit_list>div{
+				text-align: center;
+				padding-top: 10px;
+				padding-bottom : 10px;
+				border-bottom: solid 1px rgb(207, 207, 207);
 			}
 					
 		}
@@ -451,6 +490,25 @@
 				text-align: right;
 				padding: 10px 0px 20px 0px;
 				/* height: 50px; */
+			}
+
+			.rp_list_con{
+				margin: 0px 0px 0px 0px;
+			}
+
+			/* 참가자리스트 */
+			.recruit_list{
+				text-align: center;
+				width: 100%;
+				padding: 10px 0px 10px 0px;
+				overflow: auto;
+			}
+			
+			.recruit_list>div{
+				text-align: center;
+				padding-top: 10px;
+				padding-bottom : 10px;
+				border-bottom: solid 1px rgb(207, 207, 207);
 			}
 
 		}
@@ -604,7 +662,7 @@
                 			</c:forEach>
                 	</div>
                 </c:if>
-               	</div>
+            </div>
          	</form> 
                	<form action="/comreply/reply" method="post" id="frmReply" enctype="multipart/form-data">
 					<input type=hidden value="${dto.seq}" name=rseq>
@@ -618,6 +676,7 @@
                 	</c:if>
                 </form> 
                 
+				<div class="rp_list_con">
                 <c:forEach var="repl" items="${rep_list }">
                 	<form method="post" id="frmRpMod" enctype="multipart/form-data">
                 		<div class="rep_list">
@@ -651,7 +710,7 @@
                         		<!-- 답글 달기 창  -->
                         		<div class="re_rep_input" id="re_rep_input${repl.seq }" style="width: 100%; float: left; margin-top:5px; display:none;">
                         			<div style="width: 5%; float: left; text-align: right; padding-right: 10px; color: orange;"><i class="fas fa-reply fa-rotate-180"></i></div>
-                        			<div class="re_rp_contents2" style="width: 95%; float: left;">
+                        			<div class="re_rp_contents2">
                         				<div class="re_reply_content">
                             				<input type=hidden value="${dto.seq}" name=writeseq>
                             				<input type=hidden value="${repl.seq}" name=rpseq>
@@ -668,16 +727,16 @@
                         		<c:forEach var="rerepl" items="${re_rep_list }">
                         			<c:choose>
                         				<c:when test="${rerepl.par_seq == repl.seq}">
-                        					<div class="re_reply" id="re_reply${repl.seq }" style="width: 100%; float: left; margin-top:5px;">
+                        					<div class="re_reply" id="re_reply${repl.seq }">
                             					<div style="width: 5%; float: left; text-align: right; padding-right: 10px; color: orange;"><i class="fas fa-reply fa-rotate-180"></i></div>
-                            					<div style="width: 95%; float: left;">
+                            					<div class="re_rp_contents3">
                                 					<div class="re_rp_title" style="width: 100%;">
-                                    					<span class="re_rp_id" value="${rerepl.mem_seq }" style="font-weight: bolder;width: 50%; display:inline-block; padding-left: 20px ;">${rerepl.nick }</span>
-                                    					<span class="re_rp_time" style="color: gray; width:  49%; display:inline-block; text-align: right; padding-right: 20px;"> ${rerepl.writen_date }</span>
+                                    					<span class="re_rp_id" value="${rerepl.mem_seq }" style="font-weight: bolder;width: 50%; display:inline-block; ">${rerepl.nick }</span>
+                                    					<span class="re_rp_time" style="color: gray; width:  49%; display:inline-block; text-align: right;"> ${rerepl.writen_date }</span>
                                 					</div>
                                 					<div class="re_rp_contents" style="width: 100%;">
                                 						<div class="re_rp_content">
-                                    						<input type="text" class="rr_con" id="recontent${rerepl.seq }"  name="contents" value="${rerepl.contents}" style="width: 100%; padding:5px 20px 5px 20px; border: none;" readonly>
+                                    						<input type="text" class="rr_con" id="recontent${rerepl.seq }"  name="contents" value="${rerepl.contents}" style="width: 100%; padding:5px 20px 5px 0px; border: none;" readonly>
                                 						</div>
                                 						<c:if test="${!empty loginNick}">
                                 						<c:if test="${rerepl.mem_seq == loginSeq}">
@@ -699,6 +758,7 @@
                 		</div>
                 	</form>
                	</c:forEach>
+			</div>
     		</div>
     	
     	<!-- Modal -->
