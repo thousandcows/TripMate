@@ -52,8 +52,8 @@
 </head>
 <body>
 	<div class = "banner">  <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
-		<div class="banner_title"> 여행계획 관리 </div>
-		<div class="banner_content"> 여행 계획을 세워보세요. </div>
+		<div class="banner_title">  </div>
+		<div class="banner_content">  </div>
 	</div>
 	<div class="container mt-4">
 		<div class="row border mt-4 d-flex justify-content-center">
