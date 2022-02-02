@@ -34,6 +34,7 @@
           /* 전체영역 크기 조절 */
           .myPageContainer {
             width: 1200px;
+            min-height:620px;
             display: flex;
             margin: auto;
           }
@@ -177,6 +178,7 @@
             }
 
             /* 사이드바 끝 */
+          }
         </style>
 
       </head>
