@@ -1,0 +1,85 @@
+
+@charset "UTF-8";
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.red { color: #B22222; }
+ul {
+  list-style-type: none;
+}
+ul>li{
+  float:left;
+}
+
+#mainImg{
+	max-height:500px;
+}
+#heart{
+	width:20px;
+	height:20px;
+}
+#save:hover{
+	cursor:pointer;
+}
+.rcmdPhoto{
+	height:150px;
+}
+.rcmd:hover{
+	cursor:pointer;
+}
+#ph:hover{
+	cursor:pointer;
+}
+
+#profileImg{
+	width:100px;
+	height:100px;
+}
+.form-control{
+	height: 150px;
+	resize:none;
+}
+#replyText{
+	height:150px;
+}
+.replyImg{
+	height:200px;
+}
+.reply_id:hover{
+	cursor:pointer;
+}
+.btn-success{
+	background-color:#3EB489;
+	border:none;
+}
+.btn-primary{
+	background-color:#1c9f65;
+	border:none;
+}
+.btn-primary:hover{
+	background-color:#14754a;
+}
