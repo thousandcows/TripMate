@@ -125,14 +125,14 @@
       }
 
       .card-text {
-        height: 70px;
+        height: 80px;
         overflow: hidden;
       }
 
       /* 카드 이미지들 */
       .card-img-top {
         width: 100%;
-        height: 200px
+        height: 200px;
       }
 
       .btn-primarys {
@@ -147,16 +147,12 @@
       }
 
       /* 게시판쪽 */
-      .middleConBox2 {
-        height: 300px;
-      }
-
       .middleCon2Txt {
         color: rgb(114, 114, 114);
-        margin-top: 38px;
+        margin-top: 40px;
         font-size: 22px;
         font-weight: bold;
-        margin-bottom: 30px;
+        margin-bottom: 38px;
         cursor: default;
       }
 
@@ -168,6 +164,50 @@
       .mbanner1:hover {
         opacity: 0.95;
       }
+
+      @media (max-width: 480px) {
+        .top-btn {
+          right: 10px;
+          bottom: 30px;
+        }
+        .mainTopImgs{
+          width:80px;
+        }
+        h5{
+          font-size:16px;
+        }
+        h6{
+          font-size:14px;
+        }
+        .card {
+          height:290px;
+          width:200px !important;
+        }
+        .card-img-top {
+          width: 100%;
+          height: 180px;
+        }
+        .card-title{
+          font-size:14px;
+        }
+        .card-text{
+          height:80px;
+          font-size:12px;
+        }
+        .btn-primarys{
+          width:60px;
+          height:20px;
+          font-size:10px;
+          padding:0;
+        }
+        .middleCon2Txt{
+          font-size:17px;
+        }
+        .mbanner1{
+          width:180px;
+        }
+      }
+
     </style>
 
     <body>
@@ -230,7 +270,7 @@
         <div class="cuchun">추천 여행지<br><span class="cuchunB">트립메이트가 엄선한 여행지들입니다.</span></div>
         <div class="container middleConBox">
           <div class="row">
-            <div class="col-3">
+            <div class="col-6 col-sm-3">
               <div class="card" style="width: 18rem;">
                 <img src="/images/mainMCon1.webp" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -240,7 +280,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-6 col-sm-3">
               <div class="card" style="width: 18rem;">
                 <img src="/images/mainMCon2.webp" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -250,7 +290,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-6 col-sm-3">
               <div class="card" style="width: 18rem;">
                 <img src="/images/mainMCon3.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -260,7 +300,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-6 col-sm-3">
               <div class="card" style="width: 18rem;">
                 <img src="/images/mainMCon4.webp" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -272,7 +312,7 @@
             </div>
           </div>
           <div class="row middleLine">
-            <div class="col-3">
+            <div class="col-6 col-sm-3">
               <div class="card" style="width: 18rem;">
                 <img src="/images/mainMCon5.webp" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -282,7 +322,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-6 col-sm-3">
               <div class="card" style="width: 18rem;">
                 <img src="/images/mainMCon6.webp" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -292,7 +332,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-6 col-sm-3">
               <div class="card" style="width: 18rem;">
                 <img src="/images/mainMCon7.webp" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -302,7 +342,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-6 col-sm-3">
               <div class="card" style="width: 18rem;">
                 <img src="/images/mainMCon8.webp" class="card-img-top" alt="...">
                 <div class="card-body">
