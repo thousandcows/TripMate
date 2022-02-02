@@ -293,7 +293,7 @@
                 </div>
                 <div class="verificationOk">
                   <form action="/member/findPwChange" method="post" id="changePwForm">
-                    <input type="text" class="changePwInput" id="changePwInput" name="pw"
+                    <input type="password" class="changePwInput" id="changePwInput" name="pw"
                       placeholder="변경할 비밀번호를 입력해주세요."><button type="button" class="changePwBtn"
                       id="changePwBtn">변경</button>
                     <div class="changePwConfirm signupInputConfirm"></div>
