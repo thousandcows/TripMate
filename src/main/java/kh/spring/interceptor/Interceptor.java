@@ -26,11 +26,13 @@ public class Interceptor implements HandlerInterceptor {
 			throws Exception {
 
 		// 로그인 체크
-//		String loginID = (String) session.getAttribute("loginEmailID");
-//		if(loginID == null) {
-//			response.sendRedirect("/");
-//			return false;
-//		}
+		String loginID = (String) session.getAttribute("loginEmailID");
+		System.out.println("요청 URI : " + request.getRequestURI());
+		if(loginID == null) {
+			System.out.println("널");
+			response.sendRedirect("/");
+			return false;
+		}
 
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}

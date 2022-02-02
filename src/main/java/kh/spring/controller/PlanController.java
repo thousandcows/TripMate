@@ -189,10 +189,10 @@ public class PlanController {
 		pServe.deleteDatePlan(seq);
 		return "OK";
 	}
-	@ExceptionHandler
-	public String ExceptionHandler(Exception e) {
-		e.printStackTrace();
-		e.getMessage();
-		return "/error";
-	}
+//	@ExceptionHandler
+//	public String ExceptionHandler(Exception e) {
+//		e.printStackTrace();
+//		e.getMessage();
+//		return "/error";
+//	}
 }
