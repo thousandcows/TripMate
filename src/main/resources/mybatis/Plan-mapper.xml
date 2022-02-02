@@ -30,12 +30,14 @@
 	</select>
 	
 	<select id="getList" resultType="kh.spring.dto.PlanDTO">
-		select * from (select plan.* , row_number() over(order by seq desc) rn from plan where mem_seq = #{seq})where rn between #{startNum} and #{endNum}
+		select * from 
+		(select plan.*, row_number() over(order by seq desc) rn from plan where mem_seq = #{seq})
+		  where rn between #{startNum} and #{endNum}
 		
 	</select>
 	
 	<select id="detailPlanSort" resultType="kh.spring.dto.DetailPlanDTO">
-		select * from detail_plan where par_seq = #{seq} and plan_date = #{date} order by seq
+		select par_seq,area_seq,to_char(plan_date,'YYYY/MM/DD') as plan_date,seq from detail_plan where par_seq = #{seq} and plan_date = #{date} order by seq
 	</select>
 	
 	<select id="planListPrint" resultType="kh.spring.dto.AreaDTO">
