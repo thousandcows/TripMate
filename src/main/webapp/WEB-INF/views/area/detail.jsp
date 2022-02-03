@@ -110,8 +110,7 @@
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">Modal
-												title</h5>
+											<h5 class="modal-title" id="exampleModalLabel">상세 정보</h5>
 											<button type="button" class="btn-close"
 												data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
@@ -152,12 +151,10 @@
 				<div class="col-12 text-center mb-2 border">
 					<h4>후기 남기기</h4>
 				</div>
-				<div class="col-2">
-				<label class="w-100" style="height:100px;">
-				<div id="ph">
-					<svg xmlns="http://www.w3.org/2000/svg" class="w-100" style="height:100px;" viewBox="0 0 20 20" fill="currentColor">
-					   <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
-					 </svg>
+				<div class="col-2 align-middle">
+				<label class="w-100 align-middle" style="height:100px;">
+				<div id="ph" class="text-center align-middle">
+					<img src="/images/comment.png">
 				</div>
 					<input accept="image/*" id="img" type="file" class="opacity-0" name="picture" style="display:none;"/>
 				</div>
@@ -190,9 +187,9 @@
 		<c:forEach var="i" items="${reply }" >
 		<form action="/area/replyUpdate" method="post" enctype="multipart/form-data">
 		<div class="row replyContainer mt-4">
+			<div class="col-3 text-center align-self-center">
 			<input type="hidden" name=seq value=${i.seq }>
 			<input type="hidden" name=area_seq value=${i.area_seq }>
-			<div class="col-3 text-center align-self-center">
 				<label>
 				<div class="img" id="replyPhoto${i.seq }">
 				<c:if test="${i.photo ne null }">
@@ -212,7 +209,7 @@
 					</div>
 
 					
-					<div class="col text-end starRate${i.score }">
+					<div class="col text-end starRate${i.score }" id="rating${i.seq }">
 					</div>
 				</div>
 				<div class="row">
@@ -229,14 +226,14 @@
 						<button type="button" class="btn btn-success update" id="${i.seq }">수정</button>
 						<button type="submit" class="btn btn-success updateSubmit" id="replySubmit${i.seq }"  style="display:none">등록</button>						
 					</div>
+				</c:if>
 				</form>
+				<c:if test="${i.mem_seq eq loginSeq }">
 					<div class="col-3 col-xxl-1 text-end">
-						<form action="replyDelete">
-						<button type="submit" class="btn btn-success delete" id="replyDel${i.seq }">삭제</button>
+						<button type="button" class="btn btn-success delete" id="replyDel${i.seq }">삭제</button>
 						<button type="button" class="btn btn-success cancel" id="replyCancel${i.seq }"  style="display:none">취소</button>
 						<input type="hidden" name="area_seq" value=${area_seq } >
 						<input type="hidden" name="seq" value=${i.seq }>
-						</form>
 					</div>
 					
 				</div>
@@ -296,7 +293,7 @@
     		success:function(result){
     			$('#myModal').modal("toggle");
     			if(result.photo!=undefined){
-        			$("#profileImg").attr("src","/images/"+result.photo);    				
+        			$("#profileImg").attr("src",result.photo);    				
     			}else{
     				$("#profileImg").attr("src","/images/noPhoto.png");
     			}
@@ -340,14 +337,13 @@
 	
 	//댓글 수정
 	$(document).on("click",".update",function(){
-		console.log("hi");
 		let seq = "#replyTxt"+this.id;
 		$(seq).removeAttr("readonly");
 		$(this).hide();
-		
 		$("#replyDel"+this.id).hide();
 		$("#replySubmit"+this.id).show();
 		$("#replyCancel"+this.id).show();
+		$("#rating"+this.id).data('raty').readOnly(false);
 		$("#img"+this.id).prop("disabled",false);
 	})
 	
@@ -361,13 +357,13 @@
 		$("#"+id).show();
 		$("#replySubmit"+id).hide();
 		$("#img"+id).prop("disabled",true);
-
+		$("#rating"+(this.id).substr(11)).data('raty').readOnly(true);
 	})
 	
 	//댓글 삭제
-		$(".delete").on("click",function(){
-			if(!confirm("삭제하시겠습니까?")){
-				return false;
+		$(document).on("click",".delete",function(){
+			if(confirm("삭제하시겠습니까?")){
+				location.href="/area/replyDelete?seq="+(this.id).substring(8)+"&area_seq="+"${area_seq}";
 			}
 		})
 	
@@ -388,12 +384,11 @@
 	    			console.log(result);	
 	    			for(var i in result)
 					$("#seeMoreTag").before(
-							
 							'<form action="/area/replyUpdate" method="post" enctype="multipart/form-data">'+
 							'<div class="row mt-4">'+
+							'<div class="col-3 text-center align-self-center">'+
 							'<input type="hidden" name=seq value='+result[i].seq+'>'+
 							'<input type="hidden" name="area_seq" value='+result[i].area_seq+'>'+
-							'<div class="col-3 text-center align-self-center">'+
 							'<label>'+
 							'<div class="img" id="replyPhoto'+result[i].seq+'">'+
 							
@@ -407,7 +402,7 @@
 								'<div class="col">'+
 									'<span class="reply_id" value="'+result[i].mem_seq+'">'+result[i].mem_nick+'</span>'+
 								'</div>'+
-								'<div class="col text-end starRate'+result[i].score+'">'+
+								'<div class="col text-end starRate'+result[i].score+'" id="rating'+result[i].seq+'">'+
 								'</div>'+
 							'</div>'+
 							'<div class="row">'+
@@ -424,7 +419,7 @@
 								'<div class="col-3 col-xxl-3 text-end">'+
 									'<button type="button" class="btn btn-success update" id='+result[i].seq+'>수정</button>'+
 									'<button type="submit" class="btn btn-success updateSubmit" id="replySubmit'+result[i].seq+'" style="display:none">등록</button>'+
-								'</div>'+
+								'</div></form>'+
 								'<div class="col-3 col-xxl-1 text-end">'+
 									'<button type="button" class="btn btn-success delete" id="replyDel'+result[i].seq+'">삭제</button>'+
 									'<button type="button" class="btn btn-success cancel" id="replyCancel'+result[i].seq+'" style="display:none">취소</button>'+
@@ -439,14 +434,16 @@
 								'</div>'
 							)+
 						'</div>'+
-					'</div>'
+					'</div>'+
+				'</form>'
+
 					)
 	    		}
 	    	  }).done(function(param){
 				let i;
 	    		  for(i = 1; i<6;i++){
 						$(".starRate"+i).html("");
-			  			$(".starRate"+i).raty({ readOnly:true, score: i	 });
+			  			$(".starRate"+i).raty({  score: i	 });
 				}
 	    	  });
 	   })

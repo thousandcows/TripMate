@@ -44,7 +44,9 @@
         a:link {text-decoration: none; color: black; }
         a:visited {text-decoration: none; color: black; }
         a:active {text-decoration: none; color: black; }
-
+        .navbar-brand{
+            height:70px !important;
+        }
         /* 헤더----------------------------------------------------- */
         .banner {
             background-image:url("/images/community_banner.png");
@@ -71,7 +73,7 @@
 
         /* 미니 사이트맵 루트 */
         .root{
-            padding-left: 150px;
+            padding-left: 80px;
             overflow: auto;
             text-align: center;
             font-size: 16px;
@@ -168,16 +170,22 @@
 
              /* 컨테이너 ----------------------------------------------------- */
              .container_c{
-                margin-left: 0px;
-                margin-right: 0px;
+                margin-left: 50px;
+                margin-right: 50px;
                 margin-bottom:50px;
             }
 
              /* 미니 사이트맵 루트 */
             .root{
-                padding-left: 50px;
+                padding-left: 0px;
                 overflow: auto;
                 text-align: center;
+            }
+
+            /* 제목, 글 */
+            .board {
+                width: 100%;
+                padding: 20px 0px 0px 0px;
             }
         }
 
@@ -219,6 +227,12 @@
                 overflow: auto;
                 text-align: center;
                 display: none;
+            }
+
+            /* 제목, 글 */
+            .board {
+                width: 100%;
+                padding: 20px 0px 0px 0px;
             }
         }
 
@@ -293,6 +307,7 @@
                 <div class="select_gender"><span style="font-weight: bold;">성별 : </span>
                     <input type="radio" name="gender" value="남자" >남자
                     <input type="radio" name="gender" value="여자">여자
+                    <input type="radio" name="gender" value="혼성">혼성
                 </div>
 
                 <div class="title">

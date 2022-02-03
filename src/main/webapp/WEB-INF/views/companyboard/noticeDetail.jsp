@@ -79,6 +79,11 @@ a:active {
 	color: black;
 }
 
+/* input style */
+input:focus {outline:none;}
+        
+input{autocomplete:"off";}
+
 /* 헤더----------------------------------------------------- */
 .banner {
 	background-image:url("/images/community_banner.png");
@@ -103,76 +108,57 @@ a:active {
 	padding-left: 100px;
 }
 
-/* 컨테이너 ----------------------------------------------------- */
-.container {
-	/* border: 1px solid red; */
-	padding-bottom: 30px;
-}
-
 /* 미니 사이트맵 루트 */
-.container>.root {
+.root {
 	padding-left: 80px;
-	overflow: auto;
+    overflow: auto;
+    text-align: center;
+    font-size: 16px;
 }
 
 .root>div {
-	/* border: 1px solid red; */
-	float: left;
-	margin: 40px 0px 40px 0px;
-	padding-right: 10px;
-}
+    float: left;
+    margin: 40px 0px 40px 0px;
+    padding-right: 10px;
+ }
 
 .fa-home {
-	color: rgb(56, 181, 174);
+    color: rgb(56, 181, 174);
+}
+
+/* 컨테이너 ----------------------------------------------------- */
+.container_c {
+    margin-left: 200px;
+    margin-right: 200px;
+    padding-bottom: 30px;
+    overflow: auto;
 }
 
 /* 제목, 글 */
 .board {
-	/* border: 1px solid red; */
 	width: 100%;
 	padding: 20px 80px 0px 80px;
-}
-
-.select_tour {
-	width: 100%;
-	padding: 10px;
-	/* border: 1px solid red; */
-}
-
-.select_recruit {
-	width: 100%;
-	padding: 10px;
-	/* border: 1px solid red; */
-}
-
-.select_date {
-	width: 100%;
-	padding: 10px;
-	/* border: 1px solid red; */
-}
-
-.select_gender {
-	width: 100%;
-	padding: 10px;
-	/* border: 1px solid red; */
 }
 
 .title {
 	width: 100%;
 	padding: 5px;
-	/* border: 1px solid red; */
+	
 }
 
-#title {
-	/* width: 100%;
-            height: 30px;  */
-	
+#title{
+	display: inline; 
+	font-size: 30px; 
+	font-weight: 500; 
+	border: none; 
+	width: 80%;
+	padding-left: 10px;
 }
 
 .write_con {
 	width: 100%;
 	padding: 5px;
-	/* border: 1px solid red; */
+	
 }
 
 .write_con>textarea {
@@ -183,7 +169,6 @@ a:active {
 
 /* 버튼 */
 .button {
-	/* border: 1px solid red; */
 	text-align: right;
 	padding: 20px 5px 0px 0px;
 }
@@ -192,68 +177,120 @@ a:active {
 	margin: 2px;
 }
 
-/* 좋아요, 댓글란  */
-.like_n_rep {
-	/* border: 1px solid red; */
-	width: 100%;
-	height: 30px;
-	text-align: right;
-}
-
-.like_n_rep>div {
-	/* border: 1px solid red; */
-	height: 30px;
-	width: 55px;
-	text-align: center;
-	float: left;
-	line-height: 30px;
-}
-
-#heart, #cant_heart, .recruit_list_see {
-	cursor: pointer;
-}
-
 /* 작성자/조회수칸 */
-.writer_con {
-	width: 100%;
-	height: 50px;
+.writer_con{
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid black;
+    margin-top: 20px;
+	margin-bottom: 20px;
+    padding-bottom: 20px;
+    padding-left: 15px;
+}
+        
+.writer_con>div{
+    width: 100%;
+    height: 50%;
+    line-height:25px;
+    color: gray;
 }
 
-.view_con {
-	width: 100%;
-	height: 30px;
-	color: gray;
-}
+/* 1400px ~  */
+@media (min-width: 1400px){}
+  
+  /* 800 ~ 1400px */
+  @media (max-width: 1400px) and (min-width: 800px){
 
-/* input style */
-input:focus {
-	outline: none;
-}
+	  /* 컨테이너 */
+	  .container_c {
+		  margin-left: 50px;
+		  margin-right: 50px;
+		  padding-bottom: 30px;
+		  overflow: auto;
+	  }
 
-input {autocomplete ="off";
-	
-}
+	  /* 미니 사이트맵 루트 */
+	  .root{
+		  padding-left: 5px;
+		  overflow: auto;
+		  text-align: center;
+		  font-size: 16px;
+	  }
 
-/* 댓글 쓰기창 */
-.rep_con {
-	width: 100%;
-	height: 70px;
-	padding: 10px;
-	/* border: 1px solid red; */
-}
+	  #title{
+		  display: inline; 
+		  font-size: 25px; 
+		  font-weight: 500; 
+		  border: none; 
+		  width: 80%;
+		  padding-left: 10px;
+	  }
 
-.rep_con>textarea {
-	width: 100%;
-	height: 50px;
-	resize: none;
-}
+	  /* 제목, 글 */
+	  .board {
+		  width: 100%;
+		  padding: 20px 0px 0px 0px;
+	  }
+  }
 
-.button2 {
-	/*  border: 1px solid red; */
-	text-align: right;
-	padding: 5px 5px 0px 0px;
-	height: 50px;
-}
+  /* ~ 800px */
+  /* 작은 화면일 때 */
+  @media (max-width: 800px){
+
+	  /* 컨테이너 */
+	  .container_c {
+		  margin-left: 10px;
+		  margin-right: 10px;
+		  padding-bottom: 30px;
+		  overflow: auto;
+	  }
+
+	  /* 헤더 banner contents*/
+	  .banner_title{
+		  width: 100%;
+		  height: 70%;
+		  color: white;
+		  font-size: 35px;
+		  font-weight: 600;
+		  padding: 60px 0px 10px 0px;
+		  text-align: center;
+	  }
+	  
+	  .banner_content{
+		  width: 100%;
+		  height: 30%;
+		  color: white;
+		  font-size: 15px;
+		  font-weight: 500;
+		  padding-left: 0px;
+		  text-align: center;
+	  }
+
+	  /* 미니 사이트맵 루트 */
+	  .root{
+		  padding-left: 0px;
+		  overflow: auto;
+		  text-align: center;
+		  display: none;
+	  }
+
+	  #title{
+		  display: inline; 
+		  font-size: 25px; 
+		  font-weight: 500; 
+		  border: none; 
+		  width: 80%;
+		  padding-left: 10px;
+	  }
+
+	  /* 제목, 글 */
+	  .board {
+		  width: 100%;
+		  padding: 20px 0px 0px 0px;
+	  }
+
+
+  }
 </style>
 
 </head>
@@ -268,7 +305,7 @@ input {autocomplete ="off";
 		<div class="banner_content">함께 여행갈 친구들을 만들어 보세요</div>
 	</div>
 
-	<div class="container">
+	<div class="container_c">
 		<div class="root">
 			<div class="home">
 				<a href="/"><i class="fas fa-home"></i></a>
@@ -293,17 +330,15 @@ input {autocomplete ="off";
 						style="display: inline; font-size: 20px; font-weight: bold; border: none; width: 90%;">
 					</span>
 				</div>
-				<div class="writer_con">
-					<div
-						style="line-height: 50px; padding-left: 100px; padding-top: 10px;">
-						${dto.nick}</div>
-				</div>
-				<div class="view_con">
-					<div style="line-height: 30px; padding-left: 100px;">조회수
-						${dto.view_count}</div>
-				</div>
-
-				<hr style="margin: 20px 0px 30px 0px;">
+				<div class = writer_con>
+                    <div class="writer_nick">
+                           <input type=hidden value="${dto.nick}" name=nick >
+                        <div> ${dto.nick}</div>
+                    </div>
+                    <div class="view_con">
+                        <div>조회수 ${dto.view_count}</div>
+                    </div>
+                </div>
 
 				<div class="write_con">${dto.contents }</div>
 
