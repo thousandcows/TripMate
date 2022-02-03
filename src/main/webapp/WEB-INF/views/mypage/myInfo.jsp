@@ -69,8 +69,15 @@
                   </c:if>
                   <tr>
                     <th class="text-center">나이</th>
-                    <td><input type="number" min="0" max="100" class="ageInput" id="ageInput" name="age"
+                    <c:if test="${loginInfo.age == 0}">
+                      <td><button type="button" id="ageBtn">입력</button><span class="agevis">
+                      <input type="number" min="0" max="100" class="ageInput2" id="ageInput" name="age"
+                        value=${loginInfo.age}> 세</span></td>
+                    </c:if>
+                    <c:if test="${loginInfo.age != 0}">
+                      <td><input type="number" min="0" max="100" class="ageInput" id="ageInput" name="age"
                         value=${loginInfo.age}> 세</td>
+                    </c:if>
                   </tr>
                   <tr>
                     <th class="text-center">성별</th>
@@ -172,6 +179,12 @@
 
       <script>
         'use strict'
+        if(document.querySelector("#ageBtn") != null){
+          document.querySelector("#ageBtn").addEventListener("click", () => {
+            document.querySelector(".agevis").style.visibility = "visible";
+            document.querySelector("#ageBtn").style.display = "none";
+          });
+        }
         // 사진 미리보기및 파일 용량 제한
         document.querySelector("#portraitInput").onchange = function () {
           let maxSize = "5242880";
@@ -231,7 +244,7 @@
             document.querySelector(".myInfoPhoneConfirm").innerHTML = "현재 연락처를 유지합니다.";
             myInfoPhoneSubmitCheck = true;
           } else {
-            let phoneRegex = /^[0-9]{11}$/;
+            let phoneRegex = /^010[0-9]{8}$/;
             let myInfoPhoneInput = document.querySelector("#myInfoPhoneInput").value
             if (phoneRegex.test(myInfoPhoneInput)) {
               $.ajax({
@@ -289,7 +302,7 @@
           if (document.querySelector("#myInfoPhoneInput").value == nowPhone) {
             myInfoPhoneSubmitCheck = true;
           } else {
-            let phoneRegex = /^[0-9]{11}$/;
+            let phoneRegex = /^010[0-9]{8}$/;
             let myInfoPhoneInput = document.querySelector("#myInfoPhoneInput").value
             if (phoneRegex.test(myInfoPhoneInput)) {
               $.ajax({

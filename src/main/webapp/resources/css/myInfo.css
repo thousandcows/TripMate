@@ -155,6 +155,25 @@
     height: 40px;
     padding-left: 10px;
   }
+  #ageBtn{
+    border:1px solid rgb(185, 185, 185);
+    border-radius: 5px;
+    background-color:white;
+    color:rgb(107, 107, 107);
+    width:40px;
+    height:30px;
+  }
+  #ageBtn:hover{
+    box-shadow: 1px 1px 1px 1px rgb(240, 240, 240);
+  }
+  .ageInput2{
+    width: 70px;
+    height: 40px;
+    padding-left: 10px;
+  }
+  .agevis{
+    visibility: hidden;
+  }
 
   .genderInput {
     width: 16px;
