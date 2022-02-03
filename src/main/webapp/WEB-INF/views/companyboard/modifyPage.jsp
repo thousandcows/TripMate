@@ -480,10 +480,17 @@
                         <c:if test="${dto.gender eq '남자' }">
                             <input type="radio" id="manRadio" name="gender" value="남자" checked> 남자
                             <input type="radio" id="womanRadio" name="gender" value="여자"> 여자
+                            <input type="radio" name="gender" value="혼성"> 혼성
                         </c:if>
                         <c:if test="${dto.gender eq '여자' }">
                             <input type="radio" id="manRadio" name="gender" value="남자"> 남자
                             <input type="radio" id="womanRadio" name="gender" value="여자" checked> 여자
+                            <input type="radio" name="gender" value="혼성"> 혼성
+                        </c:if>
+                        <c:if test="${dto.gender eq '혼성' }">
+                            <input type="radio" id="manRadio" name="gender" value="남자"> 남자
+                            <input type="radio" id="womanRadio" name="gender" value="여자" checked> 여자
+                            <input type="radio" name="gender" value="혼성"> 혼성
                         </c:if>
                         
                     </div>

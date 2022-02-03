@@ -305,6 +305,7 @@
                 <div class="select_gender"><span style="font-weight: bold;">성별 : </span>
                     <input type="radio" name="gender" value="남자" >남자
                     <input type="radio" name="gender" value="여자">여자
+                    <input type="radio" name="gender" value="혼성">혼성
                 </div>
 
                 <div class="title">
