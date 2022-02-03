@@ -241,7 +241,7 @@
                     <div class="nickNameConfirm signupInputConfirm"></div>
                   </div>
                   <div class="signupBoxs">
-                    <span class="genderHead">성별</span><input type="radio" class="genderInput" value="male"
+                    <span class="genderHead">성별<span class="genderHeadIn">(선택)</span></span><input type="radio" class="genderInput" value="male"
                       name="gender">
                     남성&nbsp;&nbsp;&nbsp;<input type="radio" class="genderInput" name="gender" value="female"> 여성
                     <div class="nickNameConfirm signupInputConfirm"></div>
