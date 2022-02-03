@@ -417,15 +417,11 @@
     	
     	let summernote = $("#summernote").val();
     	summernote = summernote.replace(/&nbsp;/g, " ");
-//     	summernote = summernote.replace(/<span style="font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);">/g, "");
-//     	summernote = summernote.replace(/</span>/g, "");
-    	console.log(summernote);
-    	console.log(summernote.length);
     	if(summernote==""){
     		
     		alert("내용을 입력해주세요");
     		return false;
-    	}else if(summernote.length>2000){
+    	}else if(summernote.length>800){
     		
     		alert("입력한도를 초과하였습니다.");
     		return false;
