@@ -34,6 +34,7 @@
           /* 전체영역 크기 조절 */
           .myPageContainer {
             width: 1200px;
+            min-height:620px;
             display: flex;
             margin: auto;
           }
@@ -177,6 +178,7 @@
             }
 
             /* 사이드바 끝 */
+          }
         </style>
 
       </head>
@@ -198,7 +200,7 @@
           </div>
           <div class="container mt-4">
             <div class="row">
-              <div class="col-12 topTxt text-center">최근 12개의 여행계획입니다.</div>
+              <div class="col-12 topTxt text-center">최근 등록한 여행계획입니다.</div>
             </div>
             <div class="row mt-4 d-flex justify-content-center">
               <c:set var="now" value="<%=new java.util.Date()%>" />

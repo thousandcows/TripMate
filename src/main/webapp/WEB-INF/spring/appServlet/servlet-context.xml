@@ -67,6 +67,10 @@
 			<exclude-mapping path="/member/findPwChange"/>
 			<beans:bean class="kh.spring.interceptor.Interceptor"/>
 		</interceptor>
+		<interceptor>
+			<mapping path="/**"/>
+			<beans:bean class="kh.spring.interceptor.Interceptor2"/>
+		</interceptor>
 	</interceptors>
 
 	<!--

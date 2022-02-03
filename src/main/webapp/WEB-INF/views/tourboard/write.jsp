@@ -28,7 +28,9 @@
         body{
             margin: 0;  /* 임시로 body margin 0px */
         }
-
+        .navbar-brand{
+            height:70px !important;
+        }
        /* 링크 속성 지우기 */
         a { text-decoration:none  } 
         a:hover { text-decoration:none; color: black; }
@@ -94,7 +96,6 @@
             /* 글작성 부분 */
             .writeForm{
                 padding : 20px 150px 0px 150px;
-                text-align: center;
             }
 
             /* 카테고리 */
@@ -159,7 +160,6 @@
             /* 글작성 부분 */
             .writeForm{
                 padding : 20px 50px 0px 50px;
-                text-align: center;
             }
 
             /* 카테고리 */
@@ -247,7 +247,6 @@
             /* 글작성 부분 */
             .writeForm{
                 padding : 20px 15px 0px 15px;
-                text-align: center;
             }
 
             /* 카테고리 */

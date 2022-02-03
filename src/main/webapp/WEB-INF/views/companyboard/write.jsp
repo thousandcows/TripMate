@@ -39,30 +39,14 @@
         }
 
         /* 링크 속성 지우기 */
-        a {
-            text-decoration: none
+        a { text-decoration:none  } 
+        a:hover { text-decoration:none; color: black; }
+        a:link {text-decoration: none; color: black; }
+        a:visited {text-decoration: none; color: black; }
+        a:active {text-decoration: none; color: black; }
+        .navbar-brand{
+            height:70px !important;
         }
-
-        a:hover {
-            text-decoration: none;
-            color: black;
-        }
-
-        a:link {
-            text-decoration: none;
-            color: black;
-        }
-
-        a:visited {
-            text-decoration: none;
-            color: black;
-        }
-
-        a:active {
-            text-decoration: none;
-            color: black;
-        }
-
         /* 헤더----------------------------------------------------- */
         .banner {
             background-image:url("/images/community_banner.png");
@@ -87,28 +71,24 @@
             padding-left: 100px;
         }
 
-        /* 컨테이너 ----------------------------------------------------- */
-        .container {
-           /*  border: 1px solid red; */
-           padding-bottom :30px;
-        }
-
         /* 미니 사이트맵 루트 */
-        .container>.root {
+        .root{
             padding-left: 80px;
             overflow: auto;
+            text-align: center;
+            font-size: 16px;
         }
 
-        .root>div {
-           /*  border: 1px solid red; */
-            float: left;
+        .root>div{
+            float:left;
             margin: 40px 0px 40px 0px;
             padding-right: 10px;
         }
 
-        .fa-home {
+        .fa-home{
             color: rgb(56, 181, 174);
         }
+        
 
         /* 글쓰기 창 */
         .board {
@@ -173,6 +153,90 @@
         .button> button{
         	margin: 2px;
         }
+
+        
+        /* 1400px ~  */
+        @media (min-width: 1400px){
+             /* 컨테이너 ----------------------------------------------------- */
+            .container_c{
+                margin-left: 100px;
+                margin-right: 100px;
+                margin-bottom:50px;
+            }
+        }
+
+        /* 800 ~ 1400px */
+        @media (max-width: 1400px) and (min-width: 800px){
+
+             /* 컨테이너 ----------------------------------------------------- */
+             .container_c{
+                margin-left: 50px;
+                margin-right: 50px;
+                margin-bottom:50px;
+            }
+
+             /* 미니 사이트맵 루트 */
+            .root{
+                padding-left: 0px;
+                overflow: auto;
+                text-align: center;
+            }
+
+            /* 제목, 글 */
+            .board {
+                width: 100%;
+                padding: 20px 0px 0px 0px;
+            }
+        }
+
+         /* ~ 800px */
+        /* 작은 화면일 때 */
+        @media (max-width: 800px){
+
+             /* 컨테이너 ----------------------------------------------------- */
+             .container_c{
+                margin-left: 0px;
+                margin-right: 0px;
+                margin-bottom:50px;
+            }
+
+            /* 헤더 banner contents*/
+            .banner_title{
+                width: 100%;
+                height: 70%;
+                color: white;
+                font-size: 35px;
+                font-weight: 600;
+                padding: 60px 0px 10px 0px;
+                text-align: center;
+            }
+    
+            .banner_content{
+                width: 100%;
+                height: 30%;
+                color: white;
+                font-size: 15px;
+                font-weight: 500;
+                padding-left: 0px;
+                text-align: center;
+            }
+
+             /* 미니 사이트맵 루트 */
+             .root{
+                padding-left: 0px;
+                overflow: auto;
+                text-align: center;
+                display: none;
+            }
+
+            /* 제목, 글 */
+            .board {
+                width: 100%;
+                padding: 20px 0px 0px 0px;
+            }
+        }
+
+
     </style>
     
 </head>
