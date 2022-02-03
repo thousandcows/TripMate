@@ -55,6 +55,7 @@
 			<exclude-mapping path="/tourboard/noticeDetail"/>
 			<exclude-mapping path="/area/main"/>
 			<exclude-mapping path="/area/detail"/>
+			<exclude-mapping path="/area/moreReply"/>
 			<exclude-mapping path="/member/getKakaoAuthUrl"/>
 			<exclude-mapping path="/member/kakaoLogin"/>
 			<exclude-mapping path="/member/normalLogin"/>
