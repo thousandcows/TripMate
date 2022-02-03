@@ -94,7 +94,6 @@
             /* 글작성 부분 */
             .writeForm{
                 padding : 20px 150px 0px 150px;
-                text-align: center;
             }
 
             /* 카테고리 */
@@ -159,7 +158,6 @@
             /* 글작성 부분 */
             .writeForm{
                 padding : 20px 50px 0px 50px;
-                text-align: center;
             }
 
             /* 카테고리 */
@@ -247,7 +245,6 @@
             /* 글작성 부분 */
             .writeForm{
                 padding : 20px 15px 0px 15px;
-                text-align: center;
             }
 
             /* 카테고리 */

@@ -38,7 +38,35 @@
             /* 임시로 body margin 0px */
         }
 
+        /* 링크 속성 지우기 */
+        a {
+            text-decoration: none
+        }
 
+        a:hover {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:link {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:visited {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:active {
+            text-decoration: none;
+            color: black;
+        }
+
+        /* input style */
+        input:focus {outline:none;}
+        
+        input{autocomplete:"off";}
 
         /* 헤더----------------------------------------------------- */
         .banner {
@@ -64,16 +92,12 @@
             padding-left: 100px;
         }
 
-        /* 컨테이너 ----------------------------------------------------- */
-        .container {
-            /* border: 1px solid red; */
-            padding-bottom :30px;
-        }
-
         /* 미니 사이트맵 루트 */
-        .container>.root {
-            padding-left: 80px;
+        .root {
+            padding-left: 150px;
             overflow: auto;
+            text-align: center;
+            font-size: 16px;
         }
 
         .root>div {
@@ -87,11 +111,37 @@
             color: rgb(56, 181, 174);
         }
 
+        /* 컨테이너 ----------------------------------------------------- */
+        .container_c {
+            margin-left: 200px;
+            margin-right: 200px;
+            padding-bottom: 30px;
+            overflow: auto;
+        }
+
         /* 제목, 글 */
         .board {
-            /* border: 1px solid red; */
             width: 100%;
             padding: 20px 80px 0px 80px;
+        }
+
+        #categoryValue_txt{
+            color: rgb(56, 181, 174); 
+            font-weight:500; 
+            display: inline; 
+            font-size: 30px;
+            padding: 5px;
+        }
+
+        #title{
+            display: inline; 
+            font-size: 20px; 
+            font-weight: bold; 
+            width: 90%;
+        }
+
+        .catetitle {
+            padding: 0px 80px 0px 80px;
         }
 
         .select_tour {
@@ -141,43 +191,40 @@
             resize: none;
         }
 
+        .board_con{
+            padding-left: 80px;
+            padding-right: 80px;
+        }
+
         /* 버튼 */
         .button {
             /* border: 1px solid red; */
             text-align: right;
-            padding: 20px 5px 0px 0px;
+            padding: 20px 80px 0px 0px;
         }
         
         .button> button{
         	margin: 2px;
-        }
-        
-        /* 좋아요, 댓글란  */
-        .like_n_rep{
-        	/* border: 1px solid red; */
-        	width: 100%;
-        	height: 30px;
-        	text-align: right;
-        }
-        
-        .like_n_rep>div{
-        	/* border: 1px solid red; */
-        	height:30px;
-        	width: 55px;
-        	text-align:center;
-        	float: left;
-        	line-height:30px;
-        }
-        
-        #heart, #cant_heart, .recruit_list_see{
-        	cursor: pointer;
+        }        
+         
+        /* 작성자/조회수칸 */
+        .writer_con{
+            border-bottom: 1px solid black;
+            margin-bottom: 20px;
+            margin-left: 80px;
+            margin-right: 80px;
+            padding-bottom: 20px;
+            padding-left: 10px;
         }
 
-             
-         /* 작성자/조회수칸 */
-        .writer_con{
+        .writer_nick{
             width: 100%;
             height: 50px;
+        }
+
+        .writer_nick>div{
+            line-height: 50px; 
+            padding-top: 10px;
         }
 
         .view_con{
@@ -185,97 +232,166 @@
             height: 30px;
             color: gray;
         }
-        
-        /* input style */
-        input:focus {outline:none;}
-        
-        input{
-        	autocomplete="off" ;
+
+        .view_con>div{
+            line-height: 30px; 
         }
         
-        /* 댓글 쓰기창 */
-        .rep_con{
-            width: 100%;
-            height: 70px;
-            padding: 10px;
-            /* border: 1px solid red; */
+       
+        /* 1400px ~  */
+        @media (min-width: 1400px){}
+  
+        /* 800 ~ 1400px */
+        @media (max-width: 1400px) and (min-width: 800px){
+            
+            /* 컨테이너 */
+            .container_c {
+                margin-left: 50px;
+                margin-right: 50px;
+                padding-bottom: 30px;
+                overflow: auto;
+            }
+
+            /* 미니 사이트맵 루트 */
+            .root{
+                padding-left: 80px;
+                overflow: auto;
+                text-align: center;
+            }
+
+            /* 제목 카테고리 */
+            #categoryValue_txt{
+                color: rgb(56, 181, 174); 
+                font-weight:500; 
+                display: inline; 
+                font-size: 25px;
+                padding: 5px;
+            }
+
+            #title{
+                display: inline; 
+                font-size: 25px; 
+                font-weight: 500; 
+                width: 80%;
+                padding-left: 10px;
+            }
+            
+            /* 제목, 글 */
+            .board {
+                width: 100%;
+                padding: 20px 0px 0px 0px;
+            }
+
+            /* 버튼 */
+
+            .button {
+                text-align: right;
+                padding: 50px 80px 0px 0px;
+            }
+                    
+            .button> button{
+                margin: 2px;
+            }
         }
 
-        .rep_con > textarea{
-            width: 100%;
-            height: 50px;
-            resize: none;
-        }
+        /* ~ 800px */
+        /* 작은 화면일 때 */
+        @media (max-width: 800px){
 
-        .button2 {
-           /*  border: 1px solid red; */
-            text-align: right;
-            padding: 5px 5px 0px 0px;
-            height: 50px;
-        }
-        
-        /* 댓글 리스트 */
-        .rep_list{ /* border: 1px solid red; */ padding:10px; margin-top:10px; }
-        
-        .each_rep{/*  border: 1px solid red; */ width: 100%; border-bottom: solid 1px rgb(190, 190, 190); padding-bottom:10px; float:left;}
-        
-        .rep_top{ /* border: 1px solid red; */ width: 100%; padding-top:10px; }
-        
-        .rep_txt{ /* border: 1px solid red; */ width: 100%; }
-        
-        .rep_btn{/*  border: 1px solid red; */ width: 100%; text-align:right; padding-right:20px; }
-        
-        .rep_writer{ font-weight: bolder; /* border: 1px solid red; */ width: 50%; display:inline-block; padding-left: 20px ; }
-        
-        .rep_date{ /* border: 1px solid red; */ color: gray; width:  49%; display:inline-block; text-align: right; padding-right: 20px; }
-        
-        .e_rep_con{ width: 100%; padding: 5px 20px 5px 20px; border: none; }
-        
-        .rep_btn > button {margin: 2px;}
-        
-        /* 링크 속성 지우기 */
-a {
-	text-decoration: none
-}
+            
+            /* 컨테이너 */
+            .container_c {
+                margin-left: 10px;
+                margin-right: 10px;
+                padding-bottom: 30px;
+                overflow: auto;
+            }
 
-a:hover {
-	text-decoration: none;
-	color: black;
-}
+            /* 헤더 banner contents*/
+            .banner_title{
+                width: 100%;
+                height: 70%;
+                color: white;
+                font-size: 35px;
+                font-weight: 600;
+                padding: 60px 0px 10px 0px;
+                text-align: center;
+            }
+            
+            .banner_content{
+                width: 100%;
+                height: 30%;
+                color: white;
+                font-size: 15px;
+                font-weight: 500;
+                padding-left: 0px;
+                text-align: center;
+            }
 
-a:link {
-	text-decoration: none;
-	color: black;
-}
+            /* 미니 사이트맵 루트 */
+            .root{
+                padding-left: 0px;
+                overflow: auto;
+                text-align: center;
+                display: none;
+            }
 
-a:visited {
-	text-decoration: none;
-	color: black;
-}
+            /* 제목 카테고리 */
+            #categoryValue_txt{
+                color: rgb(56, 181, 174); 
+                font-weight:500; 
+                display: inline; 
+                font-size: 25px;
+                padding: 5px;
+            }
 
-a:active {
-	text-decoration: none;
-	color: black;
-}
+            #title{
+                display: inline; 
+                font-size: 25px; 
+                font-weight: 500; 
+                width: 80%;
+                padding-left: 10px;
+            }
 
-.fa-home {
-	color: rgb(56, 181, 174);
-}
+            .catetitle {
+                padding: 0px 0px 0px 0px;
+            }	
 
-        /* 참가자리스트 */
-        .recruit_list{
-            /* border: 1px solid red; */
-            text-align: center;
-            width: 100%;
-            padding: 10px 300px 10px 300px;
-            overflow: auto;
-        }
-        
-        .recruit_list>div{
-         	text-align: center;
-         	padding-top: 10px;
-         	padding-bottom : 10px;
-            border-bottom: solid 1px rgb(207, 207, 207);
+            /* 제목, 글 */
+            .board {
+                width: 100%;
+                padding: 20px 0px 0px 0px;
+            }
+
+             /* 작성자/조회수칸 */
+            .writer_con{
+                border-bottom: 1px solid black;
+                margin-bottom: 20px;
+                margin-left: 0px;
+                margin-right: 0px;
+                padding-bottom: 20px;
+            }
+
+            .contents {
+                padding-right: 0px;
+                padding-left: 0px;
+            }
+
+            .board_con{
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+
+            /* 버튼 */
+
+            .button {
+                text-align: right;
+                padding: 50px 0px 0px 0px;
+            }
+                    
+            .button> button{
+                margin: 2px;
+            }
         }
     </style>
     
@@ -291,7 +407,7 @@ a:active {
         <div class="banner_content"> 함께 여행갈 친구들을 만들어 보세요 </div>
     </div>
     
-    <div class="container">
+    <div class="container_c">
         <div class="root">
             <div class="home"><a href="/"><i class="fas fa-home"></i></a></div>
             <div> > </div>
@@ -303,77 +419,79 @@ a:active {
         <form  action="/companyboard/modify" method="post" id="frmDetail" enctype="multipart/form-data">
             <div class="board">
             	<input type=hidden value="${dto.seq}" name=seq > <!-- 글 번호에 맞춰 불러오기 위한 꼼수 -->
-            	<div class="title"> <!-- catetitle -->
-                    <span style="width: 20%;">
-                        <h3 style="color: rgb(56, 181, 174); font-weight: bold; display: inline; padding: 5px;">${dto.tour}</h3> 
-                        <h3 style="display: inline; color: rgb(153, 153, 153); padding: 5px;">|</h3>
+            	<div class="catetitle"> <!-- catetitle -->
+                    <span>
+                        <h3 id="categoryValue_txt">${dto.tour}</h3> 
                     </span>
-                    <span style="width: 80%;">
-                        <input type=text id=title name=title value="${dto.title }" style="display: inline; font-size: 20px; font-weight: bold; width: 90%;">
+                    <span>
+                        <input type=text id=title name=title value="${dto.title }">
                     </span>
                 </div>
-                <div class="writer_con">
-                    <div style="line-height: 50px; padding-left: 100px; padding-top: 10px;"> ${dto.nick}</div>
-                </div>
-                <div class="view_con">
-                    <div style="line-height: 30px; padding-left: 100px;">조회수 ${dto.view_count}</div>
-                </div>
+                <div class = writer_con>
+					<div class="writer_nick">
+						<div> ${dto.nick}</div>
+					</div>
+					<div class="view_con">
+						<div>조회수 ${dto.view_count}</div>
+					</div>
+				</div>
             	
-            	<hr style="margin:20px 0px 30px 0px;">
- 
-                <div class="select_tour"><span style="font-weight: bold;">여행지 : </span>
-               		<select id="tourSelect" name="tour">
-                        <option value="서울">서울</option>
-                        <option value="인천">인천</option>
-                        <option value="경기">경기</option>
-                        <option value="강원">강원</option>
-                        <option value="대전">대전</option>
-                        <option value="충남">충남</option>
-                        <option value="충북">충북</option>
-                        <option value="세종">세종</option>
-                        <option value="경북">경북</option>
-                        <option value="경남">경남</option>
-                        <option value="부산">부산</option>
-                        <option value="대구">대구</option>
-                        <option value="울산">울산</option>
-                        <option value="전북">전북</option>
-                        <option value="전남">전남</option>
-                        <option value="광주">광주</option>
-                        <option value="제주">제주</option>
-                    </select>              
-                </div>
-    
-                <div class="select_recruit" ><span style="font-weight: bold;">모집 인원 : </span>
-                	<select id="recruitSelect" name="recruit">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
-                </div>
-    
-                <div class="select_date">
-                    <span style="font-weight: bold;">여행 기간 : </span><!-- 1.31~2.09 -->
-                    <input type="text" id="startDateAfter" name="start_date" value="${dto.start_date }" style="width:100px; text-align:center;" autocomplete='off'/> <span style="display:none" id="datetxt2"> ~ </span>
-                    <input type="text" id="endDateAfter" name="end_date" value="${dto.end_date }" style="width:100px; text-align:center;" autocomplete='off'/>
-                </div>
-    
-                <div class="select_gender"><span style="font-weight: bold;">성별 : </span><!-- 남자 -->
-                	<c:if test="${dto.gender eq '남자' }">
-                		<input type="radio" id="manRadio" name="gender" value="남자" checked> 남자
-                   		<input type="radio" id="womanRadio" name="gender" value="여자"> 여자
-                    </c:if>
-                    <c:if test="${dto.gender eq '여자' }">
-                		<input type="radio" id="manRadio" name="gender" value="남자"> 남자
-                   		<input type="radio" id="womanRadio" name="gender" value="여자" checked> 여자
-                    </c:if>
-                    
-                </div>
-    
-                <div class="write_con">
-                    <textarea id="summernote"  name="contents">${dto.contents }</textarea>
+                <div class="board_con">
+                    <div class="select_tour"><span style="font-weight: bold;">여행지 : </span>
+                        <select id="tourSelect" name="tour">
+                            <option value="서울">서울</option>
+                            <option value="인천">인천</option>
+                            <option value="경기">경기</option>
+                            <option value="강원">강원</option>
+                            <option value="대전">대전</option>
+                            <option value="충남">충남</option>
+                            <option value="충북">충북</option>
+                            <option value="세종">세종</option>
+                            <option value="경북">경북</option>
+                            <option value="경남">경남</option>
+                            <option value="부산">부산</option>
+                            <option value="대구">대구</option>
+                            <option value="울산">울산</option>
+                            <option value="전북">전북</option>
+                            <option value="전남">전남</option>
+                            <option value="광주">광주</option>
+                            <option value="제주">제주</option>
+                        </select>              
+                    </div>
+        
+                    <div class="select_recruit" ><span style="font-weight: bold;">모집 인원 : </span>
+                        <select id="recruitSelect" name="recruit">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </div>
+        
+                    <div class="select_date">
+                        <span style="font-weight: bold;">여행 기간 : </span><!-- 1.31~2.09 -->
+                        <input type="text" id="startDateAfter" name="start_date" value="${dto.start_date }" style="width:100px; text-align:center;" autocomplete='off'/> <span id="datetxt2"> ~ </span>
+                        <input type="text" id="endDateAfter" name="end_date" value="${dto.end_date }" style="width:100px; text-align:center;" autocomplete='off'/>
+                    </div>
+        
+                    <div class="select_gender"><span style="font-weight: bold;">성별 : </span><!-- 남자 -->
+                        <c:if test="${dto.gender eq '남자' }">
+                            <input type="radio" id="manRadio" name="gender" value="남자" checked> 남자
+                            <input type="radio" id="womanRadio" name="gender" value="여자"> 여자
+                        </c:if>
+                        <c:if test="${dto.gender eq '여자' }">
+                            <input type="radio" id="manRadio" name="gender" value="남자"> 남자
+                            <input type="radio" id="womanRadio" name="gender" value="여자" checked> 여자
+                        </c:if>
+                        
+                    </div>
+        
+                    <div class="write_con">
+                        <textarea id="summernote"  name="contents">${dto.contents }</textarea>
+                    </div>
+
                 </div>
     
     			<div class="button">
