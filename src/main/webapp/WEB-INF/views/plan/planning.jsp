@@ -42,17 +42,22 @@
 	})
 </script>
 <style>
-
 .banner {
-	background-image: url("/images/banner.png");
 	height: 200px;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+.banner>img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 </style>
 </head>
 <body>
 	<div class = "banner">
-		<div class="banner_title">  </div>
-		<div class="banner_content">  </div>
+		<img src="/images/banner.png">
 	</div>
 	<div class="container con">
 		<div class="row mb-5 mt-5">
