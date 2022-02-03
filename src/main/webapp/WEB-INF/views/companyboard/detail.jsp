@@ -815,7 +815,7 @@
   		success:function(result){
   			$('#myModal').modal('toggle');
   			if(result.photo!=undefined){
-      			$("#profileImg").attr("src","/images/"+result.photo);    				
+      			$("#profileImg").attr("src",result.photo);    				
   			}else{
   				$("#profileImg").attr("src","/images/noPhoto.png");
   			}
@@ -838,7 +838,7 @@
    		success:function(result){
    			$('#myModal').modal('toggle');
    			if(result.photo!=undefined){
-       			$("#profileImg").attr("src","/images/"+result.photo);    				
+       			$("#profileImg").attr("src",result.photo);    				
    			}else{
    				$("#profileImg").attr("src","/images/noPhoto.png");
    			}
@@ -861,7 +861,7 @@
    		success:function(result){
    			$('#myModal').modal('toggle');
    			if(result.photo!=undefined){
-       			$("#profileImg").attr("src","/images/"+result.photo);    				
+       			$("#profileImg").attr("src",result.photo);    				
    			}else{
    				$("#profileImg").attr("src","/images/noPhoto.png");
    			}
