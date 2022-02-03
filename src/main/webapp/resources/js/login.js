@@ -225,17 +225,16 @@ if (eventCheck != null) {
       return false;
     }
     // 성별 체크
-    let genderCheck = false;
-    for(let i = 0; i < 2; i++){
-      if(document.querySelectorAll('.genderInput')[i].checked){
-        genderCheck = true;
-      }
-    }
-    console.log("체크된 성별값:" + genderCheck);
-    if(!genderCheck){
-      alert("성별을 체크해주세요.");
-      return false;
-    }
+    // let genderCheck = false;
+    // for(let i = 0; i < 2; i++){
+    //   if(document.querySelectorAll('.genderInput')[i].checked){
+    //     genderCheck = true;
+    //   }
+    // }
+    // if(!genderCheck){
+    //   alert("성별을 체크해주세요.");
+    //   return false;
+    // }
 
     if (!pwReSubmitCheck) {
       alert("입력된 비밀번호가 다릅니다.");
