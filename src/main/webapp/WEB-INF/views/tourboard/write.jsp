@@ -28,7 +28,9 @@
         body{
             margin: 0;  /* 임시로 body margin 0px */
         }
-
+        .navbar-brand{
+            height:70px !important;
+        }
        /* 링크 속성 지우기 */
         a { text-decoration:none  } 
         a:hover { text-decoration:none; color: black; }
