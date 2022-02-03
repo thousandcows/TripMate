@@ -270,16 +270,6 @@
                 display: none;
             }
             
-            .title_800>input{
-                width:100%;
-            }   
-            
-            .title_800{
-                width: 100%;
-                float: left;
-                padding-top: 10px;
-            }
-            
             /* 내용 */
             .contents{
                 
@@ -327,9 +317,6 @@
                     </select>
                 </div>
                 <div class="title">
-                    <input type=text placeholder="제목을 입력하세요" name="title" id="title">
-                </div>
-                <div class="title_800">
                     <input type=text placeholder="제목을 입력하세요" name="title" id="title">
                 </div>
             </div><br>
