@@ -478,11 +478,23 @@
     			return false;
     		}
     		
-    		if($("#summernote").val()==""){
+    	    let summernote = $("#summernote").val();
+        	summernote = summernote.replace(/&nbsp;/g, " ");
+    		if(summernote==""){
     			
     			alert("내용을 입력해주세요");
     			return false;
-    		} 
+    		}else if(summernote.length>800){
+        		
+        		alert("입력한도를 초과하였습니다.");
+        		return false;
+        	}
+    		
+    		if(confirm("글을 작성하시겠습니까?")==true){
+    			
+    		}else{
+    			return false;
+    		}
     	
     }); 
     

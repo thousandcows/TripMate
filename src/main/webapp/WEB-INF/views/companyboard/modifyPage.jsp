@@ -515,6 +515,35 @@
         </form>
      </div>
 
+	<script>
+		$("#modOk").on("click", function(){
+			
+			if($("#title").val()==""){
+    			
+    			alert("제목을 입력해주세요");
+    			return false;
+    		}
+			
+			let summernote = $("#summernote").val();
+			summernote = summernote.replace(/&nbsp;/g, " ");
+			if(summernote == ""){    			
+    			alert("내용을 입력해주세요");
+    			return false;
+    			
+    		}else if(summernote.length>800){
+	    		
+	    		alert("입력한도를 초과하였습니다.");
+	    		return false;
+	    	}
+			
+			if (confirm("이대로 작성하시겠습니까?")) {
+				
+			}else{				
+				return false;
+			}
+		})
+	</script>
+	
 	<!-- 여행지&모집인원 선택되어있던 값 입력 -->
 	<script>
 		$("#tourSelect").val("${dto.tour}");
@@ -603,7 +632,7 @@
 				    ['view', ['fullscreen', 'help']]],
 			  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 			  fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-    		  placeholder: '최대 2048자까지 쓸 수 있습니다', 	//placeholder 설정
+    		  placeholder: '내용을 입력해주세요.', 	//placeholder 설정
     		  
     		  callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 					onImageUpload : function(files) {
