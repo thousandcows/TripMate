@@ -29,7 +29,10 @@
         } 
         
         /* 헤더 */
-        
+        .navbar{
+          min-height:80px !important;
+          margin:0 !important;
+        }
         /* 임시 추가 부분*/
         .navbar-nav > li{
         	font-size : large;

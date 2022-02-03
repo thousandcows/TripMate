@@ -44,7 +44,9 @@
         a:link {text-decoration: none; color: black; }
         a:visited {text-decoration: none; color: black; }
         a:active {text-decoration: none; color: black; }
-
+        .navbar-brand{
+            height:70px !important;
+        }
         /* 헤더----------------------------------------------------- */
         .banner {
             background-image:url("/images/community_banner.png");
