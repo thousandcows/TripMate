@@ -29,6 +29,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     
     <style>
+    
+     	.navbar-brand{
+            height:70px !important;
+        }
+        
         * {
             box-sizing: border-box;
         }
@@ -480,10 +485,17 @@
                         <c:if test="${dto.gender eq '남자' }">
                             <input type="radio" id="manRadio" name="gender" value="남자" checked> 남자
                             <input type="radio" id="womanRadio" name="gender" value="여자"> 여자
+                            <input type="radio" name="gender" value="혼성"> 혼성
                         </c:if>
                         <c:if test="${dto.gender eq '여자' }">
                             <input type="radio" id="manRadio" name="gender" value="남자"> 남자
                             <input type="radio" id="womanRadio" name="gender" value="여자" checked> 여자
+                            <input type="radio" name="gender" value="혼성"> 혼성
+                        </c:if>
+                        <c:if test="${dto.gender eq '혼성' }">
+                            <input type="radio" id="manRadio" name="gender" value="남자"> 남자
+                            <input type="radio" id="womanRadio" name="gender" value="여자" checked> 여자
+                            <input type="radio" name="gender" value="혼성"> 혼성
                         </c:if>
                         
                     </div>
