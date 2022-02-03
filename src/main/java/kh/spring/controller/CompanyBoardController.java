@@ -212,6 +212,9 @@ public class CompanyBoardController {
 	@RequestMapping("toModify")
 	public String modifyPage(CompanyBoardDTO dto, Model model) {
 
+		System.out.println(dto.getGender() + " 성졀 ");
+		System.out.println(dto.getNick() + " -> 닉 ");
+		System.out.println(dto.getView_count() + " -> 조회수 ");
 		model.addAttribute("dto", dto);
 		return "companyboard/modifyPage";
 	}
