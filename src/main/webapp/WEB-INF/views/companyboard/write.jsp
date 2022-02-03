@@ -317,7 +317,12 @@
 		var $j360 = jQuery.noConflict();
 	
 		$j360("#back").on("click", function(){
-			location.href="/companyboard/list?cpage=1";
+			if(confirm("목록으로 돌아가시겠습니까?")){
+				location.href="/companyboard/list?cpage=1";	
+			}else{
+				return false;
+			}
+			
 	    })
 	</script>
 	

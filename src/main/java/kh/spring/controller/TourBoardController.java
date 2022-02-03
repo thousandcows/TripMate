@@ -139,8 +139,6 @@ public class TourBoardController {
 		String nick = (String) session.getAttribute("loginNick");
 		bdto.setNick(nick);
 		
-		System.out.println("컨트롤러 제목 : " + bdto.getTitle());
-		
 		int mem_id = (int)session.getAttribute("loginSeq");
 		bdto.setMem_seq(mem_id);
 	

@@ -11,6 +11,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" 	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"	crossorigin="anonymous"><!-- include libraries(jQuery, bootstrap) -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
@@ -467,15 +472,14 @@ input{autocomplete:"off";}
 	</script>
 
 	<script>
-		$(document).ready(function() {
-			//여기 아래 부분
-			$('#summernote').summernote({
-				height : 300, // 에디터 높이
-				minHeight : 300, // 최소 높이
-				maxHeight : null, // 최대 높이
-				lang : "ko-KR", // 한글 설정
-				
-				toolbar: [
+    $(document).ready(function() {
+    	//여기 아래 부분
+    	$('#summernote').summernote({
+              height:300, // 에디터 높이
+    		  minHeight: 300,             // 최소 높이
+    		  maxHeight: null,             // 최대 높이
+    		  lang: "ko-KR",					// 한글 설정
+    		  toolbar: [
 				    // [groupName, [list of button]]
 				    ['fontname', ['fontname']],
 				    ['fontsize', ['fontsize']],
@@ -485,46 +489,46 @@ input{autocomplete:"off";}
 				    ['para', ['ul', 'ol', 'paragraph']],
 				    ['height', ['height']],
 				    ['insert',['picture','link','video']],
-				    ['view', ['fullscreen', 'help']]
-				  ],
-				fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-				fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-				placeholder : '최대 2048자까지 쓸 수 있습니다', //placeholder 설정
-				
-					callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-						onImageUpload : function(files) {
-							sendFile(files[0],this);
-						}
-					}			
-			});
-		});
-		
-		/**
-		* 이미지 파일 업로드
-		*/
-		function sendFile(file, editor) {
-	        var form_data = new FormData();
-	        form_data.append('file', file);
-	        $.ajax({
-	            data : form_data,
-	            type : "POST",
-	            url : "/tourboard/imageUpload",
-	            cache : false,
-	            contentType : false,
-	            enctype : "multipart/form-data",
-	            processData : false,
-	            success : function(sysName) {
-	                console.log(sysName + "b")
-	                $(editor).summernote('insertImage', sysName);
-	            }
-	        });
-	    }
-		
-		let title = $("#title").val();
-		$("#title").val("");
-		$("#title").focus();
-		$("#title").val(title);
-	</script>
+				    ['view', ['fullscreen', 'help']]],
+			  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			  fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+    		  placeholder: '최대 2048자까지 쓸 수 있습니다', 	//placeholder 설정
+    		  
+    		  callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+					onImageUpload : function(files) {
+						sendFile(files[0],this);
+					}
+				}
+    	});    	
+    });
+ 	
+    /**
+	* 이미지 파일 업로드
+	*/
+	function sendFile(file, editor) {
+        var form_data = new FormData();
+        form_data.append('file', file);
+        $.ajax({
+            data : form_data,
+            type : "POST",
+            url : "/tourboard/imageUpload",
+            cache : false,
+            contentType : false,
+            enctype : "multipart/form-data",
+            processData : false,
+            success : function(sysName) {
+                console.log(sysName + "b")
+				console.log("write에 왔습니다.")
+                $(editor).summernote('insertImage', sysName);
+            }
+        });
+    }
+    
+	let title = $("#title").val();
+	$("#title").val("");
+	$("#title").focus();
+	$("#title").val(title);
+    </script>
 
 </body>
 </html>
