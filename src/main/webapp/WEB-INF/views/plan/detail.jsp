@@ -21,6 +21,8 @@
 	}
 	html,body{
 		height:100%;
+		
+		
 	}
 	
 	.container{
@@ -61,7 +63,8 @@
                 background-image:url("/images/banner.png");
                 height:200px;
             }
-        
+      
+     
 </style>
 </head>
 <body>
@@ -71,7 +74,7 @@
 	</div>
 	<div class="container con mt-4">
 		<div class="row mt-4">
-			<div class="col-12 text-center">
+			<div class="col-12 text-center" style="background-color: #FBD374;">
 				<h1>${dto.title }</h1>
 			</div>
 			<div class="col-4 mt-4">
@@ -127,7 +130,7 @@
 
 			</div>
 		</div>
-		<div class="col-12 text-center border mt-5">
+		<div class="col-12 text-center border mt-5" style="background-color: #b8e2ec;">
 		<h3>사용자 메모</h3>
 		<span>${dto.memo }</span>
 		</div>
