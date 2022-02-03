@@ -12,67 +12,63 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <jsp:include page="../base/header.jsp"></jsp:include>
 <style>
-/* 링크 속성 지우기 */
-a {
-	text-decoration: none
-}
+       /* 링크 속성 지우기 */
+        a { text-decoration:none  } 
+        a:hover { text-decoration:none; color: black; }
+        a:link {text-decoration: none; color: black; }
+        a:visited {text-decoration: none; color: black; }
+        a:active {text-decoration: none; color: black; }
+        
+           /* 헤더----------------------------------------------------- */
+        .banner{
+            background-color: rgb(56, 181, 174);
+            height:200px;
+        }
 
-a:hover {
-	text-decoration: none;
-	color: black;
-}
+        .banner_title{
+            width: 100%;
+            height: 70%;
+            color: white;
+            font-size: 35px;
+            font-weight: 600;
+            padding: 60px 0px 10px 100px;
+        }
 
-a:link {
-	text-decoration: none;
-	color: black;
-}
-
-a:visited {
-	text-decoration: none;
-	color: black;
-}
-
-a:active {
-	text-decoration: none;
-	color: black;
-}
-
-/* 헤더----------------------------------------------------- */
-.banner {
-	background-color: rgb(56, 181, 174);
-	height: 200px;
-	overflow: hidden;
-	margin: 0 auto;
-}
-
-.banner>img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-
-html, body {
-	height: 100%;
-}
-
-.container {
-	height: auto;
-	min-height: 100%;
-}
-
-.con {
-	padding-bottom: 250px;
-}
-
-.footer {
-	transform: translateY(-100%);
-}
+        .banner_content{
+            width: 100%;
+            height: 30%;
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            padding-left: 100px;
+        }
+        
+        .banner{
+                background-image:url("/images/banner.png");
+                height:200px;
+            }
+            
+            	html,body{
+		height:100%;
+	}
+	
+	.container{
+		height:auto;
+		min-height:100%;
+	}
+	.con{
+		padding-bottom:250px;
+	}
+	.footer{
+	  transform : translateY(-100%);
+	}
+        
 </style>
 </head>
 <body>
 	<div class = "banner">  <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
-		<img src="/images/banner.png">
+		<div class="banner_title">  </div>
+		<div class="banner_content">  </div>
 	</div>
 	<div class="container con mt-4">
 		<div class="row border mt-4 d-flex justify-content-center">

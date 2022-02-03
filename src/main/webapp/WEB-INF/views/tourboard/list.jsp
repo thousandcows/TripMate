@@ -363,7 +363,6 @@
                 }
             
         }  
-        
     </style>
 </head>
 <body>
@@ -389,13 +388,13 @@
                 <option name="searchId" value="search_writer">작성자</option>
             </select>
             <span>
-            	<input id="searchText" name="searchText" type="text" list="trip" placeholder="Search">
-            		<datalist id="trip">
+            	<input id="searchText" name="searchText" type="text" placeholder="Search"> <!-- list="trip" -->
+<!--             		<datalist id="trip">
             			<option value="여행지 추천">
             			<option value="맛집">
             			<option value="명소">
             			<option value="재미있게 다녀오는 방법">
-            		</datalist>
+            		</datalist> -->
             	<a class="fas fa-search" id="search_btn" onclick="$('#frmSearch').submit()"></a>
             </span>
         </div>

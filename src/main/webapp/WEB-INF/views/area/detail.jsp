@@ -154,7 +154,7 @@
 				<div class="col-2 align-middle">
 				<label class="w-100 align-middle" style="height:100px;">
 				<div id="ph" class="text-center align-middle">
-					<img src="/images/comment.png" class="w-100">
+					<img src="/images/comment.png">
 				</div>
 					<input accept="image/*" id="img" type="file" class="opacity-0" name="picture" style="display:none;"/>
 				</div>

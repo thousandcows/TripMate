@@ -512,12 +512,13 @@ a:active {
 						<img src="${loginInfo.photo}" class="portraitPhoto">
 					</div>
 					<div class = writer_con>
-						<div class="writer_nick">
+						<div class="writer_nick" value="${dto.mem_seq }">
                				<input type=hidden value="${dto.nick}" name=nick >
                     		<div> ${dto.nick}</div>
                 		</div>
                 		<div class="view_con">
-                    		<div>조회수 ${dto.view_count}</div>
+                			<input type=hidden value="${dto.view_count}" name=view_count >
+                    		<div >조회수 ${dto.view_count}</div>
                 		</div>
 					</div>
                 </div>
@@ -708,7 +709,7 @@ a:active {
     		success:function(result){
     			$('#myModal').modal('toggle');
     			if(result.photo!=undefined){
-        			$("#profileImg").attr("src","/images/"+result.photo);    				
+        			$("#profileImg").attr("src",result.photo);    				
     			}else{
     				$("#profileImg").attr("src","/images/noPhoto.png");
     			}
@@ -721,6 +722,7 @@ a:active {
     			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
     		}			
 		})
+	})
 		$(document).on("click",".re_rp_id",function(){
 			let mem_seq = $(this).attr("value");
 			console.log("대댓글 멤버 시퀀스 값 : " + mem_seq);
@@ -730,7 +732,30 @@ a:active {
     			success:function(result){
 	    			$('#myModal').modal('toggle');
     				if(result.photo!=undefined){
-	        			$("#profileImg").attr("src","/images/"+result.photo);    				
+	        			$("#profileImg").attr("src",result.photo);    				
+    				}else{
+	    				$("#profileImg").attr("src","/images/noPhoto.png");
+    				}
+    				$("#profileNick").text("사용자 명 : "+result.nick);
+    				$("#profilePreference").text("여행 선호 방식 : "+result.preference);
+    				$("#profileGender").text("성별 : "+result.gender);    			
+    				$("#profilePhone").text("연락처 : " + result.phone);    			
+    				$("#profileAge").text("연령 : "+result.age);
+    				$("#profileTxt").text("자기소개 : "+result.text);
+    				$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+    			}			
+			})
+		})
+		$(document).on("click",".writer_nick",function(){
+			let mem_seq = $(this).attr("value");
+			console.log("대댓글 멤버 시퀀스 값 : " + mem_seq);
+			$.ajax({
+				url:"/member/showMember?mem_seq="+mem_seq,
+    			dataType:"json",
+    			success:function(result){
+	    			$('#myModal').modal('toggle');
+    				if(result.photo!=undefined){
+	        			$("#profileImg").attr("src",result.photo);    				
     				}else{
 	    				$("#profileImg").attr("src","/images/noPhoto.png");
     				}
@@ -747,7 +772,6 @@ a:active {
 		$('#modalCloseBtn').on("click",function(){
 			$("#myModal").modal("toggle");
 		})
-	})
 	</script>
 	
 	<script>

@@ -307,6 +307,7 @@
                 <div class="select_gender"><span style="font-weight: bold;">성별 : </span>
                     <input type="radio" name="gender" value="남자" >남자
                     <input type="radio" name="gender" value="여자">여자
+                    <input type="radio" name="gender" value="혼성">혼성
                 </div>
 
                 <div class="title">
@@ -331,7 +332,12 @@
 		var $j360 = jQuery.noConflict();
 	
 		$j360("#back").on("click", function(){
-			location.href="/companyboard/list?cpage=1";
+			if(confirm("목록으로 돌아가시겠습니까?")){
+				location.href="/companyboard/list?cpage=1";	
+			}else{
+				return false;
+			}
+			
 	    })
 	</script>
 	
@@ -472,11 +478,23 @@
     			return false;
     		}
     		
-    		if($("#summernote").val()==""){
+    	    let summernote = $("#summernote").val();
+        	summernote = summernote.replace(/&nbsp;/g, " ");
+    		if(summernote==""){
     			
     			alert("내용을 입력해주세요");
     			return false;
-    		} 
+    		}else if(summernote.length>800){
+        		
+        		alert("입력한도를 초과하였습니다.");
+        		return false;
+        	}
+    		
+    		if(confirm("글을 작성하시겠습니까?")==true){
+    			
+    		}else{
+    			return false;
+    		}
     	
     }); 
     

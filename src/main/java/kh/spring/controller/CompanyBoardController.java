@@ -342,7 +342,6 @@ public class CompanyBoardController {
 				mf.transferTo(new File(realPath + "/" + sysName));
 			}
 		}
-		System.out.println(realPath + "/" + sysName);
 		return "\\images\\" + sysName;
 	}
 	
@@ -362,7 +361,6 @@ public class CompanyBoardController {
 		
 		String contents = explanation;
 		bservice.noticeModify(seq, title, contents);
-		System.out.println("다시 돌아갈 준비 중");
 		return "redirect:/companyboard/noticeDetail?seq="+seq;
 	}
 }

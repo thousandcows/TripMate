@@ -269,16 +269,6 @@
                 display: none;
             }
             
-            .title_800>input{
-                width:100%;
-            }   
-            
-            .title_800{
-                width: 100%;
-                float: left;
-                padding-top: 10px;
-            }
-            
             /* 내용 */
             .contents{
                 
@@ -328,16 +318,10 @@
                 <div class="title">
                     <input type=text placeholder="제목을 입력하세요" name="title" id="title">
                 </div>
-                <div class="title_800">
-                    <input type=text placeholder="제목을 입력하세요" name="title" id="title">
-                </div>
             </div><br>
         	<div class="contents">
  				<textarea id="summernote" rows="5" name="contents" style="width:100%; height:250px;"></textarea>
- 				<input type=hidden>
  			</div>
-<!--        <input type=text placeholder="내용을 입력하세요" name="contents"> -->
-
         </div>
         <div class="ft_btn">
         	<button type=button id="list_btn" class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
@@ -372,7 +356,7 @@
 				    ['view', ['fullscreen', 'help']]],
 			  fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 			  fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-    		  placeholder: '최대 2048자까지 쓸 수 있습니다', 	//placeholder 설정
+    		  placeholder: '내용을 작성해주세요', 	//placeholder 설정
     		  
     		  callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 					onImageUpload : function(files) {
@@ -407,8 +391,14 @@
 	
     <script>
     $("#list_btn").on("click", function(){
-	    	history.back();
-	    })
+    	if(confirm("목록으로 돌아가시겠습니까?")==true){
+    		
+    	  	history.back();
+    	}else{
+    		
+    		return false;
+    	}
+	})
     </script>
 
     <script>
@@ -425,17 +415,26 @@
     		return false;
     	}
     	
-    	if($("#summernote").val()==""){
+    	let summernote = $("#summernote").val();
+    	summernote = summernote.replace(/&nbsp;/g, " ");
+    	if(summernote==""){
     		
     		alert("내용을 입력해주세요");
     		return false;
-    	}   	
-
+    	}else if(summernote.length>800){
+    		
+    		alert("입력한도를 초과하였습니다.");
+    		return false;
+    	}
     	
-		if (confirm("이대로 작성하시겠습니까?")) {
-				$("#frmWrite").submit();
-			}
-		});   
+		if (confirm("이대로 작성하시겠습니까?")==true) {			
+			$("#frmWrite").submit();
+			
+		}else{
+			
+			return false;
+		}
+	});   
     </script>
 </body>
 </html>
