@@ -709,7 +709,7 @@ a:active {
     		success:function(result){
     			$('#myModal').modal('toggle');
     			if(result.photo!=undefined){
-        			$("#profileImg").attr("src","/images/"+result.photo);    				
+        			$("#profileImg").attr("src",result.photo);    				
     			}else{
     				$("#profileImg").attr("src","/images/noPhoto.png");
     			}
@@ -722,6 +722,7 @@ a:active {
     			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
     		}			
 		})
+	})
 		$(document).on("click",".re_rp_id",function(){
 			let mem_seq = $(this).attr("value");
 			console.log("대댓글 멤버 시퀀스 값 : " + mem_seq);
@@ -731,7 +732,7 @@ a:active {
     			success:function(result){
 	    			$('#myModal').modal('toggle');
     				if(result.photo!=undefined){
-	        			$("#profileImg").attr("src","/images/"+result.photo);    				
+	        			$("#profileImg").attr("src",result.photo);    				
     				}else{
 	    				$("#profileImg").attr("src","/images/noPhoto.png");
     				}
@@ -754,7 +755,7 @@ a:active {
     			success:function(result){
 	    			$('#myModal').modal('toggle');
     				if(result.photo!=undefined){
-	        			$("#profileImg").attr("src","/images/"+result.photo);    				
+	        			$("#profileImg").attr("src",result.photo);    				
     				}else{
 	    				$("#profileImg").attr("src","/images/noPhoto.png");
     				}
@@ -771,7 +772,6 @@ a:active {
 		$('#modalCloseBtn').on("click",function(){
 			$("#myModal").modal("toggle");
 		})
-	})
 	</script>
 	
 	<script>
