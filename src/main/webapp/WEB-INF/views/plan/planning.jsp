@@ -259,6 +259,7 @@
 		
 		<!-- 일정 순서 -->
 		<div class="row justify-content-center" id="thirdForm">
+			<div class="col-12 text-center fs-2 mt-1 mb-4" id="dateShow">${date[0] }</div>
 			<div class="col-10 ">
 				<div class="row">
 					<div class="col-2" id="planDate">
@@ -633,6 +634,7 @@
 					    } 
 					});   
 				}
+				$("#dateShow").text(id);
 				$("#planList").html(result);
 				//지도관련
 				// 주소로 좌표를 검색합니다
