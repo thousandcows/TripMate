@@ -70,10 +70,10 @@
 				<button type="button" class="btn btn-success mr-2 ml-2" id="thirdBtn">일정 순서 지정</button>
 				<button type="button" class="btn btn-success mr-2 ml-2" id="fourthBtn">메모</button>
 				<c:if test="${empty seq }">
-				<button type="button" class="btn btn-success mr-2 ml-2" id="goMain">리스트로 이동</button>
+				<button type="button" class="btn btn-success mr-2 ml-2" id="goMain">리스트로</button>
 				</c:if>
 				<c:if test="${!empty seq }">
-					<button type="button" class="btn btn-success mr-2 ml-2" id="back">내 목록으로</button>
+					<button type="button" class="btn btn-success mr-2 ml-2" id="back">목록으로</button>
 				</c:if>
 			</div>
 		</div>
@@ -118,7 +118,7 @@
 											data-target="#datetimepicker1" value="${dto.startDate }" required>
 										<div class="input-group-append" data-target="#datetimepicker1"
 											data-toggle="datetimepicker">
-											<div class="input-group-text">
+											<div class="input-group-text h-100">
 												<i class="fa fa-calendar"></i>
 											</div>
 										</div>
@@ -133,7 +133,7 @@
 										data-target="#datetimepicker2" value="${dto.endDate }" required>
 									<div class="input-group-append" data-target="#datetimepicker2"
 										data-toggle="datetimepicker">
-										<div class="input-group-text">
+										<div class="input-group-text h-100">
 											<i class="fa fa-calendar"></i>
 										</div>
 									</div>
@@ -204,7 +204,7 @@
 					<div class="col-10">
 						<div class="row justify-content-center mt-4">
 				              <c:forEach var='cnt' items="${saveList}" varStatus="status">
-				                <div class="col-9 align-self-center mt-4 delParent border">
+				                <div class="col-12 align-self-center mt-4 delParent border">
 				                  <div class="row">
 				                    <div class="col-4">
 				                      <a href="/area/detail?num=${mySaveListSeq[status.index]}">
@@ -227,7 +227,7 @@
 				                        <div class="col">${cnt.lo_detail}</div>
 				                      </div>
 				
-				                      <div class="row align-items-end mb-0  h-50">
+				                      <div class="row align-items-end mb-0 ">
 				                        <div class="col-12">
 				                            평점:${savedListRate[status.index]}
 				                             <c:if test="${empty savedListRate[status.index]}">
@@ -250,7 +250,7 @@
             </div>
             </c:if>
 					</div>
-				<div class="col-12 text-end	mb-4">
+				<div class="col-12 text-end	mb-4 mt-2">
 					<input type="submit"  class="btn btn-success saveBtn" value="저장하기">
 					<input type="hidden" name="seq" value="${seq }">
 				</div>
@@ -267,7 +267,7 @@
 			<div class="col-12 text-center fs-2 mt-1 mb-4" id="dateShow">${date[0] }</div>
 			<div class="col-10 ">
 				<div class="row">
-					<div class="col-2" id="planDate">
+					<div class="col-4 col-md-2" id="planDate">
 						<c:if test="${!empty seq }">
 						<c:forEach var="i" items="${date }">
 							<c:set var="j" value="${j+1 }"/>
@@ -290,11 +290,11 @@
 					</div>
 					
 						<!-- 리스트 -->
-					<div class="col-4 border" id="planShow">
+					<div class="col-8 col-md-4 border" id="planShow">
 					<ul class="drag-sort-enable ui-helper-reset ui-helper-clearfix" id="planList" ondragover="onDragOver(event)">
 					</ul>
 					</div>
-					<div class="col-6" id=map style="height:600px;">
+					<div class="col-12 col-md-6" id=map style="height:600px;">
 					</div>
 					<div class="col-12 text-end">
 						<h5>※드래그해 일정 순서를 조정하고, 일자를 변경하세요.</h5>
@@ -311,7 +311,7 @@
 							<h3>여행에 필요한 메모를 남기세요.</h3>
 						</div>
 						<div class="col-12 text-center mt-4">
-							<textarea name="memo" cols=100 rows=10 placeholder="메모를 남겨주세요." maxlength=1300 required>${dto.memo }</textarea>
+							<textarea name="memo" class="w-100" rows=10 placeholder="메모를 남겨주세요." maxlength=1300 required>${dto.memo }</textarea>
 							<input type="hidden" name="seq" value="${seq }">
 						</div>
 						<div class="col-12 mt-2 text-end mt-3 mb-4 mr-4">
@@ -479,7 +479,7 @@
 					}else{
 						value +='/images/noPhoto.png';
 					}
-			    	value +='"class="searchImg"></div> </div></div>';
+			    	value +='"class="searchImg w-auto"></div> </div></div>';
 	            }
                 value +='   <div class="btn-toolbar justify-content-center mt-4" role="toolbar" aria-label="Pagination"> <div class="btn-group me-2 mb-2" role="group" aria-label="First group">';
             	}

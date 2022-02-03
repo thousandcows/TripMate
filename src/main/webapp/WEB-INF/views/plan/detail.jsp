@@ -21,6 +21,8 @@
 	}
 	html,body{
 		height:100%;
+		
+		
 	}
 	
 	.container{
@@ -45,7 +47,6 @@
 			height:100%;
 			object-fit:cover;        	
         }
-        
 </style>
 </head>
 <body>
@@ -54,13 +55,13 @@
 	</div>
 	<div class="container con mt-4">
 		<div class="row mt-4">
-			<div class="col-12 text-center">
+			<div class="col-12 text-center" style="background-color: #FBD374;">
 				<h1>${dto.title }</h1>
 			</div>
-			<div class="col-4 mt-4">
+			<div class="col-12 col-md-4 mt-4">
 				<h5>여행 컨셉 : ${dto.theme }</h5>
 			</div>
-			<div class="col-8 text-end mt-4">
+			<div class="col-12 col-md-8 text-end mt-4">
 				<h5>여행 시작일 ${dto.startDate } ~ 여행 종료일 ${dto.endDate }</h5>
 			</div>
 			
@@ -110,7 +111,7 @@
 
 			</div>
 		</div>
-		<div class="col-12 text-center border mt-5">
+		<div class="col-12 text-center border mt-5" style="background-color: #b8e2ec;">
 		<h3>사용자 메모</h3>
 		<span>${dto.memo }</span>
 		</div>
