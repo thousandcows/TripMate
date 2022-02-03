@@ -105,6 +105,10 @@ public class MemberController {
 		} else {
 			MemberDTO dto = memberService.normalLoginSelectAll(emailID, pw);
 			if (dto.getSeq() == -1) {
+				session.setAttribute("loginSeq", dto.getSeq());
+				session.setAttribute("loginEmailID", dto.getEmailID());
+				session.setAttribute("loginNick", dto.getNick());
+				session.setAttribute("loginGender", dto.getGender());
 				return "2";
 			}
 			session.setAttribute("loginSeq", dto.getSeq());
