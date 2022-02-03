@@ -180,8 +180,9 @@
           font-size:14px;
         }
         .card {
-          height:290px;
+          height:300px;
           width:200px !important;
+          margin-bottom:10px;
         }
         .card-img-top {
           width: 100%;
@@ -191,7 +192,7 @@
           font-size:14px;
         }
         .card-text{
-          height:80px;
+          height:70px;
           font-size:12px;
         }
         .btn-primarys{
