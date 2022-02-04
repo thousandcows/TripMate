@@ -82,12 +82,22 @@
         <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
                 <div class="sidebar-brand-icon rotate-n-15">
                 	<i class="fas fa-map-marked-alt"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">TripMate</div>
             </a>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+			<!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">

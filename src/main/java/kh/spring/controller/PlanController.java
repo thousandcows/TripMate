@@ -41,6 +41,14 @@ public class PlanController {
 	@RequestMapping("main")
 	public String main(int page, Model model) { //여행계획 메인jsp 연결
 		int loginSeq = (int)session.getAttribute("loginSeq");
+		if(page<0) {
+			page=1;
+		}
+		int total =pServe.getTotalPage(loginSeq); 
+		if(total<page) {
+			page=total;
+		}
+
 		List<Integer> paging = pServe.listCount(loginSeq,page);
 		List<PlanDTO> list = pServe.listing(loginSeq,page);
 		int firstNum = 0;
@@ -189,10 +197,10 @@ public class PlanController {
 		pServe.deleteDatePlan(seq);
 		return "OK";
 	}
-//	@ExceptionHandler
-//	public String ExceptionHandler(Exception e) {
-//		e.printStackTrace();
-//		e.getMessage();
-//		return "/error";
-//	}
+	@ExceptionHandler
+	public String ExceptionHandler(Exception e) {
+		e.printStackTrace();
+		e.getMessage();
+		return "/error";
+	}
 }
