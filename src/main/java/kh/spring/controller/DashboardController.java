@@ -39,7 +39,7 @@ public class DashboardController {
 
 		List<DashboardDTO> dlist = ds.joinTable();
 		
-		System.out.println(dlist.get(0).getStan_date() + " : " + dlist.get(0).getVisitor() + " : " + dlist.get(0).getUser_n() + " : " + dlist.get(0).getPlan() + " : " + dlist.get(0).getTour_board() + " : " + dlist.get(0).getCom_board());
+//		System.out.println(dlist.get(2).getStan_date() + " : " + dlist.get(0).getVisitor() + " : " + dlist.get(0).getUser_n() + " : " + dlist.get(0).getPlan() + " : " + dlist.get(0).getTour_board() + " : " + dlist.get(0).getCom_board());
 		
 		ds.deleteTable();
 		
