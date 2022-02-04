@@ -16,7 +16,7 @@
       </head>
       <style>
 		@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
         * {
           box-sizing: border-box;
           margin: 0;
@@ -27,7 +27,9 @@
         body {
           position: relative;
         } 
-        
+        input[type=password]{
+          font-family: 'Noto Sans KR', sans-serif;
+        }
         /* 헤더 */
         .navbar{
           min-height:80px !important;
@@ -69,7 +71,12 @@
         .headerLi {
           color: white;
         }
-
+        .headerMypage{
+          color:white !important;
+        }
+        .headerMypage:hover{
+          color:black !important;
+        }
         /* 헤더끝 */
         .modal-header {
           background-color: #2cd4c6;
@@ -89,7 +96,10 @@
           text-align: center;
           border: none;
           background-color: #2cd4c6;
-          color: white;
+          color: white !important;
+        }
+        .loginBtn:hover{
+          color:black !important;
         }
 
         .noticeListBtn {
@@ -104,8 +114,12 @@
         }
 
         .headerLogOut {
+          color:white !important;
           margin-left: 10px;
           margin-right: 10px;
+        }
+        .headerLogOut:hover{
+          color:black !important;
         }
 
         #noticeGround {

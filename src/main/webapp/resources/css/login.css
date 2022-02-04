@@ -20,6 +20,7 @@
     border: 1px solid rgb(185, 185, 185);
     padding-left: 15px;
     border-radius: 5px;
+    color:black !important;
   }
   .loginInputBox {
     text-align: center;
