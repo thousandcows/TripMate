@@ -496,7 +496,6 @@
 	            $("#searchResult").html(value);
             
             
-                console.log(data.response.body.totalCount);
                 
             }
         }) 
@@ -731,7 +730,6 @@
    	 	            			});	
    	             				for(let i = 0; i<target.length;i++){
    	   		             			$("#planList li:nth-child("+(i+1)+")").attr("id",target[i])
-   	   		             			console.log(target[i]);
 	   	             			}
    	             			}
    	             		})   	         		
