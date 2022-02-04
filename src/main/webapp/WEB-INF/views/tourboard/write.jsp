@@ -124,10 +124,6 @@
                 width:100%;
             }      
             
-            .title_800{
-                display: none;   
-            }
-            
             /* 내용 */
             .contents{
                 
@@ -173,24 +169,20 @@
             }
             
             .category{
-                width:8%;
+                width:10%;
                 float:left;
             }
             
 
             /* 제목 */
             .title{
-                width:92%;
+                width:90%;
                 float:left;
             }
             
             .title>input{
                 width:100%;
             }   
-            
-            .title_800{
-             display: none;   
-            }
             
             /* 내용 */
             .contents{
@@ -260,17 +252,20 @@
             }
             
             .category{
-                width:10%;
+                width:17%;
                 float:left;
             }
             
 
             /* 제목 */
             .title{
-                width:90%;
+                width:83%;
                 float:left;
-                display: none;
             }
+            
+            .title>input{
+                width:100%;
+            }      
             
             /* 내용 */
             .contents{
