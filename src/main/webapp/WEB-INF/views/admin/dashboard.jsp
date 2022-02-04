@@ -170,7 +170,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Posts
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Posts (Daily)
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -206,7 +206,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                VISITORS</div>
+                                                VISITORS (Daily)</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             	<span id="visitCnt"></span>
                                             </div>
@@ -241,7 +241,7 @@
                         
                     </div>
                         
-                   	
+            <%--        	
                     <!-- 여행, 동행, 계획 글 수 -->
                     <div class="row">
 						<div class="col-xl-6">
@@ -271,10 +271,10 @@
 								</div>
                             </div>
                         </div>
-                    </div>
+                    </div> --%>
                     
                     <div class="row">
-						<div class="col-xl-6">
+						<div class="col-xl-12">
                             <div class="card   shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -286,8 +286,6 @@
 								</div>
                             </div>
                         </div>
-                        
-                        
                     </div>
                 </div>
                 <!-- /.container-fluid -->
@@ -328,14 +326,7 @@
     <script src="/js/sb-admin-2.min.js"></script>
 
     
-    
-    <!--  refresh 버튼 누를 때 dashboard db셋팅 -->
-    <script>
-    	$("#refresh").on("click", function(){
-    		/* location.href="/dashboard/insertTable"; */
-    	})
-    </script>
-    
+    <!-- 숫자 표시 -->
     <script>
      	$(document).ready(function() {
 			getCnt();
@@ -366,12 +357,13 @@
 			let timeList = [];
 			let posList = [];
 			
+			
 			$.ajax({
 				url : '/dashboard/chart',
 				type : 'POST',
 				dataType : 'json',
 				success : function(data) {
-				// console.log(data[0].pos_count);
+					
 				// 그래프로 나타낼 자료 리스트에 담기
 				for (let i = 0; i < data.length; i++) {
 						timeList.push(data[i].stan_date);
@@ -385,18 +377,29 @@
 						type : 'line',
 						data : {
 								labels : timeList, // X축 
-								datasets : [ {
+								datasets : [ 
+										{
 										data : posList, // 값
-										label : "new member",
-										borderColor : "rgb(27, 245, 118)",
-										fill : false
+										label : "신규 가입자",
+										borderColor : "rgb(255, 154, 205)",
+										backgroundColor: "rgba(255, 211, 233, 0.383)",
+										fill : true
 										} ]
 								},
 						options : {
 								title : {
-										display : true,
-										text : '일별 신규 가입자'
-									}
+										display : false
+									},
+									
+									scales: {
+										yAxes: [{
+											ticks: {
+												min: 0,
+												stepSize: 5,
+												max: 30
+												}
+											}]
+										}
 								}
 						}); //그래프
 				},
@@ -408,166 +411,90 @@
 		}
 	</script>
 	
-	<!-- chart : 여행 게시판 글 수 -->
-     <script>
+	<!-- chart : 게시판 글 수 -->
+	<script>
+	$(document).ready(function() {
+		getGraph2();
+	});
 
-		$(document).ready(function() {
-			getGraph2();
-		});
+	function getGraph2() {
+		let timeList = [];
+		let comList = [];
+		let planList = [];
+		let tourList = [];
+		
+		
+		$.ajax({
+			url : '/dashboard/chart',
+			type : 'POST',
+			dataType : 'json',
+			success : function(data) {
+				
+			// 그래프로 나타낼 자료 리스트에 담기
+			for (let i = 0; i < data.length; i++) {
+				timeList.push(data[i].stan_date);
+				planList.push(data[i].plan);
+				tourList.push(data[i].tour_board);
+				comList.push(data[i].com_board);
+			}
 
-		function getGraph2() {
-			let timeList = [];
-			let posList = [];
-			
-			$.ajax({
-				url : '/dashboard/chart',
-				type : 'POST',
-				dataType : 'json',
-				success : function(data) {
-				// console.log(data[0].pos_count);
-				// 그래프로 나타낼 자료 리스트에 담기
-				for (let i = 0; i < data.length; i++) {
-						timeList.push(data[i].stan_date);
-						posList.push(data[i].tour_board);
-				}
- 	
-				// 그래프
-				new Chart(
-						document.getElementById("line-chart2"),
-				{
-						type : 'line',
-						data : {
-								labels : timeList, // X축 
-								datasets : [ {
-										data : posList, // 값
-										label : "new tour board post",
-										borderColor : "rgb(27, 245, 118)",
+			// 그래프
+			new Chart(
+					document.getElementById("line-chart4"),
+			{
+					type : 'line',
+					data : {
+							labels : timeList, // X축 
+							datasets : [ 
+									{
+										data : planList, // 값
+										label : "여행 계획",
+										borderColor : "rgb(38, 220, 233)",
+										backgroundColor: "rgba(139, 247, 255, 0.383)",
 										fill : false
-										} ]
-								},
-						options : {
-								title : {
-										display : true,
-										text : '여행게시판 글 수'
+									},
+									{
+										data : tourList, // 값
+										label : "여행 계시판",
+										borderColor : "rgb(255, 145, 0)",
+										backgroundColor: "rgba(255, 224, 183, 0.692)",
+										fill : false
+									},
+									{
+										data : comList, // 값
+										label : "동행 게시판",
+										borderColor : "rgb(140, 0, 255)",
+										backgroundColor: "rgba(205, 144, 255, 0.582)",
+										fill : false
 									}
+								]
+							},
+					options : {
+							title : {
+									display : false
+								},
+								
+							scales: {
+								yAxes: [{
+									ticks: {
+										min: 0,
+										stepSize: 5,
+										max: 40
+										}
+									}]
 								}
-						}); //그래프
-				},
-				error : function() {
-						alert("실패");
-				}
+							}
+					}); //그래프
+			},
+			error : function() {
+					alert("실패");
+			}
 
-			})
-		}
+		})
+	}
 	</script>
 	
-	<!-- chart : 여행 게시판 글 수 -->
-     <script>
-
-		$(document).ready(function() {
-			getGraph3();
-		});
-
-		function getGraph3() {
-			let timeList = [];
-			let posList = [];
-			
-			$.ajax({
-				url : '/dashboard/chart',
-				type : 'POST',
-				dataType : 'json',
-				success : function(data) {
-				// console.log(data[0].pos_count);
-				// 그래프로 나타낼 자료 리스트에 담기
-				for (let i = 0; i < data.length; i++) {
-						timeList.push(data[i].stan_date);
-						posList.push(data[i].com_board);
-				}
-	
-				// 그래프
-				new Chart(
-						document.getElementById("line-chart3"),
-				{
-						type : 'line',
-						data : {
-								labels : timeList, // X축 
-								datasets : [ {
-										data : posList, // 값
-										label : "new accompany board post",
-										borderColor : "rgb(27, 245, 118)",
-										fill : false
-										} ]
-								},
-						options : {
-								title : {
-										display : true,
-										text : '동행게시판 글 수'
-									}
-								}
-						}); //그래프
-				},
-				error : function() {
-						alert("실패");
-				}
-
-			})
-		}
-	</script>
-	
-	<!-- chart : 여행 게시판 글 수 -->
-     <script>
-
-		$(document).ready(function() {
-			getGraph4();
-		});
-
-		function getGraph4() {
-			let timeList = [];
-			let posList = [];
-			
-			$.ajax({
-				url : '/dashboard/chart',
-				type : 'POST',
-				dataType : 'json',
-				success : function(data) {
-				// console.log(data[0].pos_count);
-				// 그래프로 나타낼 자료 리스트에 담기
-				for (let i = 0; i < data.length; i++) {
-						timeList.push(data[i].stan_date);
-						posList.push(data[i].plan);
-				}
- 	
-				// 그래프
-				new Chart(
-						document.getElementById("line-chart4"),
-				{
-						type : 'line',
-						data : {
-								labels : timeList, // X축 
-								datasets : [ {
-										data : posList, // 값
-										label : "new plan post",
-										borderColor : "rgb(27, 245, 118)",
-										fill : false
-										} ]
-								},
-						options : {
-								title : {
-										display : true,
-										text : '여행계획 글 수'
-									}
-								}
-						}); //그래프
-				},
-				error : function() {
-						alert("실패");
-				}
-
-			})
-		}
-	</script>
-	
-
+   
     
    
 		

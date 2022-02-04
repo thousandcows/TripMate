@@ -45,7 +45,7 @@
 	
 	<!-- 가입자 수 -->
 	<select id = "cntMember" resultType ="int">
-		select count(*) from member
+		select count(*) from member where to_char(signup_date,'YYYYMMDD') <![CDATA[ = ]]> to_char(sysdate,'YYYYMMDD')
 	</select>
 	
 	<!-- 전날까지의 가입자 수 -->
@@ -55,17 +55,17 @@
 	
 	<!-- 여행계획 글 수  -->
 	<select id = "cntPlan" resultType = "int">
-		select count(*) from plan
+		select count(*) from plan where to_char(writen_date,'YYYYMMDD') <![CDATA[ = ]]> to_char(sysdate,'YYYYMMDD')
 	</select>
 	
 	<!-- 여행게시판 글 수  -->
 	<select id = "cntTour" resultType = "int">
-		select count(*) from tour_board
+		select count(*) from tour_board where to_char(writen_date,'YYYYMMDD') <![CDATA[ = ]]> to_char(sysdate,'YYYYMMDD')
 	</select>
 	
-	<!-- 여행계획 글 수  -->
+	<!-- 동행게시판 글 수  -->
 	<select id = "cntCom" resultType = "int">
-		select count(*) from company_board
+		select count(*) from company_board where to_char(writen_date,'YYYYMMDD') <![CDATA[ = ]]> to_char(sysdate,'YYYYMMDD')
 	</select>
 	
 	<!-- 전날까지의 여행계획 글 수 -->

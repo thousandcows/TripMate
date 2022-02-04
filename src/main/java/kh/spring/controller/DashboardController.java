@@ -39,14 +39,13 @@ public class DashboardController {
 
 		List<DashboardDTO> dlist = ds.joinTable();
 		
-//		System.out.println(dlist.get(2).getStan_date() + " : " + dlist.get(0).getVisitor() + " : " + dlist.get(0).getUser_n() + " : " + dlist.get(0).getPlan() + " : " + dlist.get(0).getTour_board() + " : " + dlist.get(0).getCom_board());
-		
 		ds.deleteTable();
 		
 		// 방문자수 : 오늘 방문자수
 		  int visitcnt = ds.getVisitTodayCount();
 		  dlist.get(dlist.size()-1).setVisitor(visitcnt); 
 		  map.put("visitCnt", visitcnt);
+		  			
 		  
 		for (int i = 0; i < dlist.size(); i++) {
 			ds.insertTable(dlist.get(i));

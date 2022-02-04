@@ -338,11 +338,11 @@
 
           let ageInput = document.querySelector("#ageInput").value
           if (!(0 <= ageInput && ageInput <= 100)) {
-            alert("나이를 정수로 입력해주세요.");
+            alert("나이는 0~100세까지 입력가능합니다.");
             return false;
           }
           if (ageInput == "") {
-            alert("나이를 정수로 입력해주세요.");
+            alert("나이는 0~100세까지 입력가능합니다.");
             return false;
           }
           if (confirm("수정하시겠습니까?")) {
