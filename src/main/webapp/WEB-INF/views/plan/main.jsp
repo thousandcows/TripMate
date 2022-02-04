@@ -124,22 +124,28 @@ html, body {
 				
 						<c:forEach var="i" items="${paging }">
 						<a href="/plan/main?page=${i }">
-						<button type="button" class="btn paging btn-light m-2" style="background-color: #f5e3b9;">
 						<c:choose>
 						<c:when test="${i eq firstNum and (i%10) eq 0 }">
+						<button type="button" class="btn paging btn-light m-2" style="background-color: #f5e3b9;">
 						<
+						</button>
 						</c:when>
 						<c:when test="${i eq lastNum and (i%10) eq 1 }">
+						<button type="button" class="btn paging btn-light m-2" style="background-color: #f5e3b9;">
 						>
+						</button>
 						</c:when>
 						<c:when test="${i eq page }">
+						<button type="button" class="btn paging btn-light m-2" style="background-color: #cfb997;">
 						${i }
+						</button>						
 						</c:when>
 						<c:otherwise>
+						<button type="button" class="btn paging btn-light m-2" style="background-color: #f5e3b9;">
 						${i }
+						</button>
 						</c:otherwise>
 						</c:choose>
-						</button>
 						</a>
 						
 						</c:forEach>
