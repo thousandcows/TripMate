@@ -186,19 +186,16 @@ public class CompanyBoardController {
         
         //신청자 리스트
 		
-		 List<MemberDTO> recruit_list = cbs.selectAllMem(seq);
-		 model.addAttribute("recruit_list",recruit_list);
+		List<MemberDTO> recruit_list = cbs.selectAllMem(seq);
+		model.addAttribute("recruit_list",recruit_list);		 
 		 
+		// 신청자 카운트
+		int memCount = cbs.memCount(seq);
+		model.addAttribute("memCount",memCount);
 		 
-		 // 신청자 카운트
-		 int memCount = cbs.memCount(seq);
-		 model.addAttribute("memCount",memCount);
-		 
-		 // 좋아요 카운트
-		 int likeCount = cbs.totalBoardLike(seq);
-		 model.addAttribute("likeCount", likeCount);
-		 
-        
+		// 좋아요 카운트
+		int likeCount = cbs.totalBoardLike(seq);
+		model.addAttribute("likeCount", likeCount);        
 		
 		return "companyboard/detail";
 	}
