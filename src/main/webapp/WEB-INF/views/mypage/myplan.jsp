@@ -23,7 +23,6 @@
             padding: 0;
             margin: 0;
             list-style: none;
-            font-family: 'Noto Sans KR', sans-serif;
           }
 
           a {
