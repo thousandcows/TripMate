@@ -150,7 +150,11 @@ public class CompanyBoardService {
 			}
 			
 			for(int i = startNavi ; i <= endNavi; i++) {
-				pageNavi += "<a href='/companyboard/list?cpage="+i+"'>" + i + "</a> ";
+				if(currentPage==i) {
+					pageNavi += "<a href='/companyboard/list?cpage=" + i + "' style=" + "color:#2cd4c6;" + "font-size:20px;" + "><b>" + i + "</b></a> ";
+				}else {
+					pageNavi += "<a href='/companyboard/list?cpage=" + i + "'>" + i + "</a> ";
+				}
 			}
 			
 			if(needNext) {
@@ -163,7 +167,11 @@ public class CompanyBoardService {
 				}
 			
 				for(int i = startNavi ; i <= endNavi; i++) {
-					pageNavi += "<a href='/companyboard/list?cpage=" + i + "&searchOption="+searchOption+"&searchText="+searchText+"'>" + i + "</a> ";
+					if(currentPage==i) {
+						pageNavi += "<a href='/companyboard/list?cpage=" + i + "&searchOption="+searchOption+"&searchText="+searchText+"' style=" + "color:#2cd4c6;" + "font-size:20px;" + " ><b>" + i + "</b></a> ";
+					}else {
+						pageNavi += "<a href='/companyboard/list?cpage=" + i + "&searchOption="+searchOption+"&searchText="+searchText+"'>" + i + "</a> ";
+					}
 				}
 			
 				if(needNext) {

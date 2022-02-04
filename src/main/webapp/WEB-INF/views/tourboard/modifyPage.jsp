@@ -412,7 +412,7 @@ input{autocomplete:"off";}
 				</div>
 				
 				<div class="button">
-						<a href="/tourboard/list?cpage=1"><button type=button class="btn btn-primary btn-sm" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button></a>
+						<button type=button class="btn btn-primary btn-sm" id="toList" style="border: none;background-color: rgb(56, 181, 174);"><span style="font-size: small;">목록</span></button>
 						<button type=submit id=modOk style="border: none;background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm"  ><span style="font-size: small;">완료</span></button>
 						<a href="/tourboard/detail?seq=${dto.seq}"><button type=button id=modCancel style="border: none;background-color: rgb(56, 181, 174);" class="btn btn-primary btn-sm"><span style="font-size: small;">취소</span></button></a>
 				</div>				
@@ -425,6 +425,14 @@ input{autocomplete:"off";}
     </footer>
 
 
+	<script>
+		$("#toList").on("click", function(){
+			if(confirm("목록으로 돌아가시겠습니까?")){
+				
+				location.href = "/tourboard/list?cpage=1";
+			}
+		})
+	</script>
 	<script>
 		$("#category").val("${dto.category}");
 	</script>

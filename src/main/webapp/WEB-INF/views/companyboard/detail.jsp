@@ -815,19 +815,39 @@
 			url:"/member/showMember?mem_seq="+mem_seq,
   		dataType:"json",
   		success:function(result){
-  			$('#myModal').modal('toggle');
-  			if(result.photo!=undefined){
-      			$("#profileImg").attr("src",result.photo);    				
-  			}else{
-  				$("#profileImg").attr("src","/images/noPhoto.png");
-  			}
-  			$("#profileNick").text("사용자 명 : "+result.nick);
-  			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
-  			$("#profileGender").text("성별 : "+result.gender);    			
-  			$("#profilePhone").text("연락처 : " + result.phone);    			
-  			$("#profileAge").text("연령 : "+result.age);
-  			$("#profileTxt").text("자기소개 : "+result.text);
-  			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+  			$('#myModal').modal("toggle");
+            if(result.photo!=undefined){
+                $("#profileImg").attr("src",result.photo);
+            }else{
+                $("#profileImg").attr("src","/images/noPhoto.png");
+            }
+            $("#profileNick").text("사용자 명 : "+result.nick);
+            if(result.preference==0){
+                $("#profilePreference").text("여행 선호 방식 : "+"입력되지 않은 사용자입니다.");
+            }else{
+                $("#profilePreference").text("여행 선호 방식 : "+result.preference);
+            }
+            if(result.gender==undefined){
+                $("#profileGender").text("성별 : "+"입력되지 않은 사용자입니다.");
+            }else{
+                $("#profileGender").text("성별 : "+result.gender);
+            }
+            if(result.phne==undefined){
+                $("#profilePhone").text("연락처 : " + "입력되지 않은 사용자입니다.");
+            }else{
+                $("#profilePhone").text("연락처 : " + result.phone);
+            }
+            if(result.age==0){
+                $("#profileAge").text("연령 : "+"입력되지 않은 사용자입니다.");
+            }else{
+                $("#profileAge").text("연령 : "+result.age);
+            }
+            if(result.text==undefined){
+                $("#profileTxt").text("자기소개 : "+"입력되지 않은 사용자입니다.");
+            }else{
+                $("#profileTxt").text("자기소개 : "+result.text);
+            }
+            $("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
   		}			
 		})
 	})
@@ -946,6 +966,7 @@
 			$("#recontent"+id).val("");
 			$("#recontent"+id).focus();
 			$("#recontent"+id).val(recontent);
+			$("#recontent"+id).css("border","");
 		})
 		
 		
