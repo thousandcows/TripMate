@@ -400,7 +400,13 @@ public class MemberController {
 	public String myPlan(Model model, int page) {
 		int loginSeq = (int) session.getAttribute("loginSeq");
 		MemberDTO dto = memberService.myInfoSelectAll(loginSeq);
-
+		if (page < 0) {
+			page = 1;
+		}
+		int total = planService.getTotalPage(loginSeq);
+		if (total < page) {
+			page = total;
+		}
 		List<Integer> paging = planService.listCount(loginSeq, page);
 		List<PlanDTO> list = planService.listing(loginSeq, page);
 		model.addAttribute("paging", paging);
