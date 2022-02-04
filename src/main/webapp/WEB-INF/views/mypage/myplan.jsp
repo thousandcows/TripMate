@@ -197,7 +197,7 @@
               <li><a href="/member/writenList">게시글 관리</a></li>
             </ul>
           </div>
-          <div class="container mt-4">
+          <div class="container">
             <div class="row">
               <div class="col-12 topTxt text-center">최근 등록한 여행계획입니다.</div>
             </div>
