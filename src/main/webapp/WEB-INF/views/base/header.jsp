@@ -241,7 +241,7 @@
                     <div class="nickNameConfirm signupInputConfirm"></div>
                   </div>
                   <div class="signupBoxs">
-                    <span class="genderHead">성별</span><input type="radio" class="genderInput" value="male"
+                    <span class="genderHead">성별<span class="genderHeadIn">(선택)</span></span><input type="radio" class="genderInput" value="male"
                       name="gender">
                     남성&nbsp;&nbsp;&nbsp;<input type="radio" class="genderInput" name="gender" value="female"> 여성
                     <div class="nickNameConfirm signupInputConfirm"></div>
@@ -398,8 +398,14 @@
                           </div>
                         </div>
                         ${loginNick} 님
-                        <a href="/member/normalLogout" class="headerLogOut">로그아웃</a>
-                        <a href="/member/mypageGo" class="headerMypage">마이페이지</a>
+                        <c:if test="${loginSeq == -1}">
+                          <a href="/member/normalLogout" class="headerLogOut">로그아웃</a>
+                          <a href="/admin/dashboard" class="headerMypage">관리창으로</a>
+                        </c:if>
+                        <c:if test="${loginSeq != -1}">
+                          <a href="/member/normalLogout" class="headerLogOut">로그아웃</a>
+                          <a href="/member/mypageGo" class="headerMypage">마이페이지</a>
+                        </c:if>
                       </div>
                     </c:when>
                     <c:otherwise>
