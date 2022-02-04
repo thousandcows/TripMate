@@ -45,7 +45,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                 	<i class="fas fa-map-marked-alt"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">TripMate</div>
+                <div class="sidebar-brand-text mx-3">Admin</div>
             </a>
             
             <!-- Divider -->
