@@ -12,6 +12,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,7 +174,7 @@ public class MemberController {
 
 	// 카카오 로그인
 	@RequestMapping("kakaoLogin") // 서비스레이어로 뺄까 고민했지만 Http통신이 있어 컨트롤러에 있는게 맞을듯
-	public String kakaoLogin(String code, String error) {
+	public String kakaoLogin(String code, String error, HttpServletRequest request) {
 		if (error != null) { // 에러코드가 있다면 사용자가 무언가 취소를 한것.(null이 아닐때 전부 메인으로 보내버리면될수도)
 			return "redirect:/";
 //			if(error.equals("")) {
@@ -255,10 +256,9 @@ public class MemberController {
 
 	// 로그아웃
 	@RequestMapping("normalLogout")
-	public String normalLogout() {
+	public String normalLogout(HttpServletRequest request) {
 		session.invalidate();
-		return "redirect:/";
-		// 나중에 현재페이지 로그인&로그아웃으로 변경할것
+		return "redirect:"+request.getHeader("referer"); // 현재페이지 로그아웃
 	}
 
 	// 마이페이지 이동시 정보 빼오기
