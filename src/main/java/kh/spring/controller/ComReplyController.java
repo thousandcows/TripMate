@@ -23,8 +23,8 @@ public class ComReplyController {
 
 	@RequestMapping("reply")
 	public String reply(int rseq, String reply, HttpServletRequest request) throws Exception {
+		
 		int seq = rseq;
-
 		String nick = (String) request.getSession().getAttribute("loginNick");
 		int mem_seq = (int) request.getSession().getAttribute("loginSeq");
 

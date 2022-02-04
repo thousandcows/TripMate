@@ -410,24 +410,26 @@
             <div class="board_header">
                 <div class="seq" style="width: 5%;">No</div>
                 <div class="tour" style="width: 7%;">여행지</div>
-                <div class="title" style="width: 42%;">제목</div>
+                <div class="title" style="width: 38%;">제목</div>
                 <div class="recruit" style="width: 9%;">모집 인원</div>
                 <div class="mem_seq" style="width: 10%;">작성자</div>
                 <div class="write_date" style="width: 10%;">작성일</div>
                 <div class="view_count" style="width: 7%;">조회수</div>
-                <div class="expired" style="width: 10%;">마감 여부</div>
+                <div class="gender" style="width: 7%;">모집</div>
+                <div class="expired" style="width: 7%;">마감 여부</div>
             </div>
             
             <c:forEach var="n" items="${nt_list }">
     	  		<div class="notice_enroll">
        		        <div class="nt_seq" style="width: 5%;"><i class="fas fa-bullhorn"></i></div>
        		        <div class="nt_tour" style="width: 7%;">공지</div>
-       		        <div class="nt_title" style="width: 42%; text-align:left; padding-left:10px;"><a href="/companyboard/noticeDetail?seq=${n.seq}">${n.title }</a></div>
+       		        <div class="nt_title" style="width: 38%; text-align:left; padding-left:10px;"><a href="/companyboard/noticeDetail?seq=${n.seq}">${n.title }</a></div>
        		        <div class="nt_recruit" style="width: 9%;">-</div>
        		        <div class="nt_nick" style="width: 10%;">${n.nick }</div>
        		        <div class="nt_writen_time" style="width: 10%;">${n.writen_date }</div>
        		        <div class="nt_view_count" style="width: 7%;">${n.view_count }</div>
-       		        <div class="nt_rec_count" style="width: 10%;">-</div>
+       		        <div class="gender" style="width: 7%;">-</div>
+       		        <div class="nt_rec_count" style="width: 7%;">-</div>
        		        <div class="hide_nt_con">${n.nick } &nbsp/&nbsp <i class="far fa-clock"></i> ${n.writen_date } &nbsp/&nbsp <i class="far fa-eye"></i> ${n.view_count }</div>
        		    </div>
             </c:forEach>
@@ -436,13 +438,14 @@
             <div class="board_enroll">
             		<div class="seq" style="width: 5%;">${l.seq }</div>
                 	<div class="tour" style="width: 7%; color: rgb(56, 181, 174); font-weight: bold">${l.tour }</div>
-                	<div class="title" style="width: 42%; text-align:left; padding-left:10px"><a href="/companyboard/detail?seq=${l.seq}">${l.title }&nbsp</a>
+                	<div class="title" style="width: 38%; text-align:left; padding-left:10px"><a href="/companyboard/detail?seq=${l.seq}">${l.title }&nbsp</a>
                 		<i class="far fa-comment-dots" style="color: rgb(161, 161, 161)"></i><span id="rep_count" name="rep_count" style="color: red"> [${l.rep_count}] </span></div>
                 	<div class="recruit" style="width: 9%;">${l.recruit }</div>
                 	<div class="mem_seq" style="width: 10%;">${l.nick}</div>
                 	<div class="writen_date" style="width: 10%;">${l.writen_date }</div>
                 	<div class="view_count" style="width: 7%;">${l.view_count}</div>
-                	<div class="expired" style="width: 10%;">
+                	<div class="gender" style="width: 7%;">${l.gender }</div>
+                	<div class="expired" style="width: 7%;">
                 		<c:if test="${l.expired == '마감'}">
                 			<span class="badge bg-danger">${l.expired }</span>
                 		</c:if>
