@@ -372,12 +372,10 @@
 <style type="text/css">
 	li {list-style: none; float: left; padding: 6px;}
 </style>
+		<jsp:include page="../base/header.jsp" flush="true"></jsp:include>
 
 </head>
 <body>
-	<div class="header">		
-		<jsp:include page="../base/header.jsp"></jsp:include>
-	</div>
 	<div class = "banner">  <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
         <div class="banner_title"> 동행 게시판 </div>
         <div class="banner_content"> 함께 여행갈 친구들을 만들어 보세요 </div>

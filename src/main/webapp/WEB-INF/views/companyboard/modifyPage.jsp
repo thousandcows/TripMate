@@ -399,13 +399,11 @@
             }
         }
     </style>
+    <jsp:include page="../base/header.jsp"></jsp:include>
     
 </head>
            
 <body>
-	<div class="header">		
-		<jsp:include page="../base/header.jsp"></jsp:include>
-	</div>
 	<div class="banner">
         <!-- 추후 banner background로 이미지 넣을 예정입니다. 지금은 임시로 단색채움.-->
         <div class="banner_title"> 동행 게시판 </div>
