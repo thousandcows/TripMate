@@ -15,13 +15,13 @@
         <script defer src="/js/login.js"></script>
       </head>
       <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+		@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
         * {
           box-sizing: border-box;
           margin: 0;
           padding: 0;
-          font-family: 'Noto Sans KR', sans-serif;
+          font-family: 'NanumSquare', sans-serif;
         }
 
         body {
