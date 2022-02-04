@@ -154,7 +154,7 @@
                                             	<th>${nt.writen_date }</th>
                                             	<th>${nt.view_count }</th>
                                             	<th>
-                                            		<a href="/admin/delete?seq=${nt.seq}&boardNum=0" class="btn btn-danger btn-icon-split">
+                                            		<a href="/admin/delete?seq=${nt.seq}&boardNum=0" onclick="return deletenotice();" class="btn btn-danger btn-icon-split" >
                                  				       <span class="icon text-white-50">
                                   				          <i class="far fa-trash-alt text-gray-100"></i>
                                  				       </span>
@@ -217,6 +217,11 @@
         </div>
     </div>
 
+	<script type="text/javascript">
+		function deletenotice(){
+			return confirm("글을 삭제하시겠습니까?");
+		}
+	</script>
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
