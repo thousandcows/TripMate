@@ -493,8 +493,8 @@
                         </c:if>
                         <c:if test="${dto.gender eq '혼성' }">
                             <input type="radio" id="manRadio" name="gender" value="남자"> 남자
-                            <input type="radio" id="womanRadio" name="gender" value="여자" checked> 여자
-                            <input type="radio" name="gender" value="혼성"> 혼성
+                            <input type="radio" id="womanRadio" name="gender" value="여자" > 여자
+                            <input type="radio" name="gender" value="혼성" checked> 혼성
                         </c:if>
                         
                     </div>
@@ -567,7 +567,9 @@
 	
 	
 		$j360("#back").on("click", function(){
-			location.href="/companyboard/list?cpage=1";
+			if(confirm("목록으로 돌아가시겠습니까?")){
+				location.href="/companyboard/list?cpage=1";
+			}
 		})
 		
 		$j360("#delete").on("click", function(){
