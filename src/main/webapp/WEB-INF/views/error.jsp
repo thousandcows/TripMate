@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
   <title>404 에러</title>
   <style>
     @import url(https://fonts.googleapis.com/css?family=Ubuntu);

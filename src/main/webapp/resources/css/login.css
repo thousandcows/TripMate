@@ -20,6 +20,7 @@
     border: 1px solid rgb(185, 185, 185);
     padding-left: 15px;
     border-radius: 5px;
+    color:black !important;
   }
   .loginInputBox {
     text-align: center;
@@ -135,10 +136,13 @@
     display: none;
   }
   .genderHead{
-    color:rgb(80, 80, 80);
+    color:rgb(65, 65, 65);
     margin-right: 15px;
   }
-
+  .genderHeadIn{
+    color:rgb(80, 80, 80);
+    font-size:6px;
+  }
   /* 회원가입Go버튼 */
   .signupGoBtn {
     width: 96%;

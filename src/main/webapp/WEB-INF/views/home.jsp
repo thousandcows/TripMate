@@ -13,17 +13,15 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+      <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
       <title>Trip Mate</title>
       <jsp:include page="base/header.jsp"></jsp:include>
     </head>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        font-family: 'Noto Sans KR', sans-serif;
       }
 
       h5 {
@@ -180,8 +178,9 @@
           font-size:14px;
         }
         .card {
-          height:290px;
+          height:300px;
           width:200px !important;
+          margin-bottom:10px;
         }
         .card-img-top {
           width: 100%;
@@ -191,7 +190,7 @@
           font-size:14px;
         }
         .card-text{
-          height:80px;
+          height:70px;
           font-size:12px;
         }
         .btn-primarys{

@@ -15,19 +15,21 @@
         <script defer src="/js/login.js"></script>
       </head>
       <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-
+		@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
         * {
           box-sizing: border-box;
           margin: 0;
           padding: 0;
-          font-family: 'Noto Sans KR', sans-serif;
+          font-family: 'NanumSquare', sans-serif;
         }
 
         body {
           position: relative;
         } 
-        
+        input[type=password]{
+          font-family: 'Noto Sans KR', sans-serif;
+        }
         /* 헤더 */
         .navbar{
           min-height:80px !important;
@@ -69,7 +71,12 @@
         .headerLi {
           color: white;
         }
-
+        .headerMypage{
+          color:white !important;
+        }
+        .headerMypage:hover{
+          color:black !important;
+        }
         /* 헤더끝 */
         .modal-header {
           background-color: #2cd4c6;
@@ -89,7 +96,10 @@
           text-align: center;
           border: none;
           background-color: #2cd4c6;
-          color: white;
+          color: white !important;
+        }
+        .loginBtn:hover{
+          color:black !important;
         }
 
         .noticeListBtn {
@@ -104,8 +114,12 @@
         }
 
         .headerLogOut {
+          color:white !important;
           margin-left: 10px;
           margin-right: 10px;
+        }
+        .headerLogOut:hover{
+          color:black !important;
         }
 
         #noticeGround {
@@ -241,7 +255,7 @@
                     <div class="nickNameConfirm signupInputConfirm"></div>
                   </div>
                   <div class="signupBoxs">
-                    <span class="genderHead">성별</span><input type="radio" class="genderInput" value="male"
+                    <span class="genderHead">성별<span class="genderHeadIn">(선택)</span></span><input type="radio" class="genderInput" value="male"
                       name="gender">
                     남성&nbsp;&nbsp;&nbsp;<input type="radio" class="genderInput" name="gender" value="female"> 여성
                     <div class="nickNameConfirm signupInputConfirm"></div>
@@ -398,8 +412,14 @@
                           </div>
                         </div>
                         ${loginNick} 님
-                        <a href="/member/normalLogout" class="headerLogOut">로그아웃</a>
-                        <a href="/member/mypageGo" class="headerMypage">마이페이지</a>
+                        <c:if test="${loginSeq == -1}">
+                          <a href="/member/normalLogout" class="headerLogOut">로그아웃</a>
+                          <a href="/admin/dashboard" class="headerMypage">관리창으로</a>
+                        </c:if>
+                        <c:if test="${loginSeq != -1}">
+                          <a href="/member/normalLogout" class="headerLogOut">로그아웃</a>
+                          <a href="/member/mypageGo" class="headerMypage">마이페이지</a>
+                        </c:if>
                       </div>
                     </c:when>
                     <c:otherwise>

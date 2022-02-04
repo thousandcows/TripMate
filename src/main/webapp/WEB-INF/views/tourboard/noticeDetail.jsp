@@ -161,9 +161,6 @@
         	margin: 2px;
         }
         
-      
-
-             
          /* 작성자/조회수칸 */
          .writer_con{
             width: 100%;

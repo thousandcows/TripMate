@@ -1,13 +1,10 @@
 @charset "utf-8";
   /* 간단세팅 나중에 css파일 따로 뺄거*/
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-
   * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
     list-style: none;
-    font-family: 'Noto Sans KR', sans-serif;
   }
 
   a {
@@ -467,6 +464,12 @@
   }
 
   .ageInput {
+    width: 45px;
+    height: 30px;
+    font-size:12px;
+    padding-left: 10px;
+  }
+  .ageInput2{
     width: 45px;
     height: 30px;
     font-size:12px;
