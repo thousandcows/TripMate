@@ -158,7 +158,7 @@
 	                                            <th>${tb.nick }</th>
                                           		<th>${tb.writen_date }</th>
                                     	    	<th>                                    	    		
-                                    	    		<a href="/admin/delete?seq=${tb.seq}&boardNum=${tb.board_num}" class="btn btn-danger btn-icon-split">
+                                    	    		<a href="/admin/delete?seq=${tb.seq}&boardNum=${tb.board_num}" onclick="return deleteboard()" class="btn btn-danger btn-icon-split">
                                  				       <span class="icon text-white-50">
                                   				          <i class="far fa-trash-alt text-gray-100"></i>
                                  				       </span>
@@ -180,7 +180,7 @@
 	                                            <th>${cb.nick }</th>
                                           		<th>${cb.writen_date }</th>
                                     	    	<th>
-                                    	    		<a href="/admin/delete?seq=${cb.seq}&boardNum=${cb.board_num}" class="btn btn-danger btn-icon-split">
+                                    	    		<a href="/admin/delete?seq=${cb.seq}&boardNum=${cb.board_num}" onclick="return deleteboard()" class="btn btn-danger btn-icon-split">
                                  				       <span class="icon text-white-50">
                                   				          <i class="far fa-trash-alt text-gray-100"></i>
                                  				       </span>
@@ -221,6 +221,12 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+	<script type="text/javascript">
+		function deleteboard(){
+			return confirm("글을 삭제하시겠습니까?");
+		}
+	</script>
+	
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
