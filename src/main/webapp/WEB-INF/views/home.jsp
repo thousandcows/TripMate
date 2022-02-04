@@ -17,13 +17,10 @@
       <jsp:include page="base/header.jsp"></jsp:include>
     </head>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        font-family: 'Noto Sans KR', sans-serif;
       }
 
       h5 {
