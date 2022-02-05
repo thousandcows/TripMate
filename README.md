@@ -35,7 +35,7 @@ Version Control System|Git / github
 ***
 ## 프로젝트 기능 및 팀원소개
 
-#### <img src="https://user-images.githubusercontent.com/87923533/152645827-4e648f9f-234e-4694-bc03-26e1f9ca406b.png"  width="100" height="100"> 임도혁 <a href="https://github.com/LimdoH" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a> 뱃지는 자유롭게 수정해주세요
+#### <img src="https://user-images.githubusercontent.com/87923533/152647244-7f8664d1-0df7-4c25-95db-666091ef5428.jpg"  width="100" height="100"> 임도혁 <a href="https://github.com/LimdoH" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a> 뱃지는 자유롭게 수정해주세요
   *  대기능
       * 소기능
   * 대기능
@@ -44,7 +44,7 @@ Version Control System|Git / github
   * 대기능
     * 소기능
     * 소기능
-#### <img src="https://user-images.githubusercontent.com/87923533/152646232-6a03d546-3116-48f9-b478-6f403fa8329c.png"  width="100" height="100"> 서승희 <a href="https://github.com/hevly" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
+#### <img src="https://user-images.githubusercontent.com/87923533/152647260-908ae1e6-c229-4338-9f91-d33f5a26f24b.jpg"  width="100" height="100"> 서승희 <a href="https://github.com/hevly" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
   *  대기능
       * 소기능
   * 대기능
@@ -53,7 +53,7 @@ Version Control System|Git / github
   * 대기능
     * 소기능
     * 소기능
-#### <img src="https://user-images.githubusercontent.com/87923533/152645946-32d754ce-4bba-47b6-aa7a-cfdb31ba1c60.png"  width="100" height="100"> 이진호 <a href="https://github.com/Hogrii" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
+#### <img src="https://user-images.githubusercontent.com/87923533/152647274-3268cc34-e609-4947-aa32-89a1f2ebd5e3.jpg"  width="100" height="100"> 이진호 <a href="https://github.com/Hogrii" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
   *  대기능
       * 소기능
   * 대기능
@@ -62,7 +62,7 @@ Version Control System|Git / github
   * 대기능
     * 소기능
     * 소기능
-#### <img src="https://user-images.githubusercontent.com/87923533/152646260-b9a48720-8ea4-4a1b-bb0f-d6a8f1697267.png"  width="100" height="100"> 정혜주 <a href="https://github.com/hyejoojung719" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
+#### <img src="https://user-images.githubusercontent.com/87923533/152647281-ad39fc5f-3f63-438d-a28e-a12eef4f75c3.jpg"  width="100" height="100"> 정혜주 <a href="https://github.com/hyejoojung719" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
   *  대기능
       * 소기능
   * 대기능
@@ -71,7 +71,7 @@ Version Control System|Git / github
   * 대기능
     * 소기능
     * 소기능
-#### <img src="https://user-images.githubusercontent.com/87923533/152646279-1f786acf-625b-42c7-b2d3-4220999931db.png"  width="100" height="100"> 천현우 <a href="https://github.com/thousandcows" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
+#### <img src="https://user-images.githubusercontent.com/87923533/152647288-4a51e539-5bd1-49c2-9164-c125ed12e1d1.jpg"  width="100" height="100"> 천현우 <a href="https://github.com/thousandcows" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
   *  대기능
       * 소기능
   * 대기능
@@ -80,7 +80,7 @@ Version Control System|Git / github
   * 대기능
     * 소기능
     * 소기능
-#### <img src="https://user-images.githubusercontent.com/87923533/152646318-bc6557eb-e6a1-49fd-ab0d-2c8855c0ec12.png"  width="100" height="100"> 홍진규 <a href="https://github.com/Carroth23" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
+#### <img src="https://user-images.githubusercontent.com/87923533/152647296-eda1be7b-a985-453e-9033-343c1804c534.jpg"  width="100" height="100"> 홍진규 <a href="https://github.com/Carroth23" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
   *  대기능
       * 소기능
   * 대기능
