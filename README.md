@@ -1,14 +1,13 @@
 # 🏖️나만의 여행플래너 [Trip Mate]🏕️
-[프로젝트 페이지 이동](http://3.38.78.110) ✔Click
-![슬라이드0001](https://user-images.githubusercontent.com/87923533/152644628-07b4b381-3f18-401a-b62f-0b3af1c920b4.jpg)
+<a href="http://3.38.78.110" target="_blank"><img src="https://user-images.githubusercontent.com/87923533/152644628-07b4b381-3f18-401a-b62f-0b3af1c920b4.jpg"  width="700" height="380"></a> :point_left:Click
 
-## Contents 
-1. 개요
-2. 설계의 주안점
-3. 사용기술 및 개발환경
-4. 프로젝트 기능 구현
-5. 주요기능
-6. Document
+# Contents 
+  [1. 개요](#개요)<br>
+  [2. 설계의 주안점](#설계의-주안점)<br>
+  [3. 사용기술 및 개발환경](#사용기술-및-개발환경)<br>
+  [4. 프로젝트 기능 및 팀원소개](#프로젝트-기능-및-팀원소개)<br>
+  [5. 주요기능](#주요-기능)<br>
+  [6. Document](#문서)
 ***
 ## 개요
 * 여행계획을 도와주는 친구같은 사이트
@@ -35,7 +34,7 @@ Version Control System|Git / github
 ***
 ## 프로젝트 기능 및 팀원소개
 
-#### <img src="https://user-images.githubusercontent.com/87923533/152647244-7f8664d1-0df7-4c25-95db-666091ef5428.jpg"  width="100" height="100"> 임도혁 <a href="https://github.com/LimdoH" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a> 뱃지는 자유롭게 수정해주세요
+#### <img src="https://user-images.githubusercontent.com/87923533/152647244-7f8664d1-0df7-4c25-95db-666091ef5428.jpg"  width="100" height="100"> 임도혁 <a href="https://github.com/LimdoH" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a> 자유롭게 수정해주세요
   *  대기능
       * 소기능
   * 대기능
@@ -95,7 +94,7 @@ Version Control System|Git / github
 
 
 ***
-## Document
+## 문서
 1. 유스케이스
 <img src="https://user-images.githubusercontent.com/.png">
 
