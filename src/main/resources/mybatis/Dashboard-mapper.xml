@@ -43,6 +43,30 @@
 		delete from dashboard
 	</delete>
 	
+	<!-- 여행게시판 테마별 카운트 -->
+	<select id = "cntCate1" resultType = "int">
+		select count(*) from tour_board where category = '생태'
+	</select>
+	<select id = "cntCate2" resultType = "int">
+		select count(*) from tour_board where category = '문화'
+	</select>
+	<select id = "cntCate3" resultType = "int">
+		select count(*) from tour_board where category = '명소'
+	</select>
+	<select id = "cntCate4" resultType = "int">
+		select count(*) from tour_board where category = '체험'
+	</select>
+	
+	<!-- 성별카운트 -->
+	<select id = "cntGender1" resultType = "int">
+		select count(*) from member where gender = 'male'
+	</select>
+	<select id = "cntGender2" resultType = "int">
+		select count(*) from member where gender = 'female'
+	</select>
+	
+	
+	
 	<!-- 가입자 수 -->
 	<select id = "cntMember" resultType ="int">
 		select count(*) from member where to_char(signup_date,'YYYYMMDD') <![CDATA[ = ]]> to_char(sysdate,'YYYYMMDD')
@@ -92,10 +116,6 @@
 	<insert id="setVisitTotalCount" >
  		INSERT INTO VISIT (V_DATE) VALUES (sysdate)
  	</insert>
- 	
-<!-- 	<update id="updateVisitor" >
-	</update> -->
-	
  	
  	
  	<select id="getVisitTotalCount" resultType = "int">

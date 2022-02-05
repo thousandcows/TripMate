@@ -31,6 +31,32 @@ public class DashboardService {
 		return ddao.deleteTable();
 	}
 	
+	public int cntCate1() {
+		return ddao.cntCate1();
+	}
+	
+	public int cntCate2() {
+		return ddao.cntCate2();
+	}
+	
+	public int cntCate3() {
+		return ddao.cntCate3();
+	}
+	
+	public int cntCate4() {
+		return ddao.cntCate4();
+	}
+	
+	public int cntGender1() {
+		return ddao.cntGender1();
+	}
+	
+	public int cntGender2() {
+		return ddao.cntGender2();
+	}
+	
+	
+	
 	public int cntPlan() {
 		return ddao.cntPlan();
 	}
@@ -70,25 +96,21 @@ public class DashboardService {
 	}
 	
 	
-	
-	
-	
-	/*
-	 * public int updateVisitor() { return ddao.updateVisitor(); }
-	 */
-	// 방문자
-	
-	
 	public int setVisitTotalCount() { 
 		return ddao.setVisitTotalCount(); 
 	}
 	  
-	  public int getVisitTotalCount() { return ddao.getVisitTotalCount(); }
+	public int getVisitTotalCount() { 
+		return ddao.getVisitTotalCount(); 
+	}
 	  
-	  public int getVisitTodayCount() { return ddao.getVisitTodayCount(); }
+	public int getVisitTodayCount() { 
+		return ddao.getVisitTodayCount(); 
+	}
 	  
-	  public int insertVisitor(int visitcnt) { return ddao.insertVisitor(visitcnt);
-	  }
+	public int insertVisitor(int visitcnt) { 
+		return ddao.insertVisitor(visitcnt);
+	 }
 	 
 
 

@@ -43,9 +43,8 @@
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
                 <div class="sidebar-brand-icon rotate-n-15">
                 	<i class="fas fa-map-marked-alt"></i>
-<!--                 	<i class="fas fa-home"></i> -->
                 </div>
-                <div class="sidebar-brand-text mx-3">TripMate</div>
+                <div class="sidebar-brand-text mx-3">Admin</div>
             </a>
 
             <!-- Divider -->
@@ -134,11 +133,11 @@
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-4 col-md-4 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card border-left-danger shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                                 MEMBER (DAILY)</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             	<span id="cntMember"></span>
@@ -221,8 +220,6 @@
                     </div>
                     
                     <div class="row">
-                        
-                        <!-- Area Chart -->
                         <div class="col-xl-6">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
@@ -231,59 +228,52 @@
                                     <h6 class="m-0 font-weight-bold text-primary">New Member(Daily)</h6>
                                 </div>
                                 <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="line-chart"></canvas>
-                                    </div>
+                                <div>
+                                        <canvas id="bar-chart" width="500" height="200"></canvas>
                                 </div>
                             </div>
                         </div>
                         
-                    </div>
-                        
-            <%--        	
-                    <!-- 여행, 동행, 계획 글 수 -->
-                    <div class="row">
-						<div class="col-xl-6">
-                            <div class="card shadow mb-4">
+                        <div class="col-xl-6">
+                            <div class="card   shadow mb-4">
                                 <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Tour board Post Count(Daily)</h6>
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Gender</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div>
-  									<canvas id="line-chart2"></canvas>
+  									<canvas id="pie-chart"  width="500" height="200"></canvas>
+								</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="row">
+						<div class="col-xl-6">
+                            <div class="card   shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Post Count(Daily)</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div>
+  									<canvas id="line-chart"  width="500" height="200"></canvas>
 								</div>
                             </div>
                         </div>
                         
                         <div class="col-xl-6">
-                            <div class="card  shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Accompany board Post Count(Daily)</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div>
-  									<canvas id="line-chart3"></canvas>
-								</div>
-                            </div>
-                        </div>
-                    </div> --%>
-                    
-                    <div class="row">
-						<div class="col-xl-12">
                             <div class="card   shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Plan Post Count(Daily)</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Tour Category</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div>
-  									<canvas id="line-chart4"></canvas>
+  									<canvas id="doughnut-chart"  width="500" height="200"></canvas>
 								</div>
+								
                             </div>
                         </div>
                     </div>
@@ -328,11 +318,15 @@
     
     <!-- 숫자 표시 -->
     <script>
-     	$(document).ready(function() {
+  
+  
+     $(document).ready(function() {
 			getCnt();
+			getGraph1();
+			getGraph2();
 		});
     	
-    	function getCnt() {
+    function getCnt() {
     		$.ajax({
 					url : '/dashboard/ajax1',
 					type : 'POST',
@@ -343,89 +337,17 @@
 					}
 				}); 
     		}
-    </script>
-    
 
-     <!-- chart : 일간 가입자수 -->
-     <script>
-
-		$(document).ready(function() {
-			getGraph();
-		});
-
-		function getGraph() {
-			let timeList = [];
-			let posList = [];
-			
-			
-			$.ajax({
-				url : '/dashboard/chart',
-				type : 'POST',
-				dataType : 'json',
-				success : function(data) {
-					
-				// 그래프로 나타낼 자료 리스트에 담기
-				for (let i = 0; i < data.length; i++) {
-						timeList.push(data[i].stan_date);
-						posList.push(data[i].user_n);
-				}
-
-				// 그래프
-				new Chart(
-						document.getElementById("line-chart"),
-				{
-						type : 'line',
-						data : {
-								labels : timeList, // X축 
-								datasets : [ 
-										{
-										data : posList, // 값
-										label : "신규 가입자",
-										borderColor : "rgb(255, 154, 205)",
-										backgroundColor: "rgba(255, 211, 233, 0.383)",
-										fill : true
-										} ]
-								},
-						options : {
-								title : {
-										display : false
-									},
-									
-									scales: {
-										yAxes: [{
-											ticks: {
-												min: 0,
-												stepSize: 5,
-												max: 30
-												}
-											}]
-										}
-								}
-						}); //그래프
-				},
-				error : function() {
-						alert("실패");
-				}
-
-			})
-		}
-	</script>
-	
-	<!-- chart : 게시판 글 수 -->
-	<script>
-	$(document).ready(function() {
-		getGraph2();
-	});
-
-	function getGraph2() {
+	function getGraph1() {
 		let timeList = [];
 		let comList = [];
 		let planList = [];
 		let tourList = [];
+		let memList = [];
 		
 		
 		$.ajax({
-			url : '/dashboard/chart',
+			url : '/dashboard/chart1',
 			type : 'POST',
 			dataType : 'json',
 			success : function(data) {
@@ -436,11 +358,46 @@
 				planList.push(data[i].plan);
 				tourList.push(data[i].tour_board);
 				comList.push(data[i].com_board);
+				memList.push(data[i].user_n);
 			}
 
-			// 그래프
+			// 막대 그래프
 			new Chart(
-					document.getElementById("line-chart4"),
+					document.getElementById("bar-chart"),
+			{
+					type : 'bar',
+					data : {
+							labels : timeList, // X축 
+							datasets : [ 
+									{
+									data : memList, // 값
+									label : "신규 가입자",
+									borderColor : "rgb(255, 154, 205)",
+									backgroundColor: "rgba(255, 211, 233, 0.383)",
+									borderWidth: 2, 
+									fill : true
+									} ]
+							},
+					options : {
+							title : {
+									display : false
+								},
+								
+								scales: {
+									yAxes: [{
+										ticks: {
+											min: 0,
+											stepSize: 5,
+											max: 25
+											}
+										}]
+									}
+							}
+					}); //그래프
+					
+			// 라인 그래프
+			new Chart(
+					document.getElementById("line-chart"),
 			{
 					type : 'line',
 					data : {
@@ -449,22 +406,22 @@
 									{
 										data : planList, // 값
 										label : "여행 계획",
-										borderColor : "rgb(38, 220, 233)",
-										backgroundColor: "rgba(139, 247, 255, 0.383)",
+										borderColor : "rgb(21, 178, 211)",
+										backgroundColor: "rgba(21, 179, 211, 0.616)",
 										fill : false
 									},
 									{
 										data : tourList, // 값
 										label : "여행 계시판",
-										borderColor : "rgb(255, 145, 0)",
-										backgroundColor: "rgba(255, 224, 183, 0.692)",
+										borderColor : "rgb(255, 215, 0)",
+										backgroundColor: "rgba(255, 217, 0, 0.507)",
 										fill : false
 									},
 									{
 										data : comList, // 값
 										label : "동행 게시판",
-										borderColor : "rgb(140, 0, 255)",
-										backgroundColor: "rgba(205, 144, 255, 0.582)",
+										borderColor : "rgb(243, 135, 47)",
+										backgroundColor: "rgba(243, 135, 47, 0.459)",
 										fill : false
 									}
 								]
@@ -479,12 +436,87 @@
 									ticks: {
 										min: 0,
 										stepSize: 5,
-										max: 40
+										max: 30
 										}
 									}]
 								}
 							}
 					}); //그래프
+
+			},
+			error : function() {
+					alert("실패");
+			}
+
+		})
+	}
+	
+	function getGraph2() {
+		let cateList = [];
+		let genderList = [];
+		
+		
+		$.ajax({
+			url : '/dashboard/chart2',
+			type : 'POST',
+			dataType : 'json',
+			success : function(data) {
+				
+			// 그래프로 나타낼 자료 리스트에 담기
+			for (let i = 0; i < 4; i++) {
+				cateList.push(data[i]);
+			}
+			
+			for (let i = 4; i < data.length; i++) {
+				genderList.push(data[i]);
+			}
+
+			// 도넛 그래프
+			new Chart(
+					document.getElementById("pie-chart"),
+			{
+					type : 'pie',
+					data : {
+							labels : ["남자", "여자"], // X축 
+							datasets : [ 
+									{
+									data : genderList, // 값
+									borderColor :  ["rgb(5, 120, 125)", "rgb(239, 200, 9)"],
+									backgroundColor: ["rgb(5, 120, 125)", "rgb(239, 200, 9)" ],
+									borderWidth: 2, 
+									fill : true
+									} ]
+							},
+					options : {
+							title : {
+									display : false
+								}
+							}
+					}); //그래프
+					
+			// 도넛 그래프
+			new Chart(
+					document.getElementById("doughnut-chart"),
+			{
+					type : 'doughnut',
+					data : {
+							labels : ["생태", "문화", "명소", "체험"], // X축 
+							datasets : [ 
+									{
+									data : cateList, // 값
+									borderColor :  ["rgb(235, 92, 21)", "rgb(245, 233, 100)" , "rgb(102, 222, 152)" ,"rgb(100, 129, 245)"],
+									backgroundColor: ["rgb(235, 92, 21)", "rgb(245, 233, 100)" , "rgb(102, 222, 152)" ,"rgb(100, 129, 245)"],
+									borderWidth: 2, 
+									fill : true
+									} ]
+							},
+					options : {
+							title : {
+									display : false
+								}
+							}
+					}); //그래프
+
 			},
 			error : function() {
 					alert("실패");
@@ -493,6 +525,8 @@
 		})
 	}
 	</script>
+	
+
 	
    
     
