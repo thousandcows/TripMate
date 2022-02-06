@@ -1,5 +1,5 @@
 # 🏖️나만의 여행플래너 [Trip Mate]🏕️
-<a href="http://3.38.78.110" target="_blank"><img src="https://user-images.githubusercontent.com/87923533/152644628-07b4b381-3f18-401a-b62f-0b3af1c920b4.jpg"  width="700" height="380"></a> :point_left:Click
+<a href="http://3.38.78.110" target="_blank"><img src="https://user-images.githubusercontent.com/87923533/152644628-07b4b381-3f18-401a-b62f-0b3af1c920b4.jpg"  width="70%" height="70%"></a> :point_left:Click
 
 # Contents 
   [1. 개요](#개요)<br>
@@ -12,7 +12,7 @@
 ## 개요
 * 여행계획을 도와주는 친구같은 사이트
 * 사용자가 "재미있게", "능동적으로" 여행을 계획하고 경험을 공유할 수 있도록 한다.
-<img src="https://user-images.githubusercontent.com/87923533/152644957-f972bce8-ff54-496a-b6f8-43b0475aeae6.jpg"  width="700" height="370">
+<img src="https://user-images.githubusercontent.com/87923533/152644957-f972bce8-ff54-496a-b6f8-43b0475aeae6.jpg"  width="70%" height="70%">
 
 ***
 ## 설계의 주안점
