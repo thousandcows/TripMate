@@ -481,6 +481,10 @@
               });
             }
           }
+
+          if(window.location.pathname == "/"){
+            $(".navbar-nav").prepend(`<li class="nav-item"><a href='/fullpage' class="nav-link headerLi">서비스 소개</a></li>`);
+          }
         </script>
       </body>
 
