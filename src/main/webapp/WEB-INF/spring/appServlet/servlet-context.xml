@@ -44,6 +44,7 @@
 		<interceptor>
 			<mapping path="/**"/>
 			<exclude-mapping path="/"/>
+			<exclude-mapping path="/fullpage"/>
 			<exclude-mapping path="/images/**"/>
 			<exclude-mapping path="/css/**"/>
 			<exclude-mapping path="/js/**"/>

@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Khula:wght@800&family=Noto+Sans+KR:wght@100;300;700;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-    
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
 
 </head>
 
@@ -341,6 +341,7 @@
               <h2 style="font-size: 100px; font-weight: 900px; font-family: 'Khula', sans-serif; margin-top: 300px; color:rgb(196, 255, 252);">W E L C O M E</h2>
               <p style="font-size: 20px; font-family: 'Noto Sans KR', sans-serif; color:white"> 트립 메이트로 당신의 여행을 계획하고, 기록하고, 저장하세요!</p>
               <div class="icons">
+              <a href="/">
                   <button>TRIP MATE</button>
               </a>
               </div>
