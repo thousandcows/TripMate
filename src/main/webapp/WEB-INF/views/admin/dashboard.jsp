@@ -372,8 +372,8 @@
 									{
 									data : memList, // 값
 									label : "신규 가입자",
-									borderColor : "rgb(255, 154, 205)",
-									backgroundColor: "rgba(255, 211, 233, 0.383)",
+									borderColor : 'rgb(59, 232, 176)',
+									backgroundColor: 'rgb(59, 232, 176, 0.5)',
 									borderWidth: 2, 
 									fill : true
 									} ]
@@ -388,10 +388,27 @@
 										ticks: {
 											min: 0,
 											stepSize: 5,
-											max: 25
+											max: 25,
+											lineWidth: 0,
+											fontColor : 'rgba(12, 13, 13, 1)',
+											fontSize : 10
+											},
+										gridLines:{
+												color: 'rgba(212, 212, 212, 0.671)',
+												lineWidth: 0
+											}
+										}],
+									xAxes: [{
+										ticks:{
+												fontColor : 'rgba(12, 13, 13, 1)',
+												fontSize : 10
+											},
+										gridLines:{
+												color: 'rgba(212, 212, 212, 0.671)',
+												lineWidth: 0
 											}
 										}]
-									}
+								}
 							}
 					}); //그래프
 					
@@ -406,22 +423,22 @@
 									{
 										data : planList, // 값
 										label : "여행 계획",
-										borderColor : "rgb(21, 178, 211)",
-										backgroundColor: "rgba(21, 179, 211, 0.616)",
+										borderColor : "rgb(255, 193, 104)",
+										backgroundColor: "rgb(255, 193, 104, 0.5)",
 										fill : false
 									},
 									{
 										data : tourList, // 값
 										label : "여행 계시판",
-										borderColor : "rgb(255, 215, 0)",
-										backgroundColor: "rgba(255, 217, 0, 0.507)",
+										borderColor : "rgb(45, 222, 152)",
+										backgroundColor: "rgb(45, 222, 152, 0.5)",
 										fill : false
 									},
 									{
 										data : comList, // 값
 										label : "동행 게시판",
-										borderColor : "rgb(243, 135, 47)",
-										backgroundColor: "rgba(243, 135, 47, 0.459)",
+										borderColor : "rgb(28, 199, 208)",
+										backgroundColor: "rgb(28, 199, 208, 0.5)",
 										fill : false
 									}
 								]
@@ -436,9 +453,26 @@
 									ticks: {
 										min: 0,
 										stepSize: 5,
-										max: 30
+										max: 30,
+										lineWidth: 0,
+										fontColor : 'rgba(12, 13, 13, 1)',
+										fontSize : 10
+										},
+									gridLines:{
+											color: 'rgba(212, 212, 212, 0.671)',
+											lineWidth: 0
 										}
-									}]
+									}],
+									xAxes: [{
+										ticks:{
+												fontColor : 'rgba(12, 13, 13, 1)',
+												fontSize : 10
+											},
+										gridLines:{
+												color: 'rgba(212, 212, 212, 0.671)',
+												lineWidth: 0
+											}
+										}]
 								}
 							}
 					}); //그래프
@@ -481,8 +515,8 @@
 							datasets : [ 
 									{
 									data : genderList, // 값
-									borderColor :  ["rgb(5, 120, 125)", "rgb(239, 200, 9)"],
-									backgroundColor: ["rgb(5, 120, 125)", "rgb(239, 200, 9)" ],
+									borderColor :  ["rgb(194, 241, 40)", "rgb(255, 194, 229)"],
+									backgroundColor: ["rgb(235, 255, 172, 0.5)", "rgb(255, 194, 229, 0.5)" ],
 									borderWidth: 2, 
 									fill : true
 									} ]
@@ -504,8 +538,8 @@
 							datasets : [ 
 									{
 									data : cateList, // 값
-									borderColor :  ["rgb(235, 92, 21)", "rgb(245, 233, 100)" , "rgb(102, 222, 152)" ,"rgb(100, 129, 245)"],
-									backgroundColor: ["rgb(235, 92, 21)", "rgb(245, 233, 100)" , "rgb(102, 222, 152)" ,"rgb(100, 129, 245)"],
+									borderColor :  'rgb(255, 255, 255)',
+									backgroundColor: ["rgb(0, 75, 121)", "rgb(0, 145, 205)" , "rgb(86, 160, 211)" ,"rgb(196, 223, 246)"],
 									borderWidth: 2, 
 									fill : true
 									} ]
