@@ -327,7 +327,7 @@
                     width: 80% !important;
                 }
 
-                .nt_tour, .nt_recruit, .nt_nick, .nt_writen_time, .nt_view_count, .nt_rec_count{
+                .nt_tour, .nt_recruit, .nt_nick, .nt_writen_time, .nt_view_count, .nt_rec_count, .nt_gender{
                     display: none;
                 }  
 
@@ -355,7 +355,7 @@
                     width: 80% !important;
                 }
 
-                .tour, .recruit, .mem_seq, .writen_date, .view_count, .expired{
+                .tour, .recruit, .mem_seq, .writen_date, .view_count, .expired, .gender{
                     display: none;
                 }
 
@@ -428,7 +428,7 @@
        		        <div class="nt_nick" style="width: 10%;">${n.nick }</div>
        		        <div class="nt_writen_time" style="width: 10%;">${n.writen_date }</div>
        		        <div class="nt_view_count" style="width: 7%;">${n.view_count }</div>
-       		        <div class="gender" style="width: 7%;">-</div>
+       		        <div class="nt_gender" style="width: 7%;">-</div>
        		        <div class="nt_rec_count" style="width: 7%;">-</div>
        		        <div class="hide_nt_con">${n.nick } &nbsp/&nbsp <i class="far fa-clock"></i> ${n.writen_date } &nbsp/&nbsp <i class="far fa-eye"></i> ${n.view_count }</div>
        		    </div>
@@ -453,7 +453,7 @@
                 			<span class="badge bg-primary">${l.expired }</span>
                 		</c:if>
                 	</div>
-                	<div class="hide_nt_con">${l.nick} &nbsp/&nbsp <i class="far fa-clock"></i> ${l.writen_date } &nbsp/&nbsp <i class="far fa-eye"></i> ${l.view_count} &nbsp/&nbsp <i class="far fa-user"></i> ${l.recruit } &nbsp/&nbsp
+                	<div class="hide_nt_con">${l.nick} &nbsp/&nbsp <i class="far fa-clock"></i> ${l.writen_date } &nbsp/&nbsp <i class="far fa-eye"></i> ${l.view_count} &nbsp/&nbsp ${l.gender } &nbsp/&nbsp<i class="far fa-user"></i> ${l.recruit } &nbsp/&nbsp
                 		<c:if test="${l.expired == '마감'}">
                 			<span class="badge bg-danger">${l.expired }</span>
                 		</c:if>
