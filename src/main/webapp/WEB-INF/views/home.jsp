@@ -375,7 +375,7 @@
       </div>
       <jsp:include page="base/footer.jsp"></jsp:include>
       <script>
-        let us = new WebSocket("ws://3.38.78.110/user"); // 웹소켓
+        let us = new WebSocket("ws://localhost/user"); // 웹소켓
         $("#tripPlan2").on("click", function () {
           if (${loginEmailID ne null }){
           location.href = "/plan/main?page=1";

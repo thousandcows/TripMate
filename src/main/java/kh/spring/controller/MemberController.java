@@ -306,7 +306,7 @@ public class MemberController {
 	public String kakaoLogOut(int seq) {
 		session.invalidate();
 		// 여기도 추후 AWS IP로 변경
-		return "https://kauth.kakao.com/oauth/logout?client_id=b7b0a7f6722957ddef971b2ff4061bd7&logout_redirect_uri=http://3.38.78.110";
+		return "https://kauth.kakao.com/oauth/logout?client_id=b7b0a7f6722957ddef971b2ff4061bd7&logout_redirect_uri=http://localhost";
 	}
 
 	// 상대방 프로필 조회
