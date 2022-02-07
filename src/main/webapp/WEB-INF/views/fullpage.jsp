@@ -65,7 +65,7 @@
         .box > .trip2{
             width: 100%;
             height: 100%;
-            padding: 50px 100px 150px 100px;
+            padding: 50px 100px 50px 100px;
             /* border: 1px solid red; */
         }
         .box > .trip2 > div{
