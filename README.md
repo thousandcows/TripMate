@@ -1,17 +1,16 @@
 # 🏖️나만의 여행플래너 [Trip Mate]🏕️
-<a href="http://3.38.78.110" target="_blank"><img src="https://user-images.githubusercontent.com/87923533/152968977-f1923592-f695-48f3-88b8-253c06651702.jpg"  width="70%" height="70%"></a> :point_left:Click
+<a href="http://3.38.78.110" target="_blank"><img src="https://user-images.githubusercontent.com/87923533/152968977-f1923592-f695-48f3-88b8-253c06651702.jpg"  width="73%" height="73%"></a> :point_left:Click
 
 # Contents 
   [1. 개요](#개요)<br>
   [2. 설계의 주안점](#설계의-주안점)<br>
   [3. 사용기술 및 개발환경](#사용기술-및-개발환경)<br>
   [4. 프로젝트 기능 및 팀원소개](#프로젝트-기능-및-팀원소개)<br>
-  [5. 주요기능](#주요-기능)<br>
-  [6. Document](#문서)
+  [5. Document](#문서)
 ***
 ## 개요
-<img src="https://user-images.githubusercontent.com/87923533/152969149-770afcba-41a2-4817-ac5e-d5074f800857.jpg"  width="80%" height="80%">
-<img src="https://user-images.githubusercontent.com/87923533/152969205-d194bcac-c3b2-410a-97e3-34ca82117576.jpg"  width="80%" height="80%">
+<img src="https://user-images.githubusercontent.com/87923533/152974236-c656c161-1414-4564-862c-d2e2236534dc.png"  width="90%" height="90%">
+<img src="https://user-images.githubusercontent.com/87923533/152974303-7bcd39f1-0ad5-4bed-b17c-7a6f6f998b0b.png"  width="90%" height="90%">
 
 ***
 ## 설계의 주안점
@@ -96,16 +95,12 @@ Version Control System|Git / github
      * GIT 관리
      * AWS 서버담당
 ***
-## 주요 기능
-* [UI 설계서 링크](/) ✔Click
 
-
-***
 ## 문서
 
 - ERD
 <img src="https://user-images.githubusercontent.com/87923533/152971107-e4408134-c049-40a4-9435-9f06723ed281.png">
 
-- 보고서 및 발표PPT
-[기획보고서.pdf](https://github.com/)
-[파이널 발표자료.pdf](https://github.com/)
+- 보고서 및 발표PPT<br>
+  - [기획보고서.pdf](https://github.com/Carroth23/KHFinalProject/files/8023187/_.pdf)<br>
+  - [파이널 발표자료.pdf](https://github.com/Carroth23/KHFinalProject/files/8023172/4._.pdf)
