@@ -63,7 +63,7 @@ if (eventCheck != null) {
   // 휴대폰 중복확인
   document.querySelector("#signupPhoneCheckBtn").addEventListener("click", () => {
     let phoneRegex = /^[0-9]{11}$/;
-    let phone1 = document.querySelector("#signupPhone1").value
+    let phone1 = '010';
     let phone2 = document.querySelector("#signupPhone2").value
     let phone3 = document.querySelector("#signupPhone3").value
     let phone4 = phone1 + phone2 + phone3 + "";
@@ -178,7 +178,7 @@ if (eventCheck != null) {
     }
 
     let phoneRegex = /^[0-9]{11}$/;
-    let phone1 = document.querySelector("#signupPhone1").value
+    let phone1 = '010';
     let phone2 = document.querySelector("#signupPhone2").value
     let phone3 = document.querySelector("#signupPhone3").value
     let phone4 = phone1 + phone2 + phone3 + "";
@@ -284,8 +284,8 @@ if (eventCheck != null) {
   // 비밀번호 찾기
   let verificationCode = null;
   let findPwEmail = null;
-  document.querySelector("#findPwBtn").addEventListener("click", () => {
-    document.querySelector(".verificationOk").style.display = "none";
+  document.querySelector("#findPwBtnt").addEventListener("click", () => {
+    document.querySelector(".verificationOkT").style.display = "none";
     document.querySelector(".verificationCodeConfirm").innerHTML = "";
     findPwEmail = document.querySelector("#findPwInput").value;
     $.ajax({
@@ -314,7 +314,7 @@ if (eventCheck != null) {
     } else {
       document.querySelector(".verificationCodeConfirm").style.color = "cornflowerblue";
       document.querySelector(".verificationCodeConfirm").innerHTML = "인증되었습니다.";
-      document.querySelector(".verificationOk").style.display = "block";
+      document.querySelector(".verificationOkT").style.display = "block";
     }
   });
 
@@ -333,6 +333,17 @@ if (eventCheck != null) {
     } else {
       return false;
     }
+  });
+
+  // 모달이 닫히면 내부값 초기화
+  $('.modal').on('hidden.bs.modal', function(e) {
+    if($(this).find('input').length > 0){
+        $(this).find('input').val('');
+        $(this).find('.normalLoginConfirm').html('');
+        $(this).find('.signupInputConfirm').html('');
+        $(this).find('.genderInput').prop("checked", false);
+        document.querySelector(".verificationOkT").style.display = "none";
+      }
   });
 
 }
