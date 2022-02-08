@@ -36,9 +36,13 @@
 	height: 40px;
 }
 .searchSubmit{
-	background-color: #f5e3b9; 
-	border-radius: 10px; 
-	width: 60px;
+	background-color: white; 
+	border-radius: 5px; 
+	width: 55px;
+	border:1px solid gray;
+}
+.searchSubmit:hover{
+	opacity: 0.9;
 }
 .listPhoto{
 	height: 250px;
