@@ -343,8 +343,7 @@
 		let comList = [];
 		let planList = [];
 		let tourList = [];
-		let memList = [];
-		
+		let memList = [];		
 		
 		$.ajax({
 			url : '/dashboard/chart1',
@@ -360,9 +359,13 @@
 				comList.push(data[i].com_board);
 				memList.push(data[i].user_n);
 			}
-
+			
+			if(window.chartObj != undefined){
+				window.chartObj.destroy();
+			}
+			
 			// 막대 그래프
-			new Chart(
+			window.chartObj = new Chart(
 					document.getElementById("bar-chart"),
 			{
 					type : 'bar',
@@ -381,8 +384,7 @@
 					options : {
 							title : {
 									display : false
-								},
-								
+								},								
 								scales: {
 									yAxes: [{
 										ticks: {
@@ -446,8 +448,7 @@
 					options : {
 							title : {
 									display : false
-								},
-								
+								},								
 							scales: {
 								yAxes: [{
 									ticks: {
@@ -476,19 +477,16 @@
 								}
 							}
 					}); //그래프
-
 			},
 			error : function() {
 					alert("실패");
 			}
-
 		})
 	}
 	
 	function getGraph2() {
 		let cateList = [];
-		let genderList = [];
-		
+		let genderList = [];		
 		
 		$.ajax({
 			url : '/dashboard/chart2',
@@ -550,21 +548,12 @@
 								}
 							}
 					}); //그래프
-
 			},
 			error : function() {
 					alert("실패");
 			}
-
 		})
 	}
-	</script>
-	
-
-	
-   
-    
-   
-		
+	</script>		
 </body>
 </html>
