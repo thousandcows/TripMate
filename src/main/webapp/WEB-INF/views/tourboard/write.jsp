@@ -391,6 +391,11 @@
             }
         });
     }
+
+    // 이미지삽입 모달닫기
+    $(document).on("click", ".close", function(){
+        $(".note-modal").modal('hide');
+    });
     </script>
 	
     <script>
