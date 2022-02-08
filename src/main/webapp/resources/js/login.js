@@ -341,6 +341,7 @@ if (eventCheck != null) {
         $(this).find('input').val('');
         $(this).find('.normalLoginConfirm').html('');
         $(this).find('.signupInputConfirm').html('');
+        $(this).find('.myInfoPwChangeConfirm').html('&nbsp;');
         $(this).find('.genderInput').prop("checked", false);
         document.querySelector(".verificationOkT").style.display = "none";
       }
