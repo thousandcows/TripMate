@@ -393,6 +393,11 @@ body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
             }
         });
     }
+
+    // 이미지삽입 모달닫기
+    $(document).on("click", ".close", function(){
+        $(".note-modal").modal('hide');
+    });
     </script>
 	
     <script>
