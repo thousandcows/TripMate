@@ -350,7 +350,6 @@
 			url : '/dashboard/chart1',
 			type : 'POST',
 			dataType : 'json',
-			async:false,
 			success : function(data) {
 				
 			// 그래프로 나타낼 자료 리스트에 담기

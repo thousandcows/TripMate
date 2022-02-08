@@ -89,7 +89,9 @@
             color: rgb(56, 181, 174);
         }
         
-        
+        .close{
+            margin-right: 300px;
+        }
         
 
          /* 1400px ~  */

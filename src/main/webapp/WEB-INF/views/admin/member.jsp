@@ -23,7 +23,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
-
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
     <!-- Custom styles for this page -->
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
