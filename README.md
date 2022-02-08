@@ -59,14 +59,16 @@ Version Control System|Git / github
     * 소기능
     * 소기능
 #### <img src="https://user-images.githubusercontent.com/87923533/152647274-3268cc34-e609-4947-aa32-89a1f2ebd5e3.jpg"  width="100" height="100"> 이진호 <a href="https://github.com/Hogrii" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
-  *  대기능
-      * 소기능
-  * 대기능
-     * 소기능
-     * 소기능
-  * 대기능
-    * 소기능
-    * 소기능
+  * 여행지 게시판
+     * 검색
+     * 페이징
+     * 좋아요
+     * 댓글
+     * 대댓글
+  * 관리자 게시판
+     * 멤버 관리
+     * 게시판(게시글) 관리
+     * 공지사항 관리
 #### <img src="https://user-images.githubusercontent.com/87923533/152647281-ad39fc5f-3f63-438d-a28e-a12eef4f75c3.jpg"  width="100" height="100"> 정혜주 <a href="https://github.com/hyejoojung719" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
   *  대기능
       * 소기능
