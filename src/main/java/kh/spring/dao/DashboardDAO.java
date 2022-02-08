@@ -30,6 +30,33 @@ public class DashboardDAO {
 	public int deleteTable() {
 		return mybatis.delete("Dashboard.deleteTable");
 	}
+	
+	
+	public int cntCate1() {
+		return mybatis.selectOne("Dashboard.cntCate1");
+	}
+
+	public int cntCate2() {
+		return mybatis.selectOne("Dashboard.cntCate2");
+	}
+
+	public int cntCate3() {
+		return mybatis.selectOne("Dashboard.cntCate3");
+	}
+
+	public int cntCate4() {
+		return mybatis.selectOne("Dashboard.cntCate4");
+	}
+	
+	public int cntGender1() {
+		return mybatis.selectOne("Dashboard.cntGender1");
+	}
+
+	public int cntGender2() {
+		return mybatis.selectOne("Dashboard.cntGender2");
+	}
+	
+	
 
 	public int cntMember() {
 		return mybatis.selectOne("Dashboard.cntMember");

@@ -11,8 +11,12 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String home(Locale locale, Model model) {
-		
 		return "home";
+	}
+	
+	@RequestMapping("/fullpage")
+	public String fullpage() {
+		return "fullpage";
 	}
 	
 }

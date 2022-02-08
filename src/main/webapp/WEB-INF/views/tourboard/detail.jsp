@@ -9,14 +9,22 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" 	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"	crossorigin="anonymous"><!-- include libraries(jQuery, bootstrap) -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" 	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"	crossorigin="anonymous">include libraries(jQuery, bootstrap)
+ --><script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <jsp:include page="../base/header.jsp"></jsp:include>
 
 <style>
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
+	pre, form, fieldset, textarea, blockquote, span, * {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -24,6 +32,7 @@
 body {
 	margin: 0; /* 임시로 body margin 0px */
 	height: auto;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 /* input style */
@@ -35,7 +44,6 @@ input {
 	autocomplete :"off";
 	
 }
-
 
 /* 링크 속성 지우기 */
 a {
@@ -582,8 +590,9 @@ a:active {
                          	<div class="rp_id" value="${rp.mem_seq }">${rp.nick }</div>
                             <div class="rp_time" name="writen_date">${rp.writen_date }</div>
                         </div>
-						<div class="reply_contents ">
-							<input type=text value="${rp.contents }" class="rp_contents" id="rp_contents${rp.seq }" name="contents" readonly>
+						<div class="reply_contents " style="padding:15px 20px 0px 20px;">
+							<textarea class="rp_contents" id="rp_contents${rp.seq }" name="contents" style="display:none; resize:none;" readonly>${rp.contents }</textarea>
+							<div id="displayContents${rp.seq }">${rp.contents }</div>
 						</div>
 						
 						<c:if test="${!empty loginNick }">
@@ -625,8 +634,9 @@ a:active {
                                			<div class="re_rp_time"  style="color: gray; width:  49%; display:inline-block; text-align: right; padding-right: 20px;">${re.writen_date }</div>
                            			</div>
                            			<div class="re_rp_contents" style="width: 100%;">
-		                        		<div class="re_rp_content">
-                               				<input type=text id="recontent${re.seq }" style="border:none; width:100%; overflow: auto;" name="recontent" value="${re.contents}" readonly>
+		                        		<div class="re_rp_content" style="padding-top:15px;">
+                               				<textarea id="recontent${re.seq }" style="border:none; width:100%; overflow: auto; resize:none; display:none;" name="recontent" readonly>${re.contents }</textarea>
+                               				<div id="displayRecontents${re.seq }">${re.contents }</div>
                                			</div>     
                                			<c:if test="${!empty loginNick }">
                                				<c:if test="${re.mem_seq == loginSeq}">
@@ -682,12 +692,22 @@ a:active {
 		$(".re_reply_write").on("click", function(){
 			let id = this.id.substr(14);
 
-			console.log(id);			
-			if($("#rereply_contents"+id).val() == ""){
+			let rereply_contents = $("#rereply_contents"+id).val();
+			rereply_contents = rereply_contents.replace(/&nbsp;/, " ");
+						
+			if(rereply_contents == ""){
 				alert("댓글을 작성해주세요");
  				return false;			
- 			}			
-			$('#frmRpMod').submit();
+			}else if(rereply_contents.length>300){
+				alert("입력한도를 초과하였습니다.");
+				return false;
+			}
+			
+			if(confirm("이대로 작성하시겠습니까?")){
+				$('#frmRpMod').submit();				
+			}else{
+				return false;
+			}
 		})
 	</script>
 	
@@ -707,19 +727,39 @@ a:active {
 			url:"/member/showMember?mem_seq="+mem_seq,
     		dataType:"json",
     		success:function(result){
-    			$('#myModal').modal('toggle');
-    			if(result.photo!=undefined){
-        			$("#profileImg").attr("src",result.photo);    				
-    			}else{
-    				$("#profileImg").attr("src","/images/noPhoto.png");
-    			}
-    			$("#profileNick").text("사용자 명 : "+result.nick);
-    			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
-    			$("#profileGender").text("성별 : "+result.gender);    			
-    			$("#profilePhone").text("연락처 : " + result.phone);    			
-    			$("#profileAge").text("연령 : "+result.age);
-    			$("#profileTxt").text("자기소개 : "+result.text);
-    			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+    			$('#myModal').modal("toggle");
+                if(result.photo!=undefined){
+                    $("#profileImg").attr("src",result.photo);
+                }else{
+                    $("#profileImg").attr("src","/images/noPhoto.png");
+                }
+                $("#profileNick").text("사용자 명 : "+result.nick);
+                if(result.preference==0){
+                    $("#profilePreference").text("여행 선호 방식 : "+"입력되지 않은 사용자입니다.");
+                }else{
+                    $("#profilePreference").text("여행 선호 방식 : "+result.preference);
+                }
+                if(result.gender==undefined){
+                    $("#profileGender").text("성별 : "+"입력되지 않은 사용자입니다.");
+                }else{
+                    $("#profileGender").text("성별 : "+result.gender);
+                }
+                if(result.phne==undefined){
+                    $("#profilePhone").text("연락처 : " + "입력되지 않은 사용자입니다.");
+                }else{
+                    $("#profilePhone").text("연락처 : " + result.phone);
+                }
+                if(result.age==0){
+                    $("#profileAge").text("연령 : "+"입력되지 않은 사용자입니다.");
+                }else{
+                    $("#profileAge").text("연령 : "+result.age);
+                }
+                if(result.text==undefined){
+                    $("#profileTxt").text("자기소개 : "+"입력되지 않은 사용자입니다.");
+                }else{
+                    $("#profileTxt").text("자기소개 : "+result.text);
+                }
+                $("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
     		}			
 		})
 	})
@@ -780,12 +820,20 @@ a:active {
 			
 			let id = this.id.substr(12);
 			
-			if($("#rp_contents"+id).val() == ""){
+			let rp_contents = $("#rp_contents"+id).val();
+			rp_contents = rp_contents.replace(/&nbsp;/, " ");
+			if(rp_contents == ""){
 	 			alert("댓글을 작성해주세요");
 	 			return false;
+	 		}else if(rp_contents.length>300){
+	 			alert("입력한도를 초과하였습니다.");
+	 			return false;
 	 		}
-	 			
-			$('#frmRpMod').submit();
+	 		if(confirm("이대로 작성하시겠습니까?")){
+				$('#frmRpMod').submit();
+	 		}else{
+	 			return false;
+	 		}
 		})
 	</script>
 	
@@ -801,15 +849,23 @@ a:active {
 		$(".re_modOk_btn").on("click", function(){
 // 			re_modOk_btn${re.seq}${rp.seq }
 			let id = this.id.substr(12);			
-			let recontent = $("#recontent${re.seq }"+id).val();			
 			
-			if(recontent==""){	    		
+			let recontent = $("#recontent"+id).val();
+			recontent = recontent.replace(/&nbsp;/, " ");
+			
+			if(recontent==""){
 	    		alert("내용을 입력해주세요");
-	    		
+	    		return false;
+	    	}else if(recontent.length>300){
+	    		alert("입력한도를 초과하였습니다.");
 	    		return false;
 	    	}
 
-			location.href = "/tourreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;
+			if(confirm("이대로 작성하시겠습니까?")){
+				location.href = "/tourreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;				
+			}else{
+				return false;
+			}
 		})
 	</script>
 	
@@ -830,16 +886,18 @@ a:active {
 			$("#re_del_btn"+id).css("display","none");
 			$("#re_modOk_btn"+id).css("display","inline");
 			$("#re_cancle_btn"+id).css("display","inline");	
+			$("#displayRecontents"+id).css("display", "none");
+			$("#recontent"+id).css("display", "inline");
 			$("#recontent"+id).removeAttr("readonly");
 			
 			let recontent = $("#recontent"+id).val();
 			$("#recontent"+id).val("");
 			$("#recontent"+id).focus();
 			$("#recontent"+id).val(recontent);
+			$("#recontent"+id).css("border","");
 		})
 		
 	</script>
-		
 		
 	<script>
 		$(".rp_reply_cancle_btn").on("click", function(){
@@ -864,7 +922,10 @@ a:active {
 			}
 		})
 	</script>
-	
+	<div class="reply_contents " style="padding:15px 20px 0px 20px;">
+							<input type=text value="${rp.contents }" class="rp_contents" id="rp_contents${rp.seq }" name="contents" style="display:none;">
+							<div id="displayContents${rp.seq }">${rp.contents }</div>
+						</div>
 	<script>
 		$(".rp_mod_btn").on("click", function() {
 			//${rp.seq }
@@ -875,11 +936,11 @@ a:active {
 			$("#rp_cancle_btn" + id).css("display", "inline");
 			$("#rp_modOk_btn" + id).css("display", "inline");
 			$("#rp_reply_btn" + id).css("display", "none");
+			$("#displayContents" + id).css("display", "none");
+			$("#rp_contents" + id).css("display", "inline");
 			$("#rp_contents" + id).removeAttr("readonly");
 			
 			let rp_contents = $("#rp_contents" + id).val();	
-			
-			console.log(rp_contents);
 			$("#rp_contents" + id).val("");
 			$("#rp_contents" + id).focus();
 			$("#rp_contents" + id).val(rp_contents);
@@ -895,23 +956,29 @@ a:active {
 
 	<script>
 		$("#write_btn").on("click", function() {
-			if($("#rep_con").val() == ""){
-	             alert("댓글을 작성해주세요");
-	             return false;
-	          }else{ 
-	        	  var answer = confirm("댓글을 작성하시겠습니까?");
-	        	  if(answer){
-						wsObj.reaction = 'comment';
-						ws.send(JSON.stringify(wsObj));
-						$.ajax({
-							url: "/member/reactionInserter",
-							data: {reaction: JSON.stringify(wsObj)}
-						});
-	                $("#frmReply").submit();
-	        	  }else{
+			
+			let rep_con = $("#rep_con").val();
+			rep_con = rep_con.replace(/&nbsp;/g, " ");
+			if(rep_con == ""){
+	            alert("댓글을 작성해주세요");
+	            return false;
+	        }else if(rep_con.length>300){
+	        	alert("입력한도를 초과하였습니다.");
+	        	return false;
+	        }else{ 
+	        	var answer = confirm("댓글을 작성하시겠습니까?");
+	        	if(answer){
+					wsObj.reaction = 'comment';
+					ws.send(JSON.stringify(wsObj));
+					$.ajax({
+						url: "/member/reactionInserter",
+						data: {reaction: JSON.stringify(wsObj)}
+					});
+	            $("#frmReply").submit();
+	        	}else{
 	                return false;
-	        	  }	             
-	          }
+	        	}	             
+	        }
 		});
 	</script>
 
@@ -943,32 +1010,6 @@ a:active {
 				location.reload();
 			}
 		})
-	</script>
-
-	<script>
-		$("#modOk").on("click", function() {
-			if ($("#modcategory").val() == "") {
-
-				alert("말머리를 선택해주세요");
-				return false;
-			}
-
-			if ($("#title").val() == "") {
-
-				alert("제목을 입력해주세요");
-				return false;
-			}
-
-			if ($("#summernote").val() == "") {
-
-				alert("내용을 입력해주세요");
-				return false;
-			}
-
-			if (confirm("이대로 작성하시겠습니까?")) {
-				$("#frmDetail").submit();
-			}
-		});
 	</script>
 
   <!-- 좋아요 -->

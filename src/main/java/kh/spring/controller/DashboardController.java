@@ -1,5 +1,6 @@
 package kh.spring.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import kh.spring.dto.DashboardDTO;
-import kh.spring.dto.MemberDTO;
 import kh.spring.service.DashboardService;
 
 @Controller
@@ -39,14 +39,13 @@ public class DashboardController {
 
 		List<DashboardDTO> dlist = ds.joinTable();
 		
-//		System.out.println(dlist.get(2).getStan_date() + " : " + dlist.get(0).getVisitor() + " : " + dlist.get(0).getUser_n() + " : " + dlist.get(0).getPlan() + " : " + dlist.get(0).getTour_board() + " : " + dlist.get(0).getCom_board());
-		
 		ds.deleteTable();
 		
 		// 방문자수 : 오늘 방문자수
 		  int visitcnt = ds.getVisitTodayCount();
 		  dlist.get(dlist.size()-1).setVisitor(visitcnt); 
 		  map.put("visitCnt", visitcnt);
+		  			
 		  
 		for (int i = 0; i < dlist.size(); i++) {
 			ds.insertTable(dlist.get(i));
@@ -82,12 +81,36 @@ public class DashboardController {
 	}
 	
 	
-	@RequestMapping("chart")
-	public @ResponseBody String newMemDaily(Model model) throws Exception {
+	@RequestMapping("chart1")
+	public @ResponseBody String chart1(Model model) throws Exception {
 		
 		Gson gson = new Gson(); 
 		
 		List<DashboardDTO> dlist = ds.selectAllDash();
+
+		return gson.toJson(dlist);
+	}
+	
+	
+	@RequestMapping("chart2")
+	public @ResponseBody String chart2(Model model) throws Exception {
+		
+		Gson gson = new Gson(); 
+		
+		int cate1 = ds.cntCate1();
+		int cate2 = ds.cntCate2();
+		int cate3 = ds.cntCate3();
+		int cate4 = ds.cntCate4();
+		int gender1 = ds.cntGender1();
+		int gender2 = ds.cntGender2();
+		
+		List<Integer> dlist = new ArrayList();
+		dlist.add(cate1);
+		dlist.add(cate2);
+		dlist.add(cate3);
+		dlist.add(cate4);
+		dlist.add(gender1);
+		dlist.add(gender2);
 
 		return gson.toJson(dlist);
 	}

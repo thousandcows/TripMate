@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>내 여행 계획</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -124,22 +124,28 @@ html, body {
 				
 						<c:forEach var="i" items="${paging }">
 						<a href="/plan/main?page=${i }">
-						<button type="button" class="btn paging btn-light m-2" style="background-color: #f5e3b9;">
 						<c:choose>
 						<c:when test="${i eq firstNum and (i%10) eq 0 }">
+						<button type="button" class="btn paging btn-light m-2" style="background-color: #f5e3b9;">
 						<
+						</button>
 						</c:when>
 						<c:when test="${i eq lastNum and (i%10) eq 1 }">
+						<button type="button" class="btn paging btn-light m-2" style="background-color: #f5e3b9;">
 						>
+						</button>
 						</c:when>
 						<c:when test="${i eq page }">
+						<button type="button" class="btn paging btn-light m-2" style="background-color: #cfb997;">
 						${i }
+						</button>						
 						</c:when>
 						<c:otherwise>
+						<button type="button" class="btn paging btn-light m-2" style="background-color: #f5e3b9;">
 						${i }
+						</button>
 						</c:otherwise>
 						</c:choose>
-						</button>
 						</a>
 						
 						</c:forEach>

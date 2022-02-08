@@ -53,7 +53,6 @@ public class ComReplyDAO {
 	}
 
 	public int modify(ComReplyDTO rdto) {
-		
 		return mybatis.update("ComReply.modify", rdto);
 	}
 	

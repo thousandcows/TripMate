@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -185,19 +186,16 @@ public class CompanyBoardController {
         
         //신청자 리스트
 		
-		 List<MemberDTO> recruit_list = cbs.selectAllMem(seq);
-		 model.addAttribute("recruit_list",recruit_list);
+		List<MemberDTO> recruit_list = cbs.selectAllMem(seq);
+		model.addAttribute("recruit_list",recruit_list);		 
 		 
+		// 신청자 카운트
+		int memCount = cbs.memCount(seq);
+		model.addAttribute("memCount",memCount);
 		 
-		 // 신청자 카운트
-		 int memCount = cbs.memCount(seq);
-		 model.addAttribute("memCount",memCount);
-		 
-		 // 좋아요 카운트
-		 int likeCount = cbs.totalBoardLike(seq);
-		 model.addAttribute("likeCount", likeCount);
-		 
-        
+		// 좋아요 카운트
+		int likeCount = cbs.totalBoardLike(seq);
+		model.addAttribute("likeCount", likeCount);        
 		
 		return "companyboard/detail";
 	}
@@ -362,5 +360,12 @@ public class CompanyBoardController {
 		String contents = explanation;
 		bservice.noticeModify(seq, title, contents);
 		return "redirect:/companyboard/noticeDetail?seq="+seq;
+	}
+	
+	@ExceptionHandler
+	public String ExceptionHandler(Exception e) {
+		e.printStackTrace();
+		e.getMessage();
+		return "/error";
 	}
 }

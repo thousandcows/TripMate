@@ -8,29 +8,40 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+ -->
+ <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
 <jsp:include page="../base/header.jsp"></jsp:include>
 
 
 <!-- include libraries(jQuery, bootstrap) -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+
+
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 
  <style>
+ 
+ @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
+	pre, form, fieldset, textarea, blockquote, span, * {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
         * {box-sizing: border-box;}
 
         body{
             margin: 0;  /* 임시로 body margin 0px */
         }
-        .navbar-brand{
+/*         .navbar-brand{
             height:70px !important;
-        }
+        } */
        /* 링크 속성 지우기 */
         a { text-decoration:none  } 
         a:hover { text-decoration:none; color: black; }
@@ -121,10 +132,6 @@
                 width:100%;
             }      
             
-            .title_800{
-                display: none;   
-            }
-            
             /* 내용 */
             .contents{
                 
@@ -170,24 +177,20 @@
             }
             
             .category{
-                width:8%;
+                width:10%;
                 float:left;
             }
             
 
             /* 제목 */
             .title{
-                width:92%;
+                width:90%;
                 float:left;
             }
             
             .title>input{
                 width:100%;
             }   
-            
-            .title_800{
-             display: none;   
-            }
             
             /* 내용 */
             .contents{
@@ -257,17 +260,20 @@
             }
             
             .category{
-                width:10%;
+                width:17%;
                 float:left;
             }
             
 
             /* 제목 */
             .title{
-                width:90%;
+                width:83%;
                 float:left;
-                display: none;
             }
+            
+            .title>input{
+                width:100%;
+            }      
             
             /* 내용 */
             .contents{

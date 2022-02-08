@@ -11,8 +11,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <!-- fontawesome cdn -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<!--     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"> -->
 
 
 <!-- datepicker -->
@@ -21,9 +21,10 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
 <!-- include libraries(jQuery, bootstrap) -->
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+	
 <!-- include summernote css/js -->
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
@@ -31,10 +32,17 @@
     <jsp:include page="../base/header.jsp"></jsp:include>
     <style>
     
-     	.navbar-brand{
+    @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
+	pre, form, fieldset, textarea, blockquote, span, * {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+    
+/*      	.navbar-brand{
             height:70px !important;
         }
-        
+         */
         
         * {
             box-sizing: border-box;
@@ -700,8 +708,9 @@
                             			${repl.writen_date }
                             		</span>
                         		</div>
-                        		<div class="rep_txt">
-                          	  		<input type="text" id="e_rep_con${repl.seq }" class="e_rep_con"  name="contents" value="${repl.contents }"  readonly>
+                        		<div class="rep_txt" style="padding: 15px 20px 0px 20px;">
+                          	  		<textarea id="e_rep_con${repl.seq }" class="e_rep_con"  name="contents" style="resize:none; display:none;"readonly>${repl.contents }</textarea>
+                          	  		<div id="displayRep${repl.seq }">${repl.contents }</div>
                         		</div>
                         		
                         		<c:if test="${!empty loginNick}">
@@ -744,8 +753,9 @@
                                     					<span class="re_rp_time" style="color: gray; width:  49%; display:inline-block; text-align: right;"> ${rerepl.writen_date }</span>
                                 					</div>
                                 					<div class="re_rp_contents" style="width: 100%;">
-                                						<div class="re_rp_content">
-                                    						<input type="text" class="rr_con" id="recontent${rerepl.seq }"  name="contents" value="${rerepl.contents}" style="width: 100%; padding:5px 20px 5px 0px; border: none;" readonly>
+                                						<div class="re_rp_content" style="padding: 15px 0px 0px 0px;">
+                                    						<textarea class="rr_con" id="recontent${rerepl.seq }"  name="recontents" value="${rerepl.contents}" style="width: 100%; border: none; display:none; resize:none;" readonly>${rerepl.contents }</textarea>
+                                    						<div id="displayRerep${rerepl.seq}">${rerepl.contents }</div>
                                 						</div>
                                 						<c:if test="${!empty loginNick}">
                                 						<c:if test="${rerepl.mem_seq == loginSeq}">
@@ -815,19 +825,39 @@
 			url:"/member/showMember?mem_seq="+mem_seq,
   		dataType:"json",
   		success:function(result){
-  			$('#myModal').modal('toggle');
-  			if(result.photo!=undefined){
-      			$("#profileImg").attr("src",result.photo);    				
-  			}else{
-  				$("#profileImg").attr("src","/images/noPhoto.png");
-  			}
-  			$("#profileNick").text("사용자 명 : "+result.nick);
-  			$("#profilePreference").text("여행 선호 방식 : "+result.preference);
-  			$("#profileGender").text("성별 : "+result.gender);    			
-  			$("#profilePhone").text("연락처 : " + result.phone);    			
-  			$("#profileAge").text("연령 : "+result.age);
-  			$("#profileTxt").text("자기소개 : "+result.text);
-  			$("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
+  			$('#myModal').modal("toggle");
+            if(result.photo!=undefined){
+                $("#profileImg").attr("src",result.photo);
+            }else{
+                $("#profileImg").attr("src","/images/noPhoto.png");
+            }
+            $("#profileNick").text("사용자 명 : "+result.nick);
+            if(result.preference==0){
+                $("#profilePreference").text("여행 선호 방식 : "+"입력되지 않은 사용자입니다.");
+            }else{
+                $("#profilePreference").text("여행 선호 방식 : "+result.preference);
+            }
+            if(result.gender==undefined){
+                $("#profileGender").text("성별 : "+"입력되지 않은 사용자입니다.");
+            }else{
+                $("#profileGender").text("성별 : "+result.gender);
+            }
+            if(result.phne==undefined){
+                $("#profilePhone").text("연락처 : " + "입력되지 않은 사용자입니다.");
+            }else{
+                $("#profilePhone").text("연락처 : " + result.phone);
+            }
+            if(result.age==0){
+                $("#profileAge").text("연령 : "+"입력되지 않은 사용자입니다.");
+            }else{
+                $("#profileAge").text("연령 : "+result.age);
+            }
+            if(result.text==undefined){
+                $("#profileTxt").text("자기소개 : "+"입력되지 않은 사용자입니다.");
+            }else{
+                $("#profileTxt").text("자기소개 : "+result.text);
+            }
+            $("#profileMsg").attr("onclick","location.href='/member/msg?mem_seq="+mem_seq+"'");
   		}			
 		})
 	})
@@ -900,11 +930,20 @@
 		$(".re_reply_write").on("click", function(){
 			let id = this.id.substr(14);
 			
-			if($("#rereply_contents"+id).val() == ""){
+			let rereply_contents = $("#rereply_contents"+id).val();
+			rereply_contents = rereply_contents.replace(/&nbsp;/g, " ");
+			if(rereply_contents == ""){
 				alert("댓글을 작성해주세요");
  				return false;			
- 			}			
-			$('#frmRpMod').submit();
+ 			}else if(rereply_contents.length>300){
+ 				alert("입력한도를 초과하였습니다.");
+ 				return false;
+ 			}
+			if(confirm("이대로 작성하시겠습니까?")){
+				$('#frmRpMod').submit();				
+			}else{
+				return false;
+			}
 		})
 		
    		$(".re_rep_del").on("click", function(){
@@ -915,16 +954,25 @@
 		$(".re_rep_modok").on("click", function(){
 			let id = this.id.substr(12);
 			
-			let recontent = $("#recontent${rerepl.seq }"+id).val();
-			console.log(recontent + " : " + $("#recontent${rerepl.seq }").val());
-			
+			let recontent = $("#recontent"+id).val();
+			recontent = recontent.replace(/&nbsp;/g, " ");
+			console.log(recontent.length);
 			if(recontent==""){
 				alert("내용을 입력해주세요");
-				$("#recontent${rerepl.seq }"+id).focus();
+				$("#recontent"+id).focus();
+				return false;
+				
+			}else if(recontent.length>300){
+				
+				alert("입력한도를 초과하였습니다.");
 				return false;
 			}
 			
-			location.href = "/comreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;
+			if(confirm("댓글을 수정하시겠습니까?")) {
+				location.href = "/comreply/remodify?writeseq=${dto.seq}&idseq="+id+"&recontent="+recontent;
+			}else{
+				return false;
+			}
 		})
 		
 		$(".re_rep_cancle").on("click", function(){		
@@ -939,24 +987,30 @@
 			$("#re_rep_mod"+id).css("display","none");
 			$("#re_rep_del"+id).css("display","none");
 			$("#re_rep_modok"+id).css("display","inline");
-			$("#re_rep_cancle"+id).css("display","inline");	
+			$("#re_rep_cancle"+id).css("display","inline");
+			$("#displayRerep"+id).css("display","none");
+			$("#recontent"+id).css("display","inline");
 			$("#recontent"+id).removeAttr("readonly");
 			
 			let recontent = $("#recontent"+id).val();
 			$("#recontent"+id).val("");
 			$("#recontent"+id).focus();
 			$("#recontent"+id).val(recontent);
+			$("#recontent"+id).css("border","");
 		})
-		
-		
    </script>
     
     <!-- 댓글 -->
 	<script>
 	 	$("#rep_write").on("click", function() {
 	 		
-	 		if($("#rep_con").val() == ""){
+	 		let rep_con = $("#rep_con").val();
+	 		rep_con = rep_con.replace(/&nbsp;/g, " ");
+	 		if(rep_con == ""){
 	 			alert("댓글을 작성해주세요");
+	 			return false;
+	 		}else if(rep_con.length>300){
+	 			alert("입력한도를 초과하였습니다.");
 	 			return false;
 	 		}else{ 
 	 			var answer = confirm("이대로 작성하시겠습니까?");
@@ -993,6 +1047,8 @@
 			$("#rep_modcancel" + id).css("display", "inline");
 			$("#rep_modok" + id).css("display", "inline");
 			$("#re_rep_btn" + id).css("display", "none");
+			$("#displayRep" + id).css("display","none");
+			$("#e_rep_con" + id).css("display","inline");
 			$("#e_rep_con" + id).removeAttr("readonly");
 			
 			let e_rep_con = $("#e_rep_con" + id).val();
@@ -1000,7 +1056,7 @@
 			$("#e_rep_con" + id).focus();
 			$("#e_rep_con" + id).val(e_rep_con);
 		})
-	 	
+		
 		$(".rep_modcancel").on("click", function() {
 			location.reload();
 		})
@@ -1008,12 +1064,23 @@
 		$(".rep_modok").on("click", function(){
 			let id = this.id.substr(9);
 			
-			if($("#e_rep_con"+id).val() == ""){
+			let e_rep_con = $("#e_rep_con"+id).val();
+			e_rep_con = e_rep_con.replace(/&nbsp;/g, " ");
+			if(e_rep_con == ""){
 				alert("댓글을 입력하세요");
 				$("#e_rep_con"+id).focus();
 				return false;
+			}else if(e_rep_con.length>300){
+				
+				alert("입력한도를 초과하였습니다.");
+				return false;
 			}
-			$('#frmRpMod').submit();
+			
+			if(confirm("댓글을 수정하시겠습니까?")){
+				$('#frmRpMod').submit();
+			}else{
+				return false;
+			}
 		})
 	
 	</script>
@@ -1043,69 +1110,7 @@
 		let backupEndDate="";
 		let backupGender="";
 		let backupTitle = "";
-		let backupContents = "";
-		
-		/* $("#modify").on("click", function(){
-			
-			// 기존 데이터 담기
-			backupTour = $("#tourInput").val();
-			backupRecruit = $("#recruitInput").val();
-			backupStartDate = $("#startDateBefore").val();
-			backupEndDate = $("#endDateBefore").val();
-			backupGender = $("#genderInput").val();
-			backupTitle = $("#title").val();
-			backupContents = $("#summernote").val();		
-
-			// 폼 형태 바꾸기 및 읽기 전용 해제
-			$("#tourInput").css("display", "none");
-			$("#recruitInput").css("display", "none");
-			$("#startDateBefore").css("display", "none");
-			$("#datetxt1").css("display", "none");
-			$("#endDateBefore").css("display", "none");
-			$("#genderInput").css("display", "none");
-			
-			$("#tourSelect").css("display", "inline");
-			$("#recruitSelect").css("display", "inline");
-			$("#startDateAfter").css("display", "inline");
-			$("#datetxt2").css("display", "inline");
-			$("#endDateAfter").css("display", "inline");
-			$("#manRadio").css("display", "inline");
-			$("#womanRadio").css("display", "inline");
-			$("#mantxt").css("display", "inline");
-			$("#womantxt").css("display", "inline");
-			$("#title").removeAttr("readonly");
-			$("#title").css("border", "1px solid gray");
-			$("#contents").removeAttr("readonly");
-			
-			
-			// 여행지역 기존 체크값 불러오기
-			$("#tourSelect").val(backupTour).attr("selected", "selected");
-			
-			// 모집인원 기존 체크값 불러오기
-			$("#recruitSelect").val(backupRecruit).attr("selected", "selected");
-
-			// 라디오 버튼 기존 체크값 불러오기
-			if(backupGender == "남자"){
-				$("#manRadio").attr('checked', 'checked');
-			}
-			else {
-				$("#womanRadio").attr('checked', 'checked');
-			}
-	
-			//버튼 형태 바꾸기
-			$("#modify").css("display", "none");
-			$("#delete").css("display", "none");
-			$("#recruitEnd").css("display", "none");
-			$("#modOk").css("display", "inline");
-			$("#modCancel").css("display", "inline");	
-			
-			// 썸머노트 쓰기 활성화
-			/* $('#summernote').summernote({
-    		  airmode: false;
-    		}); */
-			
-			$('#summernote').summernote('enable');
-		}) */
+		let backupContents = "";		
 		
 		$("#modOk").on("click",function(){
 			if(confirm("이대로 수정하시겠습니까?")){
@@ -1117,9 +1122,6 @@
 			if(confirm("정말 취소하시겠습니까?")){
 				location.reload();
 			}
-	
-			// 썸머노트 쓰기 비활성화
-			$('#summernote').summernote('disable');
 		})
 	</script>
 	

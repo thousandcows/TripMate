@@ -56,6 +56,7 @@
             width: 100%;
             height: 40px;
             line-height: 40px;
+            padding-left:26px;
             text-align: center;
           }
 
@@ -97,10 +98,16 @@
 
           /* 사이드바 끝 */
           .topTxt {
+            height:40px;
+            line-height: 40px;
             font-size: 20px;
             color: #5B5B5B;
           }
-
+          @media (max-width: 1200px) {
+            .sideMyNick {
+            padding-left:0;
+          }
+          }
           @media (max-width: 480px) {
             .myPageContainer {
               width: 100%;
@@ -197,7 +204,7 @@
               <li><a href="/member/writenList">게시글 관리</a></li>
             </ul>
           </div>
-          <div class="container mt-4">
+          <div class="container">
             <div class="row">
               <div class="col-12 topTxt text-center">최근 등록한 여행계획입니다.</div>
             </div>

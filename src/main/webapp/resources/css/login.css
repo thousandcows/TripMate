@@ -81,6 +81,10 @@
     height: 20px;
     color: cornflowerblue;
   }
+  .verificationCodeConfirm{
+    text-align: left;
+    padding-left:52px;
+  }
   .findPwEmailCheckConfirm {
     text-align: left;
     padding-left: 50px;

@@ -29,10 +29,7 @@ public class PlanService {
 	}
 	
 	public List<Integer> listCount(int mem_seq,int page) { //메인페이지 리스팅
-		int total = dao.listCount(mem_seq);
-		int totalPage = 0;
-		if(total%Statics.RECORD_PLAN==0) {totalPage = (total/Statics.RECORD_PLAN);
-		}else {totalPage = (total/Statics.RECORD_PLAN)+1;}
+		int totalPage = getTotalPage(mem_seq);
 		int startNavi = (page-1) / Statics.NAVI_COUNT_PER_PAGE * Statics.NAVI_COUNT_PER_PAGE + 1;
 		int endNavi = startNavi + Statics.NAVI_COUNT_PER_PAGE - 1;         
 		boolean needPrev = true; 
@@ -48,7 +45,13 @@ public class PlanService {
 		}
 		if(needNext) { pageNavi.add(endNavi+1);}
 		return pageNavi;
-
+	}
+	public int getTotalPage(int mem_seq) {
+		int total= dao.listCount(mem_seq);
+		int totalPage = 0;
+		if(total%Statics.RECORD_PLAN==0) {totalPage = (total/Statics.RECORD_PLAN);
+		}else {totalPage = (total/Statics.RECORD_PLAN)+1;}
+		return totalPage;
 	}
 	
 	public List<PlanDTO> listing(int seq,int page){ //시작,끝 번호 확인 리스팅
