@@ -6,7 +6,7 @@
 <mapper namespace="Admin">
 	
 	<select id="memberAllList" resultType="kh.spring.dto.MemberDTO">
-		select * from member
+		select * from member order by seq
 	</select>
 	
 	<select id="tourboardAllList" resultType="kh.spring.dto.TourBoardDTO">

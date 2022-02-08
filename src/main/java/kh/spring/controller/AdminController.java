@@ -38,7 +38,7 @@ public class AdminController {
 	public String member(Model model) {
 		
 		List<MemberDTO> mem_list = aservice.memberAllList();
-		
+		mem_list.remove(0);
 		model.addAttribute("mem_list", mem_list);
 		return "admin/member";
 	}
