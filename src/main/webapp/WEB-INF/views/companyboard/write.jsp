@@ -152,6 +152,10 @@ body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
             resize: none;
         }
 
+        .close{
+            margin-right: 300px;
+        }
+
         /* 버튼 */
         .button {
             /* border: 1px solid red; */
