@@ -331,6 +331,10 @@ body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
             </div>
         </form>
     </div>
+    
+    <div class="footer">
+    	<jsp:include page="../base/footer.jsp"></jsp:include>
+    </div>
 
 <!-- 목록으로  -->
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
