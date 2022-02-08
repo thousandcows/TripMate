@@ -82,7 +82,9 @@
             <c:if test="${fn:length(list) == 0}">
               작성한 게시글이 없습니다.
             </c:if>
-            검색된 게시글 수 : ${postCount}
+            <c:if test="${fn:length(list) != 0}">
+              검색된 게시글 수 : ${postCount}
+            </c:if>
           </div>
             <div class="mypostBottoms">
               <div class="myPostSearchBox"><input type="text" id="myPostSearchInput" class="myPostSearchInput" placeholder="검색 제목.."><button type="button"
