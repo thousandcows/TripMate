@@ -285,6 +285,8 @@ if (eventCheck != null) {
   let verificationCode = null;
   let findPwEmail = null;
   document.querySelector("#findPwBtn").addEventListener("click", () => {
+    document.querySelector(".verificationOk").style.display = "none";
+    document.querySelector(".verificationCodeConfirm").innerHTML = "";
     findPwEmail = document.querySelector("#findPwInput").value;
     $.ajax({
       url: '/member/findPw',
@@ -299,7 +301,6 @@ if (eventCheck != null) {
         document.querySelector(".findPwEmailCheckConfirm").innerHTML = "";
         verificationCode = "";
         verificationCode = res;
-        console.log(verificationCode);
       }
     });
   });
@@ -388,7 +389,6 @@ ws.onmessage = function(e) {
   if(reaction == 'joinTrip'){
     line = `<div id='noticeProc${noticeProcNum}' class='websocTest'><a href='/companyboard/detail?seq=${seq}' class='websocLine'>동행게시판 ${title} 글에 동행 신청이 있습니다.</a></div>`;
   }
-  console.log(noticeProcNum);
   $("#noticeGround").prepend(line);
   $(`#noticeProc${noticeProcNum}`).delay(4000).fadeOut(1000);
   setTimeout(function(){
