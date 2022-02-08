@@ -19,11 +19,6 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
-<!-- include libraries(jQuery, bootstrap) -->
-<!-- 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 	
 <!-- include summernote css/js -->
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -778,7 +773,7 @@ body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
                 	</form>
                	</c:forEach>
 			</div>
-    		</div>
+    	</div>
     	
     	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -816,8 +811,7 @@ body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
 		wsObj.nick = "${dto.nick}";
 		wsObj.board_num = "${dto.board_num}";
 		wsObj.reactioner = "${loginNick}";
-	</script>
-   <script>
+
    $(document).on("click",".writer_nick",function(){
 		let mem_seq = $(this).attr("value");
 		console.log("대댓글 멤버 시퀀스 값 : " + mem_seq);
