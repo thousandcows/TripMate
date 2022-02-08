@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       <!DOCTYPE html>
       <html>
 
@@ -102,6 +103,12 @@
             line-height: 40px;
             font-size: 20px;
             color: #5B5B5B;
+          }
+          .notSaved{
+            height:50px;
+            line-height:50px;
+            font-size:16px;
+            text-align: center;
           }
           @media (max-width: 1200px) {
             .sideMyNick {
@@ -206,8 +213,13 @@
           </div>
           <div class="container">
             <div class="row">
+            <c:if test="${fn:length(list) != 0}">
               <div class="col-12 topTxt text-center">최근 등록한 여행계획입니다.</div>
+            </c:if>
             </div>
+            <c:if test="${fn:length(list) == 0}">
+              <div class="notSaved">등록된 여행계획이 없습니다.</div>
+            </c:if>
             <div class="row mt-4 d-flex justify-content-center">
               <c:set var="now" value="<%=new java.util.Date()%>" />
               <c:forEach var="i" items="${list }">

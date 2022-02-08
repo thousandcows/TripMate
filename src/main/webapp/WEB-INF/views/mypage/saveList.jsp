@@ -37,9 +37,14 @@
           </div>
           <div class="contentsBox">
           <div class="contentsBoxIn">
+          <c:if test="${fn:length(saveList) != 0}">
             <div class="contentsTop">
               찜 목록
             </div>
+          </c:if>
+            <c:if test="${fn:length(saveList) == 0}">
+              <div class="notSaved">등록된 여행지가 없습니다.</div>
+            </c:if>
             <c:forEach var='cnt' items="${saveList}" varStatus="status">
               <div class="delParent">
                 <div class="left-img">
