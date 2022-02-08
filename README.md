@@ -1,5 +1,5 @@
 # 🏖️나만의 여행플래너 [Trip Mate]🏕️
-<a href="http://3.38.78.110" target="_blank"><img src="https://user-images.githubusercontent.com/87923533/152644628-07b4b381-3f18-401a-b62f-0b3af1c920b4.jpg"  width="70%" height="70%"></a> :point_left:Click
+<a href="http://3.38.78.110" target="_blank"><img src="https://user-images.githubusercontent.com/87923533/152968977-f1923592-f695-48f3-88b8-253c06651702.jpg"  width="70%" height="70%"></a> :point_left:Click
 
 # Contents 
   [1. 개요](#개요)<br>
@@ -10,15 +10,15 @@
   [6. Document](#문서)
 ***
 ## 개요
-* 여행계획을 도와주는 친구같은 사이트
-* 사용자가 "재미있게", "능동적으로" 여행을 계획하고 경험을 공유할 수 있도록 한다.
-<img src="https://user-images.githubusercontent.com/87923533/152644957-f972bce8-ff54-496a-b6f8-43b0475aeae6.jpg"  width="70%" height="70%">
+<img src="https://user-images.githubusercontent.com/87923533/152969149-770afcba-41a2-4817-ac5e-d5074f800857.jpg"  width="80%" height="80%">
+<img src="https://user-images.githubusercontent.com/87923533/152969205-d194bcac-c3b2-410a-97e3-34ca82117576.jpg"  width="80%" height="80%">
 
 ***
 ## 설계의 주안점
 * Spring Legacy Project(MVC 구조)
-* 123~~
-* 456~~
+* 자유롭게 여행을 계획하고 저장하고 기록한다.
+* 사용자가 ‘재미있게’, ‘능동적으로’ 여행을 계획하고 
+경험을 공유할 수 있도록 한다.
 ***
 ## 사용기술 및 개발환경
 
@@ -26,15 +26,16 @@ Language | Java 11, Servlet/JSP, HTML5, CSS3, JavaScript, XML
 ------------ | ------------- 
 Framework | Spring Framework, MyBatis, Bootstrap
 Database|Oracle 11g Express Edition
-WAS | Apache Tomcat 8.5
+WAS & Server | Apache Tomcat 8.5, AWS
 Open Api|TourAPI3.0, SB Admin2, Kakao 로그인, Kakao 지도
 설계분석도구|ERDCloud, oven
 IDE|Eclipse / sqldeveloper
 Version Control System|Git / github
+
 ***
 ## 프로젝트 기능 및 팀원소개
 
-#### <img src="https://user-images.githubusercontent.com/87923533/152647244-7f8664d1-0df7-4c25-95db-666091ef5428.jpg"  width="100" height="100"> 임도혁 <a href="https://github.com/LimdoH" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a> 자유롭게 수정해주세요
+#### <img src="https://user-images.githubusercontent.com/87923533/152647244-7f8664d1-0df7-4c25-95db-666091ef5428.jpg"  width="100" height="100"> 임도혁 <a href="https://github.com/LimdoH" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
   *  여행지
       * 한국관광공사 API 활용 여행지 정보 출력
       * 회원별 찜 기능
@@ -77,23 +78,23 @@ Version Control System|Git / github
     * 소기능
     * 소기능
 #### <img src="https://user-images.githubusercontent.com/87923533/152647288-4a51e539-5bd1-49c2-9164-c125ed12e1d1.jpg"  width="100" height="100"> 천현우 <a href="https://github.com/thousandcows" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
-  *  대기능
-      * 소기능
-  * 대기능
-     * 소기능
-     * 소기능
-  * 대기능
-    * 소기능
-    * 소기능
+  * 프로젝트 컨셉 기획
+  * 회의록 작성 
 #### <img src="https://user-images.githubusercontent.com/87923533/152647296-eda1be7b-a985-453e-9033-343c1804c534.jpg"  width="100" height="100"> 홍진규 <a href="https://github.com/Carroth23" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
-  *  대기능
-      * 소기능
-  * 대기능
-     * 소기능
-     * 소기능
-  * 대기능
-    * 소기능
-    * 소기능
+  *  로그인&회원가입
+      * ajax이용 input항목 비동기 & 동기식 체크
+      * OAuth2.0 표준 REST API 카카오 로그인
+      * 이메일 인증을 통한 PW변경
+  * 마이페이지
+     * 정보수정, 프로필사진변경, PW변경
+     * 찜한 여행지 출력
+     * 모든게시판 내가 쓴 글 출력 및 선택삭제
+  * 실시간 알림
+    * 댓글, 좋아요, 동행요청시 하단 실시간 알림
+    * 과거 알림내역 확인 및 삭제
+  * 개발 외
+     * GIT 관리
+     * AWS 서버담당
 ***
 ## 주요 기능
 * [UI 설계서 링크](/) ✔Click
@@ -101,17 +102,10 @@ Version Control System|Git / github
 
 ***
 ## 문서
-1. 유스케이스
-<img src="https://user-images.githubusercontent.com/.png">
 
-2. ERD
-<img src="https://user-images.githubusercontent.com/.png">
+- ERD
+<img src="https://user-images.githubusercontent.com/87923533/152971107-e4408134-c049-40a4-9435-9f06723ed281.png">
 
-3. SQL문  
-[Oracle DB.txt](https://github.com/Oracle.DB.txt)  
-
-4. 보고서 및 발표PPT  
+- 보고서 및 발표PPT
 [기획보고서.pdf](https://github.com/)
-[DB설계보고서.pdf](https://github.com/)
-[클래스 설계보고서.pdf](https://github.com/)
 [파이널 발표자료.pdf](https://github.com/)
