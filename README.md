@@ -50,14 +50,14 @@ Version Control System|Git / github
   * 개발 외
      * 개발 일정 관리  
 #### <img src="https://user-images.githubusercontent.com/87923533/152647260-908ae1e6-c229-4338-9f91-d33f5a26f24b.jpg"  width="100" height="100"> 서승희 <a href="https://github.com/hevly" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
-  *  대기능
-      * 소기능
-  * 대기능
-     * 소기능
-     * 소기능
-  * 대기능
-    * 소기능
-    * 소기능
+  *  메인 페이지
+      * 로고 및 프론트엔드
+  * 여행지
+     * 프론트엔드
+  * 여행계획관리
+    * 프론트엔드
+  * 개발 외
+    * PPT
 #### <img src="https://user-images.githubusercontent.com/87923533/152647274-3268cc34-e609-4947-aa32-89a1f2ebd5e3.jpg"  width="100" height="100"> 이진호 <a href="https://github.com/Hogrii" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
   * 여행지 게시판
      * 검색
