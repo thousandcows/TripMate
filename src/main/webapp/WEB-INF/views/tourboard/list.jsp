@@ -11,6 +11,14 @@
 <jsp:include page="../base/header.jsp"></jsp:include>
 
     <style>
+    
+    @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
+	pre, form, fieldset, textarea, blockquote, span, * {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
         *{
             box-sizing: border-box;
         }

@@ -311,7 +311,8 @@ if (eventCheck != null) {
       document.querySelector(".verificationCodeConfirm").style.color = "red";
       document.querySelector(".verificationCodeConfirm").innerHTML = "인증번호가 맞지않습니다.";
     } else {
-      document.querySelector(".verificationCodeConfirm").innerHTML = "";
+      document.querySelector(".verificationCodeConfirm").style.color = "cornflowerblue";
+      document.querySelector(".verificationCodeConfirm").innerHTML = "인증되었습니다.";
       document.querySelector(".verificationOk").style.display = "block";
     }
   });

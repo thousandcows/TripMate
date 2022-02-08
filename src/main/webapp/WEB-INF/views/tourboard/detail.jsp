@@ -17,6 +17,14 @@
 <jsp:include page="../base/header.jsp"></jsp:include>
 
 <style>
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
+	pre, form, fieldset, textarea, blockquote, span, * {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -24,6 +32,7 @@
 body {
 	margin: 0; /* 임시로 body margin 0px */
 	height: auto;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 /* input style */
@@ -35,7 +44,6 @@ input {
 	autocomplete :"off";
 	
 }
-
 
 /* 링크 속성 지우기 */
 a {
