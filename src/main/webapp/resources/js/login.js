@@ -390,9 +390,9 @@ ws.onmessage = function(e) {
   }
   console.log(noticeProcNum);
   $("#noticeGround").prepend(line);
-  $(`#noticeProc${noticeProcNum}`).delay(3000).fadeOut(1000);
+  $(`#noticeProc${noticeProcNum}`).delay(4000).fadeOut(1000);
   setTimeout(function(){
     $(`#noticeProc${noticeProcNum}`).remove();
-  },4000);
+  },5000);
 }
 
