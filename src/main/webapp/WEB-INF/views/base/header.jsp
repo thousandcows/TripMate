@@ -274,7 +274,7 @@
                     <div class="nickNameConfirm signupInputConfirm"></div>
                   </div>
                   <div class="signupBoxs">
-                    <input type="text" value="010" class="phoneInput" id="signupPhone1" readonly> -
+                    <span class="phoneInput" id="signupPhone1">010</span> -
                     <input type="text" maxlength="4" placeholder="1234" class="phoneInput" id="signupPhone2" required>
                     -
                     <input type="text" maxlength="4" placeholder="5678" class="phoneInput" id="signupPhone3"
@@ -315,13 +315,13 @@
               <div class="modal-body modal-first-body">
                 <div class="loginInputBox">
                   <input type="text" class="findPwInput" id="findPwInput" placeholder="찾으실 Email을 입력해주세요." required>
-                  <button type="button" class="findPwBtn" id="findPwBtn">발송</button>
+                  <button type="button" class="findPwBtnt" id="findPwBtnt">발송</button>
                   <div class="findPwEmailCheckConfirm signupInputConfirm"></div>
                   <input type="text" class="findPwInput" id="verificationInput" placeholder="인증번호 입력">
-                  <button type="button" class="findPwBtn" id="verificationBtn">인증</button>
+                  <button type="button" class="findPwBtnt" id="verificationBtn">인증</button>
                   <div class="verificationCodeConfirm signupInputConfirm"></div>
                 </div>
-                <div class="verificationOk">
+                <div class="verificationOkT">
                   <form action="/member/findPwChange" method="post" id="changePwForm">
                     <input type="password" class="changePwInput" id="changePwInput" name="pw"
                       placeholder="변경할 비밀번호를 입력해주세요."><button type="button" class="changePwBtn"
