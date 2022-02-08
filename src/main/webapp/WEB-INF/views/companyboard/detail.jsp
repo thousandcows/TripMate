@@ -809,8 +809,7 @@
 		wsObj.nick = "${dto.nick}";
 		wsObj.board_num = "${dto.board_num}";
 		wsObj.reactioner = "${loginNick}";
-	</script>
-   <script>
+		
    $(document).on("click",".writer_nick",function(){
 		let mem_seq = $(this).attr("value");
 		console.log("대댓글 멤버 시퀀스 값 : " + mem_seq);
