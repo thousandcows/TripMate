@@ -108,6 +108,9 @@
           font-size: 18px;
           cursor: pointer;
         }
+        .noticeListBtn:hover{
+          color:black;
+        }
 
         #loginAfterBox {
           margin-top: 8px;
@@ -146,6 +149,9 @@
           margin: 2px;
           z-index: 9999;
           border:2px solid #003366;
+        }
+        .websocTest:hover{
+          opacity:0.9;
         }
 
         /* 헤더 알림글씨 */
@@ -195,12 +201,19 @@
           border-radius: 4px;
           margin: 5px;
         }
+        .noticeListBoxCloseBtn:hover{
+          box-shadow:1px 1px 2px 1px #EFECEA;
+        }
+        .headerNickB{
+          font-size:16px;
+        }
         @media (max-width: 480px) {
           .noticeListBox {
             right: 50px;
           }
           #noticeGround {
-            right: 50px;
+            right: 30px;
+            bottom: 30px;
           }
         }
       </style>
@@ -331,7 +344,7 @@
           <div class="container">
 
             <!-- Brand -->
-            <a class="navbar-brand d-none d-lg-block order-lg-1" href="/">
+            <a class="navbar-brand d-lg-block order-lg-1" href="/">
               <img width="142" src="/images/trip2.png" alt="TripMate" />
             </a>
 
@@ -411,7 +424,7 @@
                             <button type="button" class="noticeListBoxCloseBtn" id="noticeListBoxCloseBtn">닫기</button>
                           </div>
                         </div>
-                        ${loginNick} 님
+                        <span class="headerNickB">${loginNick}</span> 님
                         <c:if test="${loginSeq == -1}">
                           <a href="/member/normalLogout" class="headerLogOut">로그아웃</a>
                           <a href="/admin/dashboard" class="headerMypage">관리창으로</a>

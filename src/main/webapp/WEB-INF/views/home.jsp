@@ -195,8 +195,9 @@
         }
         .btn-primarys{
           width:60px;
-          height:20px;
-          font-size:10px;
+          height:30px;
+          line-height:30px;
+          font-size:12px;
           padding:0;
         }
         .middleCon2Txt{
