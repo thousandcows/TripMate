@@ -73,14 +73,24 @@ Version Control System|Git / github
      * ppt
      * 회의록 관리
 #### <img src="https://user-images.githubusercontent.com/87923533/152647281-ad39fc5f-3f63-438d-a28e-a12eef4f75c3.jpg"  width="100" height="100"> 정혜주 <a href="https://github.com/hyejoojung719" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
-  *  대기능
-      * 소기능
-  * 대기능
-     * 소기능
-     * 소기능
-  * 대기능
-    * 소기능
-    * 소기능
+  *  동행 게시판
+      * 폼 및 글 작성(썸머노트)
+      * 리스트 출력
+      * 검색
+      * 페이징
+      * 좋아요
+      * 댓글
+      * 대댓글
+      * 매칭
+  * 관리자 대시보드
+     * 일별 신규회원, 게시글, 방문자 수 출력
+     * 신규 회원, 게시글 수 line chart
+     * 회원 성별, 여행 게시판 카테고리 비율 doughnut chart
+     * SB Admin2, chart.js 사용
+  *  서비스 소개 페이지
+      * 풀 페이지
+  * 개발 외
+    * ppt
 #### <img src="https://user-images.githubusercontent.com/87923533/152647288-4a51e539-5bd1-49c2-9164-c125ed12e1d1.jpg"  width="100" height="100"> 천현우 <a href="https://github.com/thousandcows" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
   * 프로젝트 컨셉 기획
   * 회의록 작성 
