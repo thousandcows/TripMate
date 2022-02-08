@@ -335,6 +335,14 @@ if (eventCheck != null) {
     }
   });
 
+  $('.modal').on('hidden.bs.modal', function(e) {
+       console.log('modal close'); // 텍스트 인풋 초기화
+    if($(this).find('input').length > 0){
+        console.log('폼있음');
+        $(this).find('input').val('');
+      }
+  });
+
 }
 
 // 알림창 토글
