@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>title here</title>
+<title>여행지 게시판</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -15,9 +15,9 @@
 
 
 <!-- include libraries(jQuery, bootstrap) -->
-<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
 <!-- include summernote css/js -->
@@ -29,19 +29,17 @@
  
  @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-/* body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, */
-/* 	pre, form, fieldset, textarea, blockquote, span, * { */
-/* 	font-family: 'Noto Sans KR', sans-serif; */
-/* } */
+ body, talbe, th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, 
+ 	pre, form, fieldset, textarea, blockquote, span, * {
+ 	font-family: 'Noto Sans KR', sans-serif;
+ } 
 
         * {box-sizing: border-box;}
 
         body{
             margin: 0;  /* 임시로 body margin 0px */
         }
-/*         .navbar-brand{
-            height:70px !important;
-        } */
+
        /* 링크 속성 지우기 */
         a { text-decoration:none  } 
         a:hover { text-decoration:none; color: black; }
