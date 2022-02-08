@@ -96,11 +96,11 @@ Version Control System|Git / github
   * 회의록 작성 
 #### <img src="https://user-images.githubusercontent.com/87923533/152647296-eda1be7b-a985-453e-9033-343c1804c534.jpg"  width="100" height="100"> 홍진규 <a href="https://github.com/Carroth23" target="_blank"><img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=#181717"/></a>
   *  로그인&회원가입
-      * ajax이용 input항목 비동기 & 동기식 체크
-      * OAuth2.0 표준 REST API 카카오 로그인
-      * 이메일 인증을 통한 PW변경
+      * AJAX 비동기 & 동기식 체크
+      * OAuth2.0 표준 RESTAPI 카카오 로그인
+      * javax.mail 이메일 인증 PW찾기
   * 마이페이지
-     * 정보수정, 프로필사진변경, PW변경
+     * 정보수정 & 프로필사진, PW변경
      * 찜한 여행지 출력
      * 모든게시판 내가 쓴 글 출력 및 선택삭제
   * 실시간 알림
@@ -118,4 +118,4 @@ Version Control System|Git / github
 
 - 보고서 및 발표PPT<br>
   - [기획보고서.pdf](https://github.com/Carroth23/KHFinalProject/files/8023187/_.pdf)<br>
-  - [파이널 발표자료.pdf](https://github.com/Carroth23/KHFinalProject/files/8023172/4._.pdf)
+  - [파이널 발표자료.pdf](https://github.com/Carroth23/KHFinalProject/files/8024171/4._.pdf)
