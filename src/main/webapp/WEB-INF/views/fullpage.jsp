@@ -30,13 +30,31 @@
          *{box-sizing: border-box;}
 
         .box {  width:100%; height:100%;}
-    
+        #box1{
+            background-image: URL(images/full_img1.png);
+            text-align: center;
+        }
+
         .box > .trip{
             width: 800px;
             height: 400px;
             margin: auto;
             padding: 100px;
             text-align: center;
+        }
+        .box > .trip > h2{
+            margin:0; 
+            color: rgb(46, 46, 46); 
+            font-size: 70px; 
+            font-weight: 200; 
+            font-family: 'Khula', sans-serif;
+        }
+         .box > .trip > h5{
+            margin:0; 
+            font-weight:300; 
+            color: rgb(46, 46, 46); 
+            font-size: 20px; 
+            font-family: 'Noto Sans KR', sans-serif;
         }
         .box > .sub_trip{
             width: 70%;
@@ -65,13 +83,13 @@
         .box > .trip2{
             width: 100%;
             height: 100%;
-            padding: 50px 100px 50px 100px;
-            /* border: 1px solid red; */
+            padding: 50px 100px 150px 100px;
+            /* border: onex solid red; */
         }
         .box > .trip2 > div{
             width: 100%;
             height: 25%;
-            /* border: 1px solid red; */
+            /* border: onex solid red; */
         }
         .box > .trip2 > div > p{
             color: white;
@@ -107,6 +125,11 @@
             width: 100%;
             transition: width .3s;
         }
+        .hide_p1, .hide_p2, .hide_p3, .hide_p4{
+            display: none;
+        }
+        .read, .commu{
+            text-align: right;        }
 
         button{
         background:rgb(56, 181, 174);;
@@ -146,16 +169,28 @@
         width:100%;
         transition:800ms ease all;
         }
+        figcaption > h2{
+            font-size: 100px; 
+            font-weight: 900px; 
+            font-family: 'Khula', sans-serif; 
+            margin-top: 300px; 
+            color:rgb(196, 255, 252);       
+        }
+        figcaption > p{
+            font-size: 20px; 
+            font-family: 'Noto Sans KR', sans-serif; 
+            color:white;
+        }
+        .hide_fig{
+            display: none;
+        }
 
         @keyframes fade_in {
          0% { opacity:0; left:40%;}
          100% { opacity:1; left:50%;} 
         }
     
-        </style>
 
-        
-    <style>
         @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,500,900);
         @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
         div.snip1382 {
@@ -283,6 +318,128 @@
         div.snip1382.hover figcaption p {
         opacity: 0.7;
         }
+
+
+        /* 1400px ~  */
+		@media (min-width: 1400px){
+
+        }
+
+        /* 800 ~ 1400px
+        @media (max-width: 1400px) and (min-width: 800px){
+
+        } */
+
+        /* ~ 800px */
+		/* 작은 화면일 때 */
+		@media (max-width: 1300px){
+            #box1{
+                background-color: white !important;
+                background-image: none;
+            }
+            .box > .trip{
+                width: 100%;
+                height: 400px;
+                margin: 0px;
+                padding: 100px 0px 50px 0px;
+                text-align: center;
+            }
+            .box > .trip > h2{
+                margin:0; 
+                color: rgb(46, 46, 46); 
+                font-size: 70px; 
+                font-weight: 200; 
+                font-family: 'Khula', sans-serif;
+            }
+            .box > .trip > h5{
+                margin:0; 
+                font-weight:300; 
+                color: rgb(46, 46, 46); 
+                font-size: 15px; 
+                font-family: 'Noto Sans KR', sans-serif;
+            }
+            .box > .sub_trip{
+                width: 100%;
+                height: 50%;
+                margin: auto;
+            }
+            .sub_trip > div{
+                float: left;
+                width: 100%;
+                height: 25%;
+            }
+            .desc{
+                display: none;
+            }
+            .one_img {
+                display: none;
+            }
+            .one_title > h5{
+                font-size: 30px !important;
+            }
+
+            .hide_p1, .hide_p2, .hide_p3 , .hide_p4{
+                display: inline;
+            }
+
+            .p1, .p2, .p3, .p4{
+                display: none;
+            }
+
+            .hide_highlight{
+                color: white;
+                font-size: 40px; 
+                font-family: 'Noto Sans KR', sans-serif;
+                font-weight: 900px;
+                transition: color 1s;
+            }
+            .hide_highlight:hover{
+                color: rgb(255, 122, 188);
+            }
+            .trip2 >  div{
+                text-align: center;
+            }
+            .box > .trip2{
+                width: 100%;
+                height: 100%;
+                padding: 100px 100px 50px 100px;
+            }
+            figcaption > h2{
+                font-size: 50px; 
+                font-weight: 900px; 
+                font-family: 'Khula', sans-serif; 
+                margin-top: 300px; 
+                color:rgb(196, 255, 252);      
+            }
+            figcaption > p{
+                display: none;
+            }
+            .hide_fig{
+                display: inline;
+                font-size: 20px; 
+                font-family: 'Noto Sans KR', sans-serif; 
+                color:white;
+            }
+            .snip1382>img{
+                display: none;
+            }
+            #box3{
+                background-color: black;
+            }
+            div.snip1382 figcaption {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 2;
+                padding: 100px 10px 100px 10px;
+            }
+
+            
+
+            
+        }
     </style>
     
     
@@ -297,40 +454,44 @@
             
         <div class="sub_trip animate__animated animate__slideInUp">
             <div>
-                <div><img src="/images/travel-bag.png" style="width: 100%; height: 100%;"></div>
-                <div><h5 style="margin:0; color: rgb(46, 46, 46); font-size: 25px; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; width: 100%; height: 100%;">여행지</h5></div>
-                <div><h5 style="margin:0; padding:0px; font-weight:300; color: rgb(46, 46, 46); font-size: 18px; font-family: 'Noto Sans KR', sans-serif;">국내의 다양한 여행지를 <br> 구경 하고, 리뷰도 남겨보세요</h5></div>
+                <div class="one_img"><img src="/images/travel-bag.png" style="width: 100%; height: 100%;"></div>
+                <div class="one_title"><h5 style="margin:0; color: rgb(46, 46, 46); font-size: 25px; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; width: 100%; height: 100%;">여행지</h5></div>
+                <div class="desc" ><h5 style="margin:0; padding:0px; font-weight:300; color: rgb(46, 46, 46); font-size: 18px; font-family: 'Noto Sans KR', sans-serif;">국내의 다양한 여행지를 <br> 구경 하고, 리뷰도 남겨보세요</h5></div>
             </div>
             <div>
-                <div><img src="/images/list.png" style="width: 100%; height: 100%;"></div>
-                <div><h5 style="margin:0; color: rgb(46, 46, 46); font-size: 25px; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; width: 100%; height: 100%;">여행 플랜</h5></div>
-                <div><h5 style="margin:0; padding:0px; font-weight:300; color: rgb(46, 46, 46); font-size: 18px; font-family: 'Noto Sans KR', sans-serif;">쉽고, 편리하게 <br> 여행 플랜을 작성해보세요</h5></div>
+                <div class="one_img"><img src="/images/list.png" style="width: 100%; height: 100%;"></div>
+                <div class="one_title"><h5 style="margin:0; color: rgb(46, 46, 46); font-size: 25px; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; width: 100%; height: 100%;">여행 플랜</h5></div>
+                <div class="desc" ><h5 style="margin:0; padding:0px; font-weight:300; color: rgb(46, 46, 46); font-size: 18px; font-family: 'Noto Sans KR', sans-serif;">쉽고, 편리하게 <br> 여행 플랜을 작성해보세요</h5></div>
             </div>
             <div>
-                <div><img src="/images/chat.png" style="width: 100%; height: 100%;"></div>
-                <div><h5 style="margin:0; color: rgb(46, 46, 46); font-size: 25px; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; width: 100%; height: 100%;">여행 게시판</h5></div>
-                <div><h5 style="margin:0; padding:0px; font-weight:300; color: rgb(46, 46, 46); font-size: 18px; font-family: 'Noto Sans KR', sans-serif;">여행 후기를 남기고, <br> 사람들과 추억을 공유해보세요</h5></div>
+                <div class="one_img"><img src="/images/chat.png" style="width: 100%; height: 100%;"></div>
+                <div class="one_title"><h5 style="margin:0; color: rgb(46, 46, 46); font-size: 25px; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; width: 100%; height: 100%;">여행 게시판</h5></div>
+                <div class="desc" ><h5 style="margin:0; padding:0px; font-weight:300; color: rgb(46, 46, 46); font-size: 18px; font-family: 'Noto Sans KR', sans-serif;">여행 후기를 남기고, <br> 사람들과 추억을 공유해보세요</h5></div>
             </div>
             <div>
-                <div><img src="/images/friends.png" style="width: 100%; height: 100%;"></div>
-                <div><h5 style="margin:0; color: rgb(46, 46, 46); font-size: 25px; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; width: 100%; height: 100%;">동행 게시판</h5></div>
-                <div><h5 style="margin:0; padding:0px; font-weight:300; color: rgb(46, 46, 46); font-size: 18px; font-family: 'Noto Sans KR', sans-serif;"> 함께 여행가고 싶은 <br> 친구들을 구해보세요</h5></div>
+                <div class="one_img"><img src="/images/friends.png" style="width: 100%; height: 100%;"></div>
+                <div class="one_title"><h5 style="margin:0; color: rgb(46, 46, 46); font-size: 25px; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; width: 100%; height: 100%;">동행 게시판</h5></div>
+                <div class="desc" ><h5 style="margin:0; padding:0px; font-weight:300; color: rgb(46, 46, 46); font-size: 18px; font-family: 'Noto Sans KR', sans-serif;"> 함께 여행가고 싶은 <br> 친구들을 구해보세요</h5></div>
             </div>
         </div>
     </div>
     <div class="box" style="background-color:black;">
         <div class="trip2">
+            <div class="public">
+                <p class="p1"> <span class="highlight">대중성 </span>&nbsp&nbsp&nbsp&nbsp 국내 4만 여개의 여행지와 인기 있는 여행지 추천</p>
+                <p class="hide_p1"> <span class="hide_highlight">대중성 </span></p>
+            </div>
+            <div class="read">
+                <p class="p2">드래그만으로 편리하게 새로운 일정을 계획 &nbsp&nbsp&nbsp&nbsp<span class="highlight"> 가독성</span></p>
+                <p class="hide_p2"><span class="hide_highlight"> 가독성</span></p>
+            </div>
             <div>
-                <p> <span class="highlight">대중성 </span>&nbsp&nbsp&nbsp&nbsp 국내 4만 여개의 여행지와 인기 있는 여행지 추천</p>
+                <p class="p3"> <span class="highlight">편의성 </span>&nbsp&nbsp&nbsp&nbsp 여행지 검색 시 필요한 카테고리별 분류</p>
+                <p class="hide_p3"> <span class="hide_highlight">편의성 </span></p>
             </div>
-            <div style="text-align: right;">
-                <p>드래그만으로 편리하게 새로운 일정을 계획 &nbsp&nbsp&nbsp&nbsp<span class="highlight"> 가독성</span></p>
-            </div>
-            <div>
-                <p> <span class="highlight">편의성 </span>&nbsp&nbsp&nbsp&nbsp 여행지 검색 시 필요한 카테고리별 분류</p>
-            </div>
-            <div style="text-align: right;">
-                <p>회원간 소통할 수 있는 게시판 활성화 &nbsp&nbsp&nbsp&nbsp<span class="highlight"> 커뮤니티</span></p>
+            <div  class="commu">
+                <p class="p4">회원간 소통할 수 있는 게시판 활성화 &nbsp&nbsp&nbsp&nbsp<span class="highlight"> 커뮤니티</span></p>
+                <p class="hide_p4"><span class="hide_highlight"> 커뮤니티</span></p>
             </div>
         </div>
     </div>
@@ -338,10 +499,10 @@
         <div class="snip1382">
             <img src="/images/full_img2.png" alt="sample99" />
             <figcaption>
-              <h2 style="font-size: 100px; font-weight: 900px; font-family: 'Khula', sans-serif; margin-top: 300px; color:rgb(196, 255, 252);">W E L C O M E</h2>
-              <p style="font-size: 20px; font-family: 'Noto Sans KR', sans-serif; color:white"> 트립 메이트로 당신의 여행을 계획하고, 기록하고, 저장하세요!</p>
+              <h2 >W E L C O M E</h2>
+              <p > 트립 메이트로 당신의 여행을 계획하고, 기록하고, 저장하세요!</p>
+              <p class="hide_fig"> 트립 메이트로 당신의 여행을 <br>계획하고, 기록하고, 저장하세요!</p>
               <div class="icons">
-              <a href="/">
                   <button>TRIP MATE</button>
               </a>
               </div>
