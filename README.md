@@ -118,4 +118,4 @@ Version Control System|Git / github
 
 - 보고서 및 발표PPT<br>
   - [기획보고서.pdf](https://github.com/Carroth23/KHFinalProject/files/8023187/_.pdf)<br>
-  - [파이널 발표자료.pdf](https://github.com/Carroth23/KHFinalProject/files/8024171/4._.pdf)
+  - [파이널 발표자료.pdf](https://github.com/Carroth23/KHFinalProject/files/8028477/4._.pdf)
