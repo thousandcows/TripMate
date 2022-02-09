@@ -142,18 +142,6 @@
                                                 MEMBER (DAILY)</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             	<span id="cntMember"></span>
-                                            	
-                                            	<span style="color:red">
-                                            	<c:if test="${withdrawal > 0 }">
-                                            		+ ${withdrawal }
-                                            	</c:if>
-                                            	<c:if test="${withdrawal < 0 }">
-                                            		- ${withdrawal }
-                                            	</c:if>
-                                            	<c:if test="${withdrawal == 0 }">
-                                            		 ${withdrawal }
-                                            	</c:if>
-                                            	</span>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -176,17 +164,6 @@
                                                 <div class="col-auto">
                                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
                                                     	<span id="totalPost"></span>
-                                                   		<span style="color:red">
-                                            			<c:if test="${plmaPost > 0 }">
-                                            				+ ${plmaPost }
-                                            			</c:if>
-                                            			<c:if test="${plmaPost < 0 }">
-                                            				- ${plmaPost }
-                                            			</c:if>
-                                            			<c:if test="${plmaPost == 0 }">
-                                            		 		${plmaPost }
-                                            			</c:if>
-                                            			</span> 
                                                     </div>
                                                 </div>
                                             </div>

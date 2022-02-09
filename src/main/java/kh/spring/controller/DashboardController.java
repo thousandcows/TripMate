@@ -55,10 +55,6 @@ public class DashboardController {
 		  int cntMember = ds.cntMember(); 
 		  map.put("cntMember", cntMember);		 
 		
-		// 증감량 
-		  int cntPreMem = ds.cntPreMem();
-		  int withdrawal = cntMember-cntPreMem;
-		  map.put("withdrawal", withdrawal);
 		
 		// 총 게시글 수(계획 + 여행지 + 동행)
 		  int cntPlan = ds.cntPlan();
@@ -68,14 +64,6 @@ public class DashboardController {
 		  int totalPost = cntPlan + cntTour + cntCom;
 		  map.put("totalPost", totalPost);
 		  
-		// 증감량
-		  int cntPrePlan = ds.cntPrePlan();
-		  int cntPreTour = ds.cntPreTour();
-		  int cntPreCom = ds.cntPreCom();
-		  int prePost = cntPrePlan + cntPreTour + cntPreCom;
-		  
-		  int plmaPost = totalPost - prePost;
-		  map.put("plmaPost", plmaPost);
 
 		return map;
 	}
