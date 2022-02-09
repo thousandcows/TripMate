@@ -503,8 +503,9 @@
               <p > 트립 메이트로 당신의 여행을 계획하고, 기록하고, 저장하세요!</p>
               <p class="hide_fig"> 트립 메이트로 당신의 여행을 <br>계획하고, 기록하고, 저장하세요!</p>
               <div class="icons">
-                  <button>TRIP MATE</button>
-              </a>
+              	<a href = "/">
+                  <button id="home">TRIP MATE</button>
+              	</a>
               </div>
             </figcaption>
         </div>
