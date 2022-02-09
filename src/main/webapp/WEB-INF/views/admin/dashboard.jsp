@@ -296,7 +296,7 @@
     
     <!-- 숫자 표시 -->
     <script>
-  
+		window.onload = function(){
   
      $(document).ready(function() {
 			getCnt();
@@ -308,6 +308,7 @@
     		$.ajax({
 					url : '/dashboard/ajax1',
 					type : 'POST',
+					async: false,
 					success : function(data){
 						$("#cntMember").html(data.cntMember);
 						$("#totalPost").html(data.totalPost);
@@ -327,6 +328,7 @@
 			url : '/dashboard/chart1',
 			type : 'POST',
 			dataType : 'json',
+			async: false,
 			success : function(data) {
 				
 			// 그래프로 나타낼 자료 리스트에 담기
@@ -466,6 +468,7 @@
 			url : '/dashboard/chart2',
 			type : 'POST',
 			dataType : 'json',
+			async: false,
 			success : function(data) {
 				
 			// 그래프로 나타낼 자료 리스트에 담기
@@ -527,6 +530,7 @@
 					alert("실패");
 			}
 		})
+	}
 	}
 	</script>		
 </body>
